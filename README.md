@@ -32,3 +32,7 @@ Filmdata og billeder kommer fra [TMDB](https://www.themoviedb.org/).
 This product uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
 
 Projektet er et ikke-kommercielt skoleprojekt og er ikke tilknyttet Nordisk Film.
+
+
+HUSK!!!
+node_modules kom ikke med over. Før du kører importen næste gang, skal du derfor køre npm install i tmdb-import/ og derefter npm run import.
