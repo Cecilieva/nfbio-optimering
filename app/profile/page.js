@@ -1,28 +1,45 @@
 import { redirect } from "next/navigation";
-import UserBadge from "@/components/UserBadge";
-import { getCurrentProfile } from "@/lib/auth";
-import { signOut } from "@/lib/actions";
+import UserBadge from "@/components/features/UserBadge";
+import { signOut } from "@/lib/actions/auth";
+import { getCurrentUser } from "@/lib/auth";
+import { getCurrentProfile } from "@/lib/data/profile";
 
 export const metadata = {
-  title: "Profile",
+  title: "Profil",
 };
 
 export default async function ProfilePage() {
-  // Your row from users: id, name, title, image and role
-  const currentUser = await getCurrentProfile();
+  const user = await getCurrentUser();
 
-  if (!currentUser) {
+  if (!user) {
     redirect("/login");
+  }
+
+  // Your row from profiles: id, full_name, phone, points and favorite_cinema_id – plus your email
+  const profile = await getCurrentProfile();
+
+  // Logged in, but no row in profiles: the trigger did not create it at sign up
+  if (!profile) {
+    return (
+      <main>
+        <h1>Profil</h1>
+        <p>Vi kunne ikke finde en profil for {user.email}.</p>
+        <form action={signOut} className="form">
+          <button type="submit">Log ud</button>
+        </form>
+      </main>
+    );
   }
 
   return (
     <main>
-      <h1>Profile</h1>
-      <UserBadge user={currentUser} />
-      <p>Email: {currentUser.mail}</p>
-      <p>User id: {currentUser.id}</p>
+      <h1>Profil</h1>
+      <UserBadge profile={profile} />
+      <p>E-mail: {profile.email}</p>
+      {profile.phone && <p>Telefon: {profile.phone}</p>}
+      <p>Point: {profile.points}</p>
       <form action={signOut} className="form">
-        <button type="submit">Log out</button>
+        <button type="submit">Log ud</button>
       </form>
     </main>
   );

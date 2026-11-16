@@ -1,0 +1,81 @@
+/*
+  Design tokens – the only place with raw values.
+  All other CSS uses these variables.
+
+  TODO: The values are placeholders. Replace them with the variables from Figma
+  (get_variable_defs in Figma MCP) and keep the names, or rename them here and in the CSS.
+*/
+
+:root {
+  /* Colors */
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
+  --color-surface-raised: #ffffff;
+  --color-text: #171717;
+  --color-text-muted: #666666;
+  --color-border: #e5e5e5;
+  --color-accent: #2f54eb;
+  --color-on-accent: #ffffff;
+  --color-danger: #d4380d;
+  --color-success: #389e0d;
+  --color-seat-free: #e5e5e5;
+  --color-seat-selected: #2f54eb;
+  --color-seat-taken: #8c8c8c;
+  --color-backdrop: rgb(0 0 0 / 0.6);
+
+  /* Typography */
+  --font-family-body: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-family-mono: var(--font-geist-mono), monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+  --font-size-2xl: 2.25rem;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.2;
+  --line-height-body: 1.6;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.2);
+
+  /* Sizes */
+  --size-avatar: 2.5rem;
+
+  /* Layout */
+  --layout-max-width: 64rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0a0a0a;
+    --color-surface: #141414;
+    --color-surface-raised: #1f1f1f;
+    --color-text: #ededed;
+    --color-text-muted: #a1a1a1;
+    --color-border: #2e2e2e;
+    --color-accent: #85a5ff;
+    --color-on-accent: #0a0a0a;
+    --color-seat-free: #2e2e2e;
+    --color-seat-selected: #85a5ff;
+    --color-seat-taken: #595959;
+  }
+}

@@ -1,0 +1,22 @@
+.badge {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--size-avatar);
+  height: var(--size-avatar);
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+  font-weight: var(--font-weight-bold);
+  object-fit: cover;
+}
+
+.name {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}

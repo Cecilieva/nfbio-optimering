@@ -1,0 +1,18 @@
+/* Only what the overlay needs to work. The look comes from Figma. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+  background: var(--color-backdrop);
+}
+
+.content {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-raised);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}

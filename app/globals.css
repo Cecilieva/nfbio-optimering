@@ -1,22 +1,6 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --muted: #666666;
-  --border: #e5e5e5;
-  --surface: #fafafa;
-  --accent: #2f54eb;
-}
+/* Base styles only. Every value comes from tokens.css. */
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted: #a1a1a1;
-    --border: #2e2e2e;
-    --surface: #141414;
-    --accent: #85a5ff;
-  }
-
   html {
     color-scheme: dark;
   }
@@ -30,92 +14,82 @@
 
 body {
   min-height: 100vh;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-background);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
 }
 
 main {
-  max-width: 64rem;
+  max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: var(--space-8) var(--space-6);
 }
 
 h1 {
-  font-size: 2.25rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-tight);
+}
+
+h2 {
+  margin: var(--space-6) 0 var(--space-2);
+  font-size: var(--font-size-lg);
 }
 
 a {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 
-/* The forms for sign up, log in, log out and posts */
+/* The forms for sign up, log in and log out */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
   max-width: 32rem;
-  margin: 1.5rem 0;
+  margin: var(--space-6) 0;
 }
 
-.form input,
-.form textarea {
-  margin-bottom: 0.5rem;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--surface);
-  color: var(--foreground);
+.form input {
+  margin-bottom: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
   font: inherit;
 }
 
-.form textarea {
-  resize: vertical;
-}
-
-.form input::placeholder,
-.form textarea::placeholder {
-  color: var(--muted);
+.form input::placeholder {
+  color: var(--color-text-muted);
 }
 
 .form button {
-  padding: 0.75rem;
+  padding: var(--space-3);
   border: 0;
-  border-radius: 0.5rem;
-  background: var(--accent);
-  color: #ffffff;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font: inherit;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
 }
 
 .form-error {
-  margin-bottom: 1rem;
-  color: #d4380d;
+  margin-bottom: var(--space-4);
+  color: var(--color-danger);
 }
 
-/* Edit and Delete on the post page */
-.button {
-  padding: 0.5rem 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--foreground);
-  font: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.button-danger:hover {
-  border-color: #d4380d;
-  color: #d4380d;
+/* Shows the data a placeholder page has, until the Figma design replaces it */
+.data-dump {
+  overflow-x: auto;
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
 }

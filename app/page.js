@@ -1,32 +1,44 @@
-import PostCard from "@/components/PostCard";
-import { createClient } from "@/lib/supabase/server";
-import styles from "./page.module.css";
+import { redirect } from "next/navigation";
+import MovieCard from "@/components/features/MovieCard";
+import DataDump from "@/components/ui/DataDump";
+import { getSelectedCity } from "@/lib/data/cities";
+import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 
+// Figma: "Forside" – films showing now in the city, and films coming soon
 export default async function HomePage() {
-  // Every post with the user who wrote it.
-  // In Post App: fetch(`${url}/posts?select=*,user:users(*)&order=createdAt.desc`)
-  const supabase = await createClient();
-  const { data: posts, error } = await supabase
-    .from("posts")
-    .select("*, user:users(name, title, image)")
-    .order("createdAt", { ascending: false });
+  const city = await getSelectedCity();
 
-  if (error) {
-    throw error;
+  if (!city) {
+    redirect("/by");
   }
+
+  const [nowPlaying, comingSoon] = await Promise.all([getNowPlaying(city.id), getComingSoon()]);
 
   return (
     <main>
-      <section className={styles.intro}>
-        <h1>Explore the latest posts</h1>
-        <p>{posts.length} posts – each with the user who made it.</p>
-      </section>
+      <h1>Film i {city.name}</h1>
 
-      <section className={styles.grid}>
-        {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+      <h2>Spiller nu</h2>
+      {nowPlaying.length === 0 && <p>Der går ingen film i {city.name} lige nu.</p>}
+      <ul>
+        {nowPlaying.map((movie) => (
+          <li key={movie.id}>
+            <MovieCard movie={movie} />
+          </li>
         ))}
-      </section>
+      </ul>
+
+      <h2>Kommer snart</h2>
+      {comingSoon.length === 0 && <p>Der er ingen kommende film lige nu.</p>}
+      <ul>
+        {comingSoon.map((movie) => (
+          <li key={movie.id}>
+            <MovieCard movie={movie} />
+          </li>
+        ))}
+      </ul>
+
+      <DataDump label="nowPlaying, comingSoon" data={{ city, nowPlaying, comingSoon }} />
     </main>
   );
 }
