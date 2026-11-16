@@ -1,0 +1,11 @@
+/* Only what the bar needs to stick. The look comes from Figma. */
+.bar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  background: var(--color-background);
+}

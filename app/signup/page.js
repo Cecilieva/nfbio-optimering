@@ -1,82 +1,57 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { signUp } from "@/lib/actions/auth";
 import { getCurrentUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { safePath } from "@/lib/safe-path";
 
 export const metadata = {
-  title: "Sign up",
+  title: "Opret konto",
 };
-
-// A Server Action: "use server" makes it run on the server,
-// even though the form in the browser calls it
-async function signUp(formData) {
-  "use server";
-
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const password = formData.get("password");
-
-  // 1. Create the login in Supabase Auth
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.signUp({ email, password });
-
-  // Something went wrong: back to the form with ?error=true in the URL
-  if (error) {
-    redirect("/signup?error=true");
-  }
-
-  // 2. Create your row in users – with the same id as the login.
-  // In Post App: fetch(`${url}/users`, { method: "POST", body: JSON.stringify(user) })
-  await supabase.from("users").insert({
-    id: data.user.id,
-    name: name,
-    mail: email,
-  });
-
-  redirect("/profile");
-}
 
 export default async function SignUpPage({ searchParams }) {
   // ?error=true is set by signUp when Supabase says no
-  const { error } = await searchParams;
+  // ?next= is where to go afterwards, e.g. back to the booking
+  const { error, next } = await searchParams;
+  const nextPath = safePath(next, "/profile");
 
   // Already logged in? Then there is nothing to do here
   const user = await getCurrentUser();
 
   if (user) {
-    redirect("/profile");
+    redirect(nextPath);
   }
 
   return (
     <main>
-      <h1>Sign up</h1>
+      <h1>Opret konto</h1>
       {error && (
         <p className="form-error" role="alert">
-          Could not sign up. Maybe the email is already in use.
+          Kontoen kunne ikke oprettes. Måske er e-mailen allerede i brug.
         </p>
       )}
       <form action={signUp} className="form">
-        <label htmlFor="name">Name</label>
-        <input id="name" name="name" placeholder="Your name" autoComplete="name" required />
+        <input type="hidden" name="next" value={nextPath} />
+        <label htmlFor="name">Navn</label>
+        <input id="name" name="name" placeholder="Dit navn" autoComplete="name" required />
 
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
+        <label htmlFor="email">E-mail</label>
+        <input id="email" name="email" type="email" placeholder="dig@eksempel.dk" autoComplete="email" required />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Adgangskode</label>
         <input
           id="password"
           name="password"
           type="password"
-          placeholder="At least 6 characters"
+          placeholder="Mindst 6 tegn"
           autoComplete="new-password"
           minLength={6}
           required
         />
 
-        <button type="submit">Sign up</button>
+        <button type="submit">Opret konto</button>
       </form>
       <p>
-        Already have an account? <Link href="/login">Log in</Link>
+        Har du allerede en konto? <Link href={`/login?next=${encodeURIComponent(nextPath)}`}>Log ind</Link>
       </p>
     </main>
   );

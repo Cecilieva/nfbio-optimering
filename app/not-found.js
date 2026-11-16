@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main>
-      <h1>Page not found</h1>
-      <p>We could not find what you were looking for.</p>
+      <h1>Siden blev ikke fundet</h1>
+      <p>Vi kunne ikke finde det, du ledte efter.</p>
       <p>
-        <Link href="/">Go to the home page</Link>
+        <Link href="/">Gå til forsiden</Link>
       </p>
     </main>
   );

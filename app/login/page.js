@@ -1,66 +1,53 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { signIn } from "@/lib/actions/auth";
 import { getCurrentUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { safePath } from "@/lib/safe-path";
 
 export const metadata = {
-  title: "Log in",
+  title: "Log ind",
 };
-
-// The same pattern as signUp, but with signInWithPassword
-async function signIn(formData) {
-  "use server";
-
-  const email = formData.get("email");
-  const password = formData.get("password");
-
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if (error) {
-    redirect("/login?error=true");
-  }
-
-  redirect("/profile");
-}
 
 export default async function LoginPage({ searchParams }) {
   // ?error=true is set by signIn when the email or password is wrong
-  const { error } = await searchParams;
+  // ?next= is where to go afterwards, e.g. back to the booking
+  const { error, next } = await searchParams;
+  const nextPath = safePath(next, "/profile");
 
   // Already logged in? Then there is nothing to do here
   const user = await getCurrentUser();
 
   if (user) {
-    redirect("/profile");
+    redirect(nextPath);
   }
 
   return (
     <main>
-      <h1>Log in</h1>
+      <h1>Log ind</h1>
       {error && (
         <p className="form-error" role="alert">
-          Wrong email or password.
+          Forkert e-mail eller adgangskode.
         </p>
       )}
       <form action={signIn} className="form">
-        <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" autoComplete="email" required />
+        <input type="hidden" name="next" value={nextPath} />
+        <label htmlFor="email">E-mail</label>
+        <input id="email" name="email" type="email" placeholder="dig@eksempel.dk" autoComplete="email" required />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Adgangskode</label>
         <input
           id="password"
           name="password"
           type="password"
-          placeholder="Your password"
+          placeholder="Din adgangskode"
           autoComplete="current-password"
           required
         />
 
-        <button type="submit">Log in</button>
+        <button type="submit">Log ind</button>
       </form>
       <p>
-        No account yet? <Link href="/signup">Sign up</Link>
+        Har du ingen konto? <Link href={`/signup?next=${encodeURIComponent(nextPath)}`}>Opret konto</Link>
       </p>
     </main>
   );

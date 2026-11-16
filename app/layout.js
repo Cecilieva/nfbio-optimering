@@ -1,5 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import Header from "@/components/Header";
+import Footer from "@/components/features/Footer";
+import Header from "@/components/features/Header";
+import "./tokens.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,16 +15,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Post App",
-  description: "A Next.js app with posts, users and Supabase Auth",
+  title: "Nordisk Film Biograf",
+  description: "Film og spilletider hos Nordisk Film Biograf",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="da" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
