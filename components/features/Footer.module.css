@@ -1,0 +1,168 @@
+/* Figma Footer: tynd streg øverst og 40px luft over og under indholdet */
+.footer {
+  padding: var(--space-10) var(--space-8);
+  border-top: var(--border-width) solid var(--color-border-default);
+}
+
+/* Indholdet står i midten og bliver aldrig bredere end i Figma */
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: var(--layout-footer-width);
+  margin: 0 auto;
+}
+
+/* Kolonnerne står ved siden af hinanden.
+   flex-wrap lader dem hoppe ned på en ny linje, når skærmen er smal (fx en mobil). */
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  align-items: flex-start;
+}
+
+.logoColumn,
+.column {
+  flex: 0 0 var(--size-footer-column);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.logo {
+  display: block;
+  width: fit-content;
+  line-height: 0;
+}
+
+/* Små overskrifter med store bogstaver, fx "BIOGRAF".
+   Teksten i koden er "Biograf" – det er CSS'en, der laver store bogstaver. */
+.heading {
+  margin: 0;
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-snug);
+  text-transform: uppercase;
+}
+
+/* line-height sættes her, så listepunkterne ikke arver den høje linjehøjde fra body */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  line-height: var(--line-height-snug);
+  list-style: none;
+}
+
+.link {
+  color: var(--color-text-primary);
+  line-height: var(--line-height-snug);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--easing-standard);
+}
+
+/* Linkene bliver blå ved hover – samme effekt som i menuen */
+.link:hover {
+  color: var(--color-cta-soft);
+}
+
+/* Nyhedsbrevet fylder resten af bredden */
+.newsletter {
+  display: flex;
+  flex: 1 1 var(--size-footer-column);
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.text {
+  color: var(--color-text-primary);
+  line-height: var(--line-height-snug);
+}
+
+/* Stregen mellem indholdet og bunden */
+.divider {
+  border: 0;
+  border-top: var(--border-width) solid var(--color-border-default);
+}
+
+/* Bunden: tekst til venstre og sociale medier til højre */
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Studieprojekt-teksten og de juridiske links under hinanden */
+.legalGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Studieprojekt-teksten: lysere og lidt større end linkene, så den er tydelig */
+.disclaimer {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+.legal {
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.legalLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.legalLink:hover {
+  text-decoration: underline;
+}
+
+.social {
+  display: flex;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+/* Den runde ramme om hvert ikon */
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-social-button);
+  height: var(--size-social-button);
+  border: var(--border-width) solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+/* Ikonet bliver 20px, selvom SVG-filen er 24px */
+.socialLink img {
+  width: var(--size-social-icon);
+  height: var(--size-social-icon);
+}
+
+/* Kanten bliver lysere ved hover */
+.socialLink:hover {
+  border-color: var(--color-text-label);
+}
+
+/* Synlig ramme, når man navigerer med tastaturet */
+.logo:focus-visible,
+.link:focus-visible,
+.legalLink:focus-visible,
+.socialLink:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}

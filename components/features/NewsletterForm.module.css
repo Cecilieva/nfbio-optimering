@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Feltet og knappen ved siden af hinanden med 16px imellem */
+.row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+/* Feltet fylder den plads, der er tilbage ved siden af knappen */
+.field {
+  flex: 1;
+  min-width: 0;
+}
+
+.status {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Skjul den tomme statuslinje, så den ikke giver ekstra luft */
+.status:empty {
+  display: none;
+}
