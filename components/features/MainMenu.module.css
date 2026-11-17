@@ -1,0 +1,181 @@
+/* Figma "Menu" (node 1056:25687): full-height drawer pinned to the top left */
+.drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(var(--size-menu-width), 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-right: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.drawer[open] {
+  animation: slide-in var(--duration-menu) ease-out;
+}
+
+.drawer::backdrop {
+  background: var(--color-backdrop);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer[open] {
+    animation: none;
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: var(--space-7) var(--space-8) var(--space-10);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: block;
+  line-height: 0;
+}
+
+.logo:hover {
+  opacity: var(--opacity-hover);
+}
+
+.logo:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+.nav {
+  margin-top: var(--space-10);
+}
+
+.heading {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  text-transform: uppercase;
+}
+
+.list,
+.moreList {
+  list-style: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3-5);
+}
+
+/* Figma "Menupunkt": marker and arrow are hidden until hover/focus */
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: var(--size-menu-item-height);
+  padding: var(--space-2-5) 0;
+  color: var(--color-text);
+  font-size: var(--font-size-menu-item);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  text-decoration: none;
+  transition: padding-left var(--duration-fast), color var(--duration-fast);
+}
+
+.marker {
+  position: absolute;
+  top: var(--space-3);
+  left: 0;
+  width: var(--size-menu-marker-width);
+  height: var(--size-menu-marker-height);
+  border-radius: var(--radius-xs);
+  background: var(--color-cta);
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+}
+
+.arrow {
+  color: var(--color-cta-soft);
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.item:hover,
+.item:focus-visible {
+  padding-left: var(--space-4);
+  color: var(--color-cta-soft);
+  outline: none;
+}
+
+.item:hover .marker,
+.item:hover .arrow,
+.item:focus-visible .marker,
+.item:focus-visible .arrow {
+  opacity: 1;
+}
+
+.divider {
+  margin: var(--space-7) 0;
+  border: 0;
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.moreList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3-5);
+  margin-top: var(--space-7-5);
+}
+
+.moreLink {
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+  text-decoration: none;
+}
+
+.moreLink:hover {
+  color: var(--color-cta-soft);
+}
+
+.moreLink:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Pushed to the bottom of the drawer */
+.profile {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-5);
+}
+
+.profile > * {
+  flex: 1;
+}
