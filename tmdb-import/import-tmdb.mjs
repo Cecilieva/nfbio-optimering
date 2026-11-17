@@ -165,6 +165,11 @@ async function main() {
   for (const [id, status] of queue) {
     try {
       const row = await details(id, status);
+      // Non-Latin titles (e.g. Korean, Hindi) slugify to "" → no working film page, so skip them
+      if (!row.slug) {
+        console.warn(`  ⚠️  Sprang "${row.title}" over: titlen giver ingen gyldig slug`);
+        continue;
+      }
       if (seenSlugs.has(row.slug)) row.slug = `${row.slug}-${row.tmdb_id}`;
       seenSlugs.add(row.slug);
       rows.push(row);
