@@ -27,18 +27,21 @@ Next.js (App Router) + Supabase. Al tekst i UI'et er på dansk. Kodekommentarer 
 app/
   tokens.css              Design tokens (pladsholdere – skal hentes fra Figma-variablerne)
   globals.css             Base-styles, kun med tokens
-  page.js                 Forside
-  by/                     Vælg by
-  film/[slug]/            Filmside
-  bestil/
+  layout.js               Kun <html>/<body> og fonte
+  not-found.js            404 (viser selv Header + Footer)
+  by/                     Vælg by – egen layout med logo-header og uden footer
+  (site)/                 Route-gruppe: alle andre sider. layout.js giver fuld Header + Footer
+  (site)/page.js          Forside
+  (site)/film/[slug]/     Filmside
+  (site)/bestil/
     saeder/[showtimeId]/  Sædevalg (før der findes en booking)
     [bookingId]/login/    Log ind / gæst / opret profil
     [bookingId]/betaling/ Betaling (+ fejl/ til fejlsiden)
     [bookingId]/billet/   Billet
-  login/ signup/ profile/ Konto
+  (site)/login/ signup/ profile/ Konto
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, DataDump
-  features/               Domænekomponenter: Header, Footer, MovieCard, ShowtimeList, SeatMap, SeatPicker, …
+  features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, ShowtimeList, SeatMap, SeatPicker, …
 lib/
   data/                   Læsning: cities, movies, showtimes, seats, bookings, profile
   actions/                Server actions: auth, city, booking
@@ -75,7 +78,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
-| Vælg by | | `/by` | Button |
+| Vælg by | 2141:155168 | `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
 | Forside | | `/` | Header, MovieCard, PosterPlaceholder, Footer |
 | Filmside | | `/film/[slug]` | PosterPlaceholder, TrailerButton, Modal, ShowtimeList |
 | Trailer-modal | | `/film/[slug]` | TrailerButton, Modal |

@@ -1,11 +1,9 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import Footer from "@/components/features/Footer";
-import Header from "@/components/features/Header";
+import { Geist_Mono, Inter } from "next/font/google";
 import "./tokens.css";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -19,14 +17,11 @@ export const metadata = {
   description: "Film og spilletider hos Nordisk Film Biograf",
 };
 
+// Header and footer live in the route layouts: app/(site)/layout.js and app/by/layout.js
 export default function RootLayout({ children }) {
   return (
-    <html lang="da" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+    <html lang="da" className={`${inter.variable} ${geistMono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

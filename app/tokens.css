@@ -7,24 +7,27 @@
 */
 
 :root {
-  /* Colors */
-  --color-background: #ffffff;
-  --color-surface: #fafafa;
-  --color-surface-raised: #ffffff;
-  --color-text: #171717;
-  --color-text-muted: #666666;
-  --color-border: #e5e5e5;
-  --color-accent: #2f54eb;
-  --color-on-accent: #ffffff;
+  /* Colors – the site is dark only. Figma variable names in the comments; tokens without one are placeholders. */
+  --color-background: #0d0f1e; /* bg/Mørk baggrund */
+  --color-surface: #161a30; /* bg/Kort */
+  --color-surface-raised: #1f1f1f;
+  --color-text: #eef0ff; /* text/Lys */
+  --color-text-primary: #f2f2f2; /* text/Primær */
+  --color-text-muted: #9aa1c4; /* text/Sekundær */
+  --color-border: #2a3055; /* border/Kort */
+  --color-accent: #85a5ff;
+  --color-on-accent: #0a0a0a;
   --color-danger: #d4380d;
   --color-success: #389e0d;
-  --color-seat-free: #e5e5e5;
-  --color-seat-selected: #2f54eb;
-  --color-seat-taken: #8c8c8c;
+  --color-seat-free: #2e2e2e;
+  --color-seat-selected: #85a5ff;
+  --color-seat-taken: #595959;
   --color-backdrop: rgb(0 0 0 / 0.6);
+  --color-header-background: var(--color-background);
+  --color-header-text: var(--color-text-primary);
 
   /* Typography */
-  --font-family-body: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-family-body: var(--font-inter), Arial, Helvetica, sans-serif;
   --font-family-mono: var(--font-geist-mono), monospace;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -32,8 +35,12 @@
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.75rem;
   --font-size-2xl: 2.25rem;
+  --font-size-display: 2.75rem;
+  --font-size-control: 0.9375rem;
   --font-weight-regular: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 700;
+  --letter-spacing-display: -0.0625rem;
   --line-height-tight: 1.2;
   --line-height-body: 1.6;
 
@@ -41,6 +48,7 @@
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
+  --space-3-5: 0.875rem;
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
@@ -59,23 +67,22 @@
 
   /* Sizes */
   --size-avatar: 2.5rem;
+  --size-header-side: 6.5rem;
+  --size-control-height: 2.75rem;
+  --size-city-tile-width: 12.5rem;
+  /* Light cone apex sits 54px above its pivot (Figma "Lyskegle") */
+  --spotlight-apex-offset: -3.393rem;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-spotlight: 2.4s;
+
+  /* Interaction */
+  --opacity-hover: 0.75;
+  --focus-ring-width: 2px;
+  --border-width: 1px;
 
   /* Layout */
   --layout-max-width: 64rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #0a0a0a;
-    --color-surface: #141414;
-    --color-surface-raised: #1f1f1f;
-    --color-text: #ededed;
-    --color-text-muted: #a1a1a1;
-    --color-border: #2e2e2e;
-    --color-accent: #85a5ff;
-    --color-on-accent: #0a0a0a;
-    --color-seat-free: #2e2e2e;
-    --color-seat-selected: #85a5ff;
-    --color-seat-taken: #595959;
-  }
-}

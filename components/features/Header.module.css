@@ -1,35 +1,54 @@
 .header {
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-header-background);
+  color: var(--color-header-text);
 }
 
-.nav {
+.bar {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
   align-items: center;
   justify-content: space-between;
-  max-width: var(--layout-max-width);
-  margin: 0 auto;
-  padding: var(--space-4) var(--space-6);
+  padding: var(--space-4) var(--space-8);
+}
+
+.barCentered {
+  justify-content: center;
+}
+
+/* Same width as the actions so the logo stays centred. */
+.start {
+  display: flex;
+  width: var(--size-header-side);
 }
 
 .logo {
-  color: var(--color-text);
-  font-weight: var(--font-weight-bold);
-  text-decoration: none;
+  display: block;
+  line-height: 0;
 }
 
-.links {
+.actions {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-4);
+  justify-content: flex-end;
+  width: var(--size-header-side);
   list-style: none;
 }
 
-.links a {
-  color: var(--color-text);
-  text-decoration: none;
+.iconButton {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
 }
 
-.links a:hover {
-  color: var(--color-accent);
+.iconButton:hover,
+.logo:hover {
+  opacity: var(--opacity-hover);
+}
+
+.iconButton:focus-visible,
+.logo:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-header-text);
+  outline-offset: var(--space-1);
 }
