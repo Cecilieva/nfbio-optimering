@@ -1,5 +1,8 @@
+import styles from "./Checkbox.module.css";
+
 /**
- * A checkbox with its label, e.g. "Accepter handelsbetingelserne".
+ * En checkbox med sit label, fx "Husk mig" eller "Accepter handelsbetingelserne".
+ * Figma: "Checkbox" (blå kant) og "Flueben" (når den er krydset af).
  *
  * @param {object} props
  * @param {React.ReactNode} props.label
@@ -8,10 +11,11 @@
  * @param {boolean} [props.required]
  */
 export default function Checkbox({ label, name, ...rest }) {
+  // Inputtet ligger inde i <label>, så et klik på teksten også krydser af
   return (
-    <label>
-      <input type="checkbox" name={name} {...rest} />
-      {label}
+    <label className={styles.checkbox}>
+      <input type="checkbox" name={name} className={styles.input} {...rest} />
+      <span>{label}</span>
     </label>
   );
 }
