@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ComingSoonCard from "@/components/features/ComingSoonCard";
-import IntroVideo from "@/components/features/IntroVideo";
+import IntroAnimation from "@/components/features/IntroAnimation";
 import styles from "./FeaturedCarousel.module.css";
 
 // How long each film is shown before the next one fades in
@@ -14,8 +14,8 @@ const SLIDE_MS = 7000;
  * som trækker sig lidt tilbage og bliver mørkere nedenunder – som lag, der bliver lagt ovenpå.
  * Figma: "Kommer snart"-karrusel (node 11:34).
  *
- * Intro-videoen ligger her, fordi karrusellen først må begynde at skifte, når videoen er færdig –
- * videoen slutter på det første kort.
+ * Introen ligger her, fordi karrusellen først må begynde at skifte, når introen er færdig, og fordi
+ * introen slutter med, at det første kort vokser frem (revealRef).
  * Karrusellen kører videre, også når man har scrollet ned, så der står en ny film, når man kommer op igen.
  * Den holder kun pause, mens man står i kortet med tastaturet (Tab). Kortet fylder næsten hele skærmen,
  * så en pause, når musen er over det, ville få karrusellen til næsten aldrig at skifte.
@@ -30,8 +30,10 @@ export default function FeaturedCarousel({ movies }) {
   const [started, setStarted] = useState(false);
   // En ref i stedet for state, så kortet ikke tegnes om, når fokus flytter
   const paused = useRef(false);
+  // Selve karrusellen – introen lader den vokse frem fra Sunrise-plakaten
+  const carouselRef = useRef(null);
 
-  // useCallback: samme funktion hver gang, så IntroVideos effekt ikke kører igen ved hver ændring her
+  // useCallback: samme funktion hver gang, så introens effekt ikke kører igen ved hver ændring her
   const handleIntroDone = useCallback(() => setStarted(true), []);
 
   useEffect(() => {
@@ -61,9 +63,10 @@ export default function FeaturedCarousel({ movies }) {
 
   return (
     <>
-      <IntroVideo onDone={handleIntroDone} />
+      <IntroAnimation revealRef={carouselRef} onDone={handleIntroDone} />
 
       <div
+        ref={carouselRef}
         className={styles.carousel}
         aria-roledescription="karrusel"
         aria-label="Kommer snart"

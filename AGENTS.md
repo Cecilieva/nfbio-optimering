@@ -81,7 +81,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
 | Vælg by | 2141:155168 | `/` og `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
-| Forside – intro (motion) | 1869:14851 | `/film` | IntroVideo (video eksporteret fra Figma), ComingSoonCard, TrailerButton, Button |
+| Forside – intro (motion) | 1869:14851 (nedtælling: 1869:15878) | `/film` | IntroAnimation (tidslinjen i `introTimeline.js`), IntroCountdown, FeaturedCarousel, ComingSoonCard |
 | Forside – "Kommer snart"-karrusel | 11:34 | `/film` | FeaturedCarousel, ComingSoonCard, FollowButton, TrailerButton, Button (`variant="outline"`). Filmene vælges i `lib/data/featured.js` |
 | Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
 | Filmside | | `/film/[slug]` | PosterPlaceholder, TrailerButton, Modal, ShowtimeList |

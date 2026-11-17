@@ -3,6 +3,14 @@
   color: var(--color-header-text);
 }
 
+/* Mens introen på forsiden kører (IntroAnimation sætter data-intro på <html>), ligger headeren
+   over stjernerne og er gennemsigtig, som i Figma. Bagefter er den som normalt. */
+:global(html[data-intro]) .header {
+  position: relative;
+  z-index: var(--z-intro-header);
+  background: transparent;
+}
+
 .bar {
   display: flex;
   align-items: center;
