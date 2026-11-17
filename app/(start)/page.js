@@ -9,7 +9,8 @@ export const metadata = {
   title: "Vælg by",
 };
 
-// Figma: "01 Vælg by" (node 2141:155168). ?next= is the page to go back to afterwards.
+// Figma: "01 Vælg by" (node 2141:155168). The start of the flow, shown at / and /by.
+// ?next= is the page to go to afterwards (default: the film overview).
 export default async function CityPage({ searchParams }) {
   const { next } = await searchParams;
   const [cities, selected] = await Promise.all([getCities(), getSelectedCity()]);
@@ -27,7 +28,7 @@ export default async function CityPage({ searchParams }) {
             <li key={city.id}>
               <form action={selectCity}>
                 <input type="hidden" name="city_id" value={city.id} />
-                <input type="hidden" name="next" value={safePath(next, "/")} />
+                <input type="hidden" name="next" value={safePath(next, "/film")} />
                 <Button
                   type="submit"
                   variant="tile"

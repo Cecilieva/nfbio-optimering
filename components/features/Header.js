@@ -7,8 +7,13 @@ import styles from "./Header.module.css";
 export default async function Header({ variant = "full" }) {
   const city = variant === "full" ? await getSelectedCity() : null;
 
+  // Full header: logo goes to the film overview. Logo-only header (start screen): back to /.
   const logo = (
-    <Link href="/" className={styles.logo} aria-label="Nordisk Film Biografer – forside">
+    <Link
+      href={variant === "full" ? "/film" : "/"}
+      className={styles.logo}
+      aria-label="Nordisk Film Biografer – forside"
+    >
       <Image src="/logo.svg" alt="" width={84.75} height={63.75} priority />
     </Link>
   );

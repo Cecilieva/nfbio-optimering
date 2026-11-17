@@ -29,9 +29,11 @@ app/
   globals.css             Base-styles, kun med tokens
   layout.js               Kun <html>/<body> og fonte
   not-found.js            404 (viser selv Header + Footer)
-  by/                     Vælg by – egen layout med logo-header og uden footer
+  (start)/               Route-gruppe: Vælg by. layout.js giver logo-header og ingen footer
+  (start)/page.js         / – Vælg by, starten på flowet (vises altid først)
+  (start)/by/page.js      /by – samme skærm, bruges til at skifte by (?next=)
   (site)/                 Route-gruppe: alle andre sider. layout.js giver fuld Header + Footer
-  (site)/page.js          Forside
+  (site)/film/page.js     /film – Forside (filmoversigt for den valgte by)
   (site)/film/[slug]/     Filmside
   (site)/bestil/
     saeder/[showtimeId]/  Sædevalg (før der findes en booking)
@@ -56,9 +58,9 @@ supabase/supabase_schema.sql
 
 ## Købsflowet
 
-`/by` → `/` → `/film/[slug]` → `/bestil/saeder/[showtimeId]` → `reserve_seats` (uden ejer) → `/bestil/[bookingId]/login` → `attach_booking_owner` → `/bestil/[bookingId]/betaling` → `complete_payment` → `/bestil/[bookingId]/billet`
+`/` (Vælg by) → `/film` → `/film/[slug]` → `/bestil/saeder/[showtimeId]` → `reserve_seats` (uden ejer) → `/bestil/[bookingId]/login` → `attach_booking_owner` → `/bestil/[bookingId]/betaling` → `complete_payment` → `/bestil/[bookingId]/billet`
 
-- Byen gemmes i cookien `nf_city` (`lib/actions/city.js`).
+- Byen gemmes i cookien `nf_city` (`lib/actions/city.js`). `/` viser altid Vælg by – også når en by er valgt – og sender videre til `/film`.
 - Er brugeren logget ind ved reservationen, sætter `reserve_seats` ejeren med det samme, og login-skærmen springes over.
 - RLS lader kun indloggede ejere læse `bookings`. Derfor gemmer actions en kopi af bookingrækken + sæde-id'er i den httpOnly-cookie `nf_booking`, og `getBooking()` falder tilbage til den. Kopien er kun til visning – RPC'erne tjekker alt i databasen.
 - Betalingen er simuleret. `PaymentForm` har et felt til at vælge resultatet; fejlkoderne står i `lib/payment-errors.js`.
@@ -78,8 +80,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
-| Vælg by | 2141:155168 | `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
-| Forside | | `/` | Header, MovieCard, PosterPlaceholder, Footer |
+| Vælg by | 2141:155168 | `/` og `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
+| Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
 | Filmside | | `/film/[slug]` | PosterPlaceholder, TrailerButton, Modal, ShowtimeList |
 | Trailer-modal | | `/film/[slug]` | TrailerButton, Modal |
 | Sædevalg – vælg antal | | `/bestil/saeder/[showtimeId]` | StepHeader, OrderSummary, SeatPicker, Chip, BottomBar |

@@ -4,12 +4,12 @@ import DataDump from "@/components/ui/DataDump";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 
-// Figma: "Forside" – films showing now in the city, and films coming soon
+// /film – Figma: "Forside" – films showing now in the city, and films coming soon
 export default async function HomePage() {
   const city = await getSelectedCity();
 
   if (!city) {
-    redirect("/by");
+    redirect("/");
   }
 
   const [nowPlaying, comingSoon] = await Promise.all([getNowPlaying(city.id), getComingSoon()]);
