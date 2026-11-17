@@ -1,0 +1,148 @@
+/* Figma "Nedtælling": mørk flade over hele skærmen med urskiven i midten.
+   Efter tallene glider den op ud af skærmen, så stjernerummet nedenunder kommer frem. */
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--color-background-secondary);
+  animation: slideUp var(--duration-countdown-slide) var(--easing-in-out) var(--delay-countdown-slide) forwards;
+}
+
+/* Urskiven: ring, trådkors, viser og tal ligger oven på hinanden i en firkant */
+.dial {
+  position: relative;
+  width: var(--size-countdown-ring);
+  height: var(--size-countdown-ring);
+}
+
+/* Figma "Ring": blinker svagt tre gange */
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: pulse var(--duration-countdown-pulse) linear;
+}
+
+/* Figma "Trådkors": lidt længere end ringen i begge ender (408px mod 340px) */
+.crossVertical,
+.crossHorizontal {
+  position: absolute;
+  background: var(--color-text-primary);
+}
+
+.crossVertical {
+  top: -10%;
+  left: 50%;
+  width: var(--border-width);
+  height: 120%;
+}
+
+.crossHorizontal {
+  top: 50%;
+  left: -10%;
+  width: 120%;
+  height: var(--border-width);
+}
+
+/* Figma "Viser": drejer tre hele omgange */
+.hand {
+  position: absolute;
+  inset: 0;
+  animation: spin var(--duration-countdown-hand) linear forwards;
+}
+
+/* Lyskeglen ligger i øverste venstre fjerdedel, bag stregen */
+.cone {
+  position: absolute;
+  top: 0;
+  left: 10.83%;
+  width: 39.17%;
+  height: 50%;
+}
+
+/* Stregen fra midten og op */
+.line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--border-width-strong);
+  height: 50%;
+  translate: -50% 0;
+  background: var(--color-text-primary);
+}
+
+/* Figma "Tal 3/2/1": ét tal ad gangen. Hvert tal "lander" (skaleres lidt ned) og er usynligt resten af tiden. */
+.digit {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-countdown);
+  font-weight: var(--font-weight-extrabold);
+  line-height: 1;
+  letter-spacing: var(--letter-spacing-countdown);
+  opacity: 0;
+  animation: digit var(--duration-countdown-step) var(--easing-out)
+    calc(var(--duration-countdown-step) * var(--step));
+}
+
+/* Det sidste tal (1) bliver stående, til nedtællingen glider væk */
+.digit:last-child {
+  animation-fill-mode: forwards;
+}
+
+/* Figma "Spring over": nederst på midten */
+.skip {
+  position: absolute;
+  bottom: var(--space-8);
+  left: 50%;
+  margin: 0;
+  translate: -50% 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+@keyframes slideUp {
+  to {
+    translate: 0 -100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    rotate: 3turn;
+  }
+}
+
+/* Tiderne fra Figma: svagere ved 0,2 s, 0,7 s og 1,3 s – fuld styrke imellem */
+@keyframes pulse {
+  0%,
+  28%,
+  66%,
+  100% {
+    opacity: 1;
+  }
+  12.5%,
+  44%,
+  81% {
+    opacity: var(--opacity-countdown-pulse);
+  }
+}
+
+/* Synlig hele vejen; skaleres fra 108 % til 100 % i de første 0,35 s */
+@keyframes digit {
+  0% {
+    opacity: 1;
+    scale: var(--scale-countdown-digit-start);
+  }
+  64%,
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}

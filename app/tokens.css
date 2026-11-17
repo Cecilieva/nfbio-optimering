@@ -57,6 +57,7 @@
   --font-size-heading: 2rem; /* Font-Size/Large – 32px, fx "Velkommen tilbage" */
   --font-size-hero-title: 4rem; /* Font-Size/XX-Large – 64px, titlen på "Kommer snart"-kortet */
   --font-weight-black: 900;
+  --font-weight-extrabold: 800; /* Tallene i nedtællingen */
   --font-size-control: 0.9375rem;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -91,12 +92,14 @@
   --radius-pill: 999px;
   --radius-card-lg: 1.75rem; /* 28px – det store "Kommer snart"-kort */
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
+  --radius-intro-poster: 0.875rem; /* 14px – plakaterne i introen */
   --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.12);
   --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.2);
+  --shadow-intro-poster: 0 30px 60px -20px rgb(0 0 0 / 0.55); /* Plakaterne i introen */
   --shadow-toast: 0 8px 24px rgb(0 0 0 / 0.35); /* Fx beskeden under "Følg film" */
 
   /* Sizes */
@@ -118,6 +121,14 @@
   --size-auth-image-height: 57.938rem; /* 927px – billedet på Log ind */
   --space-auth-top: 8.125rem; /* 130px – fra headeren ned til formularen på Log ind */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
+  --size-intro-frame-width: 90rem; /* 1440px – Figma-rammen, introen er tegnet i (skaleres til skærmen) */
+  --size-intro-frame-height: 64rem; /* 1024px */
+  --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i introen */
+  --size-countdown-ring: min(21.25rem, 60vmin); /* 340px – ringen i nedtællingen, mindre på små skærme */
+  --font-size-countdown: calc(var(--size-countdown-ring) * 0.647); /* 220px ved fuld størrelse */
+  --letter-spacing-countdown: -0.04em; /* -8.8px ved 220px */
+  --scale-countdown-digit-start: 1.08; /* Hvert tal lander fra 108 % */
+  --opacity-countdown-pulse: 0.75; /* Ringen, når den blinker */
   /* Light cone apex sits 54px above its pivot (Figma "Lyskegle") */
   --spotlight-apex-offset: -3.393rem;
 
@@ -125,7 +136,14 @@
   --duration-fast: 150ms;
   --duration-menu: 250ms;
   --duration-spotlight: 2.4s;
-  --duration-intro-fade: 900ms; /* Intro-videoen toner ud – skal passe med FADE_LEAD_S i IntroVideo.js */
+  /* Nedtællingen 3-2-1 i introen (Figma "Nedtælling" – tider fra Figmas tidslinje) */
+  --duration-countdown-step: 550ms; /* Hvert tal */
+  --duration-countdown-hand: 1.65s; /* Viseren drejer tre omgange */
+  --duration-countdown-pulse: 1.6s; /* Ringen blinker tre gange */
+  --delay-countdown-slide: 1.75s; /* Hvornår nedtællingen begynder at glide op */
+  --duration-countdown-slide: 800ms; /* Udglidningen */
+  --duration-intro-fade: 900ms; /* Introen toner ud, når man springer over */
+  --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i introen */
   --duration-carousel-slide: 1.4s; /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
@@ -143,7 +161,11 @@
   --border-width-strong: 2px; /* Fx kanten på en checkbox */
 
   /* Lag: hvad der ligger øverst */
-  --z-intro: 100; /* Intro-videoen ligger over alt andet, også headeren */
+  /* Introen på forsiden: stjernerne under headeren, nedtællingen over den (som i Figma) */
+  --z-intro: 100; /* Stjernerummet og plakaterne – over siden */
+  --z-intro-header: 101; /* Headeren, mens introen kører */
+  --z-intro-countdown: 102; /* Nedtællingen – over alt */
+  --z-intro-skip: 103; /* "Spring introen over" ligger øverst, så den kan ses med tastaturet */
 
   /* Layout */
   --layout-max-width: 64rem;
