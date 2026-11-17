@@ -28,3 +28,54 @@
   outline: var(--focus-ring-width) solid var(--color-text);
   outline-offset: var(--space-1);
 }
+
+/* Figma button instances (e.g. "Log ind", "Opret profil", "Luk" in the menu) */
+.button[data-variant="primary"],
+.button[data-variant="secondary"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--size-button-height);
+  padding: 0 var(--space-6);
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--duration-fast), border-color var(--duration-fast);
+}
+
+.button[data-variant="primary"] {
+  background: var(--color-cta);
+}
+
+.button[data-variant="secondary"] {
+  border-color: var(--color-border);
+  background: transparent;
+}
+
+.button[data-variant="primary"]:hover {
+  opacity: var(--opacity-hover);
+}
+
+.button[data-variant="secondary"]:hover {
+  border-color: var(--color-text-muted);
+}
+
+.button[data-variant="primary"]:disabled,
+.button[data-variant="secondary"]:disabled {
+  opacity: var(--opacity-hover);
+  cursor: not-allowed;
+}
+
+.button[data-variant="primary"]:focus-visible,
+.button[data-variant="secondary"]:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}

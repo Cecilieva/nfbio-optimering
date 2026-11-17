@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getSelectedCity } from "@/lib/data/cities";
+import MainMenu from "./MainMenu";
 import styles from "./Header.module.css";
 
 // Figma: Header (node 455:9848). Variants: "m. alt" (default) and "Kun logo".
@@ -30,10 +31,7 @@ export default async function Header({ variant = "full" }) {
     <header className={styles.header}>
       <nav className={styles.bar} aria-label="Hovedmenu">
         <div className={styles.start}>
-          {/* TODO: open the menu once it exists */}
-          <button type="button" className={styles.iconButton} aria-label="Menu">
-            <Image src="/icons/menu.svg" alt="" width={24} height={24} />
-          </button>
+          <MainMenu triggerClassName={styles.iconButton} />
         </div>
 
         {logo}
