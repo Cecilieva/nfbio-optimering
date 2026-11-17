@@ -53,3 +53,12 @@
   width: min(100%, calc(3 * var(--size-city-tile-width) + 2 * var(--space-4)));
   list-style: none;
 }
+
+/* Studieprojekt-linjen nederst på Vælg by: lille og rolig, men let at læse */
+.notice {
+  padding: var(--space-4);
+  color: var(--color-text-label);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  text-align: center;
+}
