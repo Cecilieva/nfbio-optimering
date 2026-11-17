@@ -1,0 +1,75 @@
+/* Zero-size box at the parent's top centre; rotating it swings the cone around that point. */
+.pivot {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  animation: swing var(--duration-spotlight) both;
+}
+
+.cone {
+  position: absolute;
+  top: var(--spotlight-apex-offset);
+  left: 0;
+  max-width: none;
+  transform: translateX(-50%);
+  animation: flicker var(--duration-spotlight) linear both;
+}
+
+/* Keyframes and easing from Figma motion data (get_motion_context) */
+@keyframes swing {
+  0% {
+    rotate: 0deg;
+    animation-timing-function: ease-in-out;
+  }
+  20.83% {
+    rotate: -22deg;
+    animation-timing-function: ease-in-out;
+  }
+  45.83% {
+    rotate: 22deg;
+    animation-timing-function: ease-in-out;
+  }
+  66.67% {
+    rotate: -12deg;
+    animation-timing-function: ease-in-out;
+  }
+  83.33% {
+    rotate: 5deg;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0;
+  }
+  3.33% {
+    opacity: 1;
+  }
+  6.67% {
+    opacity: 0.3;
+  }
+  10% {
+    opacity: 1;
+  }
+  13.33% {
+    opacity: 0.5;
+  }
+  17.5%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pivot,
+  .cone {
+    animation: none;
+  }
+}

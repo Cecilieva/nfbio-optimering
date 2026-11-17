@@ -1,0 +1,30 @@
+/* Figma "By – …" on 01 Vælg by */
+.button[data-variant="tile"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--size-control-height);
+  padding: 0 var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--font-size-control);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--duration-fast);
+}
+
+.button[data-variant="tile"]:hover,
+.button[data-variant="tile"][aria-current="true"] {
+  border-color: var(--color-text-muted);
+}
+
+.button[data-variant="tile"]:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}

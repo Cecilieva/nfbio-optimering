@@ -1,9 +1,7 @@
 /* Base styles only. Every value comes from tokens.css. */
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+html {
+  color-scheme: dark;
 }
 
 * {
