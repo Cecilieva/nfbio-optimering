@@ -9,6 +9,10 @@
 :root {
   /* Colors – the site is dark only. Figma variable names in the comments; tokens without one are placeholders. */
   --color-background: #0d0f1e; /* bg/Mørk baggrund */
+  --color-background-secondary: #0d0c0c; /* bg/Sekundær Baggrund – fx Log ind-siden */
+  --color-fade: #0b0b0c; /* Farven billedet på Log ind toner ud i */
+  --color-divider: #2a2a2e; /* Stregerne ved "eller" på Log ind */
+  --color-text-subtle: #a0a0a8; /* Ordet "eller" på Log ind */
   --color-surface: #161a30; /* bg/Kort */
   --color-surface-raised: #1f1f1f;
   --color-text: #eef0ff; /* text/Lys */
@@ -33,7 +37,9 @@
   /* Typography */
   --font-family-body: var(--font-inter), Arial, Helvetica, sans-serif;
   --font-family-mono: var(--font-geist-mono), monospace;
+  --font-family-display: var(--font-libre-franklin), Arial, Helvetica, sans-serif; /* Font-Family/Primær – store overskrifter */
   --font-size-xs: 0.75rem;
+  --font-size-caption: 0.8125rem; /* 13px – fx "Husk mig" og "Glemt adgangskode?" */
   --font-size-sm: 0.875rem;
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
@@ -41,6 +47,7 @@
   --font-size-xl: 1.75rem;
   --font-size-2xl: 2.25rem;
   --font-size-display: 2.75rem;
+  --font-size-heading: 2rem; /* Font-Size/Large – 32px, fx "Velkommen tilbage" */
   --font-size-control: 0.9375rem;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -91,6 +98,11 @@
   --size-footer-column: 13.958rem; /* 223px – bredden på en kolonne i footeren */
   --size-social-button: 2.5rem; /* 40px – den runde knap om et socialt ikon */
   --size-social-icon: 1.25rem; /* 20px – selve ikonet */
+  --size-checkbox: 1.125rem; /* 18px – boksen i en checkbox */
+  --size-checkbox-icon: 1rem; /* 16px – fluebenet i boksen */
+  --size-auth-form-width: 29.167rem; /* 467px – formularen på Log ind */
+  --size-auth-image-height: 57.938rem; /* 927px – billedet på Log ind */
+  --space-auth-top: 8.125rem; /* 130px – fra headeren ned til formularen på Log ind */
   /* Light cone apex sits 54px above its pivot (Figma "Lyskegle") */
   --spotlight-apex-offset: -3.393rem;
 
@@ -110,6 +122,7 @@
   --opacity-hover: 0.75;
   --focus-ring-width: 2px;
   --border-width: 1px;
+  --border-width-strong: 2px; /* Fx kanten på en checkbox */
 
   /* Layout */
   --layout-max-width: 64rem;

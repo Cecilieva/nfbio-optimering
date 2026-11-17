@@ -94,6 +94,6 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Betalingsfejl (side) | | `/bestil/[bookingId]/betaling/fejl` | Button |
 | Billet – printes | | `/bestil/[bookingId]/billet` | TicketPrint |
 | Billet – færdig | | `/bestil/[bookingId]/billet` | StepHeader, TicketPrint, OrderSummary |
-| Log ind | | `/login` | — (bruger globale `.form`-styles) |
+| Log ind | 761:18178 | `/login` | TextField, Checkbox, Button |
 | Opret profil | | `/signup` | — (bruger globale `.form`-styles) |
 | Profil | | `/profile` | UserBadge |
