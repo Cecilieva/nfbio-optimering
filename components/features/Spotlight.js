@@ -14,7 +14,7 @@ export default function Spotlight() {
         src="/lyskegle.svg"
         alt=""
         width={1196}
-        height={814.286}
+        height={814}
         priority
       />
     </div>
