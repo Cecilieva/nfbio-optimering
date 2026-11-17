@@ -8,11 +8,12 @@ import styles from "./Button.module.css";
  * Varianter:
  *   primary   – blå knap, fx "Log ind"
  *   secondary – knap med kun en kant, fx "Luk" og "Opret profil"
+ *   outline   – knap med lys kant, fx "Følg film" oven på et billede
  *   ghost     – ikke stylet endnu
  *   tile      – et stort valgkort, fx en by på Vælg by
  *
  * @param {object} props
- * @param {"primary" | "secondary" | "ghost" | "tile"} [props.variant="primary"]
+ * @param {"primary" | "secondary" | "outline" | "ghost" | "tile"} [props.variant="primary"]
  * @param {string} [props.href] Hvis den er sat, vises et Link i stedet for en <button>
  * @param {"button" | "submit"} [props.type="button"] "submit" sender den formular, knappen står i
  * @param {boolean} [props.disabled]

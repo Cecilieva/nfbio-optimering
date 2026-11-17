@@ -32,6 +32,12 @@
   --color-seat-taken: #595959;
   --color-backdrop: rgb(0 0 0 / 0.6);
   --color-header-background: var(--color-background);
+
+  /* Intro-videoen på forsiden (Figma "Forside – intro (motion)") */
+  --color-intro-background: #08070d; /* Baggrunden bag videoen – samme farve som nedtællingen */
+  --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
+  --color-carousel-covered: rgb(0 0 0 / 0.5); /* Det gamle kort bliver mørkere, når et nyt lægger sig over */
+  --color-readability-shade: rgb(0 0 0 / 0.3); /* Figma "skygge for læsbarhed" bag teksten øverst på kortet */
   --color-header-text: var(--color-text-primary);
 
   /* Typography */
@@ -44,10 +50,13 @@
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-menu-item: 1.5rem; /* Font-Size/Medium */
+  --font-size-medium: 1.5rem; /* Font-Size/Medium – 24px, fx nøgletallene på "Kommer snart"-kortet */
   --font-size-xl: 1.75rem;
   --font-size-2xl: 2.25rem;
   --font-size-display: 2.75rem;
   --font-size-heading: 2rem; /* Font-Size/Large – 32px, fx "Velkommen tilbage" */
+  --font-size-hero-title: 4rem; /* Font-Size/XX-Large – 64px, titlen på "Kommer snart"-kortet */
+  --font-weight-black: 900;
   --font-size-control: 0.9375rem;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -72,6 +81,7 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
+  --space-16: 4rem; /* 64px – luften inde i "Kommer snart"-kortet */
 
   /* Radius */
   --radius-xs: 2px;
@@ -79,11 +89,15 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-pill: 999px;
+  --radius-card-lg: 1.75rem; /* 28px – det store "Kommer snart"-kort */
+  --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
+  --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.12);
   --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.2);
+  --shadow-toast: 0 8px 24px rgb(0 0 0 / 0.35); /* Fx beskeden under "Følg film" */
 
   /* Sizes */
   --size-avatar: 2.5rem;
@@ -103,6 +117,7 @@
   --size-auth-form-width: 29.167rem; /* 467px – formularen på Log ind */
   --size-auth-image-height: 57.938rem; /* 927px – billedet på Log ind */
   --space-auth-top: 8.125rem; /* 130px – fra headeren ned til formularen på Log ind */
+  --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
   /* Light cone apex sits 54px above its pivot (Figma "Lyskegle") */
   --spotlight-apex-offset: -3.393rem;
 
@@ -110,6 +125,8 @@
   --duration-fast: 150ms;
   --duration-menu: 250ms;
   --duration-spotlight: 2.4s;
+  --duration-intro-fade: 900ms; /* Intro-videoen toner ud – skal passe med FADE_LEAD_S i IntroVideo.js */
+  --duration-carousel-slide: 1.4s; /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -117,12 +134,16 @@
   --easing-out: ease-out; /* Starter hurtigt og bremser blødt op, fx menuen der glider ind */
   --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
   --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
+  --easing-slide: cubic-bezier(0.65, 0, 0.35, 1); /* Roligt i gang, roligt i stå – fx kortene i karrusellen */
 
   /* Interaction */
   --opacity-hover: 0.75;
   --focus-ring-width: 2px;
   --border-width: 1px;
   --border-width-strong: 2px; /* Fx kanten på en checkbox */
+
+  /* Lag: hvad der ligger øverst */
+  --z-intro: 100; /* Intro-videoen ligger over alt andet, også headeren */
 
   /* Layout */
   --layout-max-width: 64rem;

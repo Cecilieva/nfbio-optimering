@@ -1,0 +1,20 @@
+/* Den globale main-regel giver max-bredde og padding. Kortet øverst skal være bredere,
+   så her fjernes den, og resten af siden får den i stedet (.content). */
+.page {
+  max-width: none;
+  padding: 0;
+}
+
+/* "Kommer snart"-kortet: centreret, 16px under headeren – samme sted som i slutningen af intro-videoen */
+.hero {
+  /* Kortet bliver 1197px bredt som i Figma: bredden + luften på begge sider */
+  width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+
+.content {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+}
