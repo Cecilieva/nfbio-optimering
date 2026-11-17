@@ -1,4 +1,5 @@
-/* Zero-size box at the parent's top centre; rotating it swings the cone around that point. */
+/* En usynlig boks uden størrelse øverst i midten. Den er drejepunktet:
+   når den roteres, svinger keglen rundt om dette punkt. */
 .pivot {
   position: absolute;
   top: 0;
@@ -9,42 +10,45 @@
   animation: swing var(--duration-spotlight) both;
 }
 
+/* Selve keglen. translateX(-50%) centrerer den under drejepunktet. */
 .cone {
   position: absolute;
   top: var(--spotlight-apex-offset);
   left: 0;
   max-width: none;
   transform: translateX(-50%);
-  animation: flicker var(--duration-spotlight) linear both;
+  animation: flicker var(--duration-spotlight) var(--easing-linear) both;
 }
 
-/* Keyframes and easing from Figma motion data (get_motion_context) */
+/* Animationen "swing": keglen svinger til venstre og højre og falder til ro.
+   Tallene (procent og grader) er taget direkte fra animationen i Figma. */
 @keyframes swing {
   0% {
     rotate: 0deg;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: var(--easing-in-out);
   }
   20.83% {
     rotate: -22deg;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: var(--easing-in-out);
   }
   45.83% {
     rotate: 22deg;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: var(--easing-in-out);
   }
   66.67% {
     rotate: -12deg;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: var(--easing-in-out);
   }
   83.33% {
     rotate: 5deg;
-    animation-timing-function: ease-out;
+    animation-timing-function: var(--easing-out);
   }
   100% {
     rotate: 0deg;
   }
 }
 
+/* Animationen "flicker": keglen blinker et par gange, som når en projektor tændes */
 @keyframes flicker {
   0% {
     opacity: 0;
@@ -67,6 +71,7 @@
   }
 }
 
+/* Har brugeren slået animationer fra i styresystemet, står keglen bare stille */
 @media (prefers-reduced-motion: reduce) {
   .pivot,
   .cone {

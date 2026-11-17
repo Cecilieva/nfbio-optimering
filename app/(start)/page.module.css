@@ -1,10 +1,12 @@
+/* Hele skærmen: header øverst og scenen under, mindst lige så høj som vinduet */
 .screen {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
 }
 
-/* Figma "Scene": fills the rest of the screen, content centred, light cone clipped. */
+/* Figma "Scene": fylder resten af skærmen, indholdet står i midten.
+   overflow: clip skærer den del af lyskeglen væk, der stikker ud over kanten. */
 .scene {
   position: relative;
   display: flex;
@@ -43,6 +45,7 @@
   line-height: var(--line-height-tight);
 }
 
+/* Byerne står i et gitter med 3 kolonner, og det bliver aldrig bredere end 3 kort */
 .cities {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -93,6 +93,13 @@
   --duration-menu: 250ms;
   --duration-spotlight: 2.4s;
 
+  /* Easing: hvordan en bevægelse tager fart og bremser op.
+     Samles her, så alle animationer på sitet føles ens. */
+  --easing-standard: ease; /* Små hover-effekter på knapper og links */
+  --easing-out: ease-out; /* Starter hurtigt og bremser blødt op, fx menuen der glider ind */
+  --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
+  --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
+
   /* Interaction */
   --opacity-hover: 0.75;
   --focus-ring-width: 2px;

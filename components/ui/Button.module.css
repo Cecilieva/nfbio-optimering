@@ -1,4 +1,4 @@
-/* Figma "By – …" on 01 Vælg by */
+/* Variant "tile": by-knapperne på Vælg by (Figma "By – …") */
 .button[data-variant="tile"] {
   display: flex;
   align-items: center;
@@ -16,9 +16,10 @@
   line-height: var(--line-height-tight);
   text-decoration: none;
   cursor: pointer;
-  transition: border-color var(--duration-fast);
+  transition: border-color var(--duration-fast) var(--easing-standard);
 }
 
+/* Kanten bliver lysere ved hover, og på den by, der allerede er valgt */
 .button[data-variant="tile"]:hover,
 .button[data-variant="tile"][aria-current="true"] {
   border-color: var(--color-text-muted);
@@ -29,7 +30,8 @@
   outline-offset: var(--space-1);
 }
 
-/* Figma button instances (e.g. "Log ind", "Opret profil", "Luk" in the menu) */
+/* Variant "primary" og "secondary": almindelige knapper, fx "Log ind", "Opret profil" og "Luk" i menuen.
+   Først det, de to har til fælles, og derefter det, der er forskelligt. */
 .button[data-variant="primary"],
 .button[data-variant="secondary"] {
   display: inline-flex;
@@ -48,7 +50,9 @@
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity var(--duration-fast), border-color var(--duration-fast);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
 }
 
 .button[data-variant="primary"] {

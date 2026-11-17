@@ -14,7 +14,7 @@
   justify-content: center;
 }
 
-/* Same width as the actions so the logo stays centred. */
+/* Samme bredde som ikonerne til højre, så logoet står præcis i midten */
 .start {
   display: flex;
   width: var(--size-header-side);
@@ -33,6 +33,7 @@
   list-style: none;
 }
 
+/* Fjerner browserens standard-knapstil, så kun ikonet vises */
 .iconButton {
   display: block;
   padding: 0;
@@ -47,6 +48,7 @@
   opacity: var(--opacity-hover);
 }
 
+/* Synlig ramme, når man navigerer med tastaturet */
 .iconButton:focus-visible,
 .logo:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-header-text);
