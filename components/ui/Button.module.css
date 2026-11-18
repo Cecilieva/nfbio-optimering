@@ -57,7 +57,7 @@
 }
 
 .button[data-variant="primary"] {
-  background: var(--color-cta);
+  background: var(--color-cta-button); /* Mørkere blå, så den hvide tekst har nok kontrast (se tokens.css) */
 }
 
 /* Figma "Buttons/Sekundær border" */
