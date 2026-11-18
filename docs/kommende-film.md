@@ -1,6 +1,14 @@
 # Kommende film
 
-Sektionen under de fremhævede film på forsiden (`/film`). Den er lukket fra start og viser kun knappen **"Se alle kommende film"**. Klikker man, foldes den ud og viser alle kommende film i et gitter, som kan filtreres efter måned eller forsalg. **"Skjul kommende film"** folder den sammen igen.
+Alle kommende film på forsiden (`/film`). Lige under de fremhævede film står knappen **"Se alle kommende film"**. Klikker man, folder sektionen sig ud **længere nede på siden, under filmene, der kører nu**, og siden ruller ned til den (som i prototypen "Forside – samlet", node `1856:79051`). Sektionen viser alle kommende film i et gitter, som kan filtreres efter måned eller forsalg. **"Skjul kommende film"** folder den sammen igen og ruller op til knappen.
+
+Knappen og sektionen er samme komponent, men står to steder. Det, der står imellem dem (filtreringen og filmene, der kører nu), får komponenten som `children`:
+
+```jsx
+<ComingSoonSection movies={comingSoon}>
+  <MovieFilter … />
+</ComingSoonSection>
+```
 
 **Figma:** "Kommende film – udfold" (node `2221:15159`). Lukket tilstand: `2848:14500`. Åben tilstand: `2849:14585`.
 
@@ -63,6 +71,8 @@ Figma "Kommer snart" (node `927:6300`). Plakaten består af:
 
 Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) er uændret.
 
+**Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), skjules dato og titel, og knappen **"Giv mig besked"** vises i midten. Det er `FollowButton` med `variant="card"`: en blå knap med klokke, som viser beskeden "Vi giver besked på mail, når billetsalget åbner." Knappen må ikke ligge inde i linket, så plakaten og knappen står ved siden af hinanden i en boks (`.card`), og knappen lægges oven på plakaten.
+
 ### `components/ui/Button.js` – variant `secondary`
 Bruges til "Se alle kommende film" og "Skjul kommende film". Kanten bruger Figmas `buttons/sekundær-border`.
 
@@ -72,11 +82,11 @@ En **client component** (`"use client"`), fordi den skal kunne huske, hvad bruge
 
 | State | Værdier | Hvad den styrer |
 |---|---|---|
-| `open` | `true` / `false` | Lukket: kun knappen. Åben: overskrift, filtre, gitter og "Skjul"-knap. |
+| `open` | `true` / `false` | Lukket: kun knappen. Åben: sektionen med overskrift, filtre, gitter og "Skjul"-knap står også under `children`. Knappen bliver stående. |
 | `filter` | `"all"`, `"2026-11"` …, `"presale"` | Hvilke film der vises i gitteret |
 
 - **Filtrene** laves ud fra dataene: "Alle", én knap pr. måned med en premiere og "Forsalg åben". Kommer der film i en ny måned, kommer der automatisk en ny knap.
-- **Tilgængelighed:** når sektionen foldes ud, flytter fokus til overskriften "Kommende film", og når den foldes sammen, flytter fokus tilbage til knappen. Knapperne har `aria-expanded`, og filtrene er samlet i en `role="group"`.
+- **Rulning og tilgængelighed:** når sektionen foldes ud, ruller siden ned til overskriften "Kommende film", og fokus flytter med. Når den foldes sammen, ruller siden op til knappen igen. Trykker man på knappen, mens sektionen er åben, ruller siden bare ned til den. Bruger man "mindre bevægelse" i styresystemet, hopper siden i stedet for at glide. Knappen har `aria-expanded` og `aria-controls`, og filtrene er samlet i en `role="group"`.
 
 ## 5. Siden – `app/(site)/film/page.js`
 

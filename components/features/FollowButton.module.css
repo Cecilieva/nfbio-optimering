@@ -25,3 +25,25 @@
 .toast[data-visible="true"] {
   opacity: 1;
 }
+
+/* ---------- Variant "card" – "Giv mig besked" midt på en plakat (Figma "Notifikationsknap") ---------- */
+
+/* 201px bred som i Figma, men aldrig bredere end kortet (fx på mobil) */
+.wrapper[data-variant="card"] {
+  width: min(100%, var(--size-card-action-width));
+}
+
+.cardButton {
+  width: 100%;
+  padding-inline: var(--space-5);
+}
+
+/* Figma "Toast" på kortet: lige under knappen, lige så bred, og teksten må gå over flere linjer */
+.wrapper[data-variant="card"] .toast {
+  top: calc(100% + var(--space-0-5));
+  right: 0;
+  padding: var(--space-2-25) var(--space-3);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-toast-card);
+  white-space: normal;
+}

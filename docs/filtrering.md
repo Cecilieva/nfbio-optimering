@@ -19,7 +19,7 @@ app/(site)/film/page.js                            ← henter data og sender dem
 components/features/MovieFilter.js                 ← Figma "Filtrering": husker filtrene og filtrerer
    ├─ components/ui/FilterField.js                 (de fire felter med dropdown – Figma "Filterfelt")
    ├─ components/ui/Chip.js  variant="subtle"      (format-knapperne – Figma "Formater")
-   └─ components/features/MovieCard.js             (filmene i listen)
+   └─ components/features/MovieCard.js  variant="feed"  (plakaterne under filtrene – Figma "card i feed")
 ```
 
 ## Data
@@ -48,6 +48,16 @@ components/features/MovieFilter.js                 ← Figma "Filtrering": huske
 **Knapperne:**
 - **Søgeknappen** (den blå) lukker en åben dropdown og hopper ned til filmene.
 - **Nulstil filter** sætter alle felter tilbage på "Alle …".
+
+## Filmene under filtrene – Figma "Program"
+
+Under filtrene står filmene som plakater i et gitter (Figma "Program", node `2867:21344`): 5 pr. række på desktop og 2 på mobil.
+
+- **Kortet** er `MovieCard` med `variant="feed"` (Figma "card i feed", node `214:3673`). Det har billedet med en mørk toning nederst, formatet øverst til højre (fx "2D"), titlen og filmens første genre og alder, fx "Thriller · 15+".
+- **Hover – Figma "se spilletider" (node `455:11441`):** holder man musen over et kort (eller står på det med tastaturet), bliver kortet mørkere, teksten skjules, og en blå knap **"Se spilletider"** vises i midten. Den bruger de samme styles som `Button` med `variant="primary"`, men er en `span`, fordi hele kortet allerede er et link til filmsiden.
+- **Formatet i hjørnet** er det valgte format, eller formatet på filmens første spilletid, der passer til filtrene.
+- **Alderen** skrives kort med `formatAgeShort()` i `lib/format.js`: "15 år" → "15+", "Tilladt for alle" → "Alle".
+- **"Se flere film"** (`Button variant="secondary"`): der vises 5 film ad gangen (én række). Knappen vises kun, når der er flere film, og den viser 5 mere. Har man trykket på den, kommer **"Se færre film"**, som går tilbage til de første 5. Er der brug for begge knapper, står de side om side. Listen starter forfra, når man ændrer et filter.
 
 ## Komponenterne
 
@@ -81,7 +91,6 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
 
 - **Formater:** alle spilletider i databasen er i 2D, så 3D, 4D, IMAX og 70MM viser "Ingen film passer til dine filtre", indtil der kommer spilletider i de formater.
 - **Ekstra filtrering:** Figma har flere punkter (Babybio, Liveshow, Filmklub …), men databasen har ingen data til dem. Derfor er kun sprogene med. Kommer der data, kan punkterne tilføjes i `MovieFilter.js`.
-- **Filmkortene** i listen er endnu ikke designet i Figma, så de vises enkelt med `MovieCard`.
 
 ## Hvis du vil ændre noget
 
@@ -91,4 +100,6 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
 | tilføje punkter til "Ekstra filtrering" | `extraOptions` i `components/features/MovieFilter.js` |
 | ændre udseendet på felterne og dropdownen | `components/ui/FilterField.module.css` |
 | ændre baren, søgeknappen og format-rækken | `components/features/MovieFilter.module.css` |
+| ændre udseendet på filmkortene | `.feed` m.fl. i `components/features/MovieCard.module.css` |
+| ændre hvor mange film der vises ad gangen | `PAGE_SIZE` i `components/features/MovieFilter.js` |
 | ændre farver, størrelser og afstande | `app/tokens.css` |

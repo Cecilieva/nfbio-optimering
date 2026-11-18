@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import MovieCard from "@/components/features/MovieCard";
+import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import FilterField from "@/components/ui/FilterField";
 import { formatDayKey, formatFilterDay } from "@/lib/format";
@@ -13,6 +14,9 @@ const FORMATS = ["2D", "3D", "4D", "IMAX", "70MM"];
 // "Ekstra filtrering": de punkter, databasen har data til (movies.language, fx "Engelsk tale")
 const LANGUAGES = ["Dansk tale", "Engelsk tale"];
 
+// Der vises én række med 5 film ad gangen. "Se flere film" viser 5 mere, "Se færre film" går tilbage til 5.
+const PAGE_SIZE = 5;
+
 // Alle filtre står på "Alle …", når man kommer ind på siden, og når man trykker "Nulstil filter"
 const NO_FILTERS = { cinema: "all", day: "all", genre: "all", extra: "all", format: "all" };
 
@@ -22,6 +26,7 @@ const NO_FILTERS = { cinema: "all", day: "all", genre: "all", extra: "all", form
  *
  * Fire felter med dropdown (Biograf, Dato, Genre, Ekstra filtrering), søgeknappen,
  * format-knapperne og "Nulstil filter". Filmene filtreres med det samme, når man vælger noget.
+ * Under filtrene står filmene som plakater – Figma "Program" (node 2867:21344).
  *
  * @param {object} props
  * @param {string} props.cityName Fx "Aarhus" – står i overskriften
@@ -36,12 +41,16 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   // Hvilket felt har sin dropdown åben? Kun ét ad gangen ("Aktivt felt" i Figma), eller null
   const [openField, setOpenField] = useState(null);
 
+  // Hvor mange film der vises – "Se flere film" lægger PAGE_SIZE til, "Se færre film" sætter den tilbage
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
   // Listen med film – søgeknappen hopper ned til den
   const resultsRef = useRef(null);
 
-  // Sæt ét filter og behold de andre
+  // Sæt ét filter og behold de andre. Listen starter forfra med 5 film, når filtrene ændres.
   function setFilter(key, value) {
     setFilters((current) => ({ ...current, [key]: value }));
+    setVisibleCount(PAGE_SIZE);
   }
 
   // Giver hvert felt en funktion, der åbner eller lukker netop det felt.
@@ -111,6 +120,27 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   }
 
   const shown = movies.filter(movieMatches);
+  // Kun de første film vises, indtil man trykker "Se flere film"
+  const visible = shown.slice(0, visibleCount);
+
+  // Er der flere film, end der vises? Og har man trykket "Se flere film"?
+  const hasMore = shown.length > visible.length;
+  const hasExpanded = visibleCount > PAGE_SIZE && shown.length > PAGE_SIZE;
+
+  // "Se færre film": tilbage til den første række.
+  // Listen bliver kortere, så vi ruller op til starten af filmene, så man ikke står langt nede på siden.
+  function showFewer() {
+    setVisibleCount(PAGE_SIZE);
+    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // Formatet i hjørnet af kortet: det valgte format – ellers formatet på filmens første passende spilletid
+  function formatFor(movie) {
+    if (filters.format !== "all") {
+      return filters.format;
+    }
+    return movie.showtimes.find(showtimeMatches)?.format;
+  }
 
   // Søgeknappen: luk en åben dropdown og hop ned til filmene.
   // Fokus flytter med, så skærmlæsere og tastatur også lander dér.
@@ -124,6 +154,7 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   function resetFilters() {
     setFilters(NO_FILTERS);
     setOpenField(null);
+    setVisibleCount(PAGE_SIZE);
   }
 
   // De fire felter i Figmas rækkefølge
@@ -198,16 +229,38 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
           {shown.length === 1 ? "1 film" : `${shown.length} film`}
         </p>
 
+        {/* Figma "Filmgitter": plakaterne – variant "feed" er Figmas "card i feed" */}
         {shown.length > 0 ? (
-          <ul className={styles.list}>
-            {shown.map((movie) => (
+          <ul className={styles.grid}>
+            {visible.map((movie) => (
               <li key={movie.id}>
-                <MovieCard movie={movie} />
+                <MovieCard movie={movie} variant="feed" format={formatFor(movie)} />
               </li>
             ))}
           </ul>
         ) : (
           <p className={styles.empty}>Ingen film passer til dine filtre. Prøv at nulstille filteret.</p>
+        )}
+
+        {/* Figma "Se mere". "Se flere film" vises, når der er flere film, end der står på siden.
+            "Se færre film" vises, når man har trykket "Se flere film". Er der brug for begge, står de side om side. */}
+        {(hasMore || hasExpanded) && (
+          <div className={styles.moreButtons}>
+            {hasExpanded && (
+              <Button variant="secondary" className={styles.more} onClick={showFewer}>
+                Se færre film
+              </Button>
+            )}
+            {hasMore && (
+              <Button
+                variant="secondary"
+                className={styles.more}
+                onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+              >
+                Se flere film
+              </Button>
+            )}
+          </div>
         )}
       </div>
     </section>

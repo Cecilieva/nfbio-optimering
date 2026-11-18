@@ -129,14 +129,37 @@
   outline-offset: var(--space-1);
 }
 
-/* Listen med film. Ingen synlig ramme, når søgeknappen sætter fokus her. */
+/* Figma "Program": gitteret og "Se flere film" under hinanden med 24px imellem.
+   80px fra format-knapperne ned til filmene (som i prototypen): de 24px fra .filter's gap + resten her. */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-top: calc(var(--space-20) - var(--space-6));
+}
+
+/* Ingen synlig ramme, når søgeknappen sætter fokus her */
 .results:focus {
   outline: none;
 }
 
-/* Filmkortene er endnu ikke designet i Figma, så listen er bare en simpel liste */
-.list {
+/* Figma "Filmgitter": 220px brede plakater med 24px imellem – 5 pr. række i fuld bredde.
+   Samme gitter som under "Kommende film". */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-poster-card-width)), 1fr));
+  gap: var(--space-6);
   list-style: none;
+}
+
+/* "Se flere film" og "Se færre film": fylder gitterets bredde – deler den, hvis begge vises */
+.moreButtons {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.more {
+  flex: 1;
 }
 
 .empty {
@@ -172,6 +195,17 @@
   .search {
     grid-column: 1 / -1;
     height: var(--size-control-height);
+  }
+
+  /* 48px ned til filmene på mobil */
+  .results {
+    margin-top: calc(var(--space-12) - var(--space-6));
+  }
+
+  /* To plakater pr. række */
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-poster-card-width-compact)), 1fr));
+    gap: var(--space-4);
   }
 
   /* "Nulstil filter" under format-knapperne */
