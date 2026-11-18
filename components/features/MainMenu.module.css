@@ -187,3 +187,14 @@
 .profile > * {
   flex: 1;
 }
+
+/* Mobil: lidt mindre luft, så flere menupunkter kan ses uden at scrolle */
+@media (max-width: 48rem) {
+  .panel {
+    padding: var(--space-5) var(--space-5) var(--space-8);
+  }
+
+  .nav {
+    margin-top: var(--space-8);
+  }
+}

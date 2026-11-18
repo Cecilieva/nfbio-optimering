@@ -105,6 +105,7 @@
   /* Sizes */
   --size-avatar: 2.5rem;
   --size-header-side: 6.5rem;
+  --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-control-height: 2.75rem;
   --size-button-height: 2.5rem;
   --size-menu-width: 27.5rem;
@@ -168,6 +169,10 @@
   --z-intro-skip: 103; /* "Spring introen over" ligger øverst, så den kan ses med tastaturet */
 
   /* Layout */
+  /* Breakpoints – CSS-variabler virker ikke i @media, så tallene skrives direkte i media queries.
+     Brug kun disse to, så hele sitet skifter samme sted:
+       48rem (768px): tablet og mobil – én kolonne, mindre luft og mindre overskrifter
+       30rem (480px): små telefoner */
   --layout-max-width: 64rem;
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
 }

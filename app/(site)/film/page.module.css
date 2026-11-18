@@ -18,3 +18,13 @@
   margin: 0 auto;
   padding: var(--space-8) var(--space-6);
 }
+
+@media (max-width: 48rem) {
+  .hero {
+    padding: var(--space-3);
+  }
+
+  .content {
+    padding: var(--space-6) var(--space-4);
+  }
+}

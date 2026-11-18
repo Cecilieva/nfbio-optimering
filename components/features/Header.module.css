@@ -62,3 +62,19 @@
   outline: var(--focus-ring-width) solid var(--color-header-text);
   outline-offset: var(--space-1);
 }
+
+/* Mobil: mindre luft i siderne og ikonerne tættere sammen, så alt kan være på én linje */
+@media (max-width: 48rem) {
+  .bar {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .start,
+  .actions {
+    width: var(--size-header-side-compact);
+  }
+
+  .actions {
+    gap: var(--space-3);
+  }
+}
