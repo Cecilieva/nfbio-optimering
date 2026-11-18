@@ -9,14 +9,24 @@ import styles from "./FollowButton.module.css";
 const TOAST_MS = 3000;
 
 /**
- * "Følg film" på "Kommer snart"-kortet. Figma: "Notifikationsknap" med "Toast".
+ * Knappen med klokken. Figma: "Notifikationsknap" med "Toast".
  * Klik viser en kort besked om, at man får besked, når billetsalget åbner.
  * Følgningen gemmes ikke endnu – det er kun beskeden.
  *
+ * Varianter:
+ *   default – "Følg film" med lys kant øverst på det store "Kommer snart"-kort
+ *   card    – "Giv mig besked" som blå knap midt på en plakat under "Kommende film"
+ *             (Figma "Filmplakat", Property 1=få notifikationer)
+ *
  * @param {object} props
  * @param {string} props.title Filmens titel (til skærmlæsere)
+ * @param {"default" | "card"} [props.variant="default"]
  */
-export default function FollowButton({ title }) {
+export default function FollowButton({ title, variant = "default" }) {
+  // Teksten og udseendet afhænger af, hvor knappen står
+  const isCard = variant === "card";
+  const label = isCard ? "Giv mig besked" : "Følg film";
+
   const [following, setFollowing] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -36,10 +46,17 @@ export default function FollowButton({ title }) {
   }
 
   return (
-    <div className={styles.wrapper}>
-      <Button variant="outline" onClick={handleClick} aria-pressed={following} aria-label={`Følg ${title}`}>
+    <div className={styles.wrapper} data-variant={variant}>
+      {/* På et kort er knappen blå (Button "primary"), ellers har den en lys kant (Button "outline") */}
+      <Button
+        variant={isCard ? "primary" : "outline"}
+        className={isCard ? styles.cardButton : undefined}
+        onClick={handleClick}
+        aria-pressed={following}
+        aria-label={isCard ? `Giv mig besked om ${title}` : `Følg ${title}`}
+      >
         <Image src="/icons/bell.svg" alt="" width={16} height={18} />
-        Følg film
+        {label}
       </Button>
 
       {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}

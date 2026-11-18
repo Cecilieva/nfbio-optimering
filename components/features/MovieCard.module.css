@@ -31,11 +31,12 @@
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-/* Teksten ligger over toningen */
+/* Teksten ligger over toningen. transition: den toner væk, når knappen vises ved hover. */
 .middle,
 .title {
   position: relative;
   z-index: 1;
+  transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
 /* flex: 1 lader midten fylde pladsen, så datoen står i midten og titlen nederst */
@@ -86,9 +87,45 @@
   white-space: nowrap;
 }
 
-/* Ved hover bliver toningen lettere, så man kan se, at plakaten er et link */
-.poster:hover::after {
-  opacity: var(--opacity-hover);
+/* ---------- Hover på "Kommer snart" – Figma "få notifikationer" ---------- */
+
+/* Boksen om plakaten og knappen "Giv mig besked" */
+.card {
+  position: relative;
+}
+
+/* Knappen ligger midt på plakaten, skjult indtil man holder musen over kortet.
+   pointer-events: none, så man kan klikke igennem til linket, mens knappen er skjult. */
+.hoverAction {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Ingen padding: knappen er 201px i Figma og må gerne gå lidt ud over kortets 16px luft */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Hover – eller tastaturfokus et sted i kortet: knappen vises og kan klikkes */
+.card:hover .hoverAction,
+.card:focus-within .hoverAction {
+  opacity: 1;
+}
+
+.card:hover .hoverAction > *,
+.card:focus-within .hoverAction > * {
+  pointer-events: auto;
+}
+
+/* ...og datoen og titlen skjules, som i Figma */
+.card:hover .comingSoon .middle,
+.card:hover .comingSoon .title,
+.card:focus-within .comingSoon .middle,
+.card:focus-within .comingSoon .title {
+  opacity: 0;
 }
 
 .poster:focus-visible {
@@ -106,6 +143,96 @@
   white-space: nowrap;
 }
 
+/* ---------- Variant "feed" – Figma "card i feed" ---------- */
+
+/* Formatet øverst og teksten nederst */
+.feed {
+  justify-content: space-between;
+}
+
+/* Figma "Overlay" på kortene i feedet: en anden toning end på "Kommer snart" – mørk nederst bag titlen */
+.feed::after {
+  background: var(--gradient-poster-feed-overlay);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+/* ---------- Hover på kortene i feedet – Figma "se spilletider" ---------- */
+
+/* "Se spilletider" ligger midt på kortet og er skjult, indtil man holder musen over */
+.feedAction {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  translate: -50% -50%;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Hover eller tastaturfokus: kortet bliver ensartet mørkt, teksten skjules, og knappen vises */
+.feed:hover::after,
+.feed:focus-visible::after {
+  background: var(--color-poster-hover-overlay);
+}
+
+.feed:hover .feedTop,
+.feed:hover .feedBottom,
+.feed:focus-visible .feedTop,
+.feed:focus-visible .feedBottom {
+  opacity: 0;
+}
+
+.feed:hover .feedAction,
+.feed:focus-visible .feedAction {
+  opacity: 1;
+}
+
+.feedTop,
+.feedBottom {
+  position: relative;
+  z-index: 1;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Figma: formatet står i højre side */
+.feedTop {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Figma "Genre-chip": lille mørk boks med formatet. XS/Sekundær/Regular */
+.formatChip {
+  padding: var(--space-0-75) var(--space-2);
+  border-radius: var(--radius-poster-chip);
+  background: var(--color-poster-chip);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
+}
+
+/* Titel og "Thriller · 15+" med 8px imellem */
+.feedBottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* S/Sekundær/Regular med en skygge, så teksten kan læses på billedet */
+.details {
+  display: flex;
+  overflow: hidden;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+  text-shadow: var(--shadow-text-poster);
+  white-space: nowrap;
+}
+
+/* 8px på hver side af prikken (Figma: gap 8px) */
+.dot {
+  padding-inline: var(--space-2);
+}
+
 /* Mobil: plakaterne er smallere, så teksten bliver mindre */
 @media (max-width: 48rem) {
   .poster {
@@ -118,5 +245,9 @@
 
   .title {
     font-size: var(--font-size-md);
+  }
+
+  .details {
+    font-size: var(--font-size-sm);
   }
 }

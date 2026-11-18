@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedCarousel from "@/components/features/FeaturedCarousel";
 import MovieFilter from "@/components/features/MovieFilter";
-import DataDump from "@/components/ui/DataDump";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
@@ -31,22 +30,19 @@ export default async function HomePage() {
         <FeaturedCarousel movies={featured} />
       </section>
 
-      {/* Figma "Kommende film – udfold": knappen, der folder alle kommende film ud */}
-      <div className={styles.upcoming}>
-        <ComingSoonSection movies={comingSoon} />
-      </div>
-
-      {/* Figma "Filtrering": filtrer de film, der kører nu i byen. Listen med filmene står under filtrene. */}
-      <div className={styles.nowPlaying}>
-        {nowPlaying.length > 0 ? (
-          <MovieFilter cityName={city.name} cinemas={cinemas} movies={nowPlaying} />
-        ) : (
-          <p>Der går ingen film i {city.name} lige nu.</p>
-        )}
-      </div>
-
-      <div className={styles.content}>
-        <DataDump label="nowPlaying, comingSoon, featured" data={{ city, cinemas, nowPlaying, comingSoon, featured }} />
+      {/* Figma "Kommende film – udfold": knappen "Se alle kommende film" står øverst, og sektionen med
+          de kommende film folder sig ud nederst – under filmene, der kører nu (som i prototypen) */}
+      <div className={styles.sections}>
+        <ComingSoonSection movies={comingSoon}>
+          {/* Figma "Filtrering": filtrer de film, der kører nu i byen. Filmene står under filtrene. */}
+          <div className={styles.nowPlaying}>
+            {nowPlaying.length > 0 ? (
+              <MovieFilter cityName={city.name} cinemas={cinemas} movies={nowPlaying} />
+            ) : (
+              <p>Der går ingen film i {city.name} lige nu.</p>
+            )}
+          </div>
+        </ComingSoonSection>
       </div>
     </main>
   );
