@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedCarousel from "@/components/features/FeaturedCarousel";
-import MovieCard from "@/components/features/MovieCard";
+import MovieFilter from "@/components/features/MovieFilter";
 import DataDump from "@/components/ui/DataDump";
-import { getSelectedCity } from "@/lib/data/cities";
+import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 import styles from "./page.module.css";
@@ -16,10 +16,12 @@ export default async function HomePage() {
     redirect("/");
   }
 
-  const [nowPlaying, comingSoon, featured] = await Promise.all([
+  // Alt hentes samtidig, så siden ikke venter på én ting ad gangen
+  const [nowPlaying, comingSoon, featured, cinemas] = await Promise.all([
     getNowPlaying(city.id),
     getComingSoon(),
     getFeaturedMovies(),
+    getCinemas(city.id),
   ]);
 
   return (
@@ -34,20 +36,17 @@ export default async function HomePage() {
         <ComingSoonSection movies={comingSoon} />
       </div>
 
+      {/* Figma "Filtrering": filtrer de film, der kører nu i byen. Listen med filmene står under filtrene. */}
+      <div className={styles.nowPlaying}>
+        {nowPlaying.length > 0 ? (
+          <MovieFilter cityName={city.name} cinemas={cinemas} movies={nowPlaying} />
+        ) : (
+          <p>Der går ingen film i {city.name} lige nu.</p>
+        )}
+      </div>
+
       <div className={styles.content}>
-        <h1>Film i {city.name}</h1>
-
-        <h2>Spiller nu</h2>
-        {nowPlaying.length === 0 && <p>Der går ingen film i {city.name} lige nu.</p>}
-        <ul>
-          {nowPlaying.map((movie) => (
-            <li key={movie.id}>
-              <MovieCard movie={movie} />
-            </li>
-          ))}
-        </ul>
-
-        <DataDump label="nowPlaying, comingSoon, featured" data={{ city, nowPlaying, comingSoon, featured }} />
+        <DataDump label="nowPlaying, comingSoon, featured" data={{ city, cinemas, nowPlaying, comingSoon, featured }} />
       </div>
     </main>
   );

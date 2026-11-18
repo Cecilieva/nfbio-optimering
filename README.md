@@ -29,6 +29,7 @@ Projektregler for udvikling (også for AI-assistenter) står i [`AGENTS.md`](AGE
 ### Dokumentation af komponenter
 
 - [Kommende film](docs/kommende-film.md) – sektionen på forsiden, der folder alle kommende film ud (data, komponenter, styling)
+- [Filtrering](docs/filtrering.md) – filtrene over de film, der kører nu (biograf, dato, genre, sprog og format)
 
 ## Data og kreditering
 

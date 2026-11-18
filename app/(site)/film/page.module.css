@@ -21,6 +21,13 @@
   padding-inline: var(--space-4);
 }
 
+/* Filtreringen: samme bredde som kortet og "Kommende film" over den, 32px luft over */
+.nowPlaying {
+  width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) 0;
+}
+
 .content {
   max-width: var(--layout-max-width);
   margin: 0 auto;
@@ -33,7 +40,8 @@
   }
 
   /* Samme luft i siderne som kortet, så kanterne flugter */
-  .upcoming {
+  .upcoming,
+  .nowPlaying {
     padding-inline: var(--space-3);
   }
 
