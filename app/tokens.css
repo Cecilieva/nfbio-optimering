@@ -61,6 +61,11 @@
     rgb(0 0 0 / 0.92) 100%
   );
   --color-button-secondary-border: var(--color-text-primary); /* Buttons/Sekundær border #f2f2f2 */
+  /* Finalen nederst på forsiden (Figma "Finale (motion)") */
+  --color-finale-center: rgb(27 27 56); /* "Finale-rum": lysere i midten … */
+  --color-finale-edge: rgb(14 14 28); /* … og mørkere ud mod kanterne */
+  --color-finale-glimt: #f4f0e6; /* De små stjerner, der glimter */
+  --color-finale-star: #fffaf0; /* "Stjerner – nær" */
   --color-poster-hover-overlay: rgb(0 0 0 / 0.7); /* Filmkortet ved hover ("se spilletider"): mørkere, så knappen ses */
 
   /* Typography */
@@ -79,6 +84,9 @@
   --font-size-display: 2.75rem;
   --font-size-heading: 2rem; /* Font-Size/Large – 32px, fx "Velkommen tilbage" */
   --font-size-hero-title: 4rem; /* Font-Size/XX-Large – 64px, titlen på "Kommer snart"-kortet */
+  --font-size-finale: clamp(3rem, 11.667vw, 10.5rem); /* 168px i Figmas 1440px-ramme – sloganet i finalen, mindre på små skærme */
+  --line-height-finale: 0.86;
+  --letter-spacing-finale: -0.03em; /* -5.04px ved 168px */
   --font-weight-black: 900;
   --font-weight-extrabold: 800; /* Tallene i nedtællingen */
   --font-size-control: 0.9375rem;
@@ -172,6 +180,17 @@
   --size-intro-frame-width: 90rem; /* 1440px – Figma-rammen, introen er tegnet i (skaleres til skærmen) */
   --size-intro-frame-height: 64rem; /* 1024px */
   --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i introen */
+  --size-finale-height: min(64rem, 100svh); /* Figmas ramme er 1024px høj – aldrig højere end skærmen */
+  --size-finale-height-compact: min(32rem, 80svh); /* Mobil: sloganet er mindre, så rummet er lavere */
+  --size-finale-fade: 16rem; /* Hvor langt finalen toner over i sidens baggrund foroven og forneden */
+  --size-finale-glimt: 4px; /* De små stjerner, der glimter */
+  --distance-finale-line: 48px; /* Hver linje i sloganet glider 48px op */
+  --blur-finale-line: 14px; /* … og går fra sløret til skarp */
+  --scale-finale-start: 1.35; /* Rummet zoomer ind fra 135 % */
+  --scale-finale-stars: 1.03; /* Stjernefeltet vokser 3 % i løbet af løkken */
+  --scale-finale-near: 1.035; /* De nære stjerner zoomer 3,5 % ind og ud */
+  --distance-finale-drift-x: 14px; /* De nære stjerner svæver 14px til hver side … */
+  --distance-finale-drift-y: 18px; /* … og 18px op (9px halvvejs) */
   --size-countdown-ring: min(21.25rem, 60vmin); /* 340px – ringen i nedtællingen, mindre på små skærme */
   --font-size-countdown: calc(var(--size-countdown-ring) * 0.647); /* 220px ved fuld størrelse */
   --letter-spacing-countdown: -0.04em; /* -8.8px ved 220px */
@@ -192,7 +211,14 @@
   --duration-countdown-slide: 800ms; /* Udglidningen */
   --duration-intro-fade: 900ms; /* Introen toner ud, når man springer over */
   --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i introen */
-  --duration-carousel-slide: 1.4s; /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
+  --duration-carousel-slide: 1.4s;
+  /* Finalen nederst på forsiden (Figma "Finale (motion)" – tider fra Figmas tidslinje) */
+  --duration-finale-loop: 8s; /* Stjernerne svæver og glimter i en løkke på 8 sekunder */
+  --duration-finale-fade: 1.2s; /* Rummet toner frem (15 % af 8 s) … */
+  --duration-finale-zoom: 2.4s; /* … og zoomer på plads (30 % af 8 s) */
+  --duration-finale-line: 737ms; /* Hver linje i sloganet */
+  --delay-finale-line: 332ms; /* Tid mellem linjerne */
+  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */ /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */

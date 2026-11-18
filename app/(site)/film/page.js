@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedCarousel from "@/components/features/FeaturedCarousel";
+import Finale from "@/components/features/Finale";
 import MovieFilter from "@/components/features/MovieFilter";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";
@@ -44,6 +45,9 @@ export default async function HomePage() {
           </div>
         </ComingSoonSection>
       </div>
+
+      {/* Figma "Finale (motion)": Nordisk Films slogan i et stjernerum – det sidste på forsiden, i fuld bredde */}
+      <Finale />
     </main>
   );
 }
