@@ -84,6 +84,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside – intro (motion) | 1869:14851 (nedtælling: 1869:15878) | `/film` | IntroAnimation (tidslinjen i `introTimeline.js`), IntroCountdown, FeaturedCarousel, ComingSoonCard |
 | Forside – "Kommer snart"-karrusel | 11:34 | `/film` | FeaturedCarousel, ComingSoonCard, FollowButton, TrailerButton, Button (`variant="outline"`). Filmene vælges i `lib/data/featured.js` |
 | Forside – "Kommende film" (udfold) | 2221:15159 (lukket: 2848:14500, åben: 2849:14585) | `/film` | ComingSoonSection, MovieCard (`variant="coming-soon"`), Chip (Option button), Button (`variant="secondary"`). Billetsalgsdatoer står i `lib/data/ticket-sale.js` |
+| Forside – "Filtrering" | 2848:14506 (komponent "Filtering" 464:12550, "Filterfelt" 2087:9999, "Dropdown valg" 535:2814) | `/film` | MovieFilter, FilterField, Chip (`variant="subtle"` – Figma "Formater"), MovieCard |
 | Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
 | Filmside | | `/film/[slug]` | PosterPlaceholder, TrailerButton, Modal, ShowtimeList |
 | Trailer-modal | | `/film/[slug]` | TrailerButton, Modal |

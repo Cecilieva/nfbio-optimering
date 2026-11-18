@@ -45,6 +45,7 @@
   --color-option-border: var(--color-border-default); /* Option button/Border standard #22346b */
   --color-option-background-active: var(--color-border-default); /* Option button/Aktiv baggrund #22346b */
   --color-option-border-active: var(--color-cta); /* Option button/Border aktiv #0080ff */
+  --color-text-input-muted: rgb(242 242 242 / 0.5); /* text/input (muted) – punkterne i en dropdown */
 
   /* Plakaterne under "Kommende film" (Figma "Kommer snart") */
   --color-poster-gradient-top: #103a5c; /* Fyldet bag plakaten – ses, hvis filmen ikke har et billede */
@@ -80,6 +81,7 @@
 
   /* Spacing */
   --space-1: 0.25rem;
+  --space-0-5: 0.125rem; /* 2px – mellem punkterne i en dropdown */
   --space-1-5: 0.375rem; /* 6px – afstand mellem label og felt */
   --space-2: 0.5rem;
   --space-2-5: 0.625rem;
@@ -106,6 +108,9 @@
   --radius-intro-poster: 0.875rem; /* 14px – plakaterne i introen */
   --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
   --radius-option-button: 1.125rem; /* 18px – Option button, fx "November" */
+  --radius-filter-bar: 1.5rem; /* Border-radius/Large – 24px: filtreringsbaren, dens felter og søgeknappen */
+  --radius-dropdown: 1rem; /* 16px – dropdown-listen under et filterfelt */
+  --radius-dropdown-item: 0.625rem; /* 10px – et punkt i dropdown-listen */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
@@ -113,6 +118,7 @@
   --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.2);
   --shadow-intro-poster: 0 30px 60px -20px rgb(0 0 0 / 0.55); /* Plakaterne i introen */
   --shadow-toast: 0 8px 24px rgb(0 0 0 / 0.35); /* Fx beskeden under "Følg film" */
+  --shadow-dropdown: 0 8px 24px rgb(0 0 0 / 0.4); /* Dropdown-listen under et filterfelt */
 
   /* Sizes */
   --size-avatar: 2.5rem;
@@ -120,6 +126,9 @@
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-option-button-height: 2rem; /* Btn-Height/Small – 32px */
   --size-option-divider-height: 1.375rem; /* 22px – "Skille" før og efter filtrene */
+  --size-filter-divider-height: 2rem; /* 32px – "Skille" mellem felterne i filtreringsbaren */
+  --size-dropdown-max-height: 20rem; /* Lange dropdown-lister (fx Genre) kan scrolles */
+  --size-icon-small: 1rem; /* 16px – fx pilen i et filterfelt og ikonet i "Nulstil filter" */
   --size-poster-card-width: 13.75rem; /* 220px – en plakat under "Kommende film" */
   --size-poster-card-width-compact: 9rem; /* Mindste bredde på mobil, så der er to pr. række */
   --aspect-poster-card: 11 / 16; /* 220 × 320 */
@@ -179,6 +188,7 @@
   --focus-ring-width: 2px;
   --border-width: 1px;
   --border-width-strong: 2px; /* Fx kanten på en checkbox */
+  --border-width-active: 1.5px; /* Det valgte felt i filtreringsbaren */
 
   /* Lag: hvad der ligger øverst */
   /* Introen på forsiden: stjernerne under headeren, nedtællingen over den (som i Figma) */
@@ -193,6 +203,7 @@
        48rem (768px): tablet og mobil – én kolonne, mindre luft og mindre overskrifter
        30rem (480px): små telefoner */
   --layout-max-width: 64rem;
+  --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
 }
 

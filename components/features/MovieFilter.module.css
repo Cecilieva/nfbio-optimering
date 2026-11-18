@@ -1,0 +1,182 @@
+/* Figma "Filtrering": titel, baren og format-rækken under hinanden med 24px imellem */
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* L/Sekundær/Bold, farven text/lys */
+.title {
+  margin: 0; /* Fjerner den globale h1-margin; afstanden kommer fra gap */
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma: den mørke bar med runde hjørner. Felterne deler bredden, søgeknappen sidder yderst til højre.
+   Ingen overflow: hidden – dropdownen skal kunne stikke ud under baren. */
+.bar {
+  display: flex;
+  align-items: stretch;
+  border: var(--border-width) solid var(--color-option-background);
+  border-radius: var(--radius-filter-bar);
+  background: var(--color-option-background);
+}
+
+/* Et felt og stregen foran det. flex: 1, så de fire felter er lige brede. */
+.slot {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  min-width: 0;
+}
+
+/* Figma "Skille": 1px × 32px i samme farve som baren (som i Figma) */
+.divider {
+  flex-shrink: 0;
+  width: var(--border-width);
+  height: var(--size-filter-divider-height);
+  background: var(--color-option-background);
+}
+
+/* Felterne fylder hele barens højde */
+.slot > :last-child {
+  align-self: stretch;
+}
+
+/* Den blå søgeknap: lige så høj som baren, 32px luft på hver side af ikonet */
+.search {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-8);
+  border: 0;
+  border-radius: var(--radius-filter-bar);
+  background: var(--color-cta);
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.search:hover {
+  opacity: var(--opacity-hover);
+}
+
+.search:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Format-knapperne til venstre og "Nulstil filter" til højre, 24px imellem */
+.options {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* Figma "Formater": 8px mellem knapperne. Kan scrolles vandret, hvis skærmen er for smal. */
+.formats {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 0;
+  max-width: 100%; /* Aldrig bredere end skærmen – så scroller knapperne i stedet */
+  overflow-x: auto;
+}
+
+/* Figma "Skille" før og efter format-knapperne: 1px × 22px */
+.formatDivider {
+  flex-shrink: 0;
+  width: var(--border-width);
+  height: var(--size-option-divider-height);
+  background: var(--color-option-background);
+}
+
+/* Figma "Nulstil filter": ikon og tekst uden baggrund, samme højde som format-knapperne */
+.reset {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+  align-items: center;
+  height: var(--size-option-button-height);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-option-button);
+  background: none;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.reset img {
+  width: var(--size-icon-small);
+  height: var(--size-icon-small);
+}
+
+.reset:hover {
+  opacity: var(--opacity-hover);
+}
+
+.reset:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Listen med film. Ingen synlig ramme, når søgeknappen sætter fokus her. */
+.results:focus {
+  outline: none;
+}
+
+/* Filmkortene er endnu ikke designet i Figma, så listen er bare en simpel liste */
+.list {
+  list-style: none;
+}
+
+.empty {
+  color: var(--color-text-label);
+}
+
+/* Kun til skærmlæsere: "8 film" */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Mobil: felterne står to og to, og søgeknappen fylder en hel linje nederst */
+@media (max-width: 48rem) {
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Stregerne giver ikke mening, når felterne står i et gitter */
+  .divider {
+    display: none;
+  }
+
+  .search {
+    grid-column: 1 / -1;
+    height: var(--size-control-height);
+  }
+
+  /* "Nulstil filter" under format-knapperne */
+  .options {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}

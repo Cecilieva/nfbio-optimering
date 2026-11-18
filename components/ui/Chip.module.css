@@ -20,6 +20,11 @@
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
 
+/* Variant "subtle" (Figma "Formater"): kanten har samme farve som baggrunden, så den ikke ses */
+.chip[data-variant="subtle"] {
+  border-color: var(--color-option-background);
+}
+
 .chip:hover {
   border-color: var(--color-text-muted);
 }
