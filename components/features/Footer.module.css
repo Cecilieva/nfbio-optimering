@@ -166,3 +166,29 @@
   outline: var(--focus-ring-width) solid var(--color-text);
   outline-offset: var(--space-1);
 }
+
+/* Mobil: logo og nyhedsbrev fylder hele bredden, de to link-kolonner står ved siden af hinanden */
+@media (max-width: 48rem) {
+  .footer {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .columns {
+    gap: var(--space-8) var(--space-5);
+  }
+
+  .logoColumn,
+  .newsletter {
+    flex-basis: 100%;
+  }
+
+  .column {
+    flex: 1 1 0;
+  }
+
+  /* Tekst og sociale ikoner under hinanden */
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
