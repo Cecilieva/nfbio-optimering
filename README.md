@@ -26,6 +26,10 @@ Databasen er allerede sat op. Skemaet (tabeller, RPC-funktioner, RLS og testdata
 
 Projektregler for udvikling (også for AI-assistenter) står i [`AGENTS.md`](AGENTS.md).
 
+### Dokumentation af komponenter
+
+- [Kommende film](docs/kommende-film.md) – sektionen på forsiden, der folder alle kommende film ud (data, komponenter, styling)
+
 ## Data og kreditering
 
 Filmdata og billeder kommer fra [TMDB](https://www.themoviedb.org/).

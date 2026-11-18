@@ -10,7 +10,15 @@
   /* Kortet bliver 1197px bredt som i Figma: bredden + luften på begge sider */
   width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
   margin: 0 auto;
-  padding: var(--space-4);
+  /* Ingen luft i bunden – den kommer fra "Kommende film" lige under */
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+/* "Kommende film": samme bredde som kortet over. Luften over og under står i ComingSoonSection. */
+.upcoming {
+  width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
+  margin: 0 auto;
+  padding-inline: var(--space-4);
 }
 
 .content {

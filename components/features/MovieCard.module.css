@@ -1,0 +1,122 @@
+/* Figma "Kommer snart": plakat med mørk toning, premieren i midten og titlen nederst.
+   Gradienten er fyldet bag billedet – den ses, hvis filmen ikke har et billede. */
+.poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  overflow: hidden;
+  aspect-ratio: var(--aspect-poster-card);
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(to bottom, var(--color-poster-gradient-top), var(--color-poster-gradient-bottom));
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Figma "Overlay" */
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-poster-overlay);
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Teksten ligger over toningen */
+.middle,
+.title {
+  position: relative;
+  z-index: 1;
+}
+
+/* flex: 1 lader midten fylde pladsen, så datoen står i midten og titlen nederst */
+.middle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* Figma "Premiere": 4px mellem kalender, dato og billetsalg */
+.premiere {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: center;
+  line-height: var(--line-height-snug);
+  text-align: center;
+}
+
+.icon {
+  width: var(--size-icon);
+  height: var(--size-icon);
+}
+
+/* L/Sekundær/Bold */
+.date {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+/* XS/Sekundær/Regular */
+.ticketSale {
+  font-size: var(--font-size-xs);
+  opacity: var(--opacity-poster-text);
+}
+
+/* M/Sekundær/Bold – lange titler slutter med "…" på én linje */
+.title {
+  overflow: hidden;
+  margin: 0;
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ved hover bliver toningen lettere, så man kan se, at plakaten er et link */
+.poster:hover::after {
+  opacity: var(--opacity-hover);
+}
+
+.poster:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Kun til skærmlæsere: "Premiere 19. nov" */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Mobil: plakaterne er smallere, så teksten bliver mindre */
+@media (max-width: 48rem) {
+  .poster {
+    padding: var(--space-3);
+  }
+
+  .date {
+    font-size: var(--font-size-lg);
+  }
+
+  .title {
+    font-size: var(--font-size-md);
+  }
+}
