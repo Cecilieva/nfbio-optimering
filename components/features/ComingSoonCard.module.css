@@ -128,11 +128,36 @@
   gap: var(--space-4);
 }
 
-/* Mindre luft og titel på små skærme */
+/* Mobil: top og bund ligger i normalt flow i stedet for oven på billedet hver for sig,
+   så de aldrig kan overlappe. Kortet er mindst lige så højt som før, men vokser, hvis teksten kræver det. */
 @media (max-width: 48rem) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    min-height: min(var(--size-coming-card-height), 85svh);
+    border-radius: var(--radius-lg);
+  }
+
   .top,
   .bottom {
+    position: relative;
+    inset: auto;
     padding: var(--space-6);
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stats {
+    gap: var(--space-4);
+  }
+
+  .stat {
+    gap: var(--space-1);
   }
 
   .stat dd {
@@ -141,5 +166,27 @@
 
   .title {
     font-size: var(--font-size-2xl);
+    overflow-wrap: break-word;
+  }
+
+  .credit {
+    gap: var(--space-4);
+  }
+
+  /* Knapperne deler bredden */
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .actions > * {
+    flex: 1 1 auto;
+  }
+}
+
+/* Små telefoner: endnu mindre luft */
+@media (max-width: 30rem) {
+  .top,
+  .bottom {
+    padding: var(--space-4);
   }
 }

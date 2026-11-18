@@ -41,6 +41,13 @@ a {
   color: var(--color-accent);
 }
 
+/* Billeder og video bliver aldrig bredere end deres beholder */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 /* The forms for sign up, log in and log out */
 .form {
   display: flex;
@@ -90,4 +97,15 @@ a {
   background: var(--color-surface);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
+}
+
+/* Mindre luft og overskrifter på tablet og mobil */
+@media (max-width: 48rem) {
+  main {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  h1 {
+    font-size: var(--font-size-xl);
+  }
 }
