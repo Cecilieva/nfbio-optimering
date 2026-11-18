@@ -1,0 +1,87 @@
+/* Figma "Kommende film – udfold", lukket: kun knappen, 16px luft over og under */
+.closed {
+  padding-block: var(--space-4);
+}
+
+/* Knapperne er lige så brede som indholdet (Figma "Se mere") */
+.toggle {
+  width: 100%;
+}
+
+/* Figma "Kommende film – sektion": 24px mellem header, gitter og knap */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-block: var(--space-4);
+}
+
+/* Figma "Tekst": 8px mellem linjerne */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* L/Sekundær/Bold */
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.title:focus {
+  outline: none;
+}
+
+/* S/Sekundær/Regular */
+.intro {
+  color: var(--color-text-label);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "Luft" (8px) over filtrene – plus de 8px fra gap */
+.filters {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-2);
+  overflow-x: auto;
+}
+
+/* Figma "Skille" */
+.divider {
+  flex-shrink: 0;
+  width: var(--border-width);
+  height: var(--size-option-divider-height);
+  background: var(--color-option-border);
+}
+
+/* Figma "Filmgitter": 220px brede plakater med 24px imellem – 5 pr. række i fuld bredde */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-poster-card-width)), 1fr));
+  gap: var(--space-6);
+  list-style: none;
+}
+
+.empty {
+  color: var(--color-text-label);
+}
+
+/* Mobil: to plakater pr. række og mindre luft */
+@media (max-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-poster-card-width-compact)), 1fr));
+    gap: var(--space-4);
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+  }
+}

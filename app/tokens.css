@@ -40,6 +40,17 @@
   --color-readability-shade: rgb(0 0 0 / 0.3); /* Figma "skygge for læsbarhed" bag teksten øverst på kortet */
   --color-header-text: var(--color-text-primary);
 
+  /* Option button – filtrene under "Kommende film" */
+  --color-option-background: var(--color-surface); /* Option button/Standard baggrund #161a30 */
+  --color-option-border: var(--color-border-default); /* Option button/Border standard #22346b */
+  --color-option-background-active: var(--color-border-default); /* Option button/Aktiv baggrund #22346b */
+  --color-option-border-active: var(--color-cta); /* Option button/Border aktiv #0080ff */
+
+  /* Plakaterne under "Kommende film" (Figma "Kommer snart") */
+  --color-poster-gradient-top: #103a5c; /* Fyldet bag plakaten – ses, hvis filmen ikke har et billede */
+  --color-poster-gradient-bottom: #01070f;
+  --color-poster-overlay: rgb(20 6 12 / 0.7); /* Figma "Overlay": mørk toning, så dato og titel kan læses */
+
   /* Typography */
   --font-family-body: var(--font-inter), Arial, Helvetica, sans-serif;
   --font-family-mono: var(--font-geist-mono), monospace;
@@ -94,6 +105,7 @@
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
   --radius-intro-poster: 0.875rem; /* 14px – plakaterne i introen */
   --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
+  --radius-option-button: 1.125rem; /* 18px – Option button, fx "November" */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
@@ -106,6 +118,13 @@
   --size-avatar: 2.5rem;
   --size-header-side: 6.5rem;
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
+  --size-option-button-height: 2rem; /* Btn-Height/Small – 32px */
+  --size-option-divider-height: 1.375rem; /* 22px – "Skille" før og efter filtrene */
+  --size-poster-card-width: 13.75rem; /* 220px – en plakat under "Kommende film" */
+  --size-poster-card-width-compact: 9rem; /* Mindste bredde på mobil, så der er to pr. række */
+  --aspect-poster-card: 11 / 16; /* 220 × 320 */
+  --size-icon: 1.5rem; /* 24px – fx kalenderen på plakaterne */
+  --opacity-poster-text: 0.85; /* "Billetsalg fra 10. nov" på plakaterne */
   --size-control-height: 2.75rem;
   --size-button-height: 2.5rem;
   --size-menu-width: 27.5rem;

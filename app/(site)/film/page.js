@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedCarousel from "@/components/features/FeaturedCarousel";
 import MovieCard from "@/components/features/MovieCard";
 import DataDump from "@/components/ui/DataDump";
@@ -28,6 +29,11 @@ export default async function HomePage() {
         <FeaturedCarousel movies={featured} />
       </section>
 
+      {/* Figma "Kommende film – udfold": knappen, der folder alle kommende film ud */}
+      <div className={styles.upcoming}>
+        <ComingSoonSection movies={comingSoon} />
+      </div>
+
       <div className={styles.content}>
         <h1>Film i {city.name}</h1>
 
@@ -35,16 +41,6 @@ export default async function HomePage() {
         {nowPlaying.length === 0 && <p>Der går ingen film i {city.name} lige nu.</p>}
         <ul>
           {nowPlaying.map((movie) => (
-            <li key={movie.id}>
-              <MovieCard movie={movie} />
-            </li>
-          ))}
-        </ul>
-
-        <h2>Kommer snart</h2>
-        {comingSoon.length === 0 && <p>Der er ingen kommende film lige nu.</p>}
-        <ul>
-          {comingSoon.map((movie) => (
             <li key={movie.id}>
               <MovieCard movie={movie} />
             </li>

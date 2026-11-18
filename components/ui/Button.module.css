@@ -60,8 +60,9 @@
   background: var(--color-cta);
 }
 
+/* Figma "buttons/sekundær-border" */
 .button[data-variant="secondary"] {
-  border-color: var(--color-border);
+  border-color: var(--color-border-default);
   background: transparent;
 }
 

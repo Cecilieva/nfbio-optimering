@@ -1,0 +1,41 @@
+/* Figma "Option button": lille pille med kant, fx månedsfiltrene under "Kommende film".
+   Den valgte (aria-pressed) har blå kant og lysere tekst. */
+.chip {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--size-option-button-height);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-option-border);
+  border-radius: var(--radius-option-button);
+  background: var(--color-option-background);
+  color: var(--color-text-label);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.chip:hover {
+  border-color: var(--color-text-muted);
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--color-option-border-active);
+  background: var(--color-option-background-active);
+  color: var(--color-text-primary);
+}
+
+.chip:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+.chip:disabled {
+  opacity: var(--opacity-hover);
+  cursor: not-allowed;
+}
