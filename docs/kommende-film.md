@@ -73,6 +73,8 @@ Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) 
 
 **Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), skjules dato og titel, og knappen **"Giv mig besked"** vises i midten. Det er `FollowButton` med `variant="card"`: en blå knap med klokke, som viser beskeden "Vi giver besked på mail, når billetsalget åbner." Knappen må ikke ligge inde i linket, så plakaten og knappen står ved siden af hinanden i en boks (`.card`), og knappen lægges oven på plakaten.
 
+**Touchskærme** (mobil og tablet, `@media (hover: none)`) kan ikke holde musen over et kort. Dér står "Giv mig besked" altid nederst på plakaten, under titlen, og datoen bliver stående.
+
 ### `components/ui/Button.js` – variant `secondary`
 Bruges til "Se alle kommende film" og "Skjul kommende film". Kanten bruger Figmas `buttons/sekundær-border`.
 

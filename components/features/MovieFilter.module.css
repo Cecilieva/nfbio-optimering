@@ -55,7 +55,7 @@
   padding: 0 var(--space-8);
   border: 0;
   border-radius: var(--radius-filter-bar);
-  background: var(--color-cta);
+  background: var(--color-cta-button); /* Samme blå som de andre knapper (se tokens.css) */
   cursor: pointer;
   transition: opacity var(--duration-fast) var(--easing-standard);
 }

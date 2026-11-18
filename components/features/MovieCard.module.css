@@ -120,12 +120,33 @@
   pointer-events: auto;
 }
 
-/* ...og datoen og titlen skjules, som i Figma */
-.card:hover .comingSoon .middle,
-.card:hover .comingSoon .title,
-.card:focus-within .comingSoon .middle,
-.card:focus-within .comingSoon .title {
-  opacity: 0;
+/* Touchskærme (mobil og tablet) kan ikke holde musen over et kort.
+   Derfor står "Giv mig besked" altid nederst på plakaten, og datoen og titlen bliver stående over den. */
+@media (hover: none) {
+  .hoverAction {
+    align-items: flex-end;
+    padding: var(--space-3);
+    opacity: 1;
+  }
+
+  .hoverAction > * {
+    pointer-events: auto;
+  }
+
+  /* Plads til knappen under titlen. .poster.comingSoon, så mobilreglen for .poster længere nede ikke overskriver den. */
+  .poster.comingSoon {
+    padding-bottom: calc(var(--space-3) + var(--size-button-height) + var(--space-2));
+  }
+}
+
+/* ...og datoen og titlen skjules, som i Figma (kun hvor man kan holde musen over) */
+@media (hover: hover) {
+  .card:hover .comingSoon .middle,
+  .card:hover .comingSoon .title,
+  .card:focus-within .comingSoon .middle,
+  .card:focus-within .comingSoon .title {
+    opacity: 0;
+  }
 }
 
 .poster:focus-visible {

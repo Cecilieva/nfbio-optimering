@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import IntroCountdown from "@/components/features/IntroCountdown";
 import {
   CARD_TRACKS,
@@ -17,6 +17,24 @@ import {
   playTracks,
 } from "@/components/features/introTimeline";
 import styles from "./IntroAnimation.module.css";
+
+// Brugerens indstilling for "mindre bevægelse", læst med useSyncExternalStore.
+// Serveren kan ikke se indstillingen, så dér er svaret null ("ved ikke endnu").
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange) {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+function getReducedMotion() {
+  return window.matchMedia(REDUCED_MOTION).matches;
+}
+
+function getServerReducedMotion() {
+  return null;
+}
 
 /**
  * Introen på forsiden, bygget i kode. Figma: "Forside – intro (motion)" (node 1869:14851).
@@ -39,7 +57,12 @@ export default function IntroAnimation({ revealRef, onDone }) {
   // "playing": introen kører
   // "leaving": man har sprunget over, og introen toner ud
   // "done": introen er væk
-  const [status, setStatus] = useState("pending");
+  // Hvor langt introen er nået, når den vises: "playing", "leaving" eller "done"
+  const [phase, setPhase] = useState("playing");
+  // true/false i browseren, null på serveren
+  const reduceMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
+  // Har man bedt om mindre bevægelse i styresystemet, springer vi introen over
+  const status = reduceMotion === null ? "pending" : reduceMotion ? "done" : phase;
   const [showCountdown, setShowCountdown] = useState(true);
 
   const stageRef = useRef(null);
@@ -49,12 +72,6 @@ export default function IntroAnimation({ revealRef, onDone }) {
   const posterRefs = useRef([]);
   // Kortets animation gemmes for sig, så den kan stoppes, hvis man springer over
   const cardAnimations = useRef([]);
-
-  // Har man bedt om mindre bevægelse i styresystemet, springer vi introen over
-  useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setStatus(reduceMotion ? "done" : "playing");
-  }, []);
 
   // Sig til forælderen, når introen er væk – fx så karrusellen først begynder at skifte nu
   useEffect(() => {
@@ -104,7 +121,7 @@ export default function IntroAnimation({ revealRef, onDone }) {
     }
 
     // Når tidslinjen er færdig, er stjernerne væk, og kortet står, hvor det skal
-    const timer = setTimeout(() => setStatus("done"), INTRO_DURATION_S * 1000);
+    const timer = setTimeout(() => setPhase("done"), INTRO_DURATION_S * 1000);
 
     return () => {
       clearTimeout(timer);
@@ -119,13 +136,13 @@ export default function IntroAnimation({ revealRef, onDone }) {
       return;
     }
     cardAnimations.current.forEach((animation) => animation.cancel());
-    setStatus("leaving");
+    setPhase("leaving");
   }
 
   // Når udtoningen er færdig, fjernes introen. Andre animationer "bobler" også op hertil, så vi tjekker.
   function handleAnimationEnd(event) {
     if (event.target === event.currentTarget && status === "leaving") {
-      setStatus("done");
+      setPhase("done");
     }
   }
 

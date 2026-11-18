@@ -22,7 +22,10 @@
   --color-border: #2a3055; /* border/Kort */
   --color-border-default: #22346b; /* border/default – fx stregen over footeren */
   --color-accent: #85a5ff;
-  --color-cta: #0080ff; /* accent/Primær CTA */
+  --color-cta: #0080ff; /* accent/Primær CTA – kanter, markeringer og tekst på mørk baggrund */
+  /* Baggrunden på blå knapper med hvid tekst. Figmas #0080ff giver kun 3,4:1 med hvid tekst, men WCAG AA kræver 4,5:1
+     ved 16px. Samme blå, bare lidt mørkere: 4,56:1. (Opdater også "Buttons/Primær" i Figma.) */
+  --color-cta-button: #006cd6;
   --color-cta-soft: #5e8cff; /* accent/Sart primær CTA */
   --color-on-accent: #0a0a0a;
   --color-danger: #d4380d;
