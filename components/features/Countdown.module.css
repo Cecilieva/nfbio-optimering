@@ -1,0 +1,72 @@
+/* Variant "premiere" – Figma "Nedtælling" (node 594:3212): "PREMIERE OM" over fire bokse, højrestillet */
+.premiere {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+/* Figma "XS/Sekundær/Bold" */
+.heading {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  text-transform: uppercase;
+}
+
+.units {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* En boks: tallet over enheden */
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-0-5);
+  width: var(--size-countdown-unit);
+  padding-block: var(--space-2);
+  border: var(--border-width) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+/* Figma: sekunderne står i en lysere blå boks uden kant (:last-child = den sidste boks) */
+.unit:last-child {
+  border-color: var(--color-option-background-active);
+  background: var(--color-option-background-active);
+}
+
+/* Figma "L/Sekundær/Bold". tabular-nums giver alle tal samme bredde, så tallene ikke hopper, når de skifter */
+.value {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "XS/Sekundær/Regular" */
+.label {
+  color: var(--color-text-input-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.unit:last-child .label {
+  color: var(--color-text-primary);
+}
+
+/* Små telefoner: lidt mindre bokse */
+@media (max-width: 30rem) { /* 30rem = 480px */
+  .unit {
+    width: var(--size-countdown-unit-compact);
+  }
+
+  .value {
+    font-size: var(--font-size-lg);
+  }
+}

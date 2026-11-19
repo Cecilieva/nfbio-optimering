@@ -88,7 +88,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside – "Program" (filmene under filtreringen) | 2867:21344 (kortet "card i feed" 214:3673) | `/film` | MovieFilter, MovieCard (`variant="feed"`), Button (`variant="secondary"`) – "Se flere film" |
 | Forside – Finale (motion) | 1883:12291 | `/film` | Finale (stjernerne i `finaleStars.js`, stjernefeltet i `public/finale/stjerner.svg`) |
 | Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
-| Filmside | | `/film/[slug]` | PosterPlaceholder, TrailerButton, Modal, ShowtimeList |
+| Filmside | Projektor – standard: 3063:14519, Titel – standard: 3063:14531, Titel – smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="melt"` til kommende thrillere/gysere – dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal, ShowtimeList |
 | Trailer-modal | | `/film/[slug]` | TrailerButton, Modal |
 | Sædevalg – vælg antal | | `/bestil/saeder/[showtimeId]` | StepHeader, OrderSummary, SeatPicker, Chip, BottomBar |
 | Sædevalg – vælg sæder | | `/bestil/saeder/[showtimeId]` | SeatPicker, SeatMap, BottomBar, Button |

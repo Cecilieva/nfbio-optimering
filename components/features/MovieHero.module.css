@@ -1,0 +1,206 @@
+/* Figma "Filmside": stort billede, der toner over i baggrunden, med teksten nederst.
+   Toppen er lagt på 12-kolonne-griddet: "Tilbage" øverst, titel og fakta nederst. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  /* 12 lige brede kolonner. minmax(0, 1fr) gør, at en kolonne må blive smallere end sit indhold. */
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  /* Række 1 (toppen) er så høj som sit indhold, række 2 (bunden) fylder resten af heroen */
+  grid-template-rows: auto 1fr;
+  column-gap: var(--grid-gutter);
+  min-height: var(--size-movie-hero-height);
+  padding: var(--space-6) var(--grid-margin) var(--space-8);
+  background: var(--color-background);
+}
+
+/* Figma "Projektor – standard": projektorlyset fejer hen over billedet, derefter langsom zoom i loop.
+   Lagene ligger som i Figma: Billede → Toning → Lysstribe → Fade (::after) → teksten. */
+
+/* Billede: tændes fra 108 % og usynligt, og glider derefter langsomt frem og tilbage */
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* To animationer efter hinanden: først tændes billedet, så driver det frem og tilbage (alternate) for evigt.
+     Den anden starter først, når den første er færdig (forsinkelse = --duration-projector-on). */
+  animation:
+    projectorImageOn var(--duration-projector-on) var(--easing-out) both,
+    projectorImageDrift var(--duration-projector-drift) var(--easing-in-out) var(--duration-projector-on) infinite
+      alternate;
+}
+
+/* Toning: mørk hinde over billedet, der løfter sig, når projektoren tændes */
+.toning {
+  position: absolute;
+  inset: 0;
+  background: var(--color-fade);
+  opacity: var(--opacity-projector-on);
+  animation:
+    projectorToningOn var(--duration-projector-on) var(--easing-out) both,
+    projectorToningDrift var(--duration-projector-drift) var(--easing-in-out) var(--duration-projector-on) infinite
+      alternate;
+}
+
+/* Lysstribe: en skrå stribe varmt lys, der fejer fra venstre mod højre én gang */
+.beam {
+  position: absolute;
+  top: 50%;
+  left: var(--position-projector-beam-end);
+  width: var(--size-projector-beam-width);
+  height: var(--size-projector-beam-height);
+  background: linear-gradient(to right, transparent, var(--color-projector-beam), transparent);
+  transform: translateY(-50%) rotate(var(--angle-projector-beam));
+  pointer-events: none;
+  animation: projectorBeam var(--duration-projector-on) var(--easing-in-out) both;
+}
+
+/* Fade: billedet toner over i sidens baggrund forneden (220px af 560px i Figma) – også under lommelygten.
+   ::after er et ekstra "usynligt" element, som CSS'en laver selv, så der ikke skal en <div> til i HTML'en.
+   Gradienten er gennemsigtig de øverste 60.71 % og går derefter over i baggrundsfarven. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60.71%, var(--color-background));
+}
+
+/* Projektoren toner også over i baggrunden foroven, så billedet glider ud af headeren */
+.fadeTop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, transparent 60.71%, var(--color-background));
+}
+
+/* Figma: toppen og bunden starter i kolonne 2 og slutter med kolonne 11.
+   z-index lægger dem over billedet og toningen. */
+.top,
+.bottom {
+  position: relative;
+  z-index: 1;
+  grid-column: 2 / 12;
+}
+
+/* "Tilbage" til venstre, nedtællingen til højre – begge øverst */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Figma: "Tilbage" og sagsmappe-linjen under hinanden med 32px imellem */
+.topLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  text-decoration: none;
+}
+
+.back:hover {
+  opacity: var(--opacity-hover);
+}
+
+/* Pilen findes kun som "ned" – drejet, så den peger til venstre */
+.backIcon {
+  transform: rotate(90deg);
+}
+
+/* Bunden arver kolonne 2–11 fra griddet (subgrid), så MovieInfoBar kan lægge sig på de samme kolonner.
+   align-self: end skubber den ned i bunden af heroen. */
+.bottom {
+  align-self: end;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--space-6);
+}
+
+/* MovieTitle står i hele bundens bredde (kolonne 2–11) */
+.title {
+  grid-column: 1 / -1;
+}
+
+/* Fakta og knapper toner frem til sidst. Også et subgrid, så kolonnerne går videre ind i MovieInfoBar. */
+.details {
+  position: relative; /* Ligger over dråberne fra den smeltende titel, så fakta og knapper altid kan læses */
+  z-index: 1;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  animation: fadeIn var(--duration-movie-hero-title) var(--easing-out) var(--delay-movie-hero-details) both;
+}
+
+/* Start → Tændt. Der står kun "from": animationen går fra disse værdier til elementets normale værdier i CSS'en.
+   "both" i animation-linjen gør, at billedet allerede står i "from"-tilstanden, før animationen går i gang. */
+@keyframes projectorImageOn {
+  from {
+    opacity: 0;
+    transform: scale(var(--scale-projector-start));
+  }
+}
+
+@keyframes projectorToningOn {
+  from {
+    opacity: 1;
+  }
+}
+
+@keyframes projectorBeam {
+  from {
+    left: var(--position-projector-beam-start);
+  }
+}
+
+/* Tændt → Drift (frem og tilbage i loop). Her står kun "to": fra de normale værdier hen til disse. */
+@keyframes projectorImageDrift {
+  to {
+    transform: translateX(var(--distance-projector-drift-x)) scale(var(--scale-projector-drift));
+  }
+}
+
+@keyframes projectorToningDrift {
+  to {
+    opacity: var(--opacity-projector-drift);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Ingen bevægelse for dem, der har slået animationer fra */
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .toning,
+  .beam,
+  .details {
+    animation: none;
+  }
+}
+
+/* Tablet og mobil: indholdet bruger alle 12 kolonner med lidt luft til kanten, og titlen er mindre */
+@media (max-width: 48rem) {
+  .hero {
+    padding: var(--space-4) var(--space-4) var(--space-8);
+  }
+
+  .top,
+  .bottom {
+    grid-column: 1 / -1;
+  }
+
+}

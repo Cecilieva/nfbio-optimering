@@ -1,12 +1,12 @@
 import { notFound, redirect } from "next/navigation";
-import PosterPlaceholder from "@/components/features/PosterPlaceholder";
+import MovieHero from "@/components/features/MovieHero";
 import ShowtimeList from "@/components/features/ShowtimeList";
-import TrailerButton from "@/components/features/TrailerButton";
 import DataDump from "@/components/ui/DataDump";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getMovieBySlug } from "@/lib/data/movies";
 import { getShowtimes } from "@/lib/data/showtimes";
 import { formatDay, formatDuration } from "@/lib/format";
+import styles from "./page.module.css";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Figma: "Filmside" – facts, trailer modal and showtimes in the chosen city
+// Figma: "Filmside" – MovieHero øverst (billede, titel, trailer, følg, køb), derefter fakta og spilletider
 export default async function MoviePage({ params }) {
   const { slug } = await params;
   const movie = await getMovieBySlug(slug);
@@ -46,32 +46,30 @@ export default async function MoviePage({ params }) {
   ].filter(([, value]) => value);
 
   return (
-    <main>
-      {movie.poster_url ? (
-        <img src={movie.poster_url} alt="" />
-      ) : (
-        <PosterPlaceholder title={movie.title} />
-      )}
-      <h1>{movie.title}</h1>
-      {movie.tagline && <p>{movie.tagline}</p>}
-      {(movie.description || movie.short_description) && (
-        <p>{movie.description || movie.short_description}</p>
-      )}
-      {movie.trailer_url && <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />}
+    <main className={styles.page}>
+      <MovieHero movie={movie} />
 
-      <dl>
-        {facts.map(([label, value]) => (
-          <div key={label}>
-            <dt>{label}</dt>
-            <dd>{value}</dd>
-          </div>
-        ))}
-      </dl>
+      {/* Ikke stylet fra Figma endnu */}
+      <div className={styles.content}>
+        {(movie.description || movie.short_description) && (
+          <p>{movie.description || movie.short_description}</p>
+        )}
 
-      <h2>Spilletider i {city.name}</h2>
-      <ShowtimeList showtimes={showtimes} />
+        <dl>
+          {facts.map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        </dl>
 
-      <DataDump label="movie, showtimes" data={{ movie, showtimes }} />
+        {/* id="spilletider" er det sted, "Køb billet" i MovieHero hopper ned til (#spilletider) */}
+        <h2 id="spilletider">Spilletider i {city.name}</h2>
+        <ShowtimeList showtimes={showtimes} />
+
+        <DataDump label="movie, showtimes" data={{ movie, showtimes }} />
+      </div>
     </main>
   );
 }

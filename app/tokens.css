@@ -29,6 +29,7 @@
   --color-cta-soft: #5e8cff; /* accent/Sart primær CTA */
   --color-on-accent: #0a0a0a;
   --color-danger: #d4380d;
+  --color-status-error: #c94545; /* status/error – fx "REC" på filmsiden til kommende thrillere og gysere */
   --color-success: #389e0d;
   --color-seat-free: #2e2e2e;
   --color-seat-selected: #85a5ff;
@@ -86,6 +87,24 @@
   --font-size-2xl: 2.25rem;
   --font-size-display: 2.75rem;
   --font-size-heading: 2rem; /* Font-Size/Large – 32px, fx "Velkommen tilbage" */
+  --font-size-movie-title: 6rem; /* 96px – filmtitlen på filmsiden (Figma "Titel – standard") */
+  --line-height-movie-title: 1.05;
+  --letter-spacing-overtitle: 0.16em; /* 2.56px ved 16px – fx "THE HUNGER GAMES" over titlen */
+  /* Figma "Titel – smelter" (thrillere og gysere). Figma bruger 245.7px – her en anelse mindre og i 8-tabellen:
+     208px (8 × 26), så CLAYFACE kan stå i kolonne 2–11. Bliver mindre på smallere skærme (14,45vw ≈ 208px ved 1440px). */
+  --font-size-movie-title-melt: min(13rem, 14.45vw);
+  /* Dråberne i "Titel – smelter" (Figma "Dråbe"), i em så de følger skriftstørrelsen. Figmas px ÷ 245.697px. */
+  --position-title-melt-drip: 0.64714em; /* Fast: dråben starter 159px nede … */
+  --size-title-melt-drip-start: 0.01628em; /* … og er 4px høj */
+  --distance-title-melt-drip: 0.01814em; /* Smelter: dråben er rykket 4.457px ned (til 163.457px) */
+  --blur-title-melt-drip: 0.00509em; /* Smelter: let sløret (Layer blur 1.25px) */
+  --color-title-melt-drip: #fff; /* Dråbens gradient: hvid … */
+  --color-title-melt-drip-middle: rgb(255 255 255 / 0.95); /* … 95 % ved 45 % … */
+  --color-title-melt-drip-end: rgb(255 255 255 / 0); /* … og gennemsigtig forneden */
+  --space-movie-title-melt-drip: 0.4em; /* Plads under titlen til dråberne – halvdelen af den længste (0.79em), så titlen kommer længere ned */
+  --space-movie-title-melt-row: 0.1em; /* Luft mellem linjerne, når en lang titel brydes (Figma har kun én linje) */
+  --font-size-movie-title-melt-compact: 4rem; /* 64px (8 × 8) på tablet og mobil */
+  --line-height-movie-title-melt: 0.8;
   --font-size-hero-title: 4rem; /* Font-Size/XX-Large – 64px, titlen på "Kommer snart"-kortet */
   --font-size-finale: clamp(3rem, 11.667vw, 10.5rem); /* 168px i Figmas 1440px-ramme – sloganet i finalen, mindre på små skærme */
   --line-height-finale: 0.86;
@@ -179,6 +198,28 @@
   --size-auth-form-width: 29.167rem; /* 467px – formularen på Log ind */
   --size-auth-image-height: 57.938rem; /* 927px – billedet på Log ind */
   --space-auth-top: 8.125rem; /* 130px – fra headeren ned til formularen på Log ind */
+  --size-movie-hero-height: min(56rem, 90svh); /* 896px – toppen af filmsiden med det store billede, aldrig over 90 % af skærmen (svh = % af skærmens højde) */
+  /* Figma "Projektor – standard" (node 3063:14519): Start → Tændt → Drift */
+  --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
+  --scale-projector-drift: 1.06; /* Drift: … og glider langsomt mellem 100 % og 106 % */
+  --distance-projector-drift-x: -3%; /* Drift: billedet glider 3 % mod venstre */
+  --opacity-projector-on: 0.35; /* Toningen over billedet, når projektoren er tændt … */
+  --opacity-projector-drift: 0.45; /* … og under driften */
+  --color-projector-beam: rgb(255 247 229 / 0.12); /* Lysstriben – varmt hvidt lys */
+  --angle-projector-beam: 14deg;
+  --size-projector-beam-width: 36%; /* 520px af 1440px */
+  --size-projector-beam-height: 196%; /* 1100px af 560px */
+  --position-projector-beam-start: -67%; /* Lysstriben starter til venstre for billedet … */
+  --position-projector-beam-end: 100%; /* … og fejer ud til højre */
+  /* Figma "Titel – standard" (node 3063:14531) */
+  --distance-title-in: 40px; /* Skjult → Ind: titlen glider 40px op */
+  --distance-title-wave: 10px; /* Bølgen: hvert ord løftes 10px (og falder til 5px på vej ned) */
+  --space-movie-title-word: 1.625rem; /* 26px mellem ordene i titlen */
+  --size-countdown-unit: 4.75rem; /* 76px – en boks i nedtællingen til premieren (Figma "Nedtælling") */
+  --size-countdown-unit-compact: 3.5rem; /* Små telefoner */
+  --size-flashlight: 33.333cqw; /* Lyskeglen i "Lommelygte": 480px af 1440px – en tredjedel af heroens bredde */
+  --size-rec-dot: 0.625rem; /* 10px – den røde prik ved "REC" */
+  --size-age-badge: 1.5rem; /* 24px – boksen med aldersgrænsen, fx "7" */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
   --size-intro-frame-width: 90rem; /* 1440px – Figma-rammen, introen er tegnet i (skaleres til skærmen) */
   --size-intro-frame-height: 64rem; /* 1024px */
@@ -215,6 +256,19 @@
   --duration-intro-fade: 900ms; /* Introen toner ud, når man springer over */
   --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i introen */
   --duration-carousel-slide: 1.4s;
+  /* Toppen af filmsiden (Figma "Filmside"): billedet toner frem og zoomer ud, derefter glider titlen op */
+  --duration-projector-on: 1.6s; /* Lysstriben fejer hen over, og billedet tændes */
+  --duration-projector-drift: 12s; /* Én vej i den langsomme drift (kører frem og tilbage i loop) */
+  --duration-movie-hero-title: 900ms;
+  --delay-movie-hero-title: 400ms;
+  --delay-movie-hero-details: 800ms; /* Fakta og knapper kommer til sidst */
+  --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
+  --duration-flashlight-follow: 600ms; /* … og hurtigere, når den følger musen */
+  --duration-rec-blink: 1s; /* Prikken ved "REC" tænder og slukker – ét blink i sekundet */
+  --duration-title-wave-loop: 4s; /* Bølgen i titlen går hvert 4. sekund (ét ord bevæger sig i 450ms af dem) */
+  --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
+  --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
+  --duration-title-melt: 7s; /* Dråberne løber ned (3,5 s), hænger (2,1 s) og trækker sig tilbage (1,4 s) */
   /* Finalen nederst på forsiden (Figma "Finale (motion)" – tider fra Figmas tidslinje) */
   --duration-finale-loop: 8s; /* Stjernerne svæver og glimter i en løkke på 8 sekunder */
   --duration-finale-fade: 1.2s; /* Rummet toner frem (15 % af 8 s) … */
@@ -230,6 +284,7 @@
   --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
   --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
   --easing-slide: cubic-bezier(0.65, 0, 0.35, 1); /* Roligt i gang, roligt i stå – fx kortene i karrusellen */
+  --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* Dråberne løber langsomt i gang og bremser blødt op */
 
   /* Interaction */
   --opacity-hover: 0.75;
@@ -251,6 +306,10 @@
        48rem (768px): tablet og mobil – én kolonne, mindre luft og mindre overskrifter
        30rem (480px): små telefoner */
   --layout-max-width: 64rem;
+  /* 12-kolonne-grid (Figma layout grid: Stretch over hele rammen, ingen margen, 20px gutter) */
+  --grid-columns: 12;
+  --grid-gutter: var(--space-5); /* 20px mellem kolonnerne */
+  --grid-margin: 0rem; /* Kolonnerne går helt ud til kanten */
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
 }
