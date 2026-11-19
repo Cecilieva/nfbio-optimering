@@ -5,16 +5,7 @@
   padding: 0;
 }
 
-/* "Kommer snart"-kortet: centreret, 16px under headeren – samme sted som i slutningen af intro-videoen */
-.hero {
-  /* Kortet bliver 1197px bredt som i Figma: bredden + luften på begge sider */
-  width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
-  margin: 0 auto;
-  /* 16px luft hele vejen rundt – plus 16px over knappen "Se alle kommende film" giver 32px som i prototypen */
-  padding: var(--space-4);
-}
-
-/* Knappen "Se alle kommende film", filtreringen og de kommende film: samme bredde som kortet over */
+/* Knappen "Se alle kommende film", filtreringen og de kommende film: samme bredde som kortet i hero'en */
 .sections {
   width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
   margin: 0 auto;
@@ -27,10 +18,6 @@
 }
 
 @media (max-width: 48rem) {
-  .hero {
-    padding: var(--space-3);
-  }
-
   /* Samme luft i siderne som kortet, så kanterne flugter */
   .sections {
     padding-inline: var(--space-3);

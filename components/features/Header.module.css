@@ -3,10 +3,12 @@
   color: var(--color-header-text);
 }
 
-/* Mens introen på forsiden kører (IntroAnimation sætter data-intro på <html>), ligger headeren
-   over stjernerne og er gennemsigtig, som i Figma. Bagefter er den som normalt. */
+/* På forsiden (HeroScroll sætter data-intro på <html>) ligger headeren gennemsigtig oven på
+   stjernerummet øverst, som i Figma. Den scroller væk med siden. */
 :global(html[data-intro]) .header {
-  position: relative;
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
   z-index: var(--z-intro-header);
   background: transparent;
 }

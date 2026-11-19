@@ -1,6 +1,6 @@
 import styles from "./IntroCountdown.module.css";
 
-// The digits in the order they are shown. Each one gets its turn via --step in the CSS.
+// Tallene i den rækkefølge, de vises. Hvert tal får sin tur via --step i CSS'en.
 const DIGITS = [3, 2, 1];
 
 /**
@@ -27,7 +27,7 @@ export default function IntroCountdown({ onSlideStart, onDone }) {
   }
 
   return (
-    // Pynt: skærmlæsere får knappen "Spring introen over" i IntroAnimation i stedet
+    // Pynt: skærmlæsere springer den over
     <div
       className={styles.countdown}
       onAnimationStart={handleAnimationStart}
@@ -52,7 +52,6 @@ export default function IntroCountdown({ onSlideStart, onDone }) {
         ))}
       </div>
 
-      <p className={styles.skip}>Klik for at springe over</p>
     </div>
   );
 }

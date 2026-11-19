@@ -147,10 +147,10 @@
   --color-header-background: var(--color-background);
   --color-toning: var(--figma-toning-100); /* hinden over billedet på filmsiden */
 
-  /* Intro-videoen på forsiden (Figma "Forside – intro (motion)") */
-  --color-vignette: var(--figma-bg-primary); /* Mørk toning over billedet på "Kommer snart"-kortet */
+  /* Forsiden: hero'en og "Kommer snart"-kortene */
+  --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
+  --color-readability-shade: rgb(0 0 0 / 0.3); /* Figma "skygge for læsbarhed" bag teksten øverst på kortet */
   --color-carousel-covered: color-mix(in srgb, var(--figma-bg-primary) 50%, transparent); /* gamle kort bliver mørkere under det nye */
-  --color-readability-shade: color-mix(in srgb, var(--figma-bg-primary) 30%, transparent); /* figma "skygge for læsbarhed" */
   --color-header-text: var(--color-text-primary);
 
   /* Option button – filtrene under "Kommende film" */
@@ -260,21 +260,24 @@
   --radius-lg: var(--figma-radius-medium); /* 16px – modal, overlay og kort på mobil */
   --radius-pill: 999px;
   --radius-card-lg: 1.75rem; /* 28px – det store "Kommer snart"-kort */
+  --radius-intro-poster: 0.875rem; /* 14px – plakaterne i hero'en */
+  --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
-  --radius-intro-poster: 0.875rem; /* 14px – plakaterne i introen */
   --radius-option-button: 1.125rem; /* 18px – Option button, fx "November" */
   --radius-filter-bar: var(--figma-radius-large); /* 24px: filtreringsbaren, dens felter og søgeknappen */
   --radius-dropdown: var(--figma-radius-medium); /* 16px – dropdown-listen under et filterfelt */
   --radius-dropdown-item: 0.625rem; /* 10px – et punkt i dropdown-listen */
   --radius-poster-chip: 0.625rem; /* 10px – format-mærket på et filmkort */
 
-  /* Skygger (bg/Sekundær med opacity) */
-  --shadow-lg: 0 12px 32px color-mix(in srgb, var(--figma-bg-secondary) 20%, transparent);
-  --shadow-intro-poster: 0 30px 60px -20px color-mix(in srgb, var(--figma-bg-secondary) 55%, transparent); /* Plakaterne i introen */
-  --shadow-toast: 0 8px 24px color-mix(in srgb, var(--figma-bg-secondary) 35%, transparent); /* Fx beskeden under "Følg film" */
-  --shadow-toast-card: 0 6px 16px color-mix(in srgb, var(--figma-bg-secondary) 40%, transparent); /* Beskeden under "Giv mig besked" på et filmkort */
-  --shadow-dropdown: 0 8px 24px color-mix(in srgb, var(--figma-bg-secondary) 40%, transparent); /* Dropdown-listen under et filterfelt */
-  --shadow-text-poster: 0 1px 4px color-mix(in srgb, var(--figma-bg-secondary) 60%, transparent); /* Genre og alder på et filmkort, så de kan læses på billedet */
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.2);
+  --shadow-intro-poster: 0 30px 60px -20px rgb(0 0 0 / 0.55); /* Plakaterne i hero'en */
+  --shadow-toast: 0 8px 24px rgb(0 0 0 / 0.35); /* Fx beskeden under "Følg film" */
+  --shadow-toast-card: 0 6px 16px rgb(0 0 0 / 0.4); /* Beskeden under "Giv mig besked" på et filmkort */
+  --shadow-dropdown: 0 8px 24px rgb(0 0 0 / 0.4); /* Dropdown-listen under et filterfelt */
+  --shadow-text-poster: 0 1px 4px rgb(0 0 0 / 0.6); /* Genre og alder på et filmkort, så de kan læses på billedet */
 
   /* Sizes */
   --size-avatar: 2.5rem;
@@ -331,9 +334,15 @@
   --size-rec-dot: 0.625rem; /* 10px – den røde prik ved "REC" */
   --size-age-badge: 1.5rem; /* 24px – boksen med aldersgrænsen, fx "7" */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
-  --size-intro-frame-width: 90rem; /* 1440px – Figma-rammen, introen er tegnet i (skaleres til skærmen) */
-  --size-intro-frame-height: 64rem; /* 1024px */
-  --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i introen */
+  --size-featured-card-height: min(var(--size-coming-card-height), 85svh); /* Tilpasser sig skærmen, så titel og knapper kan ses */
+  --space-featured-gap: 4vh; /* Luften mellem "Kommer snart"-kortene */
+  --space-featured-dots-edge: clamp(0.5rem, 1.4vw, 1.375rem); /* Prikkerne fra højre kant */
+  --size-featured-dot: 4px; /* En prik ved "Kommer snart"-kortene */
+  --scale-featured-dot-active: 1.6; /* Den aktive prik er lidt større */
+  --size-hero-height: 100svh; /* Hero'en på forsiden fylder skærmen */
+  --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i hero'en */
+  --perspective-hero: 900px; /* Hvor dybt stjernerummet i hero'en føles – mindre tal giver mere 3D */
+  --space-hero-cue: clamp(1.75rem, 6vh, 3.5rem); /* Scroll-markøren over bunden af hero'en */
   --size-finale-height: min(64rem, 100svh); /* Figmas ramme er 1024px høj – aldrig højere end skærmen */
   --size-finale-height-compact: min(32rem, 80svh); /* Mobil: sloganet er mindre, så rummet er lavere */
   --size-finale-fade: 16rem; /* Hvor langt finalen toner over i sidens baggrund foroven og forneden */
@@ -363,8 +372,9 @@
   --duration-countdown-pulse: 1.6s; /* Ringen blinker tre gange */
   --delay-countdown-slide: 1.75s; /* Hvornår nedtællingen begynder at glide op */
   --duration-countdown-slide: 800ms; /* Udglidningen */
+  --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i hero'en */
+  --duration-featured-dots: 500ms; /* Prikkerne ved "Kommer snart"-kortene toner frem og skifter */
   --duration-intro-fade: 900ms; /* Introen toner ud, når man springer over */
-  --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i introen */
   --duration-carousel-slide: 1.4s;
   /* Toppen af filmsiden (Figma "Filmside"): billedet toner frem og zoomer ud, derefter glider titlen op */
   --duration-projector-on: 1.6s; /* Lysstriben fejer hen over, og billedet tændes */
@@ -385,7 +395,7 @@
   --duration-finale-zoom: 2.4s; /* … og zoomer på plads (30 % af 8 s) */
   --duration-finale-line: 737ms; /* Hver linje i sloganet */
   --delay-finale-line: 332ms; /* Tid mellem linjerne */
-  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */ /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
+  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -404,11 +414,9 @@
   --border-width-active: 1.5px; /* Det valgte felt i filtreringsbaren */
 
   /* Lag: hvad der ligger øverst */
-  /* Introen på forsiden: stjernerne under headeren, nedtællingen over den (som i Figma) */
-  --z-intro: 100; /* Stjernerummet og plakaterne – over siden */
-  --z-intro-header: 101; /* Headeren, mens introen kører */
+  /* Hero'en på forsiden: headeren over stjernerummet, nedtællingen over alt (som i Figma) */
+  --z-intro-header: 101; /* Headeren oven på hero'en */
   --z-intro-countdown: 102; /* Nedtællingen – over alt */
-  --z-intro-skip: 103; /* "Spring introen over" ligger øverst, så den kan ses med tastaturet */
 
   /* Layout */
   /* Breakpoints – CSS-variabler virker ikke i @media, så tallene skrives direkte i media queries.
@@ -421,6 +429,7 @@
   --grid-gutter: var(--space-5); /* 20px mellem kolonnerne */
   --grid-margin: 0rem; /* Kolonnerne går helt ud til kanten */
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
+  --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene – over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
 }
 
