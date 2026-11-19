@@ -36,8 +36,7 @@
   --color-backdrop: rgb(0 0 0 / 0.6);
   --color-header-background: var(--color-background);
 
-  /* Intro-videoen på forsiden (Figma "Forside – intro (motion)") */
-  --color-intro-background: #08070d; /* Baggrunden bag videoen – samme farve som nedtællingen */
+  /* Forsiden: hero'en og "Kommer snart"-kortene */
   --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
   --color-readability-shade: rgb(0 0 0 / 0.3); /* Figma "skygge for læsbarhed" bag teksten øverst på kortet */
   --color-header-text: var(--color-text-primary);
@@ -224,7 +223,7 @@
   --duration-finale-zoom: 2.4s; /* … og zoomer på plads (30 % af 8 s) */
   --duration-finale-line: 737ms; /* Hver linje i sloganet */
   --delay-finale-line: 332ms; /* Tid mellem linjerne */
-  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */ /* Et nyt kort i "Kommer snart"-karrusellen glider ind oven på det gamle */
+  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -232,7 +231,6 @@
   --easing-out: ease-out; /* Starter hurtigt og bremser blødt op, fx menuen der glider ind */
   --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
   --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
-  --easing-slide: cubic-bezier(0.65, 0, 0.35, 1); /* Roligt i gang, roligt i stå – fx kortene i karrusellen */
 
   /* Interaction */
   --opacity-hover: 0.75;

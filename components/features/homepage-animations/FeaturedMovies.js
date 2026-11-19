@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ComingSoonCard from "@/components/features/ComingSoonCard";
-import HeroScroll from "@/components/features/hero-animation/HeroScroll";
+import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
 
 // How much of a card image's bottom to show instead of its top (see ParallaxFrame's lift).
