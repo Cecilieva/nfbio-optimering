@@ -17,7 +17,7 @@ Next.js (App Router) + Supabase. Al tekst i UI'et er på dansk. Kodekommentarer 
 1. **Kør aldrig SQL mod databasen** – heller ikke migrationer eller "små rettelser". Skemaet står i `supabase/supabase_schema.sql` og er den eneste kilde til tabeller, views, RPC'er og RLS. Mangler der noget i databasen, så beskriv ændringen og lad brugeren køre den.
 2. **Data hentes via `lib/data/`.** Sider (`app/**/page.js`) kalder funktionerne derfra. Komponenter kalder aldrig Supabase direkte – de får data som props.
 3. **Ændringer går gennem server actions i `lib/actions/`.** De returnerer `{ error: { code, message } }` til `useActionState` eller redirecter til næste trin.
-4. **Styling bruger kun tokens fra `app/tokens.css`.** Ingen hårdkodede farver, størrelser, skygger eller fonte i andre CSS-filer. Mangler der en værdi, så tilføj et token.
+4. **Styling bruger kun tokens fra `app/tokens.css`.** Ingen hårdkodede farver, størrelser, skygger eller fonte i andre CSS-filer. Mangler der en værdi, så tilføj et token. Nye farver lægges i farvepaletten øverst i tokens.css (`--palette-…`), og tokens henter dem derfra.
 5. **Figma-skærme bygges ved at genbruge eksisterende komponenter.** Style og udvid komponenterne i `components/ui` og `components/features` frem for at lave nye. Lav kun en ny komponent, når ingen eksisterende passer, og læg den i den rigtige mappe.
 6. **Rør ikke auth-opsætningen** (`lib/supabase/`, `proxy.js`, `lib/auth.js`), medmindre opgaven kræver det.
 
@@ -25,7 +25,7 @@ Next.js (App Router) + Supabase. Al tekst i UI'et er på dansk. Kodekommentarer 
 
 ```
 app/
-  tokens.css              Design tokens (pladsholdere – skal hentes fra Figma-variablerne)
+  tokens.css              Design tokens: farvepalet (--palette-…), Figma-variabler (--figma-…), sitets tokens og Figma-tilstande
   globals.css             Base-styles, kun med tokens
   layout.js               Kun <html>/<body> og fonte
   not-found.js            404 (viser selv Header + Footer)

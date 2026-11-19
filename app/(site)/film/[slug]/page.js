@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// Figma: "Filmside" – MovieHero øverst (billede, titel, trailer, følg, køb), derefter fakta og spilletider
+// Figma "Filmside": MovieHero øverst, så fakta + spilletider
 export default async function MoviePage({ params }) {
   const { slug } = await params;
   const movie = await getMovieBySlug(slug);
@@ -46,10 +46,11 @@ export default async function MoviePage({ params }) {
   ].filter(([, value]) => value);
 
   return (
-    <main className={styles.page}>
+    // data-theme = mode for hele siden (tokens.css)
+    <main className={styles.page} data-theme={movie.theme ?? undefined}>
       <MovieHero movie={movie} />
 
-      {/* Ikke stylet fra Figma endnu */}
+      {/* mangler stadig figma-styling */}
       <div className={styles.content}>
         {(movie.description || movie.short_description) && (
           <p>{movie.description || movie.short_description}</p>
@@ -64,7 +65,7 @@ export default async function MoviePage({ params }) {
           ))}
         </dl>
 
-        {/* id="spilletider" er det sted, "Køb billet" i MovieHero hopper ned til (#spilletider) */}
+        {/* "Køb billet" hopper herned (#spilletider) */}
         <h2 id="spilletider">Spilletider i {city.name}</h2>
         <ShowtimeList showtimes={showtimes} />
 

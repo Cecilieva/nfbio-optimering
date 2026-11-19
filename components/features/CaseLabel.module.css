@@ -1,4 +1,4 @@
-/* Figma "Sag": REC og teksten på én linje med 16px imellem */
+/* "Sag": REC + tekst på én linje, 16px imellem */
 .label {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +8,7 @@
   line-height: var(--line-height-snug);
 }
 
-/* Figma "REC": prik og ord med 8px imellem */
+/* "REC": prik + ord, 8px imellem */
 .rec {
   display: inline-flex;
   align-items: center;
@@ -16,8 +16,7 @@
   color: var(--color-status-error);
 }
 
-/* De to prikker ligger oven på hinanden: .dot er "rammen" (position: relative), og billederne inde i den
-   lægges præcis oven på hinanden med position: absolute og inset: 0 (= top, højre, bund og venstre er 0) */
+/* de 2 prikker oven på hinanden (.dot = rammen, billederne absolute + inset: 0) */
 .dot {
   position: relative;
   width: var(--size-rec-dot);
@@ -29,8 +28,7 @@
   inset: 0;
 }
 
-/* Figma "Blink=Til" / "Blink=Fra": den røde prik tænder og slukker.
-   steps(1, end) får den til at skifte brat (tændt/slukket) i stedet for at tone glidende. */
+/* "Blink=Til" / "Fra" – steps(1, end) så den skifter brat */
 .dotOn {
   animation: recBlink var(--duration-rec-blink) steps(1, end) infinite;
 }
@@ -41,14 +39,14 @@
   text-transform: uppercase;
 }
 
-/* Halvvejs i hvert blink er "Til"-prikken usynlig, så "Fra"-prikken nedenunder ses */
+/* halvvejs: "Til" usynlig → "Fra" ses */
 @keyframes recBlink {
   50% {
     opacity: 0;
   }
 }
 
-/* Ingen blink for dem, der har slået animationer fra – prikken lyser bare */
+/* reduced motion: prikken lyser bare */
 @media (prefers-reduced-motion: reduce) {
   .dotOn {
     animation: none;

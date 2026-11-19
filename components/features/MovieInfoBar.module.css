@@ -1,6 +1,5 @@
-/* Figma: på sidens 12-kolonne-grid (subgrid fra MovieHero, kolonne 2–11).
-   subgrid betyder, at baren bruger præcis de samme kolonner som heroen i stedet for at lave sine egne.
-   Fakta og tekst i sidens kolonne 2–6, knapperne i sidens kolonne 8–11 – begge sat øverst. */
+/* subgrid fra MovieHero (kol. 2–11)
+   fakta + tekst i kol. 2–6, knapper i kol. 8–11 */
 .bar {
   grid-column: 1 / -1;
   display: grid;
@@ -9,7 +8,7 @@
   align-items: start;
 }
 
-/* 1 / span 5 = start i barens første kolonne og fyld 5 kolonner */
+/* 1 / span 5 = start i kol. 1, fyld 5 */
 .info {
   grid-column: 1 / span 5;
   display: flex;
@@ -31,7 +30,7 @@
   line-height: var(--line-height-snug);
 }
 
-/* Aldersgrænsen i en lille boks med blå kant */
+/* aldersgrænse i lille boks */
 .age {
   display: inline-flex;
   align-items: center;
@@ -48,12 +47,11 @@
 .text {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs); /* XS/Sekundær/Regular */
   line-height: var(--line-height-snug);
 }
 
-/* Knapperne slutter ved højre kant af sidens kolonne 11 (-1 = sidste kolonne). justify-content: flex-end skubber
-   dem til højre. */
+/* knapperne til højre, slutter ved kol. 11 (-1 = sidste) */
 .actions {
   grid-column: 7 / -1;
   display: flex;
@@ -61,7 +59,7 @@
   gap: var(--space-2);
 }
 
-/* Tablet og mobil (under 48rem = 768px): tekst og knapper fylder hver hele bredden, og knapperne deler den */
+/* tablet + mobil (< 768px): fuld bredde, knapperne deler */
 @media (max-width: 48rem) {
   .info,
   .actions {
@@ -76,7 +74,7 @@
     flex-wrap: wrap;
   }
 
-  /* > * = hver knap direkte i .actions. flex: 1 1 auto lader dem vokse, så de deler rækken ligeligt. */
+  /* > * = hver knap → deler rækken lige */
   .actions > * {
     flex: 1 1 auto;
   }

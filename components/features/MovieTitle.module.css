@@ -1,5 +1,5 @@
-/* Figma "Titel – standard": overtitel og titel under hinanden med 16px imellem.
-   Skjult → Ind: hele blokken toner frem og glider 40px op. */
+/* "Titel – standard": overtitel + titel, 16px imellem
+   glider 40px op og toner frem */
 .titleBlock {
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   animation: titleIn var(--duration-movie-hero-title) var(--easing-out) var(--delay-movie-hero-title) both;
 }
 
-/* Figma "Univers titel": fx "THE HUNGER GAMES" */
+/* "Univers titel", fx "THE HUNGER GAMES" */
 .series {
   margin: 0;
   color: var(--color-text-label);
@@ -16,12 +16,12 @@
   text-transform: uppercase;
 }
 
-/* Figma "Ord": ordene står ved siden af hinanden med 26px imellem og brydes til næste linje */
+/* ordene ved siden af hinanden, 26px imellem, brydes til ny linje */
 .title {
   display: flex;
   flex-wrap: wrap;
   column-gap: var(--space-movie-title-word);
-  margin: 0; /* Fjerner den globale h1-margin */
+  margin: 0; /* fjerner global h1-margin */
   color: var(--color-text-primary);
   font-family: var(--font-family-display);
   font-size: var(--font-size-movie-title);
@@ -29,21 +29,20 @@
   line-height: var(--line-height-movie-title);
 }
 
-/* Hvert ord kan løftes for sig. Figma "Bølge 1–5": hvert ord løftes 10px, falder til 5px og lander igen – ét efter ét.
-   Bølgen går af sig selv hvert 4. sekund og starter, når titlen er gledet på plads. */
+/* "Bølge 1–5": hvert ord løftes 10px → 5px → lander, ét ad gangen
+   hvert 4. sek, starter når titlen er på plads */
 .word {
-  /* inline-block, fordi transform (løftet i bølgen) ikke virker på almindelige inline-elementer */
+  /* inline-block – transform virker ikke på inline */
   display: inline-block;
-  /* Forsinkelsen = når titlen er på plads + ordets nummer (--index fra MovieTitle.js) × 150ms,
-     så ord 0 løftes først, så ord 1 osv. – det giver bølgen fra venstre mod højre */
+  /* forsinkelse = titlen på plads + --index × 150ms → bølge fra venstre */
   animation: wordWave var(--duration-title-wave-loop) var(--easing-in-out)
     calc(var(--delay-title-wave-start) + var(--index) * var(--delay-title-wave)) infinite;
 }
 
-/* ---------- Variant "melt" – Figma "Titel – smelter" (kommende thrillere og gysere) ---------- */
+/* ---------- melt – "Titel – smelter" (kommende thrillere/gysere) ---------- */
 
-/* Store versaler med tæt linjeafstand som i Figma. padding-bottom giver plads til det meste af dråberne –
-   kun de falmede spidser af de længste når ned bag fakta og knapper (MovieHero lægger dem ovenpå). */
+/* store versaler, tæt linjeafstand
+   padding-bottom = plads til dråberne (spidserne må gå ned bag fakta/knapper) */
 .title[data-variant="melt"] {
   padding-bottom: var(--space-movie-title-melt-drip);
   row-gap: var(--space-movie-title-melt-row);
@@ -52,27 +51,25 @@
   text-transform: uppercase;
 }
 
-/* Ingen bølge her – det er dråberne, der bevæger sig. Et ord brydes aldrig midt i (white-space: nowrap).
-   position: relative gør ordet til "rammen" for dråberne, så de placeres ud fra ordets venstre kant. */
+/* ingen bølge her, og ordet må ikke knække
+   position: relative → dråberne placeres fra ordets venstre kant */
 .title[data-variant="melt"] .word {
   position: relative;
   white-space: nowrap;
   animation: none;
 }
 
-/* Figma "Dråbe": placeret fra ordets venstre kant. --left, --width og --height kommer fra MovieTitle.js.
-   Her står dråbens udgangspunkt, Figma "Fast": 4px høj og usynlig lige over bunden af bogstaverne.
-   Alle mål er i em, så dråberne følger titlens skriftstørrelse. */
+/* "Dråbe" – --left/--width/--height kommer fra MovieTitle.js
+   start ("Fast"): 4px høj og usynlig, alt i em */
 .drip {
   position: absolute;
   top: var(--position-title-melt-drip);
   left: var(--left);
   width: var(--width);
   height: var(--size-title-melt-drip-start);
-  /* Hjørnerne: øverst venstre, øverst højre, nederst højre, nederst venstre. Foroven 2px som i Figma,
-     forneden en halv bredde, så bunden bliver helt rund. */
+  /* 2px foroven, helt rund forneden (halv bredde) */
   border-radius: var(--radius-xs) var(--radius-xs) calc(var(--width) / 2) calc(var(--width) / 2);
-  /* Figma: hvid foroven, næsten hvid ved 45 %, gennemsigtig forneden – så dråben falmer ud */
+  /* hvid → næsten hvid ved 45 % → gennemsigtig */
   background: linear-gradient(
     to bottom,
     var(--color-title-melt-drip),
@@ -80,14 +77,14 @@
     var(--color-title-melt-drip-end)
   );
   opacity: 0;
-  /* 7 sekunder pr. gang, starter når titlen er gledet på plads, og gentages for evigt (infinite) */
+  /* 7 sek, starter når titlen er på plads, for evigt */
   animation: drip var(--duration-title-melt) var(--delay-title-wave-start) infinite;
 }
 
-/* Fast → Smelter i et loop. 0–50 %: dråberne løber ned. 50–80 %: de hænger. 80–100 %: tilbage til Fast.
-   Kun "Smelter"-tilstanden (50 % og 80 %) står her. Start og slut (0 % og 100 %) er dråbens normale værdier fra
-   .drip ovenfor, så dem behøver man ikke skrive igen. animation-timing-function bestemmer farten fra den
-   keyframe og frem til den næste: langsomt i gang og blødt stop på vej ned, blødt frem og tilbage på vej op. */
+/* Fast → Smelter → Fast
+   0–50 % ned, 50–80 % hænger, 80–100 % op igen
+   kun "Smelter" står her – start/slut er .drip's normale værdier
+   timing-function gælder fra den keyframe til den næste */
 @keyframes drip {
   0% {
     animation-timing-function: var(--easing-title-melt-down);
@@ -103,7 +100,7 @@
   }
 }
 
-/* Titlen glider op og toner frem: fra usynlig og 40px længere nede til sin normale plads */
+/* usynlig + 40px nede → normal plads */
 @keyframes titleIn {
   from {
     opacity: 0;
@@ -111,8 +108,8 @@
   }
 }
 
-/* Ét ord bevæger sig i de første 450ms af de 4 sekunder (11,25 %) og står stille resten af tiden.
-   Procenterne kan ikke være tokens – ændres --duration-title-wave-loop, skal de regnes om (450ms / løkken). */
+/* et ord bevæger sig i de første 450ms af 4 sek (11,25 %)
+   procenterne kan ikke være tokens – regn om hvis loopet ændres */
 @keyframes wordWave {
   0%,
   11.25%,
@@ -129,14 +126,14 @@
   }
 }
 
-/* Ingen bevægelse for dem, der har slået animationer fra */
+/* reduced motion: ingen bevægelse */
 @media (prefers-reduced-motion: reduce) {
   .titleBlock,
   .word {
     animation: none;
   }
 
-  /* Dråberne står stille, som i Figma "Smelter" (de samme værdier som 50 % i @keyframes drip) */
+  /* dråberne står stille i "Smelter" (= 50 % i keyframes) */
   .drip {
     height: var(--height);
     opacity: 1;
@@ -146,7 +143,7 @@
   }
 }
 
-/* Tablet og mobil: mindre titel og mindre luft mellem ordene */
+/* tablet + mobil: mindre titel og mindre luft */
 @media (max-width: 48rem) {
   .title {
     column-gap: var(--space-3);
@@ -157,7 +154,7 @@
     font-size: var(--font-size-xs);
   }
 
-  /* Mindre titel – dråberne følger med, fordi de er målt i em */
+  /* dråberne følger med (em) */
   .title[data-variant="melt"] {
     font-size: var(--font-size-movie-title-melt-compact);
   }
