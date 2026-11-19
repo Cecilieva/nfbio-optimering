@@ -125,7 +125,7 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
   );
 }
 
-// "Om 31 dage" → the number in its own span (data-days), so FeaturedMovies can count it up
+// "Om 31 dage" → tallet i sit eget <span> (data-days), så FeaturedMovies kan tælle det op
 function withCountingNumber(text) {
   const match = typeof text === "string" && text.match(/^(\D*)(\d+)(\D*)$/);
   if (!match) {
@@ -141,7 +141,7 @@ function withCountingNumber(text) {
   );
 }
 
-// "Åbent", or "Åbner 27.11" while ticket sale has not opened yet
+// "Åbent", eller "Åbner 27.11", så længe billetsalget ikke er åbnet endnu
 function formatTicketSale(opens) {
   if (opens && opens > formatDayKey(new Date())) {
     return `Åbner ${formatPremiereShort(opens)}`;

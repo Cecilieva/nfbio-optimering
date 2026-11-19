@@ -10,10 +10,10 @@ import { useLenis } from "@/components/features/SmoothScroll";
 import { getParallaxBox, PARALLAX_STRENGTH } from "@/components/ui/ParallaxFrame";
 import styles from "./HeroScroll.module.css";
 
-// The posters that float past. The last one (Sunrise) unfolds into the first "Kommer snart" card.
-// position: which part of the image is shown on the poster (object-position)
-// The last poster has no image of its own: it shows the first card's image (targetImage) all the way,
-// so the poster just stretches out into the card – never two images on top of each other.
+// Plakaterne, der svæver forbi. Den sidste (Sunrise) folder sig ud til det første "Kommer snart"-kort.
+// position: hvilken del af billedet plakaten viser (object-position i CSS).
+// Den sidste plakat har ikke sit eget billede: den viser kort 1's billede (targetImage) hele vejen,
+// så plakaten bare strækker sig ud til kortet – der er aldrig to billeder oven på hinanden.
 const FILMS = [
   { src: "/intro/plakater/dune.jpg" },
   { src: "/intro/plakater/paper-tiger.jpg" },
@@ -23,26 +23,27 @@ const FILMS = [
   { src: "/intro/plakater/you-can-see-everything.jpg" },
   { src: "/intro/plakater/markens-groede.jpg" },
   { src: "/intro/plakater/jumanji.jpg" },
-  // Square image: in the standing poster only the sides are cut off, so the middle shows the tents and mountains
+  // Billedet er kvadratisk: i den stående plakat skæres kun siderne fra, så midten viser teltene og bjergene
   { position: "50% 50%" },
 ];
 
-// Fixed places in the room: [x, y (share of the screen from the middle), width in px]. Reused if there are more films.
+// Faste pladser i rummet: [x, y (andel af skærmen ud fra midten), bredde i px]. Genbruges, hvis der er flere film.
 const SLOTS = [
   [-0.34, -0.2, 250], [0.33, 0.22, 210], [0.3, -0.27, 200], [-0.31, 0.25, 250], [0.37, -0.04, 220],
   [-0.39, 0.03, 240], [0.22, 0.31, 200], [-0.22, -0.31, 210], [0.33, -0.23, 230], [-0.33, 0.21, 240],
 ];
-const DEPTH = 6000; // How far the camera flies
-const POSTER_GONE_Z = 800; // A poster has faded out here (perspective 900px: it is shown about 9× larger)
-const LAST_WIDTH = 300; // The last film's width before it unfolds
-const POSTER_RATIO = 1.25; // Height / width of a poster
-const FULL_SIZE_WIDTH = 1200; // Posters have full size from this screen width – smaller on mobile
-const MIN_POSTER_SCALE = 0.55;
-const REVEAL_BLUR_PX = 10; // The card's text goes from blurred to sharp
+const DEPTH = 6000; // Hvor langt "kameraet" flyver ind i rummet
+const POSTER_GONE_Z = 800; // Her er en plakat tonet helt ud (den vises ca. 9 gange større, fordi den er tæt på)
+const LAST_WIDTH = 300; // Den sidste plakats bredde, før den folder sig ud
+const POSTER_RATIO = 1.25; // Højde / bredde på en plakat
+const FULL_SIZE_WIDTH = 1200; // Plakaterne har fuld størrelse fra denne skærmbredde – mindre på mobil
+const MIN_POSTER_SCALE = 0.55; // Mindste størrelse på mobil
+const REVEAL_BLUR_PX = 10; // Kortets tekst går fra så sløret til skarp
 
+// Holder et tal mellem 0 og 1
 const clamp = gsap.utils.clamp(0, 1);
 
-// "50% 30%" → [50, 30]. object-position in percent, as getComputedStyle gives it.
+// "50% 30%" → [50, 30]. Laver object-position om til tal (i procent), så de kan blandes.
 function parsePosition(position = "50% 50%") {
   const [x = "50%", y = "50%"] = position.trim().split(/\s+/);
   return [parseFloat(x), parseFloat(y)];
@@ -66,7 +67,8 @@ function getServerReducedMotion() {
   return null;
 }
 
-// Each film gets a place and a depth. The last one is always in the middle, furthest away.
+// Hver film får en plads og en dybde (z). Den sidste står altid i midten, længst væk.
+// De andre fordeles jævnt i dybden, så de kommer forbi én ad gangen.
 function getLayout(films) {
   return films.map((film, index) => {
     if (index === films.length - 1) {
@@ -85,10 +87,12 @@ function getLayout(films) {
  * 1. Nedtællingen 3-2-1 (IntroCountdown) kører på tid ved indlæsning og ligger over alt, også headeren.
  *    Man kan ikke scrolle, mens den kører (Lenis er stoppet).
  * 2. Når den glider op, toner plakaterne frem, og "Scroll"-markøren venter nederst.
- * 3. Resten styres af scroll (GSAP ScrollTrigger med pin og scrub). Til sidst folder den sidste plakat sig ud
- *    til det første "Kommer snart"-kort (target): plakaten vokser til kortets plads og størrelse, kortets billede
- *    tones ind – præcis som kortets parallax viser det – og en kopi af kortets tekst (children) skærpes frem.
- * 4. Når hero'en slipper, byttes plakaten ud med det rigtige kort. Scroller man op, byttes der tilbage.
+ * 3. Resten styres af scroll. "Pinned" betyder, at hero'en står fast på skærmen, mens man scroller, og
+ *    "scrub", at animationen følger scrollen frem og tilbage. Kameraet flyver ind gennem plakaterne, og
+ *    til sidst folder den sidste plakat sig ud til det første "Kommer snart"-kort (target): plakaten vokser
+ *    til kortets plads og størrelse, og en kopi af kortets tekst (children) skærpes frem.
+ * 4. Når hero'en slipper, byttes plakaten ud med det rigtige kort. De ser ens ud, så man kan ikke se byttet.
+ *    Scroller man op, byttes der tilbage.
  *
  * Kortet ligger i sektionen lige under hero'en, trukket en skærmhøjde op (se FeaturedMovies), så det står
  * præcis, hvor hero'en var, når den slipper.
@@ -128,7 +132,8 @@ export default function HeroScroll({
   const revealLayerRef = useRef(null);
   const copyRef = useRef(null);
   const posterRefs = useRef([]);
-  // The posters fade in when the countdown slides away. The tween is made in the effect below.
+  // Plakaterne toner frem, når nedtællingen glider væk. Selve animationen laves længere nede.
+  // fadeWanted husker, hvis nedtællingen var hurtigere end animationen.
   const fadeTween = useRef(null);
   const fadeWanted = useRef(false);
 
@@ -164,7 +169,7 @@ export default function HeroScroll({
     };
   }, [reduceMotion, showCountdown, lenis]);
 
-  // The scroll animation
+  // Selve scroll-animationen
   useEffect(() => {
     const target = targetRef?.current;
     if (reduceMotion !== false || !target) {
@@ -176,7 +181,8 @@ export default function HeroScroll({
     const vignette = vignetteRef.current;
     const revealLayer = revealLayerRef.current;
     const revealImage = revealLayer?.querySelector("img");
-    // Which part of the image the poster shows, and which part the card shows. Interpolated during the unfolding.
+    // Hvilken del af billedet plakaten viser, og hvilken del kortet viser. Under udfoldningen glider den fra den ene
+    // til den anden.
     const posterPosition = parsePosition(films[films.length - 1].position);
     const cardImage = target.querySelector("img");
     const cardPosition = parsePosition(cardImage ? getComputedStyle(cardImage).objectPosition : undefined);
@@ -185,16 +191,17 @@ export default function HeroScroll({
     const lastIndex = films.length - 1;
     const layout = getLayout(films);
     const startRadius = parseFloat(getComputedStyle(posters[0]).borderTopLeftRadius);
-    const camera = { z: 0 };
-    const morph = { m: 0 };
-    // The card's text follows the scroll evenly through the unfolding (the unfolding itself eases in and out,
-    // so tying the text to it made the text rush in during the middle)
+    // Tallene, som scroll-animationen ændrer, og som render() tegner ud fra:
+    const camera = { z: 0 }; // Hvor langt kameraet er fløjet ind i rummet
+    const morph = { m: 0 }; // Udfoldningen af den sidste plakat: 0 = plakat, 1 = kort
+    // Kortets tekst: følger scrollen jævnt. Udfoldningen går langsomt i gang og i stå, og hvis teksten fulgte den,
+    // ville den fare frem på midten.
     const textReveal = { v: 0 };
-    const fade = { v: 0 };
-    let swapped = false;
+    const fade = { v: 0 }; // Plakaterne toner frem efter nedtællingen
+    let swapped = false; // Er plakaten byttet ud med det rigtige kort?
 
-    // Where the card stands when the hero lets go. The card's section starts where the hero starts,
-    // so the card's place in its section is its place on the screen.
+    // Hvor kort 1 står, når hero'en slipper. Kortenes sektion starter samme sted som hero'en,
+    // så kortets plads i sektionen er også dets plads på skærmen.
     function getTarget() {
       return {
         x: target.offsetLeft,
@@ -205,10 +212,11 @@ export default function HeroScroll({
       };
     }
 
-    // The last poster's image. At k = 1 it stands exactly as the card's parallax has it when the hero lets go.
-    // At k = 0 (the poster) it "holds the card's bottom": the poster shows the same share of the image as the card,
-    // ending at the same place – so the unfolding just opens up towards the sky.
-    // Both the layer's height and its top edge move in a straight line, so the image always covers the frame.
+    // Placerer billedet i den sidste plakat. k er udfoldningen: 0 = plakat, 1 = kort.
+    // Ved k = 1 står billedet præcis, som kortets parallax har det, når hero'en slipper – så byttet ikke ses.
+    // Ved k = 0 "holder plakaten kortets bund": den viser samme bund af billedet som kortet, så udfoldningen
+    // bare åbner op mod himlen. Imellem glider højde og placering jævnt fra det ene til det andet, så billedet
+    // altid dækker hele plakaten.
     function placeImage(card, posterHeight, frameHeight, k) {
       if (!revealLayer) {
         return;
@@ -220,15 +228,19 @@ export default function HeroScroll({
         strength,
         lift: targetLift,
       });
-      const cardLayerTop = card.height / 2 - box.height / 2 + box.y; // relative to the card's top edge
-      const share = card.height / box.height; // how much of the layer the card shows
-      const shownBottom = (card.height - cardLayerTop) / box.height; // where the card's view ends (0–1)
+      // Billedlagets top i kortet, målt fra kortets top (negativ = over kortet)
+      const cardLayerTop = card.height / 2 - box.height / 2 + box.y;
+      // Hvor stor en del af billedet kortet viser, og hvor i billedet kortets bund er (0 = top, 1 = bund)
+      const share = card.height / box.height;
+      const shownBottom = (card.height - cardLayerTop) / box.height;
+      // Plakaten viser samme andel af billedet og slutter samme sted forneden
       const posterLayerHeight = posterHeight / share;
       const posterLayerTop = -(shownBottom - share) * posterLayerHeight;
 
+      // Bland plakatens og kortets værdier efter k
       const layerHeight = posterLayerHeight + (box.height - posterLayerHeight) * k;
       const layerTop = posterLayerTop + (cardLayerTop - posterLayerTop) * k;
-      // The layer is centred in the frame by CSS (top: 50%, translate -50%), so it is moved from there
+      // Laget er centreret i plakaten af CSS'en (top: 50% og translate -50%), så det flyttes ud fra midten
       revealLayer.style.height = `${layerHeight}px`;
       revealLayer.style.transform = `translate3d(0, ${layerTop - frameHeight / 2 + layerHeight / 2}px, 0)`;
       revealImage.style.objectPosition = posterPosition
@@ -236,10 +248,12 @@ export default function HeroScroll({
         .join(" ");
     }
 
-    // Places each film in 3D from the camera's position
+    // Tegner alle plakaterne ud fra, hvor kameraet er. Kaldes, hver gang scrollen ændrer noget.
+    // Plakaterne står i et 3D-rum (CSS perspective), og z er afstanden til kameraet.
     function render() {
       const width = hero.clientWidth;
       const height = hero.clientHeight;
+      // Plakaterne er mindre på små skærme
       const scale = Math.max(MIN_POSTER_SCALE, Math.min(1, width / FULL_SIZE_WIDTH));
 
       posters.forEach((poster, index) => {
@@ -247,10 +261,11 @@ export default function HeroScroll({
         const isLast = index === lastIndex;
         const w0 = place.width * scale;
         const h0 = w0 * POSTER_RATIO;
-        const z = place.z + camera.z;
+        const z = place.z + camera.z; // Afstanden til kameraet: jo større, jo tættere på
 
         if (isLast && morph.m > 0) {
-          // Last step: the film grows flat out to the card's size and place
+          // Sidste trin: den sidste plakat vokser fladt ud til kortets størrelse og plads.
+          // Alle tal glider fra plakatens værdi (k = 0) til kortets værdi (k = 1).
           const card = getTarget();
           const k = morph.m;
           const frameWidth = w0 + (card.width - w0) * k;
@@ -266,20 +281,21 @@ export default function HeroScroll({
             visibility: swapped ? "hidden" : "visible",
           });
 
-          // One image all the way: it grows with the frame from the poster to exactly where
-          // the card's parallax has it when the hero lets go (height, offset and crop)
+          // Ét billede hele vejen, der vokser med plakaten, og kortets mørke toning tones ind
           placeImage(card, h0, frameHeight, k);
           vignette.style.opacity = String(k);
 
-          // The card's text stands still where it ends up: it is laid out at the card's final size and place,
-          // and the growing poster opens like a window over it (no reflow, nothing sliding around).
-          // The poster's top-left corner is the camera's centre (middle of the hero) + the translate above.
+          // Kopien af kortets tekst står stille det sted, hvor den ender: den har hele tiden kortets størrelse
+          // og plads, og plakaten åbner sig som et vindue hen over den. Så flytter teksten sig ikke undervejs.
+          // Plakatens øverste venstre hjørne er midten af hero'en + flytningen ovenfor, så teksten flyttes
+          // tilbage med forskellen.
           Object.assign(copy.style, {
             width: `${card.width}px`,
             height: `${card.height}px`,
             transform: `translate3d(${card.x - (width / 2 + x)}px, ${card.y - (height / 2 + y)}px, 0)`,
           });
-          // It fades in and sharpens over most of the unfolding, starting and ending softly
+          // Teksten tones ind og bliver skarp over det meste af udfoldningen. t * t * (3 - 2t) får den til
+          // at gå blødt i gang og blødt i stå.
           const t = clamp((textReveal.v - 0.2) / 0.75);
           const text = t * t * (3 - 2 * t);
           copy.style.opacity = String(text);
@@ -294,11 +310,13 @@ export default function HeroScroll({
           vignette.style.opacity = "0";
           copy.style.opacity = "0";
         }
-        // Hidden from where it has faded out (see fadeOut), before it gets very large close to the camera
+        // Skjul plakaten, når den er tonet ud. Kommer den helt tæt på kameraet, bliver den meget stor, og så
+        // kan browseren ikke tegne den ordentligt (den kunne blive skåret over).
         if (z >= POSTER_GONE_Z) {
           poster.style.visibility = "hidden";
           return;
         }
+        // Plakaterne toner ind langt væk og ud, lige før de når kameraet. I starten er de lidt dæmpede.
         const fadeIn = clamp(isLast ? (z + 4000) / 1500 : (z + 5600) / 2400);
         const fadeOut = isLast ? 1 : clamp((POSTER_GONE_Z - z) / 400);
         poster.style.visibility = "visible";
@@ -307,7 +325,8 @@ export default function HeroScroll({
       });
     }
 
-    // Swap the unfolded poster for the real card – they look the same, so it can't be seen
+    // Byt den udfoldede plakat ud med det rigtige kort (eller tilbage). De ser ens ud, så man kan ikke se det.
+    // autoAlpha: GSAP sætter både opacity og visibility.
     function swap(toCard) {
       swapped = toCard;
       gsap.set(target, { autoAlpha: toCard ? 1 : 0 });
@@ -318,13 +337,13 @@ export default function HeroScroll({
       gsap.set(target, { autoAlpha: 0 });
       render();
 
-      // The films fade in softly when the countdown slides away
+      // Plakaterne toner blødt frem, når nedtællingen glider væk (startes fra handleCountdownSlideStart)
       fadeTween.current = gsap.to(fade, { v: 1, duration: 1.6, ease: "power2.out", onUpdate: render, paused: true });
       if (fadeWanted.current) {
         fadeTween.current.play();
       }
 
-      // The mouse turns the "camera" slightly (the perspective's origin)
+      // Musen drejer "kameraet" en lille smule: perspektivets midtpunkt følger musen blødt
       const origin = { x: 50, y: 50 };
       const setOrigin = () => {
         hero.style.setProperty("--hero-origin-x", `${origin.x}%`);
@@ -338,7 +357,10 @@ export default function HeroScroll({
       };
       hero.addEventListener("pointermove", onPointerMove);
 
-      // Scroll: the camera flies forward, and in the end the last film unfolds into the card
+      // Scroll-tidslinjen. Hero'en står fast (pin) i scrollLength % af skærmhøjden, mens:
+      // 0 → 1: kameraet flyver frem, og scroll-markøren forsvinder med det samme
+      // 1 → 1,32: den sidste plakat folder sig ud til kortet, og kortets tekst kommer frem
+      // til sidst en lille pause, hvor kortet står færdigt, før hero'en slipper
       const timeline = gsap
         .timeline({
           scrollTrigger: {
@@ -348,10 +370,10 @@ export default function HeroScroll({
             scrub: true,
             pin: true,
             invalidateOnRefresh: true,
-            // Measured before the cards below, which are pushed down by the pin
+            // Måles før kortene nedenunder, fordi pin'en skubber dem ned
             refreshPriority: 1,
-            // The card is shown from the very end of the pin – also when scroll stops exactly there (fx a snap),
-            // so the poster and the card never stand on top of each other
+            // Kortet vises helt fra slutningen af pin'en – også hvis scrollen stopper præcis på kanten –
+            // så plakaten og kortet aldrig står oven på hinanden
             onUpdate: (self) => {
               const atEnd = self.progress >= 0.9999;
               if (atEnd !== swapped) {
@@ -365,11 +387,12 @@ export default function HeroScroll({
         .to(cueRef.current, { opacity: 0, duration: 0.05, ease: "none" }, 0)
         .to(morph, { m: 1, duration: 0.32, ease: "power2.inOut", onUpdate: render }, 1)
         .to(textReveal, { v: 1, duration: 0.32, ease: "none", onUpdate: render }, 1)
-        .to({}, { duration: 0.02 }); // A short pause where the card stands finished before the section lets go
+        .to({}, { duration: 0.02 }); // Den lille pause
 
+      // Sorter ScrollTriggers efter refreshPriority, så pin'en måles først, og mål siden igen
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
-      // Opened further down the page (e.g. after a reload): the card is already there
+      // Åbnes siden længere nede (fx efter en genindlæsning), skal kortet allerede stå der
       if (timeline.scrollTrigger.progress >= 1) {
         swap(true);
       }
@@ -377,11 +400,11 @@ export default function HeroScroll({
       return () => hero.removeEventListener("pointermove", onPointerMove);
     }, hero);
 
-    // Place the posters again when ScrollTrigger has measured the page (after resize the pinned hero gets its new
-    // size from ScrollTrigger a moment later – a plain resize listener would use the old size)
+    // Tegn plakaterne igen, når ScrollTrigger har målt siden. Ændres vinduets størrelse, får hero'en først sin
+    // nye størrelse lidt efter, så plakaterne skal tegnes efter målingen og ikke med det samme.
     ScrollTrigger.addEventListener("refresh", render);
 
-    // The pin changes the page's height, so measure again when images and fonts are loaded
+    // Pin'en ændrer sidens højde, så siden måles igen, når billeder og skrifttyper er indlæst
     let active = true;
     const refresh = () => {
       if (active) {
@@ -393,6 +416,7 @@ export default function HeroScroll({
       window.addEventListener("load", refresh, { once: true });
     }
 
+    // Ryd op, når komponenten forsvinder
     return () => {
       active = false;
       ScrollTrigger.removeEventListener("refresh", render);

@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Nordisk Film Biograf – projektregler
 
-Next.js (App Router) + Supabase. Al tekst i UI'et er på dansk. Kodekommentarer er på engelsk.
+Next.js (App Router) + Supabase. Al tekst i UI'et er på dansk. Kodekommentarer er også på dansk, skrevet i et simpelt sprog. De forklarer kort, hvad koden gør, og går kun i dybden, hvor koden er svær at forstå.
 
 ## Regler
 

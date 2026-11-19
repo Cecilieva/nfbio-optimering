@@ -8,7 +8,7 @@ import { getFeaturedMovies } from "@/lib/data/featured";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 import styles from "./page.module.css";
 
-// /film – Figma: "Forside" – films showing now in the city, and films coming soon
+// /film – Figma: "Forside" – film, der kører nu i byen, og film, der kommer snart
 export default async function HomePage() {
   const city = await getSelectedCity();
 

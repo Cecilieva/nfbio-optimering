@@ -1,6 +1,6 @@
 import styles from "./IntroCountdown.module.css";
 
-// The digits in the order they are shown. Each one gets its turn via --step in the CSS.
+// Tallene i den rækkefølge, de vises. Hvert tal får sin tur via --step i CSS'en.
 const DIGITS = [3, 2, 1];
 
 /**

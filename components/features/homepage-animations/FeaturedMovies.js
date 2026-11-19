@@ -7,8 +7,8 @@ import ComingSoonCard from "@/components/features/ComingSoonCard";
 import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
 
-// How much of a card image's bottom to show instead of its top (see ParallaxFrame's lift).
-// Sunrise: more of the tents and the ground, less sky.
+// Hvor meget mere af billedets bund (og mindre af toppen) et kort viser (se lift i ParallaxFrame).
+// Sunrise: mere af teltene og græsset, mindre himmel.
 const IMAGE_LIFT = { "sunrise-on-the-reaping": 0.35 };
 
 /**
@@ -22,9 +22,8 @@ const IMAGE_LIFT = { "sunrise-on-the-reaping": 0.35 };
  *   når kortet forlader skærmen. Kort 1 starter skarpt og sløres kun ud.
  * - "Om X dage" tæller op første gang, kort 2 og 3 ses. Kort 1 tæller ikke, så tallet passer med plakaten ved byttet.
  * - Prikkerne i højre side viser det kort, der står tættest på midten af skærmen (ikke på mobil).
- * - Scale og blur er udjævnet (scrub: 0.6). Billedernes parallax følger scrollen præcist: den er lille
- *   (se PARALLAX_STRENGTH), så billedlaget er kun lidt større end kortet og ikke har plads til at halte bagefter.
- *   Det sørger også for, at kort 1's billede står samme sted som i hero'ens plakat ved byttet.
+ * - Animationerne følger scrollen. "scrub" betyder, at de kører frem, når man scroller ned, og baglæns,
+ *   når man scroller op. Scale og blur er udjævnet lidt (scrub: 0.6), så de aldrig hakker.
  *
  * Har man bedt om mindre bevægelse, står kortene bare under hinanden – uden hero og effekter.
  *
@@ -47,15 +46,19 @@ export default function FeaturedMovies({ movies }) {
     const cards = [...section.querySelectorAll("[data-featured-card]")];
     const dots = [...dotsRef.current.children];
 
-    const SCRUB = 0.6; // Smooths scale and blur, so they never jump
+    // Animationerne halter 0,6 sekund efter scrollen, så de føles bløde og aldrig hakker
+    const SCRUB = 0.6;
 
     const ctx = gsap.context(() => {
       cards.forEach((card, index) => {
+        // Bogstaverne i titlen (data-char) og resten af teksten og knapperne (data-reveal) – se ComingSoonCard
         const chars = card.querySelectorAll("[data-char]");
         const rest = card.querySelectorAll("[data-reveal]");
 
         if (index === 0) {
-          // Kort 1 kommer skarpt fra hero'en og sløres kun ud, når man scroller videre
+          // Kort 1 kommer skarpt fra hero'en og sløres kun ud, når man scroller videre.
+          // Tidslinjen: først en pause (75 %), så sløres bogstaverne ét ad gangen (stagger), og resten tones ud.
+          // immediateRender: false betyder, at teksten ikke sløres fra start – først når tidslinjen når dertil.
           gsap
             .timeline({ scrollTrigger: { trigger: card, start: "top top", end: "bottom 10%", scrub: SCRUB } })
             .to({}, { duration: 0.75 })
@@ -78,7 +81,9 @@ export default function FeaturedMovies({ movies }) {
             },
           );
 
-          // Titlen skærpes ind og sløres ud igen – som fokus på et objektiv
+          // Titlen skærpes ind og sløres ud igen – som fokus på et objektiv.
+          // Tidslinjen: bogstaverne skærpes ét ad gangen, resten tones ind, en pause, mens kortet står midt
+          // på skærmen, og så sløres det hele ud igen, når kortet forlader skærmen.
           gsap
             .timeline({ scrollTrigger: { trigger: card, start: "top 85%", end: "bottom 15%", scrub: SCRUB } })
             .fromTo(chars, { opacity: 0.15, filter: "blur(18px)" }, { opacity: 1, filter: "blur(0px)", stagger: 0.01, duration: 0.35 })
@@ -87,7 +92,7 @@ export default function FeaturedMovies({ movies }) {
             .to(chars, { opacity: 0.15, filter: "blur(18px)", stagger: 0.005, duration: 0.3 })
             .to(rest, { opacity: 0, duration: 0.2 }, "<");
 
-          // "Om X dage" tæller op første gang, kortet ses
+          // "Om X dage" tæller op fra 0 første gang, kortet ses (once: true = kun én gang)
           card.querySelectorAll("[data-days]").forEach((element) => {
             const days = Number(element.dataset.days);
             const counter = { value: 0 };
@@ -135,7 +140,7 @@ export default function FeaturedMovies({ movies }) {
         onRefresh: updateActiveDot,
       });
 
-      // Ryd op: tallene står som før
+      // Ryd op, når komponenten forsvinder: tallene står som før
       return () => {
         section.querySelectorAll("[data-days]").forEach((element) => {
           element.textContent = element.dataset.days;

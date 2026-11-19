@@ -30,32 +30,39 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
     gsap.registerPlugin(ScrollTrigger);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
-    // The color comes from the CSS token, so no color is written here
+    // dpr: hvor skarp skærmen er (2 på en Retina-skærm). Canvas'et tegnes i den opløsning, så stjernerne er skarpe.
+    // Farven hentes fra CSS'en (tokenet --color-text-primary), så der står ingen farve her
     const color = getComputedStyle(canvas).color;
 
-    // Each star has a direction (x, y) and a distance (z: 1 = far away, 0 = right in front of you)
+    // Hver stjerne har en retning ud fra midten (x, y) og en afstand (z: 1 = langt væk, 0 = lige foran en).
+    // r er stjernens størrelse.
     const newStar = (z) => ({ x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z, r: Math.random() * 0.8 + 0.6 });
     const stars = Array.from({ length: count }, () => newStar(Math.random()));
     let currentSpeed = speed;
     let boost = 0;
     let visible = true;
 
+    // Canvas'et skal have samme størrelse som sektionen (gange dpr for skarphed)
     function size() {
       canvas.width = section.clientWidth * dpr;
       canvas.height = section.clientHeight * dpr;
     }
 
+    // Tegner én frame. dt er tiden i millisekunder siden sidste frame.
     function draw(dt) {
-      // The speed glides softly towards base speed + scroll boost, and the boost fades out
+      // Farten glider blødt mod grundfarten + det ekstra fra scroll (boost), og boostet klinger langsomt af
       currentSpeed += (speed + boost - currentSpeed) * 0.08;
       boost *= 0.92;
       const w = canvas.width;
       const h = canvas.height;
       const cx = w / 2;
       const cy = h / 2;
+      // focal: hvor stærkt perspektivet er (som en kameralinse)
       const focal = Math.max(w, h) * 0.5;
+      // Hvor langt stjernerne flytter sig i denne frame. Max 50 ms, så de ikke springer efter en langsom frame.
       const step = (Math.min(dt, 50) / 1000) * currentSpeed;
-      const streak = Math.min(1, Math.max(0, (currentSpeed - 0.12) / 0.25)); // 0 = dots, 1 = full streaks
+      // Ved høj fart bliver stjernerne til striber: 0 = prikker, 1 = fulde striber
+      const streak = Math.min(1, Math.max(0, (currentSpeed - 0.12) / 0.25));
 
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = color;
@@ -65,23 +72,25 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
       for (const star of stars) {
         star.z -= step;
         if (star.z <= 0.03) {
-          Object.assign(star, newStar(1)); // A new star far away
+          Object.assign(star, newStar(1)); // Stjernen er fløjet forbi: en ny starter langt væk
         }
-        // Perspective: the closer, the further out from the middle
+        // Perspektiv: jo tættere en stjerne er på, jo længere ude fra midten står den
         const x = cx + (star.x / star.z) * focal;
         const y = cy + (star.y / star.z) * focal;
+        // Uden for skærmen: den kommer aldrig tilbage, så den erstattes af en ny i næste frame
         if (x < -20 || x > w + 20 || y < -20 || y > h + 20) {
           star.z = 0;
           continue;
         }
-        // Far away: small and faint – close: bigger and brighter (faded in, so they don't "pop")
+        // Langt væk: små og svage – tæt på: større og klarere.
+        // De tones blødt ind langt væk og ud helt tæt på, så de ikke pludselig dukker op eller forsvinder.
         const near = 1 - star.z;
         const alpha = Math.min(1, near * 1.6) * Math.min(1, star.z / 0.08) * 0.9;
         const radius = (0.3 + near * near * 1.8) * star.r * dpr;
 
         ctx.beginPath();
         if (streak > 0) {
-          // Speed: draw a trail from where the star was a moment ago
+          // Fart: tegn en streg fra der, hvor stjernen var for et øjeblik siden, til der, hvor den er nu
           const tailZ = Math.min(1, star.z + step);
           ctx.globalAlpha = alpha * (0.6 + 0.4 * (1 - streak));
           ctx.lineWidth = radius * 1.5;
@@ -106,18 +115,20 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
     });
     resizeObserver.observe(section);
 
-    // Reduced motion: draw one still starfield
+    // Mindre bevægelse: tegn ét stillestående stjernefelt og stop her
     if (reduce) {
       draw(0);
       return () => resizeObserver.disconnect();
     }
 
-    // Pause when the section is out of view. IntersectionObserver also works while the section is pinned.
+    // Hold pause, når sektionen ikke kan ses, så computeren ikke tegner forgæves.
+    // IntersectionObserver holder øje med, om sektionen er på skærmen (virker også, mens hero'en er pinned).
     const intersectionObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
     });
     intersectionObserver.observe(section);
 
+    // Tegn en ny frame hver gang GSAP's løkke kører (ca. 60 gange i sekundet)
     function tick(_time, dt) {
       if (visible) {
         draw(dt);
@@ -125,7 +136,7 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
     }
     gsap.ticker.add(tick);
 
-    // The scroll speed of the whole page gives the boost (streaks)
+    // Jo hurtigere man scroller på siden, jo større boost (og striber)
     const trigger = reactToScroll
       ? ScrollTrigger.create({
           start: 0,
@@ -136,6 +147,7 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
         })
       : null;
 
+    // Ryd op, når komponenten forsvinder
     return () => {
       gsap.ticker.remove(tick);
       trigger?.kill();

@@ -6,36 +6,39 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ParallaxFrame.module.css";
 
-// 1 = the image stands completely still, 0 = the image follows the frame (no effect).
-// 0.3: the image mostly sits in the card and only drifts a little, so little of its top and bottom is shown.
+// Hvor meget billedet bevæger sig i forhold til rammen.
+// 1 = billedet står helt stille på skærmen, 0 = billedet følger rammen (ingen effekt).
+// 0.3: billedet sidder mest fast i kortet og glider kun lidt, så man ser ikke meget af top og bund.
 export const PARALLAX_STRENGTH = 0.3;
 
 /**
- * Where the image inside a ParallaxFrame is, for a frame at a given place on the screen.
- * The image is centred in the frame (top: 50%, translate -50%) and then moved y px.
- * HeroScroll uses it too, so the unfolding poster ends with the image exactly where the first card has it.
+ * Regner ud, hvor billedet skal stå inde i rammen, når rammen står et bestemt sted på skærmen.
+ * Billedlaget er centreret i rammen og flyttes så y pixels op eller ned.
+ * HeroScroll bruger også funktionen, så plakaten, der folder sig ud, ender med billedet præcis
+ * samme sted som i kort 1 – ellers ville man kunne se et hop, når de bytter.
  *
  * @param {object} options
- * @param {number} options.frameHeight
- * @param {number} options.frameTop The frame's top edge on the screen (px from the top of the viewport)
- * @param {number} options.viewportHeight
- * @param {number} [options.strength]
- * @param {number} [options.lift] Extra image above, as a share of the height (0.3 = 30 %). The bottom edge stays,
- *   so the frame shows more of the image's bottom and less of its top (fx more ground, less sky)
- * @returns {{ height: number, y: number }}
+ * @param {number} options.frameHeight Rammens højde
+ * @param {number} options.frameTop Hvor rammens top står på skærmen (pixels fra toppen af vinduet)
+ * @param {number} options.viewportHeight Vinduets højde
+ * @param {number} [options.strength] Se PARALLAX_STRENGTH
+ * @param {number} [options.lift] Ekstra billede foroven, som en andel af højden (0.3 = 30 %). Bunden bliver,
+ *   hvor den er, så rammen viser mere af billedets bund og mindre af toppen (fx mere jord, mindre himmel)
+ * @returns {{ height: number, y: number }} Billedlagets højde og hvor langt det skal flyttes
  */
 export function getParallaxBox({ frameHeight, frameTop, viewportHeight, strength = PARALLAX_STRENGTH, lift = 0 }) {
+  // Hele turen: fra rammens top kommer ind i bunden af skærmen, til dens bund forsvinder i toppen
   const span = viewportHeight + frameHeight;
-  // How far the image moves against the frame
+  // Hvor langt billedet når at glide i forhold til rammen på den tur
   const travel = (span / 2) * strength;
-  // The smallest height that still covers the part of the frame that is on the screen, all the way through
-  // the scroll (worst case: the frame's top edge at the top of the screen, or its bottom edge at the bottom).
-  // The smaller the strength, the closer the image is to the frame's own size – so it hardly zooms.
-  // A couple of pixels extra, so rounding never shows a hairline.
+  // Billedet skal være højere end rammen, så der aldrig kommer et hul i kanten, mens det glider.
+  // Det er den mindste højde, der stadig dækker den del af rammen, man kan se – hele vejen igennem.
+  // Jo mindre strength, jo tættere er billedet på rammens egen størrelse, og så zoomer det næsten ikke.
+  // + 2 pixels, så en afrunding aldrig viser en tynd streg.
   const height = frameHeight + strength * Math.abs(viewportHeight - frameHeight) + 2;
-  // 0 when the frame's top enters at the bottom, 1 when its bottom leaves at the top
+  // Hvor langt rammen er nået på turen: 0 = lige kommet ind i bunden, 1 = lige ved at forsvinde i toppen
   const progress = (viewportHeight - frameTop) / span;
-  // Lift: taller by height × lift, moved up by half of that, so only the top edge moves
+  // Lift: billedet gøres højere og flyttes halvdelen af det op, så kun toppen rykker sig – bunden bliver
   const extra = height * lift;
   return { height: height + extra, y: -travel + 2 * travel * progress - extra / 2 };
 }
@@ -46,7 +49,8 @@ export function getParallaxBox({ frameHeight, frameTop, viewportHeight, strength
  * Ved "reducer bevægelse" fylder billedet bare rammen.
  *
  * Indholdet (children) lægges direkte i rammen, så rammens egen CSS kan placere det.
- * Billedet er et next/image i et lag, der flyttes med transform (translate3d) – aldrig med top eller filter.
+ * Billedet er et next/image i et lag, der flyttes med transform (translate3d) – det er det hurtigste,
+ * fordi grafikkortet så kan flytte det uden at tegne det igen.
  *
  * @param {object} props
  * @param {string} [props.src] Uden billede er rammen bare en ramme
@@ -86,6 +90,7 @@ export default function ParallaxFrame({
     }
     gsap.registerPlugin(ScrollTrigger);
 
+    // Billedlagets højde og placering for rammen et bestemt sted på skærmen
     const box = (frameTop) =>
       getParallaxBox({ frameHeight: frame.offsetHeight, frameTop, viewportHeight: window.innerHeight, strength, lift });
     const size = () => {
@@ -95,9 +100,10 @@ export default function ParallaxFrame({
     const ctx = gsap.context(() => {
       layer.classList.add(styles.moving);
       size();
-      // From the frame's top at the bottom of the screen to its bottom at the top.
-      // yPercent: -50 centres the layer (top: 50% in the CSS). It is part of GSAP's transform on purpose:
-      // GSAP owns the whole transform, so a CSS translate would be dropped.
+      // Billedlaget glider, mens rammen scroller fra bunden af skærmen til toppen.
+      // yPercent: -50 centrerer laget (sammen med top: 50% i CSS'en). Det skal stå her og ikke i CSS'en:
+      // GSAP styrer hele elementets transform og ville ellers slette en translate fra CSS'en,
+      // så laget ville ligge et halvt lag for lavt (det gav en tom stribe øverst i kortet).
       gsap.fromTo(
         layer,
         { yPercent: -50, y: () => box(window.innerHeight).y },
@@ -105,12 +111,13 @@ export default function ParallaxFrame({
           yPercent: -50,
           y: () => box(-frame.offsetHeight).y,
           ease: "none",
-          force3D: true, // translate3d, so the layer moves on the GPU
+          force3D: true, // translate3d, så grafikkortet flytter laget
           scrollTrigger: {
             trigger: frame,
             start: "top bottom",
-            // "bottom top", measured from the frame's real height: a parent may be scaled while ScrollTrigger
-            // measures (FeaturedMovies grows cards in from 0.9), and offsetHeight ignores that
+            // Slutter, når rammens bund forlader toppen af skærmen. Det regnes ud fra rammens rigtige højde,
+            // fordi kortet kan være skaleret ned (FeaturedMovies lader kortene vokse fra 0.9), når ScrollTrigger
+            // måler – og offsetHeight er højden uden skalering
             end: () => `+=${window.innerHeight + frame.offsetHeight}`,
             scrub,
             invalidateOnRefresh: true,
@@ -120,6 +127,7 @@ export default function ParallaxFrame({
       );
     });
 
+    // Ryd op: fjern animationen og sæt laget tilbage, som det var
     return () => {
       ctx.revert();
       layer.classList.remove(styles.moving);
