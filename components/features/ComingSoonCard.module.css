@@ -6,7 +6,7 @@
   /* Kortet tilpasser sig skærmens højde, så titel og knapper altid kan ses */
   height: min(var(--size-coming-card-height), 85svh);
   border-radius: var(--radius-card-lg);
-  background: var(--color-on-accent);
+  background: var(--color-background-secondary); /* ses kun indtil billedet er loadet */
 }
 
 .image {

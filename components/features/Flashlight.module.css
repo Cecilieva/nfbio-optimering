@@ -1,5 +1,5 @@
-/* Figma "Lommelygte": fylder hele heroen. container-type: size gør, at elementerne indeni kan bruge enhederne
-   cqw og cqh (1cqw = 1 % af lommelygtens bredde, 1cqh = 1 % af højden), så lyset placeres i forhold til heroen. */
+/* fylder hele heroen
+   container-type: size → cqw/cqh (1 % af lommelygtens bredde/højde) */
 .flashlight {
   position: absolute;
   inset: 0;
@@ -7,45 +7,44 @@
   container-type: size;
 }
 
-/* Figma "Mørke": helt mørkt – billedet kan kun ses i lyskeglen */
+/* "Mørke": billedet ses kun i keglen */
 .darkness {
   position: absolute;
   inset: 0;
   background: var(--color-background-secondary);
 }
 
-/* Figma "Kegle": billedet bag en blød, rund maske (hvid i midten, gennemsigtig ude ved kanten).
-   --light-x og --light-y er lysets midte som andel af bredden og højden (sættes i Flashlight.js). */
+/* "Kegle": billedet bag en blød rund maske
+   --light-x/y = lysets midte (fra Flashlight.js) */
 .cone {
   position: absolute;
   inset: 0;
-  /* Masken bestemmer, hvor billedet kan ses: hvidt = synligt, gennemsigtigt = skjult */
+  /* hvid = synligt, gennemsigtig = skjult */
   mask-image: url("/flashlight/kegle-maske.svg");
   mask-repeat: no-repeat;
   mask-size: var(--size-flashlight) var(--size-flashlight);
-  /* Lysets midte i procent af heroen (fx 0.57 × 100cqw) minus en halv kegle, så det er keglens midte –
-     og ikke dens øverste venstre hjørne – der står på punktet */
+  /* midten × 100cqw minus en halv kegle → keglens midte står på punktet */
   mask-position:
     calc(var(--light-x) * 100cqw - var(--size-flashlight) / 2)
     calc(var(--light-y) * 100cqh - var(--size-flashlight) / 2);
-  /* Når --light-x/--light-y ændres i Flashlight.js, glider masken derhen i stedet for at hoppe */
+  /* glider i stedet for at hoppe */
   transition: mask-position var(--duration-flashlight-auto) var(--easing-in-out);
 }
 
-/* Når lyset følger musen (data-mode="follow" fra Flashlight.js), flytter det sig hurtigere */
+/* hurtigere når den følger musen */
 .cone[data-mode="follow"] {
   transition-duration: var(--duration-flashlight-follow);
   transition-timing-function: var(--easing-out);
 }
 
-/* object-fit: cover fylder hele heroen med billedet uden at strække det (kanterne beskæres i stedet) */
+/* cover = fylder uden at strække (kanter beskæres) */
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Ingen glidende bevægelse for dem, der har slået animationer fra */
+/* reduced motion: ingen glid */
 @media (prefers-reduced-motion: reduce) {
   .cone {
     transition: none;

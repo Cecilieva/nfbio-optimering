@@ -1,15 +1,13 @@
-// "use client" gør det til en klientkomponent: den kører i browseren, fordi den skal lytte efter musen
-// og bruge state (useState) og effekter (useEffect). Serverkomponenter kan ikke reagere på brugeren.
+// client component – skal lytte efter musen + bruge state, det kan en server component ikke
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./Flashlight.module.css";
 
-// Figma "Lommelygte" (node 570:3160) er tegnet i en ramme på 1440 × 560 px. Positionerne nedenfor er midten af
-// lyset som en andel af rammens bredde (x) og højde (y) – fx 820 / 1440 ≈ 0,57 = 57 % inde fra venstre.
-// Andele (0–1) i stedet for px gør, at lyset rammer samme sted, uanset hvor bred skærmen er.
+// figma-rammen er 1440 × 560 → positioner som andel (0–1) af bredde/højde
+// fx 820 / 1440 ≈ 0,57 = 57 % fra venstre. så passer det på alle skærme
 
-// "Position=Auto 1–4": lyset vandrer selv mellem de fire punkter, når musen ikke er over heroen
+// Auto 1–4: lyset vandrer selv mellem dem når musen er væk
 const AUTO_POSITIONS = [
   { x: 820 / 1440, y: 230 / 560 },
   { x: 300 / 1440, y: 220 / 560 },
@@ -17,31 +15,31 @@ const AUTO_POSITIONS = [
   { x: 1180 / 1440, y: 260 / 560 },
 ];
 
-// "Position=1–9": rammen deles i 3 × 3 zoner, og lyset hopper til midten af den zone, musen er over
+// Position 1–9: 3 × 3 zoner, lyset hopper til midten af zonen under musen
 const ZONES = 3;
 
-// Hvor længe lyset bliver ved hvert auto-punkt, før det går videre (millisekunder – 2000 ms = 2 sekunder)
+// 2 sek ved hvert auto-punkt
 const AUTO_STEP_MS = 2000;
 
 /**
- * Lommelygten: billedet ligger i mørke, og kun en blød lyskegle viser det.
- * Figma: "Lommelygte" (node 570:3160) fra Clayface-temaet – "FLYT LYGTEN".
- * Lyset følger musen zone for zone (Position 1–9) og vandrer selv rundt, når musen ikke er over (Auto 1–4).
- * Bruges i MovieHero til kommende thrillere og gysere i stedet for projektoren.
+ * Lommelygten – billedet i mørke, kun lyskeglen viser det
+ * Figma "Lommelygte" (570:3160), Clayface-temaet ("FLYT LYGTEN")
+ * følger musen zone for zone, ellers vandrer den selv
+ * bruges i MovieHero til kommende thrillere/gysere i stedet for projektoren
  *
  * @param {object} props
- * @param {string} props.image Billedet, der lyses op
+ * @param {string} props.image billedet der lyses op
  */
 export default function Flashlight({ image }) {
-  // ref peger på lommelygtens <div> i DOM'en, så vi kan finde heroen udenom (dens forælder)
+  // ref til lommelygtens div → så jeg kan finde heroen (forælderen)
   const ref = useRef(null);
-  // Zonen under musen ({ col, row } = kolonne og række 0–2), eller null, når lyset kører af sig selv
+  // zonen under musen { col, row } (0–2), null = kører selv
   const [zone, setZone] = useState(null);
-  // Hvilket af de fire auto-punkter lyset er ved lige nu (0–3)
+  // hvilket auto-punkt (0–3)
   const [autoIndex, setAutoIndex] = useState(0);
 
-  // Lyt på hele heroen (forælderen), så lyset også følger musen hen over titlen og knapperne.
-  // Den tomme liste [] til sidst betyder, at effekten kun kører én gang, når komponenten vises.
+  // lytter på hele heroen så det også virker over titel og knapper
+  // [] = kører kun én gang
   useEffect(() => {
     const hero = ref.current?.parentElement;
     if (!hero) {
@@ -49,54 +47,54 @@ export default function Flashlight({ image }) {
     }
 
     function handleMove(event) {
-      // Kun en rigtig mus flytter lyset – på touchskærme bliver det ved med at vandre af sig selv
+      // kun mus – på touch vandrer den bare selv
       if (event.pointerType !== "mouse") {
         return;
       }
-      // Musens position inde i heroen som andel (0–1) ganget med 3 og rundet ned giver zonen 0, 1 eller 2
+      // position (0–1) × 3, rundet ned → zone 0, 1 eller 2
       const box = hero.getBoundingClientRect();
       const col = clampZone(Math.floor(((event.clientX - box.left) / box.width) * ZONES));
       const row = clampZone(Math.floor(((event.clientY - box.top) / box.height) * ZONES));
-      // Opdatér kun, når zonen skifter, så komponenten ikke tegnes om for hver eneste pixel, musen flytter sig
+      // kun opdatere når zonen skifter, ellers re-render ved hver pixel
       setZone((current) => (current?.col === col && current?.row === row ? current : { col, row }));
     }
 
-    // Musen forlader heroen: tilbage til at vandre af sig selv
+    // musen væk → tilbage til auto
     function handleLeave() {
       setZone(null);
     }
 
     hero.addEventListener("pointermove", handleMove);
     hero.addEventListener("pointerleave", handleLeave);
-    // Oprydning: fjern lytterne igen, når komponenten forsvinder fra siden
+    // ryd op når komponenten forsvinder
     return () => {
       hero.removeEventListener("pointermove", handleMove);
       hero.removeEventListener("pointerleave", handleLeave);
     };
   }, []);
 
-  // Auto 1 → 2 → 3 → 4 → 1 … så længe musen er væk. Ikke for dem, der har slået animationer fra.
-  // Effekten kører igen, hver gang zone ændrer sig ([zone]) – så timeren stopper, når musen kommer ind.
+  // Auto 1 → 2 → 3 → 4 → 1 … når musen er væk (ikke ved reduced motion)
+  // [zone] → stopper når musen kommer ind
   useEffect(() => {
     if (zone || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
-    // % AUTO_POSITIONS.length (rest ved division med 4) får tallet til at starte forfra: 0, 1, 2, 3, 0, 1 …
+    // % 4 → starter forfra: 0, 1, 2, 3, 0 …
     const timer = setInterval(() => setAutoIndex((index) => (index + 1) % AUTO_POSITIONS.length), AUTO_STEP_MS);
     return () => clearInterval(timer);
   }, [zone]);
 
-  // Lysets midtpunkt: midten af zonen under musen (+ 0.5 = midt i zonen), ellers det aktuelle auto-punkt
+  // midten af zonen (+0.5), ellers auto-punktet
   const position = zone ? { x: (zone.col + 0.5) / ZONES, y: (zone.row + 0.5) / ZONES } : AUTO_POSITIONS[autoIndex];
 
   return (
     <div ref={ref} className={styles.flashlight} aria-hidden="true">
-      {/* Figma "Billede" + "Mørke": billedet ligger helt i mørke */}
+      {/* "Billede" + "Mørke" */}
       <div className={styles.darkness} />
 
-      {/* Figma "Kegle": det samme billede, men kun synligt gennem den bløde, runde maske.
-          --light-x og --light-y sendes til CSS'en, som flytter masken derhen.
-          data-mode vælger, hvor hurtigt lyset glider (langsomt af sig selv, hurtigt efter musen). */}
+      {/* "Kegle": samme billede, men kun synligt gennem masken
+          --light-x/y → css flytter masken
+          data-mode → langsom (auto) eller hurtig (følger musen) */}
       <div
         className={styles.cone}
         data-mode={zone ? "follow" : "auto"}
@@ -108,7 +106,7 @@ export default function Flashlight({ image }) {
   );
 }
 
-// Holder zonen inden for 0–2 – fx hvis musen står helt ude på kanten og regnestykket giver 3
+// holder zonen på 0–2 (helt ude på kanten giver ellers 3)
 function clampZone(value) {
   return Math.min(ZONES - 1, Math.max(0, value));
 }

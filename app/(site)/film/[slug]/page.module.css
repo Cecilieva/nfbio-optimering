@@ -1,5 +1,5 @@
-/* Heroen bruger hele bredden, så den globale main-regel (max-width og padding i app/globals.css) slås fra her …
-   … og resten af siden (.content) får den normale spalte igen */
+/* heroen i fuld bredde → slår main-reglen fra globals.css fra
+   resten (.content) får den normale spalte igen */
 .page {
   max-width: none;
   padding: 0;
@@ -11,7 +11,7 @@
   padding: var(--space-8) var(--space-6);
 }
 
-/* Tablet og mobil: mindre luft til kanten */
+/* tablet + mobil: mindre luft */
 @media (max-width: 48rem) {
   .content {
     padding: var(--space-6) var(--space-4);
