@@ -1,20 +1,28 @@
-/* Figma "Kommende film – kort": billede med runde hjørner og teksten nederst */
+/* Figma "Kommende film – kort": billede med runde hjørner og teksten nederst.
+   Billedet ligger i ParallaxFrame, som også giver position: relative og overflow: hidden. */
 .card {
-  position: relative;
-  overflow: hidden;
   width: 100%;
   /* Kortet tilpasser sig skærmens højde, så titel og knapper altid kan ses */
-  height: min(var(--size-coming-card-height), 85svh);
+  height: var(--size-featured-card-height);
   border-radius: var(--radius-card-lg);
   background: var(--color-on-accent);
 }
 
-.image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
+/* Med billede: ingen baggrund. Kortets kant kan ligge på en halv pixel, og så tegner Chrome baggrunden
+   ud under billedlaget som en tynd mørk streg langs kanten. Baggrunden er kun til kort uden billede. */
+.card.withImage {
+  background: transparent;
+}
+
+/* Kopien i hero'ens sidste plakat: fylder plakaten, og plakaten har selv billede og toning */
+.card.copy {
   height: 100%;
-  object-fit: cover;
+  min-height: 0;
+  background: transparent;
+}
+
+.card.copy::after {
+  display: none;
 }
 
 /* Figma "Vignet top", "Vignet bund" og "skygge for læsbarhed": mørk toning,
@@ -22,7 +30,9 @@
 .card::after {
   content: "";
   position: absolute;
-  inset: 0;
+  /* 1px ud over kanten (klippes væk af kortets runde hjørner). Billedet ligger i sit eget lag, som grafikkortet
+     klipper, og kan derfor nå en skærmpixel længere ud end toningen – så ses en lys streg langs kanten. */
+  inset: calc(-1 * var(--border-width));
   background:
     linear-gradient(to bottom, color-mix(in srgb, var(--color-vignette) 55%, transparent), transparent 30%),
     linear-gradient(to bottom, var(--color-readability-shade), transparent 50%),
@@ -92,6 +102,17 @@
   line-height: var(--line-height-snug);
 }
 
+/* Titlen er delt op i ord og bogstaver, så den kan skærpes ind bogstav for bogstav.
+   Et ord brydes aldrig midt i. */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.char {
+  display: inline-block;
+}
+
 .title {
   margin: 0; /* Fjerner den globale h2-margin */
   color: var(--color-text-primary);
@@ -136,7 +157,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: auto;
-    min-height: min(var(--size-coming-card-height), 85svh);
+    min-height: var(--size-featured-card-height);
     border-radius: var(--radius-lg);
   }
 

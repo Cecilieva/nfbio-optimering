@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import ComingSoonSection from "@/components/features/ComingSoonSection";
-import FeaturedCarousel from "@/components/features/FeaturedCarousel";
+import FeaturedMovies from "@/components/features/FeaturedMovies";
 import Finale from "@/components/features/Finale";
 import MovieFilter from "@/components/features/MovieFilter";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
@@ -26,9 +26,9 @@ export default async function HomePage() {
 
   return (
     <main className={styles.page}>
-      {/* Hero'en: plakater i et stjernerum, styret af scroll, der ender på "Kommer snart"-kortet.
-          De fremhævede film skifter roligt. Hero'en ligger inde i karrusellen (se FeaturedCarousel). */}
-      <FeaturedCarousel movies={featured} />
+      {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
+          Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
+      <FeaturedMovies movies={featured} />
 
       {/* Figma "Kommende film – udfold": knappen "Se alle kommende film" står øverst, og sektionen med
           de kommende film folder sig ud nederst – under filmene, der kører nu (som i prototypen) */}

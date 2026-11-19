@@ -39,7 +39,6 @@
   /* Intro-videoen på forsiden (Figma "Forside – intro (motion)") */
   --color-intro-background: #08070d; /* Baggrunden bag videoen – samme farve som nedtællingen */
   --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
-  --color-carousel-covered: rgb(0 0 0 / 0.5); /* Det gamle kort bliver mørkere, når et nyt lægger sig over */
   --color-readability-shade: rgb(0 0 0 / 0.3); /* Figma "skygge for læsbarhed" bag teksten øverst på kortet */
   --color-header-text: var(--color-text-primary);
 
@@ -130,7 +129,6 @@
   --radius-lg: 0.75rem;
   --radius-pill: 999px;
   --radius-card-lg: 1.75rem; /* 28px – det store "Kommer snart"-kort */
-  --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
   --radius-intro-poster: 0.875rem; /* 14px – plakaterne i hero'en */
   --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
   --radius-option-button: 1.125rem; /* 18px – Option button, fx "November" */
@@ -180,6 +178,11 @@
   --size-auth-image-height: 57.938rem; /* 927px – billedet på Log ind */
   --space-auth-top: 8.125rem; /* 130px – fra headeren ned til formularen på Log ind */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
+  --size-featured-card-height: min(var(--size-coming-card-height), 85svh); /* Tilpasser sig skærmen, så titel og knapper kan ses */
+  --space-featured-gap: 4vh; /* Luften mellem "Kommer snart"-kortene */
+  --space-featured-dots-edge: clamp(0.5rem, 1.4vw, 1.375rem); /* Prikkerne fra højre kant */
+  --size-featured-dot: 4px; /* En prik ved "Kommer snart"-kortene */
+  --scale-featured-dot-active: 1.6; /* Den aktive prik er lidt større */
   --size-hero-height: 100svh; /* Hero'en på forsiden fylder skærmen */
   --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i hero'en */
   --perspective-hero: 900px; /* Hvor dybt stjernerummet i hero'en føles – mindre tal giver mere 3D */
@@ -214,7 +217,7 @@
   --delay-countdown-slide: 1.75s; /* Hvornår nedtællingen begynder at glide op */
   --duration-countdown-slide: 800ms; /* Udglidningen */
   --duration-intro-scroll-line: 1.3s; /* Stregen i "SCROLL"-markøren i hero'en */
-  --duration-carousel-slide: 1.4s;
+  --duration-featured-dots: 500ms; /* Prikkerne ved "Kommer snart"-kortene toner frem og skifter */
   /* Finalen nederst på forsiden (Figma "Finale (motion)" – tider fra Figmas tidslinje) */
   --duration-finale-loop: 8s; /* Stjernerne svæver og glimter i en løkke på 8 sekunder */
   --duration-finale-fade: 1.2s; /* Rummet toner frem (15 % af 8 s) … */
@@ -250,6 +253,7 @@
        30rem (480px): små telefoner */
   --layout-max-width: 64rem;
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
+  --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene – over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
 }
 

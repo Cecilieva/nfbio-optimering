@@ -1,0 +1,91 @@
+/* De store "Kommer snart"-kort under hinanden – centreret, med samme bredde som resten af forsiden.
+   Sektionen ligger over hero'en, så kort 1 kan stå, hvor hero'en var, når den slipper. */
+.cards {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-featured-gap);
+  padding: var(--space-4);
+}
+
+/* Kortene vokser fra toppen, så de ikke rykker op og ned, mens de vokser */
+.card {
+  width: min(100%, var(--layout-footer-width));
+  transform-origin: 50% 0%;
+}
+
+/* Med bevægelse: sektionen trækkes en skærmhøjde op under den pinnede hero, og kort 1 er skjult,
+   indtil hero'ens plakat bytter med det (HeroScroll.js sætter det synligt). */
+@media (prefers-reduced-motion: no-preference) {
+  /* Kort 1 står lodret i midten af skærmen, når hero'en slipper */
+  .cards {
+    margin-top: calc(-1 * var(--size-hero-height));
+    padding-top: max(var(--space-4), calc((var(--size-hero-height) - var(--size-featured-card-height)) / 2));
+  }
+
+  .card:first-child {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+/* Prikkerne i højre side: én pr. kort, den aktive er lysere og større */
+.dots {
+  position: fixed;
+  top: 50%;
+  right: var(--space-featured-dots-edge);
+  z-index: var(--z-featured-dots);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  translate: 0 -50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-featured-dots) var(--easing-standard);
+}
+
+.dotsShown {
+  opacity: 1;
+}
+
+.dot {
+  width: var(--size-featured-dot);
+  height: var(--size-featured-dot);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-text-primary) 30%, transparent);
+  transition:
+    background var(--duration-featured-dots) var(--easing-standard),
+    scale var(--duration-featured-dots) var(--easing-standard);
+}
+
+.dot[data-active] {
+  background: var(--color-text-primary);
+  scale: var(--scale-featured-dot-active);
+}
+
+/* Mobil: mindre luft i siderne og ingen prikker */
+@media (max-width: 48rem) {
+  .cards {
+    padding: var(--space-3);
+  }
+
+  .dots {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dots {
+    display: none;
+  }
+}
+
+/* Mobil med bevægelse: kort 1 står stadig i midten (reglen ovenfor ville ellers overskrive det) */
+@media (prefers-reduced-motion: no-preference) and (max-width: 48rem) {
+  .cards {
+    padding-top: max(var(--space-3), calc((var(--size-hero-height) - var(--size-featured-card-height)) / 2));
+  }
+}
