@@ -1,0 +1,19 @@
+/* heroen i fuld bredde → slår main-reglen fra globals.css fra
+   resten (.content) får den normale spalte igen */
+.page {
+  max-width: none;
+  padding: 0;
+}
+
+.content {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+}
+
+/* tablet + mobil: mindre luft */
+@media (max-width: 48rem) {
+  .content {
+    padding: var(--space-6) var(--space-4);
+  }
+}

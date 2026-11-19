@@ -1,0 +1,81 @@
+/* subgrid fra MovieHero (kol. 2–11)
+   fakta + tekst i kol. 2–6, knapper i kol. 8–11 */
+.bar {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--space-6);
+  align-items: start;
+}
+
+/* 1 / span 5 = start i kol. 1, fyld 5 */
+.info {
+  grid-column: 1 / span 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* "Romance   2 t 12 min   [7]   Premiere 22. oktober" */
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+}
+
+/* aldersgrænse i lille boks */
+.age {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--size-age-badge);
+  height: var(--size-age-badge);
+  padding: 0 var(--space-1-5);
+  border: var(--border-width) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.text {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs); /* XS/Sekundær/Regular */
+  line-height: var(--line-height-snug);
+}
+
+/* knapperne til højre, slutter ved kol. 11 (-1 = sidste) */
+.actions {
+  grid-column: 7 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* tablet + mobil (< 768px): fuld bredde, knapperne deler */
+@media (max-width: 48rem) {
+  .info,
+  .actions {
+    grid-column: 1 / -1;
+  }
+
+  .facts {
+    gap: var(--space-4);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  /* > * = hver knap → deler rækken lige */
+  .actions > * {
+    flex: 1 1 auto;
+  }
+}

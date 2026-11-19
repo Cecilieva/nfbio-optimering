@@ -1,0 +1,54 @@
+/* "Sag": REC + tekst på én linje, 16px imellem */
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* "REC": prik + ord, 8px imellem */
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-status-error);
+}
+
+/* de 2 prikker oven på hinanden (.dot = rammen, billederne absolute + inset: 0) */
+.dot {
+  position: relative;
+  width: var(--size-rec-dot);
+  height: var(--size-rec-dot);
+}
+
+.dotImage {
+  position: absolute;
+  inset: 0;
+}
+
+/* "Blink=Til" / "Fra" – steps(1, end) så den skifter brat */
+.dotOn {
+  animation: recBlink var(--duration-rec-blink) steps(1, end) infinite;
+}
+
+.text {
+  margin: 0;
+  color: var(--color-text-subtle);
+  text-transform: uppercase;
+}
+
+/* halvvejs: "Til" usynlig → "Fra" ses */
+@keyframes recBlink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* reduced motion: prikken lyser bare */
+@media (prefers-reduced-motion: reduce) {
+  .dotOn {
+    animation: none;
+  }
+}

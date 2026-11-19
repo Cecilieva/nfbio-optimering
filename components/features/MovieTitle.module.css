@@ -1,0 +1,161 @@
+/* "Titel – standard": overtitel + titel, 16px imellem
+   glider 40px op og toner frem */
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: titleIn var(--duration-movie-hero-title) var(--easing-out) var(--delay-movie-hero-title) both;
+}
+
+/* "Univers titel", fx "THE HUNGER GAMES" */
+.series {
+  margin: 0;
+  color: var(--color-text-label);
+  font-size: var(--font-size-md);
+  letter-spacing: var(--letter-spacing-overtitle);
+  text-transform: uppercase;
+}
+
+/* ordene ved siden af hinanden, 26px imellem, brydes til ny linje */
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-movie-title-word);
+  margin: 0; /* fjerner global h1-margin */
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-movie-title);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-movie-title);
+}
+
+/* "Bølge 1–5": hvert ord løftes 10px → 5px → lander, ét ad gangen
+   hvert 4. sek, starter når titlen er på plads */
+.word {
+  /* inline-block – transform virker ikke på inline */
+  display: inline-block;
+  /* forsinkelse = titlen på plads + --index × 150ms → bølge fra venstre */
+  animation: wordWave var(--duration-title-wave-loop) var(--easing-in-out)
+    calc(var(--delay-title-wave-start) + var(--index) * var(--delay-title-wave)) infinite;
+}
+
+/* ---------- melt – "Titel – smelter" (kommende thrillere/gysere) ---------- */
+
+/* store versaler, tæt linjeafstand
+   padding-bottom = plads til dråberne (spidserne må gå ned bag fakta/knapper) */
+.title[data-variant="melt"] {
+  padding-bottom: var(--space-movie-title-melt-drip);
+  row-gap: var(--space-movie-title-melt-row);
+  font-size: var(--font-size-movie-title-melt);
+  line-height: var(--line-height-movie-title-melt);
+  text-transform: uppercase;
+}
+
+/* ingen bølge her, og ordet må ikke knække
+   position: relative → dråberne placeres fra ordets venstre kant */
+.title[data-variant="melt"] .word {
+  position: relative;
+  white-space: nowrap;
+  animation: none;
+}
+
+/* "Dråbe" – --left/--width/--height kommer fra MovieTitle.js
+   start ("Fast"): 4px høj og usynlig, alt i em */
+.drip {
+  position: absolute;
+  top: var(--position-title-melt-drip);
+  left: var(--left);
+  width: var(--width);
+  height: var(--size-title-melt-drip-start);
+  /* 2px foroven, helt rund forneden (halv bredde) */
+  border-radius: var(--radius-xs) var(--radius-xs) calc(var(--width) / 2) calc(var(--width) / 2);
+  /* hvid → næsten hvid ved 45 % → gennemsigtig */
+  background: linear-gradient(
+    to bottom,
+    var(--color-title-melt-drip),
+    var(--color-title-melt-drip-middle) 45%,
+    var(--color-title-melt-drip-end)
+  );
+  opacity: 0;
+  /* 7 sek, starter når titlen er på plads, for evigt */
+  animation: drip var(--duration-title-melt) var(--delay-title-wave-start) infinite;
+}
+
+/* Fast → Smelter → Fast
+   0–50 % ned, 50–80 % hænger, 80–100 % op igen
+   kun "Smelter" står her – start/slut er .drip's normale værdier
+   timing-function gælder fra den keyframe til den næste */
+@keyframes drip {
+  0% {
+    animation-timing-function: var(--easing-title-melt-down);
+  }
+
+  50%,
+  80% {
+    height: var(--height);
+    opacity: 1;
+    filter: blur(var(--blur-title-melt-drip));
+    transform: translateY(var(--distance-title-melt-drip));
+    animation-timing-function: var(--easing-in-out);
+  }
+}
+
+/* usynlig + 40px nede → normal plads */
+@keyframes titleIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--distance-title-in));
+  }
+}
+
+/* et ord bevæger sig i de første 450ms af 4 sek (11,25 %)
+   procenterne kan ikke være tokens – regn om hvis loopet ændres */
+@keyframes wordWave {
+  0%,
+  11.25%,
+  100% {
+    transform: translateY(0);
+  }
+
+  3.75% {
+    transform: translateY(calc(var(--distance-title-wave) * -1));
+  }
+
+  7.5% {
+    transform: translateY(calc(var(--distance-title-wave) * -0.5));
+  }
+}
+
+/* reduced motion: ingen bevægelse */
+@media (prefers-reduced-motion: reduce) {
+  .titleBlock,
+  .word {
+    animation: none;
+  }
+
+  /* dråberne står stille i "Smelter" (= 50 % i keyframes) */
+  .drip {
+    height: var(--height);
+    opacity: 1;
+    filter: blur(var(--blur-title-melt-drip));
+    transform: translateY(var(--distance-title-melt-drip));
+    animation: none;
+  }
+}
+
+/* tablet + mobil: mindre titel og mindre luft */
+@media (max-width: 48rem) {
+  .title {
+    column-gap: var(--space-3);
+    font-size: var(--font-size-2xl);
+  }
+
+  .series {
+    font-size: var(--font-size-xs);
+  }
+
+  /* dråberne følger med (em) */
+  .title[data-variant="melt"] {
+    font-size: var(--font-size-movie-title-melt-compact);
+  }
+}

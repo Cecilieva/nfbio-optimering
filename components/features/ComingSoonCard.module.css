@@ -5,7 +5,7 @@
   /* Kortet tilpasser sig skærmens højde, så titel og knapper altid kan ses */
   height: var(--size-featured-card-height);
   border-radius: var(--radius-card-lg);
-  background: var(--color-on-accent);
+  background: var(--color-background-secondary); /* ses kun indtil billedet er loadet */
 }
 
 /* Med billede: ingen baggrund. Kortets kant kan ligge på en halv pixel, og så tegner Chrome baggrunden

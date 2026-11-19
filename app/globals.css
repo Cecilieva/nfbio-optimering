@@ -1,4 +1,4 @@
-/* Base styles only. Every value comes from tokens.css. */
+/* grund-styles – alle værdier fra tokens.css */
 
 html {
   color-scheme: dark;
@@ -18,6 +18,16 @@ body {
   font-size: var(--font-size-md);
   line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
+}
+
+/* kun for skærmlæsere (læses op, vises ikke) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 main {
@@ -41,26 +51,31 @@ a {
   color: var(--color-accent);
 }
 
-/* Billeder og video bliver aldrig bredere end deres beholder */
+/* svg-ikoner + logo farves om i lyse modes (--filter-icon) */
+img[src$=".svg"] {
+  filter: var(--filter-icon);
+}
+
+/* billeder/video aldrig bredere end deres boks */
 img,
 video {
   max-width: 100%;
   height: auto;
 }
 
-/* The forms for sign up, log in and log out */
+/* formularer på pladsholdersiderne (opret profil, log ud) */
 .form {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  max-width: 32rem;
+  max-width: var(--size-form-width);
   margin: var(--space-6) 0;
 }
 
 .form input {
   margin-bottom: var(--space-2);
   padding: var(--space-3);
-  border: 1px solid var(--color-border);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
@@ -75,7 +90,7 @@ video {
   padding: var(--space-3);
   border: 0;
   border-radius: var(--radius-md);
-  background: var(--color-accent);
+  background: var(--color-cta-button);
   color: var(--color-on-accent);
   font: inherit;
   font-weight: var(--font-weight-bold);
@@ -87,19 +102,19 @@ video {
   color: var(--color-danger);
 }
 
-/* Shows the data a placeholder page has, until the Figma design replaces it */
+/* DataDump – fjernes når siden er bygget fra figma */
 .data-dump {
   overflow-x: auto;
   margin: var(--space-4) 0;
   padding: var(--space-4);
-  border: 1px dashed var(--color-border);
+  border: var(--border-width) dashed var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-xs);
 }
 
-/* Mindre luft og overskrifter på tablet og mobil */
+/* tablet + mobil: mindre luft og overskrifter */
 @media (max-width: 48rem) {
   main {
     padding: var(--space-6) var(--space-4);
