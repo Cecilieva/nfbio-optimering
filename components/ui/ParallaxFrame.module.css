@@ -1,0 +1,24 @@
+/* Rammen: billedet må ikke stikke ud over kanten */
+.frame {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Billedlaget. Uden bevægelse fylder det bare rammen. */
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* next/image med fill fylder laget */
+.image {
+  object-fit: cover;
+  user-select: none;
+}
+
+/* Med parallax: laget er højere end rammen og flyttes med transform. Det centreres (top: 50% og
+   yPercent: -50) og forskydes i ParallaxFrame.js – hele transformen styres af GSAP. */
+.moving {
+  inset: 50% 0 auto;
+  will-change: transform;
+}
