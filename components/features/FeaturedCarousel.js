@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ComingSoonCard from "@/components/features/ComingSoonCard";
-import IntroAnimation from "@/components/features/IntroAnimation";
+import IntroAnimation from "@/components/features/hero-animation/IntroAnimation";
 import styles from "./FeaturedCarousel.module.css";
 
 // How long each film is shown before the next one fades in

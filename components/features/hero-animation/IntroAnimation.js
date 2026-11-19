@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import IntroCountdown from "@/components/features/IntroCountdown";
+import IntroCountdown from "@/components/features/hero-animation/IntroCountdown";
 import {
   CARD_TRACKS,
   FRAME_HEIGHT,
@@ -15,7 +15,7 @@ import {
   STARS_TRACKS,
   TWINKLES,
   playTracks,
-} from "@/components/features/introTimeline";
+} from "@/components/features/hero-animation/introTimeline";
 import styles from "./IntroAnimation.module.css";
 
 // Brugerens indstilling for "mindre bevægelse", læst med useSyncExternalStore.
