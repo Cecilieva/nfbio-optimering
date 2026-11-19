@@ -1,0 +1,35 @@
+/* Figma "Anmeldelse": bjørnene + teksten "4 / 6" på én linje med 8px imellem */
+.rating {
+  display: inline-flex;
+  align-items: center; /* bjørne og tekst står midt for hinanden */
+  gap: var(--space-2);
+}
+
+/* Bjørnene står helt tæt – der er ingen afstand mellem dem i Figma */
+.bears {
+  display: flex;
+}
+
+/* Hver bjørn står i en boks på 24 × 24px med tegningen i midten.
+   Tegningen er lidt bredere end boksen (25px), så overflow: hidden klipper den sidste pixel af – som i Figma. */
+.bear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  overflow: hidden;
+}
+
+/* De tomme bjørne er falmede – hvor meget styres af --opacity-rating-empty i tokens.css */
+.bear[data-filled="false"] {
+  opacity: var(--opacity-rating-empty);
+}
+
+/* Teksten "4 / 6" – Figma "XS/Sekundær/Regular" (12px) */
+.score {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  white-space: nowrap; /* "4 / 6" må ikke deles over to linjer */
+}

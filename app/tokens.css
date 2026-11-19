@@ -333,6 +333,7 @@
   --size-flashlight: 33.333cqw; /* lyskeglen: 480 af 1440px = 1/3 af heroen */
   --size-rec-dot: 0.625rem; /* 10px – den røde prik ved "REC" */
   --size-age-badge: 1.5rem; /* 24px – boksen med aldersgrænsen, fx "7" */
+  --opacity-rating-empty: 0.25; /* hvor synlige de tomme bjørne er i "Anmeldelse" (0 = usynlig, 1 = helt synlig) */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
   --size-featured-card-height: min(var(--size-coming-card-height), 85svh); /* Tilpasser sig skærmen, så titel og knapper kan ses */
   --space-featured-gap: 4vh; /* Luften mellem "Kommer snart"-kortene */
