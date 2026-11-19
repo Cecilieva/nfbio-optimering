@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import ComingSoonCard from "@/components/features/ComingSoonCard";
-import IntroAnimation from "@/components/features/hero-animation/IntroAnimation";
+import HeroScroll from "@/components/features/hero-animation/HeroScroll";
 import styles from "./FeaturedCarousel.module.css";
 
 // How long each film is shown before the next one fades in
@@ -14,8 +14,8 @@ const SLIDE_MS = 7000;
  * som trækker sig lidt tilbage og bliver mørkere nedenunder – som lag, der bliver lagt ovenpå.
  * Figma: "Kommer snart"-karrusel (node 11:34).
  *
- * Introen ligger her, fordi karrusellen først må begynde at skifte, når introen er færdig, og fordi
- * introen slutter med, at det første kort vokser frem (revealRef).
+ * Karrusellen ligger inde i hero'en (HeroScroll), fordi hero-animationen slutter med, at den sidste plakat
+ * folder sig ud til kortet. Karrusellen begynder først at skifte, når kortet har stået helt fremme.
  * Karrusellen kører videre, også når man har scrollet ned, så der står en ny film, når man kommer op igen.
  * Den holder kun pause, mens man står i kortet med tastaturet (Tab). Kortet fylder næsten hele skærmen,
  * så en pause, når musen er over det, ville få karrusellen til næsten aldrig at skifte.
@@ -26,14 +26,11 @@ const SLIDE_MS = 7000;
 export default function FeaturedCarousel({ movies }) {
   // Kortet, der vises nu, og kortet, det lige har lagt sig oven på (null før første skift)
   const [{ active, previous }, setSlides] = useState({ active: 0, previous: null });
-  // Karrusellen starter først, når introen er væk
+  // Karrusellen starter først, når hero'en har vist kortet
   const [started, setStarted] = useState(false);
   // En ref i stedet for state, så kortet ikke tegnes om, når fokus flytter
   const paused = useRef(false);
-  // Selve karrusellen – introen lader den vokse frem fra Sunrise-plakaten
-  const carouselRef = useRef(null);
-
-  // useCallback: samme funktion hver gang, så introens effekt ikke kører igen ved hver ændring her
+  // useCallback: samme funktion hver gang
   const handleIntroDone = useCallback(() => setStarted(true), []);
 
   useEffect(() => {
@@ -62,11 +59,8 @@ export default function FeaturedCarousel({ movies }) {
   }
 
   return (
-    <>
-      <IntroAnimation revealRef={carouselRef} onDone={handleIntroDone} />
-
+    <HeroScroll label="Kommer snart" onReveal={handleIntroDone}>
       <div
-        ref={carouselRef}
         className={styles.carousel}
         aria-roledescription="karrusel"
         aria-label="Kommer snart"
@@ -93,7 +87,7 @@ export default function FeaturedCarousel({ movies }) {
           </div>
         ))}
       </div>
-    </>
+    </HeroScroll>
   );
 }
 

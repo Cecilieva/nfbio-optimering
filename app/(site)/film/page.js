@@ -26,10 +26,9 @@ export default async function HomePage() {
 
   return (
     <main className={styles.page}>
-      {/* De fremhævede film skifter roligt. Intro-videoen ligger inde i karrusellen og ender på det første kort. */}
-      <section className={styles.hero} aria-label="Kommer snart">
-        <FeaturedCarousel movies={featured} />
-      </section>
+      {/* Hero'en: plakater i et stjernerum, styret af scroll, der ender på "Kommer snart"-kortet.
+          De fremhævede film skifter roligt. Hero'en ligger inde i karrusellen (se FeaturedCarousel). */}
+      <FeaturedCarousel movies={featured} />
 
       {/* Figma "Kommende film – udfold": knappen "Se alle kommende film" står øverst, og sektionen med
           de kommende film folder sig ud nederst – under filmene, der kører nu (som i prototypen) */}

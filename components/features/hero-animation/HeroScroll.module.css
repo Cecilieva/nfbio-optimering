@@ -1,0 +1,160 @@
+/* Hero'en øverst på forsiden: et stjernerum i fuld skærm. GSAP pinner den, mens man scroller. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: var(--size-hero-height);
+  /* Figma "Rum": lysere i midten, mørkere ud mod kanterne */
+  background: radial-gradient(closest-side, var(--color-surface), var(--color-background));
+}
+
+/* Rummet: perspektivet flytter sig let med musen (--hero-origin-x/y sættes i HeroScroll.js) */
+.space {
+  position: absolute;
+  inset: 0;
+  perspective: var(--perspective-hero);
+  perspective-origin: var(--hero-origin-x, 50%) var(--hero-origin-y, 50%);
+  pointer-events: none;
+}
+
+.camera {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+}
+
+/* Figma "Filmplakat". Størrelse, placering og synlighed sættes i HeroScroll.js. */
+.poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: var(--radius-intro-poster);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-intro-poster);
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.posterImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+/* Samme mørke toning som på "Kommer snart"-kortet, så plakaten glider over i kortet */
+.vignette {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-vignette) 55%, transparent), transparent 30%),
+    linear-gradient(to bottom, transparent 35%, color-mix(in srgb, var(--color-vignette) 85%, transparent));
+}
+
+/* Kortets plads: i midten af skærmen, med samme bredde og luft som resten af forsiden */
+.content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: var(--size-hero-height);
+  padding: var(--space-4);
+  pointer-events: none;
+}
+
+/* border-radius ses ikke, men HeroScroll.js læser den, så plakaten får kortets hjørner til sidst */
+.card {
+  width: min(100%, var(--layout-footer-width));
+  border-radius: var(--radius-card-lg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Figma "Scroll-markør": teksten med en streg, der glider ned gennem et spor */
+.cue {
+  position: absolute;
+  bottom: var(--space-hero-cue);
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+  text-transform: uppercase;
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.cueTrack {
+  position: relative;
+  overflow: hidden;
+  width: var(--border-width-strong);
+  height: var(--size-intro-scroll-track);
+  background: color-mix(in srgb, var(--color-text-primary) 25%, transparent);
+}
+
+.cueLine {
+  position: absolute;
+  inset: 0 0 50%;
+  background: var(--color-text-primary);
+  animation: cueLine var(--duration-intro-scroll-line) var(--easing-in-out) infinite;
+}
+
+@keyframes cueLine {
+  from {
+    translate: 0 -100%;
+  }
+  to {
+    translate: 0 200%;
+  }
+}
+
+/* Nedtællingen ligger over alt, også headeren */
+.countdownLayer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-intro-countdown);
+}
+
+/* Nedtællingens CSS-animationer venter, til vi ved, at den skal vises – så starter alt samtidig */
+.countdownLayer[data-status="pending"] * {
+  animation-play-state: paused;
+}
+
+/* Samme luft og hjørner som kortet på mobil */
+@media (max-width: 48rem) {
+  .content {
+    padding: var(--space-3);
+  }
+
+  .card {
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* Mindre bevægelse: ingen rejse og ingen pin – kun kortet på et stillestående stjernefelt */
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .content {
+    min-height: 0;
+  }
+
+  .space,
+  .cue,
+  .countdownLayer {
+    display: none;
+  }
+
+  .card {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

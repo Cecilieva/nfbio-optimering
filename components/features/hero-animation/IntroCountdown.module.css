@@ -95,18 +95,6 @@
   animation-fill-mode: forwards;
 }
 
-/* Figma "Spring over": nederst på midten */
-.skip {
-  position: absolute;
-  bottom: var(--space-8);
-  left: 50%;
-  margin: 0;
-  translate: -50% 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
-  white-space: nowrap;
-}
-
 @keyframes slideUp {
   to {
     translate: 0 -100%;

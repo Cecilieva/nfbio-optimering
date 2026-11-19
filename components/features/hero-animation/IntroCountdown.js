@@ -27,7 +27,7 @@ export default function IntroCountdown({ onSlideStart, onDone }) {
   }
 
   return (
-    // Pynt: skærmlæsere får knappen "Spring introen over" i IntroAnimation i stedet
+    // Pynt: skærmlæsere springer den over
     <div
       className={styles.countdown}
       onAnimationStart={handleAnimationStart}
@@ -52,7 +52,6 @@ export default function IntroCountdown({ onSlideStart, onDone }) {
         ))}
       </div>
 
-      <p className={styles.skip}>Klik for at springe over</p>
     </div>
   );
 }
