@@ -16,7 +16,7 @@ import styles from "./ComingSoonCard.module.css";
  *
  * @param {object} props
  * @param {{ title: string, slug: string, series?: string, director?: string, genres?: string[],
- *   premiere_date?: string, poster_url?: string, hero_url?: string, trailer_url?: string,
+ *   premiere_date?: string, hero_url?: string, trailer_url?: string,
  *   ticket_sale_opens?: string | null }} props.movie Uden ticket_sale_opens er billetsalget åbent
  * @param {boolean} [props.copy] Kopien inde i hero'ens sidste plakat: uden billede og toning (dem har plakaten selv),
  *   og man kan ikke klikke eller tabbe ind i den
@@ -26,8 +26,8 @@ import styles from "./ComingSoonCard.module.css";
  * @param {number} [props.lift] Vis mere af billedets bund (se ParallaxFrame)
  */
 export default function ComingSoonCard({ movie, copy = false, preload, loading, scrub, lift }) {
-  // Det brede billede, hvis filmen har et – ellers plakaten
-  const image = movie.hero_url || movie.poster_url;
+  // Det brede billede fra movies.hero_url i Supabase
+  const image = movie.hero_url;
 
   // Kun de oplysninger, filmen faktisk har, kommer med i listerne
   const credits = [

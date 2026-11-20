@@ -156,7 +156,7 @@ export default function FeaturedMovies({ movies }) {
       <HeroScroll
         label="Velkommen"
         targetRef={firstCardRef}
-        targetImage={first?.hero_url || first?.poster_url}
+        targetImage={first?.hero_url}
         targetLift={IMAGE_LIFT[first?.slug] ?? 0}
       >
         {first && <ComingSoonCard movie={first} copy />}
