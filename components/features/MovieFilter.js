@@ -9,7 +9,7 @@ import { formatDayKey, formatFilterDay } from "@/lib/format";
 import styles from "./MovieFilter.module.css";
 
 // Figma "Formater": knapperne står fast i Figma, så de står også fast her
-const FORMATS = ["2D", "3D", "4D", "IMAX", "70MM"];
+const FORMATS = ["2D", "3D", "4DX", "70MM"];
 
 // "Ekstra filtrering": de punkter, databasen har data til (movies.language, fx "Engelsk tale")
 const LANGUAGES = ["Dansk tale", "Engelsk tale"];

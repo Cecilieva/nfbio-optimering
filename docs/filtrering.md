@@ -39,7 +39,7 @@ components/features/MovieFilter.js                 ← Figma "Filtrering": huske
 - **Dato:** "Alle datoer" + hver dag med mindst én spilletid: "I dag", "I morgen", "Fredag 20. nov" …
 - **Genre:** "Alle genrer" + alle genrer, filmene har, i alfabetisk rækkefølge.
 - **Ekstra filtrering:** "Alle forestillinger", "Dansk tale", "Engelsk tale" og "Andre tale" (alle andre sprog).
-- **Format:** står fast som i Figma: Alle formater, 2D, 3D, 4D, IMAX og 70MM.
+- **Format:** står fast som i Figma: Alle formater, 2D, 3D, 4DX og 70MM. Nordisk Film har ikke IMAX.
 
 **En film vises, når:**
 1. den har genren og sproget, der er valgt, og
@@ -90,7 +90,7 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
 
 ## Det skal du vide
 
-- **Formater:** alle spilletider i databasen er i 2D, så 3D, 4D, IMAX og 70MM viser "Ingen film passer til dine filtre", indtil der kommer spilletider i de formater.
+- **Formater:** spilletiderne i databasen er i 2D og 4DX, så 3D og 70MM viser "Ingen film passer til dine filtre", indtil der kommer spilletider i de formater.
 - **Ekstra filtrering:** Figma har flere punkter (Babybio, Liveshow, Filmklub …), men databasen har ingen data til dem. Derfor er kun sprogene med. Kommer der data, kan punkterne tilføjes i `MovieFilter.js`.
 
 ## Hvis du vil ændre noget
