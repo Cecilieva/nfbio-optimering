@@ -35,14 +35,15 @@ app/
   (site)/                 Route-gruppe: alle andre sider. layout.js giver fuld Header + Footer
   (site)/film/page.js     /film - Forside (filmoversigt for den valgte by)
   (site)/film/[slug]/     Filmside
-  (site)/bestil/
+  (bestil)/               Route-gruppe: købsflowet. layout.js giver logo-header og ingen footer
+  (bestil)/bestil/
     saeder/[showtimeId]/  Sædevalg (før der findes en booking)
     [bookingId]/login/    Log ind / gæst / opret profil
     [bookingId]/betaling/ Betaling (+ fejl/ til fejlsiden)
     [bookingId]/billet/   Billet
   (site)/login/ signup/ profile/ Konto
 components/
-  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, DataDump
+  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
@@ -54,6 +55,7 @@ lib/
   booking-cookie.js       Kopi af bookingen til gæster (se nedenfor)
   format.js               Dato, tid, pris, varighed og sæder (formatSeats) - dansk og i Europe/Copenhagen
   payment-errors.js       De simulerede betalingsfejl (fx MP-408)
+  ticket-types.js         Billettyperne (Voksen, Barn, Pensionist) og deres priser
   safe-path.js            Validerer ?next=
 supabase/supabase_schema.sql
 ```
@@ -90,13 +92,13 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside - "Program" (filmene under filtreringen) | 2867:21344 (kortet "card i feed" 214:3673) | `/film` | MovieFilter, MovieCard (`variant="feed"`), Button (`variant="secondary"`) - "Se flere film" |
 | Forside - Finale (motion) | 1883:12291 | `/film` | Finale (i `features/homepage-animations/` - scroll-styret med GSAP: sektionen pinnes, og sloganet lyses op bogstav for bogstav), Starfield |
 | Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
-| Filmside | Projektor - standard: 3063:14519, Titel - standard: 3063:14531, Titel - smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="melt"` til kommende thrillere/gysere - dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal |
+| Filmside | Projektor - standard: 3063:14519, Titel - standard: 3063:14531, Titel - smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="clayface"` og `variant="katten"` - unikke kampagne-animationer, kun til de to film; valgt i `getTitleVariant` i `lib/data/movies.js`. Dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal |
 | Filmside - "Filmdetaljer" (plakat, handling, fakta) | 2250:15224 (Anmeldelse: 2249:15255) | `/film/[slug]` | MovieDetails, TrailerButton, ShareButton, BearRating, PosterPlaceholder |
 | Filmside - "Spilletider" | 627:3145 (Din forestilling: 2010:26575, Biograf-vælger: 1813:9324) | `/film/[slug]` | ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime (alle i `features/showtimes/`), Chip (format), FilterField (`variant="box"` - biograf), Button (`variant="secondary"` - "Se salen", `primary` - "Vælg billetter"). Ledige pladser regnes ud i `getShowtimes`. Kommende film: første dag hedder "Premiere" |
-| Filmside - "Se salen" (overblik over salen) | Sal/1: 929:6302, Sal/3: 929:7069, Sal/4: 929:7295, Sal/5: 929:7522, Sal/6: 929:8100, Sal/7: 929:8359 | `/film/[slug]` | HallMap (i `features/showtimes/` - vises fra SelectedShowtime). Layoutet hentes med `getHallLayouts` i `lib/data/seats.js`; sædernes placering står i `seats.col`, og salene bygges med `seed_hall_seats` i skemaet |
+| Filmside - "Se salen" (overblik over salen) | Sal/1: 929:6302, Sal/3: 929:7069, Sal/4: 929:7295, Sal/5: 929:7522, Sal/6: 929:8100, Sal/7: 929:8359 | `/film/[slug]` | HallMap (i `features/showtimes/` - vises fra SelectedShowtime). Sæderne tegnes med Seat (`components/ui` - Figma "Sæde" 214:3678, farverne er tokens, så de skifter i familie-mode). Layoutet hentes med `getHallLayouts` i `lib/data/seats.js`; sædernes placering står i `seats.col`, og salene bygges med `seed_hall_seats` i skemaet |
 | Trailer-modal | 596:3073 (Fortæppe: 636:3749) | `/film/[slug]` og `/film` | TrailerButton, Modal, Curtain (fortæppet, der åbner over videoen), Button (`variant="secondary"` - "Luk" med kryds) |
-| Sædevalg - vælg antal | | `/bestil/saeder/[showtimeId]` | StepHeader, OrderSummary, SeatPicker, Chip, BottomBar |
-| Sædevalg - vælg sæder | | `/bestil/saeder/[showtimeId]` | SeatPicker, SeatMap, BottomBar, Button |
+| Sædevalg - vælg antal ("Antal pladser") | 737:6375 (Trin-header: 811:6487, Vælg antal-kort: 775:6366) | `/bestil/saeder/[showtimeId]` | StepHeader, SeatPicker (trin 1 af 2 på siden), TicketCounter, Button. Billettyper og priser i `lib/ticket-types.js` |
+| Sædevalg - vælg sæder | 214:4067 | `/bestil/saeder/[showtimeId]` | SeatPicker, SeatMap, BottomBar, Button |
 | Overlay: Vi popper dine pladser | | `/bestil/saeder/[showtimeId]` | Overlay |
 | Overlay: Dine popkorn blev brændt | | `/bestil/saeder/[showtimeId]` | Overlay, Button |
 | Log ind / gæst / opret profil | | `/bestil/[bookingId]/login` | StepHeader, OrderSummary, TextField, Button, AttachOwnerForm |

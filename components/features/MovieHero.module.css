@@ -1,38 +1,31 @@
-/* Figma "Filmside": stort billede der toner ud, tekst nederst
-   12-kolonne-grid: "Tilbage" øverst, titel + fakta nederst */
+/* Figma "Filmside": stort billede med "Tilbage" øverst og titel + fakta nederst */
 .hero {
   position: relative;
   overflow: hidden;
   display: grid;
-  /* 12 kolonner – minmax(0, 1fr) så de kan blive smallere end indholdet */
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-  /* række 1 = toppen (auto), række 2 = resten */
   grid-template-rows: auto 1fr;
   column-gap: var(--grid-gutter);
-  min-height: var(--size-movie-hero-height);
-  padding: var(--space-6) var(--grid-margin) var(--space-8);
+  /* headeren ligger oven på heroen → dens højde lægges til */
+  min-height: calc(var(--size-movie-hero-height) + var(--size-header-height));
+  padding: calc(var(--size-header-height) + var(--space-6)) var(--grid-margin) var(--space-8);
   background: var(--color-background);
 }
 
-/* Figma "Projektor – standard": lyset fejer hen over, så langsom zoom i loop
-   lag: billede → toning → lysstribe → fade (::after) → tekst */
-
-/* billedet: starter på 108 % og usynligt, glider så frem og tilbage */
+/* Figma "Projektor – standard": lysstriben fejer hen, og billedet zoomer langsomt frem og tilbage */
 .image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* 2 animationer: tænd → drift (alternate, for evigt)
-     drift venter til tænd er færdig */
   animation:
     projectorImageOn var(--duration-projector-on) var(--easing-out) both,
     projectorImageDrift var(--duration-projector-drift) var(--easing-in-out) var(--duration-projector-on) infinite
       alternate;
 }
 
-/* toning: hinde over billedet, letter når projektoren tændes */
+/* hinden over billedet */
 .toning {
   position: absolute;
   inset: 0;
@@ -44,7 +37,6 @@
       alternate;
 }
 
-/* lysstriben fejer fra venstre mod højre (én gang) */
 .beam {
   position: absolute;
   top: 50%;
@@ -62,24 +54,23 @@
   animation: projectorBeam var(--duration-projector-on) var(--easing-in-out) both;
 }
 
-/* fade forneden (220 af 560px i figma) – også under lommelygten
-   ::after = ekstra element lavet i css, ingen div nødvendig
-   gennemsigtig til 60.71 %, så baggrundsfarve */
+/* Figma "Toning/skygge-bund" – også under lommelygten */
 .hero::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 60.71%, var(--color-background));
+  inset: auto 0 0;
+  height: var(--size-movie-hero-shadow);
+  background: var(--gradient-movie-hero-shadow-bottom);
 }
 
-/* fade foroven så billedet glider ud af headeren */
+/* Figma "Toning" (skygge-top) */
 .fadeTop {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, transparent 60.71%, var(--color-background));
+  inset: 0 0 auto;
+  height: var(--size-movie-hero-shadow);
+  background: var(--gradient-movie-hero-shadow-top);
 }
 
-/* top + bund: kolonne 2–11, z-index over billedet */
 .top,
 .bottom {
   position: relative;
@@ -87,7 +78,6 @@
   grid-column: 2 / 12;
 }
 
-/* "Tilbage" venstre, nedtælling højre */
 .top {
   display: flex;
   flex-wrap: wrap;
@@ -96,7 +86,6 @@
   gap: var(--space-4);
 }
 
-/* "Tilbage" + sagsmappe-linjen, 32px imellem */
 .topLeft {
   display: flex;
   flex-direction: column;
@@ -104,8 +93,7 @@
   gap: var(--space-8);
 }
 
-/* bunden: subgrid så MovieInfoBar bruger samme kolonner
-   align-self: end → skubbes ned i bunden */
+/* subgrid → MovieInfoBar bruger heroens kolonner */
 .bottom {
   align-self: end;
   display: grid;
@@ -113,14 +101,12 @@
   row-gap: var(--space-6);
 }
 
-/* titlen over hele bredden (kol. 2–11) */
 .title {
   grid-column: 1 / -1;
 }
 
-/* fakta + knapper toner frem til sidst, også subgrid */
 .details {
-  position: relative; /* over dråberne fra den smeltende titel */
+  position: relative; /* ligger oven på dråberne fra den smeltende titel */
   z-index: 1;
   grid-column: 1 / -1;
   display: grid;
@@ -128,9 +114,6 @@
   animation: fadeIn var(--duration-movie-hero-title) var(--easing-out) var(--delay-movie-hero-details) both;
 }
 
-/* start → tændt
-   kun "from" → animerer herfra til de normale værdier
-   "both" = står i from-tilstand inden den starter */
 @keyframes projectorImageOn {
   from {
     opacity: 0;
@@ -150,7 +133,6 @@
   }
 }
 
-/* tændt → drift (loop), kun "to" */
 @keyframes projectorImageDrift {
   to {
     transform: translateX(var(--distance-projector-drift-x)) scale(var(--scale-projector-drift));
@@ -169,7 +151,6 @@
   }
 }
 
-/* ingen bevægelse hvis animationer er slået fra */
 @media (prefers-reduced-motion: reduce) {
   .image,
   .toning,
@@ -179,15 +160,14 @@
   }
 }
 
-/* tablet + mobil: alle 12 kolonner, lidt luft til kanten */
 @media (max-width: 48rem) {
   .hero {
-    padding: var(--space-4) var(--space-4) var(--space-8);
+    padding: calc(var(--size-header-height-compact) + var(--space-4)) var(--space-4) var(--space-8);
+    min-height: calc(var(--size-movie-hero-height) + var(--size-header-height-compact));
   }
 
   .top,
   .bottom {
     grid-column: 1 / -1;
   }
-
 }

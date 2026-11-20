@@ -1,0 +1,7 @@
+/* Indholdet: højst 1197px bredt og 32px luft foroven */
+.page {
+  width: 100%;
+  max-width: calc(var(--layout-booking-width) + 2 * var(--space-4));
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}

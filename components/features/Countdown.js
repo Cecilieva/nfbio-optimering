@@ -47,7 +47,7 @@ function useNow() {
  * Nedtælling
  *
  *   reservation – tid tilbage, fx "9:58" (until = reserved_until)
- *   premiere    – Figma "Nedtælling" (594:3212): "PREMIERE OM" + 4 bokse (until = premiere_date). Bruges i MovieHero
+ *   premiere    – "PREMIERE OM" + 4 bokse (until = premiere_date). Bruges i MovieHero
  *
  * @param {object} props
  * @param {string} props.until

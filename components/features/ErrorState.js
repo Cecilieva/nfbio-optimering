@@ -2,14 +2,11 @@
 
 import Button from "@/components/ui/Button";
 
-/**
- * Shown by error.js when a page throws. retry() renders the page again.
- *
- * @param {object} props
- * @param {Error} props.error
- * @param {() => void} props.retry
- * @param {string} [props.title="Noget gik galt"]
- */
+// Vises af error.js, når der sker en fejl på en side.
+//
+//   error - fejlen, der skete
+//   retry - prøver at vise siden igen ("Prøv igen"-knappen)
+//   title - overskriften (standard: "Noget gik galt")
 export default function ErrorState({ error, retry, title = "Noget gik galt" }) {
   return (
     <main>

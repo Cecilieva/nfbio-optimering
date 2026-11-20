@@ -1,4 +1,7 @@
-/* "Sag": REC + tekst på én linje, 16px imellem */
+/* ========================================================================
+   KAMPAGNE: CLAYFACE – hele denne fil bruges kun på Clayface-filmsiden
+   ======================================================================== */
+
 .label {
   display: flex;
   flex-wrap: wrap;
@@ -8,7 +11,6 @@
   line-height: var(--line-height-snug);
 }
 
-/* "REC": prik + ord, 8px imellem */
 .rec {
   display: inline-flex;
   align-items: center;
@@ -16,7 +18,7 @@
   color: var(--color-status-error);
 }
 
-/* de 2 prikker oven på hinanden (.dot = rammen, billederne absolute + inset: 0) */
+/* 2 prikker oven på hinanden */
 .dot {
   position: relative;
   width: var(--size-rec-dot);
@@ -28,7 +30,7 @@
   inset: 0;
 }
 
-/* "Blink=Til" / "Fra" – steps(1, end) så den skifter brat */
+/* steps → blinker brat, uden fade */
 .dotOn {
   animation: recBlink var(--duration-rec-blink) steps(1, end) infinite;
 }
@@ -39,14 +41,12 @@
   text-transform: uppercase;
 }
 
-/* halvvejs: "Til" usynlig → "Fra" ses */
 @keyframes recBlink {
   50% {
     opacity: 0;
   }
 }
 
-/* reduced motion: prikken lyser bare */
 @media (prefers-reduced-motion: reduce) {
   .dotOn {
     animation: none;

@@ -1,0 +1,19 @@
+/* Hele skærmen: header øverst, siden i midten og studieprojekt-linjen nederst */
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* Siden fylder resten af højden, så linjen altid står nederst */
+.screen > main {
+  flex: 1;
+}
+
+.notice {
+  padding: var(--space-4);
+  color: var(--color-text-label);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  text-align: center;
+}

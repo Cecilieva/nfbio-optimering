@@ -8,13 +8,17 @@ export const metadata = {
   title: "Betalingen fejlede",
 };
 
-// Figma: "Betalingsfejl" – the full-page error, e.g. ?kode=MP-408
+// Fejlsiden - vises, når betalingen fejler på en måde, der kræver en hel side.
+// Fejlkoden står i adressen, fx /bestil/abc123/betaling/fejl?kode=MP-408
+// (de mindre fejl vises i stedet direkte i betalingsformularen)
 export default async function PaymentErrorPage({ params, searchParams }) {
   const { bookingId } = await params;
+  // ?kode=… fra adressen
   const { kode } = await searchParams;
+  // Slå fejlteksten op i lib/payment-errors.js
   const paymentError = getPaymentError(kode);
 
-  // The seats are still reserved, so we remind the user which ones
+  // Sæderne er stadig reserveret, så vi minder brugeren om, hvilke det er
   const booking = await getBooking(bookingId);
   const seats = booking ? await getSeatsByIds(booking.seat_ids) : [];
 
@@ -24,6 +28,7 @@ export default async function PaymentErrorPage({ params, searchParams }) {
       <p>{paymentError.message}</p>
       {kode && <p>Fejlkode: {kode}</p>}
       {seats.length > 0 && <p>Dine pladser er stadig reserveret: {formatSeats(seats)}</p>}
+      {/* Tilbage til betalingen for at prøve igen */}
       <Button href={`/bestil/${bookingId}/betaling`}>Prøv igen</Button>
     </main>
   );

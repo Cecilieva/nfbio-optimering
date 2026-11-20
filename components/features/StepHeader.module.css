@@ -1,0 +1,51 @@
+/* Tilbage, trinbjælke og titel - 32px mellem dem */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+/* "Tilbage" (BackLink): står i venstre side i stedet for at fylde hele bredden */
+.back {
+  align-self: flex-start;
+}
+
+/* Trinbjælken: lige brede streger med 8px imellem */
+.steps {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.step {
+  flex: 1;
+  height: var(--size-step-bar-height);
+  border-radius: var(--radius-xs);
+  background: var(--color-step-todo);
+}
+
+.step[data-done="true"] {
+  background: var(--color-step-done);
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}

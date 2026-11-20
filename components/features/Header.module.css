@@ -13,6 +13,15 @@
   background: transparent;
 }
 
+/* På filmsiden ligger headeren også gennemsigtig oven på heroen */
+:global(html:has(main[data-hero-under-header])) .header {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-header-over-hero);
+  background: transparent;
+}
+
 .bar {
   display: flex;
   align-items: center;

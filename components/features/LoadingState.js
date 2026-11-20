@@ -1,9 +1,6 @@
-/**
- * Shown by loading.js while a page fetches data.
- *
- * @param {object} props
- * @param {string} [props.label="Henter …"]
- */
+// Vises af loading.js, mens en side henter data.
+//
+//   label - teksten, der vises (standard: "Henter …")
 export default function LoadingState({ label = "Henter …" }) {
   return (
     <main>

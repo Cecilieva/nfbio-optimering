@@ -12,14 +12,11 @@ const METHODS = [
   { value: "giftcard", label: "Gavekort" },
 ];
 
-/**
- * Choose payment method and pay. The payment is simulated, so there is a field
- * for choosing the result – it can be removed when a real payment provider is added.
- * Inline errors are shown here. Errors that need the error page redirect there.
- *
- * @param {object} props
- * @param {string} props.bookingId
- */
+// Vælg betalingsmetode og betal.
+// Betalingen er ikke rigtig, så der er et felt, hvor man selv vælger, om den lykkes eller fejler.
+// Små fejl vises her i formularen. Store fejl sender brugeren videre til fejlsiden.
+//
+//   bookingId - id'et på reservationen, der skal betales
 export default function PaymentForm({ bookingId }) {
   const [state, formAction, pending] = useActionState(completePayment, null);
 
