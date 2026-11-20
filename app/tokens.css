@@ -30,7 +30,8 @@
   --palette-red: #c94545; /* status/error */
   --palette-green: #2fbf71; /* Spilletider: "Ledige pladser" */
   --palette-yellow: #d9b23a; /* Spilletider: "Få pladser" */
-  --palette-seat: #3a4170; /* Biografstole/Ledig - daybeds i "Se salen" */
+  --palette-seat: #3a4170; /* Biografstole/Ledig */
+  --palette-seat-soft: #4a5288; /* Biografstole/Ledig sart (hyndet) */
   --palette-star: #f4f0e6; /* Stjerner/Stjerne primær */
   --palette-projector-strong: #a0beff80; /* Lysprojektor/Projekter kraftig */
   --palette-projector-soft: #a0beff00; /* Lysprojektor/Projekter sart */
@@ -59,6 +60,8 @@
   --palette-ink-light: #4a5378; /* text/Sekundær */
   --palette-ink-muted: #56608a; /* text/input (muted) */
   --palette-blue-pale: #dce6ff; /* Option button/Aktiv baggrund */
+  --palette-seat-family: #8c95bb; /* Biografstole/Ledig */
+  --palette-seat-soft-family: #b9c0db; /* Biografstole/Ledig sart (hyndet) */
  
   /* KAMPAGNE: KATTEN MED HATTEN – farverne i "Titel – hopper" (1817:9662) */
   --palette-hop-red: #e8473b;
@@ -95,6 +98,14 @@
   --figma-stars-bg: var(--figma-bg-primary); /* Stjerner/bg/Primær baggrund -> bg/Primær baggrund */
   --figma-projector-strong: var(--palette-projector-strong); /* Lysprojektor/Projekter kraftig */
   --figma-projector-soft: var(--palette-projector-soft); /* Lysprojektor/Projekter sart */
+  /* Biografstole - sæderne (Figma "Sæde") */
+  --figma-seat-free: var(--palette-seat); /* Biografstole/Ledig */
+  --figma-seat-free-soft: var(--palette-seat-soft); /* Biografstole/Ledig sart */
+  --figma-seat-selected: var(--figma-accent-primary); /* Biografstole/Valgt -> accent/Primær */
+  --figma-seat-selected-soft: var(--figma-accent-secondary); /* Biografstole/Valgt sart -> accent/Sekundær */
+  --figma-seat-taken: var(--figma-bg-secondary); /* Biografstole/Optaget -> bg/Sekundær Baggrund */
+  --figma-seat-taken-soft: var(--figma-bg-primary); /* Biografstole/Optaget sart -> bg/Primær baggrund */
+  --figma-seat-taken-cross: var(--figma-projector-strong); /* Biografstole/Optaget kryds -> Lysprojektor/Projekter kraftig */
 
   /* ikonerne + logoet er svg'er med #f2f2f2 i filen -> farves om med filter i familie (se nederst) */
   --filter-icon: none;
@@ -418,8 +429,17 @@
   --opacity-day-empty: var(--opacity-arrow-disabled); /* En dag uden spilletider - tonet ned som pilen */
 
   /* "Se salen" på filmsiden (Figma "Sal/1" … "Sal/7") */
-  --color-hall-daybed: var(--palette-seat); /* En ledig daybed */
-  --color-hall-daybed-taken: var(--palette-navy-darkest); /* En optaget daybed */
+  --color-hall-daybed: var(--figma-seat-free); /* En ledig daybed */
+  --color-hall-daybed-taken: var(--figma-seat-taken-soft); /* En optaget daybed */
+  /* Sæderne (Seat-komponenten). Skifter farve i familie-mode */
+  --color-seat-free: var(--figma-seat-free); /* ryglæn og armlæn */
+  --color-seat-free-soft: var(--figma-seat-free-soft); /* hyndet */
+  --color-seat-selected: var(--figma-seat-selected);
+  --color-seat-selected-soft: var(--figma-seat-selected-soft);
+  --color-seat-taken: var(--figma-seat-taken);
+  --color-seat-taken-soft: var(--figma-seat-taken-soft);
+  --color-seat-taken-cross: var(--figma-seat-taken-cross);
+  --color-seat-symbol: var(--figma-text-primary); /* kørestolen på handicapsæder */
   --size-hall-seat: 1.5rem; /* 24px - ét sæde (og én kolonne) */
   --size-hall-row-label: 1.25rem; /* 20px - rækkenummeret i hver side */
   --size-hall-screen-height: 2.5rem; /* 40px - lærredet */
@@ -431,6 +451,7 @@
   --font-size-hall-legend: 0.8125rem; /* 13px - "Ledig", "Optaget" … */
   --opacity-hall-daybed: 0.6; /* Daybeds er lidt gennemsigtige, som i Figma */
   --opacity-hall-out-of-order: 0.3; /* Sæder ude af drift */
+
   /* Trailer-vinduet (Figma 596:3073: 960 × 600 - 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
   --space-trailer-button: 0.625rem; /* 10px - luft rundt om "Luk" */
@@ -608,6 +629,9 @@
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */
   --figma-star: var(--palette-ink); /* Stjerner/Stjerne primær */
+  --figma-seat-free: var(--palette-seat-family); /* Biografstole/Ledig */
+  --figma-seat-free-soft: var(--palette-seat-soft-family); /* Biografstole/Ledig sart */
+  --figma-seat-taken: var(--palette-cream-dark); /* Biografstole/Optaget -> bg/Sekundær Baggrund (familie) */
   /* mindre hinde, så cremen ikke bleger billedet */
   --opacity-projector-on: 0.05;
   --opacity-projector-drift: 0.1;
