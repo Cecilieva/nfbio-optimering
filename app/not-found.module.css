@@ -1,0 +1,90 @@
+/* Figma "404 indhold": illustrationen til venstre og teksten til højre, 96px imellem, centreret.
+   120px luft over og 140px under. */
+.page {
+  display: flex;
+  gap: var(--space-24);
+  align-items: center;
+  justify-content: center;
+  /* Den globale main-regel giver max-bredde og padding – her bestemmer Figmas mål */
+  max-width: none;
+  padding: var(--space-not-found-top) var(--layout-page-margin) var(--space-not-found-bottom);
+}
+
+/* Figma "404 illustration": 340px bred, højden følger billedet */
+.illustration {
+  flex-shrink: 0;
+  width: var(--size-not-found-illustration-width);
+  height: auto;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* "Åh nej..": L/Sekundær/Bold i accent/Primær */
+.eyebrow {
+  color: var(--color-cta);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "XL": Libre Franklin Black, 64px. 14px over (Figma "gap"). */
+.title {
+  max-width: var(--size-not-found-title-width);
+  margin: var(--space-3-5) 0 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-hero-title);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-snug);
+}
+
+/* 16px med linjehøjde 1.6. 28px over (Figma "gap"). */
+.intro {
+  max-width: var(--size-not-found-text-width);
+  margin-top: var(--space-7);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-body);
+}
+
+/* Figma "Knapper": 16px imellem, 56px under teksten */
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-not-found-buttons);
+}
+
+.button {
+  width: var(--size-not-found-button-width);
+}
+
+/* Tablet og mobil: illustrationen over teksten, mindre overskrift og mindre luft.
+   (CSS-variabler virker ikke i @media, derfor står 48rem her.) */
+@media (max-width: 48rem) {
+  .page {
+    flex-direction: column;
+    gap: var(--space-8);
+    align-items: flex-start;
+    padding: var(--space-10) var(--space-4) var(--space-12);
+  }
+
+  .illustration {
+    align-self: center;
+    width: min(60%, var(--size-not-found-illustration-width));
+  }
+
+  .title {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* Knapperne fylder hver sin halvdel */
+  .button {
+    flex: 1 1 0;
+    width: auto;
+  }
+}

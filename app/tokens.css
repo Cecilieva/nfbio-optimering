@@ -398,6 +398,14 @@
   --size-auth-fade-right: 22.5rem; /* 360px - Figma "Toning – højre" på billedet på Log ind */
   --size-auth-fade-top: 18.75rem; /* 300px - Figma "Toning – top" */
   --size-auth-fade-bottom: 65%; /* 602px af 928px - Figma "Toning/skygge-bund" */
+  /* 404-siden (Figma "404 side", node 1580:35416) */
+  --size-not-found-illustration-width: 21.25rem; /* 340px - illustrationen */
+  --size-not-found-title-width: 37.5rem; /* 600px - "Vi kunne ikke finde …" */
+  --size-not-found-text-width: 32.5rem; /* 520px - teksten under overskriften */
+  --size-not-found-button-width: 11rem; /* 176px - de to knapper */
+  --space-not-found-top: 7.5rem; /* 120px - luft over indholdet */
+  --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
+  --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   /* Figma "Projektor - standard" (node 3063:14519): Start -> Tændt -> Drift */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
