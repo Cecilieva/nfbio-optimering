@@ -46,6 +46,34 @@
   line-height: var(--line-height-snug);
 }
 
+/* small: en kort besked, fx "Der må ikke stå en plads alene" */
+.modal[data-size="small"] {
+  width: min(var(--size-message-modal-width), 100% - var(--space-8));
+}
+
+/* --space-message-modal (80px) hele vejen rundt og Gabs/Small (16px) mellem titel og tekst */
+.modal[data-size="small"] .header {
+  padding: var(--space-message-modal) var(--space-message-modal) var(--space-4);
+}
+
+/* "Luk" sidder oppe i højre hjørne med Paddings/Medium (24px) til kanten */
+.modal[data-size="small"] .close {
+  position: absolute;
+  top: var(--space-message-modal-close);
+  right: var(--space-message-modal-close);
+}
+
+.body {
+  padding: 0 var(--space-message-modal) var(--space-message-modal);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+.body p {
+  margin: 0;
+}
+
 @keyframes modalIn {
   from {
     opacity: 0;
@@ -61,6 +89,15 @@
 
   .title {
     font-size: var(--font-size-md);
+  }
+
+  /* beskeden: 80px er for meget på en telefon -> Paddings/Medium (24px) */
+  .modal[data-size="small"] .header {
+    padding: var(--space-6) var(--space-6) var(--space-4);
+  }
+
+  .body {
+    padding: 0 var(--space-6) var(--space-6);
   }
 }
 

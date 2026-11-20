@@ -1,7 +1,42 @@
-/* Indholdet: højst 1197px bredt og 32px luft foroven */
+/* 12-kolonne-griddet som på filmsiden: indholdet står i kolonne 2–11 */
 .page {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  align-content: start;
   width: 100%;
-  max-width: calc(var(--layout-booking-width) + 2 * var(--space-4));
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-4) var(--space-16);
+  max-width: none; /* <main> er ellers højst 1024px bred (globals.css) */
+  padding: var(--space-8) 0 var(--space-16);
+}
+
+.page > * {
+  grid-column: 2 / 12;
+}
+
+/* Desktop: siden kan ikke scrolles (data-fit-screen), så indholdet skal kunne skrumpe i højden */
+@media (min-width: 64rem) { /* 1024px */
+  .page {
+    grid-template-rows: minmax(0, 1fr);
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* Lav skærm (fx en bærbar): mindre luft foroven og forneden */
+@media (min-width: 64rem) and (max-height: 60rem) { /* 1024px bred, under 960px høj */
+  .page {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+}
+
+/* Tablet og mobil: hele bredden med 16px luft i siderne */
+@media (max-width: 48rem) {
+  .page {
+    padding-right: var(--space-4);
+    padding-left: var(--space-4);
+  }
+
+  .page > * {
+    grid-column: 1 / -1;
+  }
 }

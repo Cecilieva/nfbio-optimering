@@ -103,25 +103,6 @@
   height: var(--size-hall-seat);
 }
 
-/* En daybed er en bred boks, der fylder to kolonner */
-.daybed {
-  display: block;
-  height: var(--size-hall-seat);
-  border-radius: var(--radius-hall-daybed);
-  background: var(--color-hall-daybed);
-  opacity: var(--opacity-hall-daybed);
-}
-
-.daybed[data-taken="true"] {
-  background: var(--color-hall-daybed-taken);
-}
-
-/* Sæder ude af drift er næsten gennemsigtige */
-.seat[data-out-of-order="true"],
-.daybed[data-out-of-order="true"] {
-  opacity: var(--opacity-hall-out-of-order);
-}
-
 /* ---------- Forklaringen nederst ---------- */
 
 .legend {
@@ -140,9 +121,4 @@
   gap: var(--space-1-5);
   color: var(--color-text-label);
   font-size: var(--font-size-hall-legend);
-}
-
-/* Daybed i forklaringen - lige så bred som to sæder */
-.legendDaybed {
-  width: calc(var(--size-hall-seat) * 2 + var(--space-1-5));
 }

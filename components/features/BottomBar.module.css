@@ -1,11 +1,50 @@
-/* Kun det, der får bjælken til at blive hængende i bunden. Udseendet kommer, når skærmen bygges */
+/* Mobil: bjælken hænger fast i bunden, når man scroller */
 .bar {
   position: sticky;
   bottom: 0;
+  z-index: 1;
   display: flex;
-  gap: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) 0;
+  padding: var(--space-bottom-bar) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+/* Baggrunden og stregen foroven går helt ud til skærmens kanter.
+   Layoutet klipper det, der stikker ud (overflow-x: clip), så siden ikke kan scrolles til siden */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0 -100vmax;
+  z-index: -1;
+  border-top: var(--border-width) solid var(--color-border);
   background: var(--color-background);
+}
+
+.summary,
+.end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Desktop: bjælken står helt nede i bunden af skærmen, som i Figma.
+   Indholdet flugter med siden (kolonne 2–11), så luften i siderne er én kolonne + én gutter */
+@media (min-width: 64rem) { /* 1024px */
+  .bar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    flex-wrap: nowrap;
+    height: var(--size-bottom-bar-height);
+    padding: 0 calc((100% + var(--grid-gutter)) / var(--grid-columns));
+  }
+
+  .bar::before {
+    inset: 0;
+  }
 }

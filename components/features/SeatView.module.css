@@ -1,0 +1,189 @@
+/* Panelet ved siden af salen */
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+}
+
+/* ---------- Udsigten: lærredet set fra sædet og stolene ---------- */
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-10);
+  border-radius: var(--radius-md);
+  background: linear-gradient(var(--color-seat-view-top), var(--color-seat-view-bottom));
+}
+
+.label {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+  text-align: center;
+}
+
+.screen {
+  display: flex;
+  justify-content: center;
+  height: var(--size-seat-view-screen-height);
+  animation: slideIn var(--duration-seat-view) var(--easing-in-out) var(--delay-seat-view) both;
+}
+
+/* Lærredet glider lidt op på plads */
+@keyframes slideIn {
+  from {
+    transform: translateY(var(--distance-seat-view-screen));
+  }
+}
+
+/* Selve lærredet. Billedet har gløden med, så det stikker 40px ud til alle sider.
+   Det drejes og skaleres efter, hvor man sidder (--view-turn og --view-depth sættes i SeatView.js):
+   sidder man i siden, rykker det over og ses fra skrå - forrest er det stort, bagerst lille */
+.screenBox {
+  position: relative;
+  width: var(--size-seat-view-screen-box-width);
+  height: var(--size-seat-view-screen-box-height);
+  transform:
+    perspective(var(--perspective-seat-view))
+    translateX(calc(var(--view-turn) * var(--distance-seat-view-turn)))
+    rotateY(calc(var(--view-turn) * var(--angle-seat-view-turn)))
+    scale(calc(var(--scale-seat-view-front) - var(--view-depth) * (var(--scale-seat-view-front) - var(--scale-seat-view-back))));
+  /* Vokser nedad fra toppen, så det ikke dækker "LÆRRED" */
+  transform-origin: top center;
+  /* Starter lige forfra og drejer så hen til vinklen fra sædet */
+  animation: look var(--duration-seat-view-turn) var(--easing-in-out) var(--delay-seat-view-turn) both;
+}
+
+@keyframes look {
+  from {
+    transform: none;
+  }
+}
+
+.screenImage {
+  position: absolute;
+  top: calc(-1 * var(--size-seat-view-screen-glow));
+  left: calc(-1 * var(--size-seat-view-screen-glow));
+  width: calc(100% + 2 * var(--size-seat-view-screen-glow));
+  height: calc(100% + 2 * var(--size-seat-view-screen-glow));
+  max-width: none;
+}
+
+.chairs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+/* ---------- Række og sæder ---------- */
+
+.boxes {
+  display: flex;
+  gap: var(--space-6);
+  margin: 0;
+}
+
+/* "Info-boks": en label over en stor værdi */
+.box {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  min-width: 0;
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.value {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Antal, pris og knappen ---------- */
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.tickets {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.price {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Desktop: siden kan ikke scrolles. Er skærmen for lav, bliver udsigten lavere,
+   så række, sæder, pris og "Til betaling" altid kan ses */
+@media (min-width: 64rem) { /* 1024px */
+  .view {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  /* Det er lærredet, der bliver mindre - stolene og boksene bliver hele */
+  .screen {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  .screenBox {
+    width: auto;
+    height: min(100%, var(--size-seat-view-screen-box-height));
+    aspect-ratio: var(--aspect-seat-view-screen);
+  }
+
+  .label,
+  .chairs,
+  .boxes,
+  .summary {
+    flex-shrink: 0;
+  }
+}
+
+/* Lav skærm (fx en bærbar): mindre luft i udsigten og mellem boksene */
+@media (min-width: 64rem) and (max-height: 60rem) { /* 1024px bred, under 960px høj */
+  .view {
+    gap: var(--space-4);
+  }
+
+  .box {
+    padding-block: var(--space-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .screenBox {
+    animation: none;
+  }
+}

@@ -1,5 +1,4 @@
-/* heroen i fuld bredde → slår main-reglen fra globals.css fra
-   resten (.content) får den normale spalte igen */
+/* heroen i fuld bredde → slår main-reglen fra globals.css fra */
 .page {
   max-width: none;
   padding: 0;

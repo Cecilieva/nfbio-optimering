@@ -16,14 +16,17 @@ export default function StepHeader({ step, totalSteps = 4, title, subtitle, back
 
   return (
     <div className={styles.header}>
-      {/* Figma "Knap", Type=Tilbage – samme knap som på filmsiden. En knap med onBack, ellers et link. */}
-      {(onBack || backHref) && <BackLink href={backHref} onClick={onBack} className={styles.back} />}
+      {/* "Tilbage" og trinbjælken står sammen - titlen står længere nede */}
+      <div className={styles.top}>
+        {/* Figma "Knap", Type=Tilbage – samme knap som på filmsiden. En knap med onBack, ellers et link */}
+        {(onBack || backHref) && <BackLink href={backHref} onClick={onBack} className={styles.back} />}
 
-      {/* Trinbjælken. Skærmlæsere får teksten "Trin 1 af 4" i stedet for stregerne */}
-      <div className={styles.steps} role="img" aria-label={`Trin ${step} af ${totalSteps}`}>
-        {steps.map((number) => (
-          <span key={number} className={styles.step} data-done={number <= step} />
-        ))}
+        {/* Trinbjælken. Skærmlæsere får teksten "Trin 1 af 4" i stedet for stregerne */}
+        <div className={styles.steps} role="img" aria-label={`Trin ${step} af ${totalSteps}`}>
+          {steps.map((number) => (
+            <span key={number} className={styles.step} data-done={number <= step} />
+          ))}
+        </div>
       </div>
 
       <div className={styles.titles}>

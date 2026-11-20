@@ -1,3 +1,19 @@
+/* reservation – "Dine pladser holdes i 09:59" med tiden i fed */
+.reservation {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+/* tabular-nums så tallene ikke hopper, når de skifter */
+.time {
+  margin-left: var(--space-2);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
 /* premiere – "Nedtælling" (594:3212): "PREMIERE OM" over 4 bokse, højrestillet */
 .premiere {
   display: flex;

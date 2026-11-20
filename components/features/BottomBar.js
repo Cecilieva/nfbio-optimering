@@ -1,15 +1,17 @@
 import styles from "./BottomBar.module.css";
 
-// Bjælken i bunden af skærmen i købsflowet: en kort opsummering til venstre og en knap til højre.
-// Den bliver hængende i bunden, når man scroller.
+// Bjælken i bunden af skærmen i købsflowet: de valgte sæder til venstre og nedtællingen til højre.
+// På desktop står den helt nede i bunden af skærmen. På mobil hænger den i bunden, når man scroller.
+// Stregen og baggrunden går helt ud til kanten.
+// data-bottom-bar: så giver layoutet plads til bjælken nederst (se (bestil)/layout.module.css)
 //
-//   summary  - teksten til venstre, fx "2 billetter · 270 kr."
-//   children - knappen til højre, fx "Reservér"
+//   summary  - indholdet til venstre, fx en stol og "Række 4, sæde 6–7"
+//   children - indholdet til højre, fx nedtællingen
 export default function BottomBar({ summary, children }) {
   return (
-    <div className={styles.bar}>
-      <div>{summary}</div>
-      <div>{children}</div>
+    <div className={styles.bar} data-bottom-bar>
+      <div className={styles.summary}>{summary}</div>
+      <div className={styles.end}>{children}</div>
     </div>
   );
 }

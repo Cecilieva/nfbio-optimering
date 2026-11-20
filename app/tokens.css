@@ -66,7 +66,7 @@
   --palette-seat-family: #8c95bb; /* Biografstole/Ledig */
   --palette-seat-soft-family: #b9c0db; /* Biografstole/Ledig sart (hyndet) */
  
-  /* KAMPAGNE: KATTEN MED HATTEN – farverne i "Titel – hopper" (1817:9662) */
+  /* KAMPAGNE: KATTEN MED HATTEN – farverne i "Titel – hopper" */
   --palette-hop-red: #e8473b;
   --palette-hop-blue: #3fa7e8;
   --palette-hop-yellow: #ffc43d;
@@ -467,8 +467,31 @@
   --color-stepper-button: var(--figma-accent-secondary); /* plus og minus */
   --color-stepper-button-disabled: var(--figma-option-background-active); /* minus ved 0 */
   --opacity-stepper-disabled: 0.4;
+  /* Sædevalg: salen til venstre og "Udsigt fra sædet" til højre */
+  --space-seat-columns: 1.25rem; /* 20px - mellem salen og panelet */
+  --space-bottom-bar: var(--figma-padding-medium); /* 24px - Paddings/Medium, luft over og under i bundbjælken med tiden */
+  --size-bottom-bar-height: calc(var(--size-icon) + 2 * var(--space-bottom-bar)); /* 72px - 24px stol + luften over og under */
+  --size-seat-map-screen-width: 35rem; /* 560px - lærredet over salen */
+  --size-seat-view-screen-height: 5.938rem; /* 95px - lærredet set fra sædet … */
+  --size-seat-view-screen-box-width: 14.75rem; /* 236px - … selve lærredet uden glød */
+  --size-seat-view-screen-box-height: 5.5rem; /* 88px */
+  --aspect-seat-view-screen: 236 / 88; /* Lærredet beholder sin form, når det bliver mindre på en lav skærm */
+  --size-seat-view-screen-glow: 2.5rem; /* 40px - gløden stikker så langt ud til alle sider */
+  --scale-seat-hover: 1.15; /* Et sæde løfter sig lidt ved hover */
+  /* Vinklen på lærredet i "Udsigt fra sædet" - helt ude i siden og forrest/bagerst */
+  --perspective-seat-view: 25rem; /* Hvor kraftig 3D-effekten er (mindre = kraftigere) */
+  --angle-seat-view-turn: 30deg; /* Lærredet drejer højst så meget, når man sidder helt ude i siden … */
+  --distance-seat-view-turn: 1.5rem; /* … og rykker så langt over */
+  --scale-seat-view-front: 1.1; /* Forreste række: lærredet er større … */
+  --scale-seat-view-back: 0.8; /* … bagerste række: mindre */
+  --distance-seat-view-screen: 1.5px; /* Lærredet glider lidt op på plads */
+  --color-seat-view-top: var(--figma-bg-primary); /* Udsigten toner fra mørk … */
+  --color-seat-view-bottom: var(--figma-option-background); /* … til kortets farve */
   /* Trailer-vinduet (Figma 596:3073: 960 × 600 - 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
+  --size-message-modal-width: 40rem; /* 640px - Modal med en kort besked (size="small"): 480px tekst + 80px luft i hver side */
+  --space-message-modal: var(--figma-padding-xx-large); /* 80px - Paddings/XX-Large, luften i Modal med en kort besked */
+  --space-message-modal-close: var(--figma-padding-medium); /* 24px - Paddings/Medium, "Luk" fra hjørnet i Modal med en kort besked */
   --space-trailer-button: 0.625rem; /* 10px - luft rundt om "Luk" */
   --aspect-trailer: 16 / 9; /* 960 × 540 */
   --size-curtain-half: 50.556%; /* 485 af 960px - overlapper lidt på midten */
@@ -525,6 +548,11 @@
   --duration-curtain-open: 1.6s;
   --delay-curtain-open: 500ms; /* tæppet venter lidt før det åbner */
   --scale-trailer-start: 0.96; /* vinduet vokser fra 96 % */
+  /* "Udsigt fra sædet": lærredet venter 300ms og glider på plads i 750ms */
+  --duration-seat-view: 750ms;
+  --delay-seat-view: 300ms;
+  --duration-seat-view-turn: 900ms; /* Lærredet drejer hen til vinklen fra sædet … */
+  --delay-seat-view-turn: 700ms; /* … når det næsten er gledet på plads */
   --duration-title-wave-loop: 4s; /* Bølgen i titlen går hvert 4. sekund (ét ord bevæger sig i 450ms af dem) */
   --duration-title-wave-hop: 450ms; /* Ét hop i bølgen - bruges, når man holder musen over titlen */
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */

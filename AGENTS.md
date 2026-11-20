@@ -44,7 +44,7 @@ app/
   (site)/login/ signup/ profile/ Konto
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
-  features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, …
+  features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
 lib/
@@ -57,6 +57,7 @@ lib/
   payment-errors.js       De simulerede betalingsfejl (fx MP-408)
   ticket-types.js         Billettyperne (Voksen, Barn, Pensionist) og deres priser
   safe-path.js            Validerer ?next=
+  seat-rules.js           Sædevalget: et ledigt sæde må ikke efterlades alene (findLoneSeats) og de bedste pladser midt i salen (findBestSeats)
 supabase/supabase_schema.sql
 ```
 
@@ -72,7 +73,11 @@ supabase/supabase_schema.sql
 
 ## Sæder
 
-Sæder har `row_number` og `seat_number` (begge tal), `col` (kolonnen i salen - huller er gange) og `out_of_order`. `type = 'couple'` er en daybed, der fylder to kolonner. Vis altid valgte sæder med `formatSeats(seats)` fra `lib/format.js`, fx "Række 4, sæde 6–7" eller "Række 4, sæde 6, 9" - skriv aldrig teksten selv.
+Sæder har `row_number` og `seat_number` (begge tal), og `col` (kolonnen i salen - huller er gange). Der er ingen daybeds - alle sæder er almindelige sæder eller handicappladser. Vis altid valgte sæder med `formatSeats(seats)` fra `lib/format.js`, fx "Række 4, sæde 6–7" eller "Række 4, sæde 6, 9" - skriv aldrig teksten selv.
+
+Man må ikke efterlade et ledigt sæde alene (optaget sæde, gang eller væg på begge sider), medmindre der ikke er nogen anden måde at vælge antallet på - fx når salen er næsten udsolgt. Reglen står i `lib/seat-rules.js` og tjekkes både i SeatPicker og i `reserveSeats`.
+
+Når man kommer fra "Vælg antal" til sædevalget, får man automatisk tildelt pladser så tæt på midten af salen som muligt (`findBestSeats` i samme fil). Man kan frit ændre dem: et klik på et ledigt sæde bytter med det sæde, der blev valgt først.
 
 ## Pladsholdere
 
@@ -98,7 +103,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Filmside - "Se salen" (overblik over salen) | Sal/1: 929:6302, Sal/3: 929:7069, Sal/4: 929:7295, Sal/5: 929:7522, Sal/6: 929:8100, Sal/7: 929:8359 | `/film/[slug]` | HallMap (i `features/showtimes/` - vises fra SelectedShowtime). Sæderne tegnes med Seat (`components/ui` - Figma "Sæde" 214:3678, farverne er tokens, så de skifter i familie-mode). Layoutet hentes med `getHallLayouts` i `lib/data/seats.js`; sædernes placering står i `seats.col`, og salene bygges med `seed_hall_seats` i skemaet |
 | Trailer-modal | 596:3073 (Fortæppe: 636:3749) | `/film/[slug]` og `/film` | TrailerButton, Modal, Curtain (fortæppet, der åbner over videoen), Button (`variant="secondary"` - "Luk" med kryds) |
 | Sædevalg - vælg antal ("Antal pladser") | 737:6375 (Trin-header: 811:6487, Vælg antal-kort: 775:6366) | `/bestil/saeder/[showtimeId]` | StepHeader, SeatPicker (trin 1 af 2 på siden), TicketCounter, Button. Billettyper og priser i `lib/ticket-types.js` |
-| Sædevalg - vælg sæder | 214:4067 | `/bestil/saeder/[showtimeId]` | SeatPicker, SeatMap, BottomBar, Button |
+| Sædevalg - vælg sæder | 214:4067 (Info-boks: 838:6543, Bundbar: 843:6569) | `/bestil/saeder/[showtimeId]` | SeatPicker (trin 2 af 2 på siden), SeatMap (salen - tegnes med Seat som HallMap), SeatView ("Udsigt fra sædet": lærredet i perspektiv, Række/Sæder, pris og "Til betaling"), BottomBar (valgte sæder + Countdown "Dine pladser holdes i"), Button |
 | Overlay: Vi popper dine pladser | | `/bestil/saeder/[showtimeId]` | Overlay |
 | Overlay: Dine popkorn blev brændt | | `/bestil/saeder/[showtimeId]` | Overlay, Button |
 | Log ind / gæst / opret profil | | `/bestil/[bookingId]/login` | StepHeader, OrderSummary, TextField, Button, AttachOwnerForm |

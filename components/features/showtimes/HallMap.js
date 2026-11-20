@@ -16,13 +16,9 @@ import styles from "./HallMap.module.css";
 export default function HallMap({ name, layout, freeSeats, takenSeatIds }) {
   // Hvilke slags sæder har salen? Forklaringen nederst viser kun dem, der findes
   let hasWheelchair = false;
-  let hasDaybed = false;
-  let hasOutOfOrder = false;
   for (const row of layout.rows) {
     for (const seat of row.seats) {
       if (seat.type === "handicap") hasWheelchair = true;
-      if (seat.type === "couple") hasDaybed = true;
-      if (seat.out_of_order) hasOutOfOrder = true;
     }
   }
 
@@ -60,20 +56,7 @@ export default function HallMap({ name, layout, freeSeats, takenSeatIds }) {
                 {row.seats.map((seat) => {
                   const isTaken = takenSeatIds.includes(seat.id);
                   // "+ 1", fordi den første kolonne er rækkenummeret
-                  const position = { gridRow, gridColumn: `${seat.col + 1} / span ${seat.span}` };
-
-                  // En daybed er en bred, afrundet boks
-                  if (seat.type === "couple") {
-                    return (
-                      <span
-                        key={seat.id}
-                        className={styles.daybed}
-                        data-taken={isTaken}
-                        data-out-of-order={seat.out_of_order}
-                        style={position}
-                      />
-                    );
-                  }
+                  const position = { gridRow, gridColumn: seat.col + 1 };
 
                   return (
                     <Seat
@@ -81,7 +64,6 @@ export default function HallMap({ name, layout, freeSeats, takenSeatIds }) {
                       state={isTaken ? "taken" : "free"}
                       wheelchair={seat.type === "handicap"}
                       className={styles.seat}
-                      data-out-of-order={seat.out_of_order}
                       style={position}
                     />
                   );
@@ -114,18 +96,6 @@ export default function HallMap({ name, layout, freeSeats, takenSeatIds }) {
           <li className={styles.legendItem}>
             <Seat wheelchair className={styles.seat} />
             Kørestolsplads
-          </li>
-        )}
-        {hasDaybed && (
-          <li className={styles.legendItem}>
-            <span className={`${styles.daybed} ${styles.legendDaybed}`} />
-            Daybed
-          </li>
-        )}
-        {hasOutOfOrder && (
-          <li className={styles.legendItem}>
-            <Seat className={styles.seat} data-out-of-order="true" />
-            Ude af drift
           </li>
         )}
       </ul>
