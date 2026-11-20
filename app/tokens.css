@@ -312,7 +312,7 @@
   --radius-md: var(--figma-radius-small); /* 8px – knapper, felter og bokse */
   --radius-lg: var(--figma-radius-medium); /* 16px – modal, overlay og kort på mobil */
   --radius-pill: 999px;
-  --radius-card-lg: 1.75rem; /* 28px – det store "Kommer snart"-kort */
+  --radius-card-lg: var(--figma-radius-large); /* 24px – Border-radius/Large, det store "Kommer snart"-kort */
   --radius-intro-poster: 0.875rem; /* 14px – plakaterne i hero'en */
   --radius-button-outline: 0.625rem; /* 10px – "Følg film" */
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */

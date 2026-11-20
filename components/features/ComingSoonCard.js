@@ -118,7 +118,7 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
         <div className={styles.actions} data-reveal>
           {/* Altid med, så alle kort har de samme knapper. Uden trailer viser vinduet en besked i stedet. */}
           <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
-          <Button href={`/film/${movie.slug}`}>Køb billet</Button>
+          <Button href={`/film/${movie.slug}`}>Se filmtider</Button>
         </div>
       </div>
     </ParallaxFrame>
