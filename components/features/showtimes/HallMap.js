@@ -1,0 +1,153 @@
+import { Fragment } from "react";
+import styles from "./HallMap.module.css";
+
+// Billederne af sæderne (eksporteret fra Figma)
+const SEAT_ICONS = {
+  free: "/icons/seats/seat-free.svg",
+  taken: "/icons/seats/seat-taken.svg",
+  wheelchair: "/icons/seats/seat-wheelchair.svg",
+};
+
+// Finder det rigtige billede til et sæde
+function seatIcon(seat, isTaken) {
+  if (isTaken) {
+    return SEAT_ICONS.taken;
+  }
+  if (seat.type === "handicap") {
+    return SEAT_ICONS.wheelchair;
+  }
+  return SEAT_ICONS.free;
+}
+
+// Overblik over salen (Figma "Sal/1" … "Sal/7"). Vises, når man klikker "Se salen".
+// Man kan ikke vælge sæder her - det gør man først i næste trin.
+//
+// Salen er bygget som et grid: rækkenummeret står i begge sider,
+// og hvert sæde står i sin egen kolonne (col). Er der ingen sæde i en kolonne, bliver det en gang.
+//
+// Den får:
+//   name         - salens navn, fx "Bio 5"
+//   layout       - fra getHallLayouts(): { columns, rows: [{ number, seats: [...] }] }
+//   freeSeats    - antal ledige pladser (fra getShowtimes)
+//   takenSeatIds - id'erne på de sæder, der er taget til forestillingen
+export default function HallMap({ name, layout, freeSeats, takenSeatIds }) {
+  // Hvilke slags sæder har salen? Forklaringen nederst viser kun dem, der findes
+  let hasWheelchair = false;
+  let hasDaybed = false;
+  let hasOutOfOrder = false;
+  for (const row of layout.rows) {
+    for (const seat of row.seats) {
+      if (seat.type === "handicap") hasWheelchair = true;
+      if (seat.type === "couple") hasDaybed = true;
+      if (seat.out_of_order) hasOutOfOrder = true;
+    }
+  }
+
+  // Kolonnerne i griddet: rækkenummer | sæderne | rækkenummer
+  const lastColumn = layout.columns + 2;
+
+  return (
+    <div className={styles.hall}>
+      {/* Salens navn og antal ledige pladser */}
+      <div className={styles.header}>
+        <p className={styles.name}>{name}</p>
+        <p className={styles.free}>{freeSeats} ledige pladser</p>
+      </div>
+
+      {/* Lærredet øverst */}
+      <p className={styles.screenLabel}>LÆRRED</p>
+      <div className={styles.screen} aria-hidden="true">
+        <img src="/icons/seats/screen-glow.svg" alt="" className={styles.screenGlow} />
+        <img src="/icons/seats/screen-line.svg" alt="" className={styles.screenLine} />
+      </div>
+
+      {/* Selve salen - den er kun til at se på, så skærmlæsere springer den over */}
+      <div className={styles.scroll}>
+        <div className={styles.grid} style={{ "--hall-columns": layout.columns }} aria-hidden="true">
+          {layout.rows.map((row, index) => {
+            const gridRow = index + 1;
+
+            return (
+              <Fragment key={row.number}>
+                {/* Rækkenummeret til venstre */}
+                <span className={styles.rowLabel} style={{ gridRow, gridColumn: 1 }}>
+                  {row.number}
+                </span>
+
+                {row.seats.map((seat) => {
+                  const isTaken = takenSeatIds.includes(seat.id);
+                  // "+ 1", fordi den første kolonne er rækkenummeret
+                  const position = { gridRow, gridColumn: `${seat.col + 1} / span ${seat.span}` };
+
+                  // En daybed er en bred, afrundet boks
+                  if (seat.type === "couple") {
+                    return (
+                      <span
+                        key={seat.id}
+                        className={styles.daybed}
+                        data-taken={isTaken}
+                        data-out-of-order={seat.out_of_order}
+                        style={position}
+                      />
+                    );
+                  }
+
+                  return (
+                    <img
+                      key={seat.id}
+                      src={seatIcon(seat, isTaken)}
+                      alt=""
+                      width={24}
+                      height={24}
+                      className={styles.seat}
+                      data-out-of-order={seat.out_of_order}
+                      style={position}
+                    />
+                  );
+                })}
+
+                {/* Rækkenummeret til højre */}
+                <span
+                  className={`${styles.rowLabel} ${styles.rowLabelRight}`}
+                  style={{ gridRow, gridColumn: lastColumn }}
+                >
+                  {row.number}
+                </span>
+              </Fragment>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Forklaringen nederst - "Ledig" og "Optaget" er der altid, resten kun hvis salen har dem */}
+      <ul className={styles.legend}>
+        <li className={styles.legendItem}>
+          <img src={SEAT_ICONS.free} alt="" width={24} height={24} className={styles.seat} />
+          Ledig
+        </li>
+        <li className={styles.legendItem}>
+          <img src={SEAT_ICONS.taken} alt="" width={24} height={24} className={styles.seat} />
+          Optaget
+        </li>
+        {hasWheelchair && (
+          <li className={styles.legendItem}>
+            <img src={SEAT_ICONS.wheelchair} alt="" width={24} height={24} className={styles.seat} />
+            Kørestolsplads
+          </li>
+        )}
+        {hasDaybed && (
+          <li className={styles.legendItem}>
+            <span className={`${styles.daybed} ${styles.legendDaybed}`} />
+            Daybed
+          </li>
+        )}
+        {hasOutOfOrder && (
+          <li className={styles.legendItem}>
+            <img src={SEAT_ICONS.free} alt="" width={24} height={24} className={styles.seat} data-out-of-order="true" />
+            Ude af drift
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}

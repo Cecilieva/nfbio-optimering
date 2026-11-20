@@ -35,7 +35,7 @@
   margin: 0;
 }
 
-/* "Din forestilling" og teksten under titlen – lille og dæmpet */
+/* "Din forestilling" og teksten under titlen - lille og dæmpet */
 .label,
 .details {
   color: var(--color-text-input-muted);
@@ -43,7 +43,7 @@
   line-height: var(--line-height-snug);
 }
 
-/* Titlen, fx "Clayface · I dag kl. 18.20" – stor og fed */
+/* Titlen, fx "Clayface · I dag kl. 18.20" - stor og fed */
 .title {
   color: var(--color-text-primary);
   font-size: var(--font-size-lg);
@@ -57,7 +57,7 @@
   gap: var(--space-4);
 }
 
-/* "Billetsalg fra 3. december" – står i stedet for "Vælg billetter", før billetsalget åbner */
+/* "Billetsalg fra 3. december" - står i stedet for "Vælg billetter", før billetsalget åbner */
 .saleOpens {
   display: flex;
   align-items: center;
@@ -73,57 +73,37 @@
   height: auto;
 }
 
-/* ---------- Boksen med salen (når "Se salen" er klikket) ---------- */
+/* ---------- Salen (når man har klikket "Se salen") ---------- */
 
-/* Boksen med salen til venstre og teksten til højre */
+/* Salen til venstre og teksten til højre */
 .hall {
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-10);
   align-items: center;
+  min-width: 0;
 }
 
-.hallBox {
-  display: flex;
-  flex: 0 1 60%;
-  justify-content: space-between;
-  padding: var(--space-6) var(--space-8);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-}
-
-.hallBox p,
 .hallText p {
   margin: 0;
 }
 
-/* Salens navn, fx "Sal 5" – fed */
-.hallName {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-}
-
-/* "94 ledige pladser" – lille tekst */
-.hallSeats {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
-}
-
+/* Teksten ved siden af salen */
 .hallText {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-/* "Overblik over salen" – stor og fed */
+/* "Overblik over salen" - stor og fed */
 .hallTitle {
   color: var(--color-text-primary);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
 }
 
+/* "Du vælger selv pladser i næste trin." - lille og dæmpet */
 .hallHint {
-  color: var(--color-text-primary);
+  color: var(--color-text-label);
   font-size: var(--font-size-xs);
 }
 
