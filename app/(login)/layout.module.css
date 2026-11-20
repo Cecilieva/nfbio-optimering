@@ -1,0 +1,15 @@
+/* Hele skærmen: header øverst og siden under.
+   Samme baggrund som Log ind-siden, så der ikke ses en anden farve under den på høje skærme. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--color-background-secondary);
+}
+
+/* Siden fylder resten af højden.
+   width: 100%, fordi den globale main-regel centrerer med auto-margin, som ellers gør siden smal. */
+.screen > main {
+  flex: 1;
+  width: 100%;
+}
