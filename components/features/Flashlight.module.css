@@ -1,5 +1,8 @@
-/* fylder hele heroen
-   container-type: size → cqw/cqh (1 % af lommelygtens bredde/højde) */
+/* ========================================================================
+   KAMPAGNE: CLAYFACE – hele denne fil bruges kun på Clayface-filmsiden
+   ======================================================================== */
+
+/* container-type → cqw/cqh = 1 % af lommelygtens bredde/højde */
 .flashlight {
   position: absolute;
   inset: 0;
@@ -7,44 +10,36 @@
   container-type: size;
 }
 
-/* "Mørke": billedet ses kun i keglen */
 .darkness {
   position: absolute;
   inset: 0;
   background: var(--color-background-secondary);
 }
 
-/* "Kegle": billedet bag en blød rund maske
-   --light-x/y = lysets midte (fra Flashlight.js) */
 .cone {
   position: absolute;
   inset: 0;
-  /* hvid = synligt, gennemsigtig = skjult */
   mask-image: url("/flashlight/kegle-maske.svg");
   mask-repeat: no-repeat;
   mask-size: var(--size-flashlight) var(--size-flashlight);
-  /* midten × 100cqw minus en halv kegle → keglens midte står på punktet */
+  /* keglens midte står på --light-x/y */
   mask-position:
     calc(var(--light-x) * 100cqw - var(--size-flashlight) / 2)
     calc(var(--light-y) * 100cqh - var(--size-flashlight) / 2);
-  /* glider i stedet for at hoppe */
   transition: mask-position var(--duration-flashlight-auto) var(--easing-in-out);
 }
 
-/* hurtigere når den følger musen */
 .cone[data-mode="follow"] {
   transition-duration: var(--duration-flashlight-follow);
   transition-timing-function: var(--easing-out);
 }
 
-/* cover = fylder uden at strække (kanter beskæres) */
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* reduced motion: ingen glid */
 @media (prefers-reduced-motion: reduce) {
   .cone {
     transition: none;

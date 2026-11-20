@@ -5,38 +5,39 @@ import styles from "./MovieTitle.module.css";
 /**
  * Titlen øverst på filmsiden
  *
- *   standard – Figma "Titel – standard" (3063:14531)
- *              glider op når siden loader + bølge hvert 4. sek
- *   melt     – Figma "Titel – smelter" (1797:9068 / 1797:9099), kun kommende thrillere/gysere
- *              store versaler med dråber der løber ned og trækker sig op igen (MeltDrips)
+ *   standard – alle film. Figma "Titel – standard" (3063:14531)
+ *   katten   – KAMPAGNE, kun Katten med Hatten. Figma "Titel – hopper" (1817:9681)
+ *   clayface – KAMPAGNE, kun Clayface. Figma "Titel – smelter" (1797:9068 / 1797:9099)
  *
- * kolon i titlen → delen før bliver lille overtitel ("Univers titel")
+ * kolon i titlen → delen før bliver en lille overtitel
  *
  * @param {object} props
  * @param {string} props.title
  * @param {string} [props.id] id på h1 (til aria-labelledby)
- * @param {"standard" | "melt"} [props.variant="standard"]
+ * @param {"standard" | "katten" | "clayface"} [props.variant="standard"]
  */
 export default function MovieTitle({ title, id, variant = "standard" }) {
-  // overtitel + titel (splitSeries i lib/format.js)
   const [series, name] = splitSeries(title);
-  // span pr. ord → bølgen + dråber pr. ord
   const words = name.split(" ");
+  let letterCount = 0;
 
   return (
     <div className={styles.titleBlock}>
       {series && <p className={styles.series}>{series}</p>}
-      {/* data-variant styres i css'en */}
-      <h1 id={id} className={styles.title} data-variant={variant}>
+      {/* aria-label: skærmlæsere læser titlen samlet, selv om bogstaverne er delt op */}
+      <h1 id={id} className={styles.title} data-variant={variant} aria-label={variant === "katten" ? name : undefined}>
         {words.map((word, index) => (
-          // --index = forsinkelse pr. ord → bølgen går fra venstre
-          // mellemrummet står som tekst så skærmlæsere/kopiering får hele titlen (afstanden er column-gap)
           <Fragment key={index}>
             {index > 0 && " "}
             <span className={styles.word} style={{ "--index": index }}>
-              {word}
-              {/* dråber kun på melt */}
-              {variant === "melt" && <MeltDrips letters={word.length} />}
+              {variant === "katten"
+                ? word.split("").map((letter) => {
+                    const number = letterCount;
+                    letterCount = letterCount + 1;
+                    return <HopLetter key={number} letter={letter} number={number} />;
+                  })
+                : word}
+              {variant === "clayface" && <MeltDrips letters={word.length} />}
             </span>
           </Fragment>
         ))}
@@ -45,9 +46,44 @@ export default function MovieTitle({ title, id, variant = "standard" }) {
   );
 }
 
-// dråberne fra figma "Dråber": [left, width, height] i px
-// tegnet under CLAYFACE (8 bogstaver, 1380px) ved 245.697px
-// start-position, blur osv. står i tokens.css
+// ---------- KAMPAGNE: KATTEN MED HATTEN ----------
+
+// hvor højt hvert bogstav hopper og hvor meget det drejer (fra Figma). starter forfra efter 6
+const HOPS = [
+  { up: "-0.29em", turn: "-6deg" },
+  { up: "-0.05em", turn: "5deg" },
+  { up: "-0.22em", turn: "-4deg" },
+  { up: "0.03em", turn: "7deg" },
+  { up: "-0.23em", turn: "-3deg" },
+  { up: "-0.08em", turn: "4deg" },
+];
+
+const HOP_COLORS = [
+  "var(--color-title-hop-red)",
+  "var(--color-title-hop-blue)",
+  "var(--color-title-hop-yellow)",
+  "var(--color-title-hop-ink)",
+];
+
+function HopLetter({ letter, number }) {
+  // % → listen starter forfra, når den er brugt op
+  const hop = HOPS[number % HOPS.length];
+  const color = HOP_COLORS[number % HOP_COLORS.length];
+
+  return (
+    <span
+      className={styles.letter}
+      aria-hidden="true"
+      style={{ "--number": number, "--up": hop.up, "--turn": hop.turn, "--color": color }}
+    >
+      {letter}
+    </span>
+  );
+}
+
+// ---------- KAMPAGNE: CLAYFACE ----------
+
+// dråberne fra Figma: [left, width, height] i px, tegnet under CLAYFACE (8 bogstaver) ved 245.697px
 const DRIPS = [
   [47.6, 14.0, 154.91],
   [89.67, 20.86, 78.58],
@@ -70,34 +106,29 @@ const DRIPS = [
   [1280.35, 35.1, 130.9],
   [1343.69, 33.83, 73.56],
 ];
-const FIGMA_FONT_SIZE = 245.697; // Titlens skriftstørrelse i Figma
-const PATTERN_WIDTH = 1380; // Bredden af hele mønstret = CLAYFACE i Figma
-const LETTER_WIDTH = PATTERN_WIDTH / 8; // Gennemsnitlig bredde af ét bogstav (172.5px)
+const FIGMA_FONT_SIZE = 245.697;
+const PATTERN_WIDTH = 1380; // bredden af CLAYFACE i Figma
+const LETTER_WIDTH = PATTERN_WIDTH / 8;
 
-// px → em så dråberne følger titlens størrelse (245.697px = 1em)
+// px → em, så dråberne følger titlens størrelse
 function toEm(px) {
   return `${px / FIGMA_FONT_SIZE}em`;
 }
 
-// dråber under ét ord – korte ord får dem der passer, lange får mønstret igen efter 8 bogstaver
+// dråber under ét ord. lange ord får mønstret igen efter 8 bogstaver
 function MeltDrips({ letters }) {
-  // ca. bredde i figma-px (CLAYFACE: 8 × 172.5 = 1380)
   const wordWidth = letters * LETTER_WIDTH;
   const drips = [];
 
-  // mønstret ved 0, 1380, 2760 …
   for (let start = 0; start < wordWidth; start += PATTERN_WIDTH) {
-    // de 20 dråber
     for (const [left, width, height] of DRIPS) {
-      // kun dem der slutter inden for ordet
+      // kun dråber, der slutter inden for ordet
       if (start + left + width <= wordWidth) {
         drips.push({ left: start + left, width, height });
       }
     }
   }
 
-  // tom span pr. dråbe, mål som css-variabler (MovieTitle.module.css)
-  // aria-hidden = pynt
   return drips.map((drip) => (
     <span
       key={drip.left}
