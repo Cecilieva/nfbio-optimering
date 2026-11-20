@@ -236,7 +236,7 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
         {/* Figma "Se mere": vises kun, når der er flere film, end der står på siden. Man kan kun se flere – ikke færre. */}
         {hasMore && (
           <Button
-            variant="secondary"
+            variant="more"
             className={styles.more}
             onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
           >

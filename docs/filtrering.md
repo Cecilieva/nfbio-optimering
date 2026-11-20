@@ -57,7 +57,7 @@ Under filtrene står filmene som plakater i et gitter (Figma "Program", node `28
 - **Hover – Figma "se spilletider" (node `455:11441`):** holder man musen over et kort (eller står på det med tastaturet), bliver kortet mørkere, teksten skjules, og en blå knap **"Se spilletider"** vises i midten. Den bruger de samme styles som `Button` med `variant="primary"`, men er en `span`, fordi hele kortet allerede er et link til filmsiden.
 - **Formatet i hjørnet** er det valgte format, eller formatet på filmens første spilletid, der passer til filtrene.
 - **Alderen** skrives kort med `formatAgeShort()` i `lib/format.js`: "15 år" → "15+", "Tilladt for alle" → "Alle".
-- **"Se flere film"** (`Button variant="secondary"`): der vises altid mindst 10 film (2 rækker á 5, `PAGE_SIZE`). Knappen vises kun, når der er flere film, og den viser 10 mere ad gangen. Man kan kun se flere film, ikke færre. Listen starter forfra med 10, når man ændrer et filter.
+- **"Se flere film"** (`Button variant="more"`, Figma "Knap" Type=Se flere – mørk kant `border/Standard`): der vises altid mindst 10 film (2 rækker á 5, `PAGE_SIZE`). Knappen vises kun, når der er flere film, og den viser 10 mere ad gangen. Man kan kun se flere film, ikke færre. Listen starter forfra med 10, når man ændrer et filter.
 
 ## Komponenterne
 
