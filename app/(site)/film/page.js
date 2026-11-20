@@ -32,19 +32,19 @@ export default async function HomePage() {
           Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
       <FeaturedMovies movies={featured} introPosters={introPosters} />
 
-      {/* Figma "Kommende film – udfold": knappen "Se alle kommende film" står øverst, og sektionen med
-          de kommende film folder sig ud nederst – under filmene, der kører nu (som i prototypen) */}
+      {/* Figma "Forside – samlet": filmene, der kører nu, og under dem "Kommende film" */}
       <div className={styles.sections}>
-        <ComingSoonSection movies={comingSoon}>
-          {/* Figma "Filtrering": filtrer de film, der kører nu i byen. Filmene står under filtrene. */}
-          <div className={styles.nowPlaying}>
-            {nowPlaying.length > 0 ? (
-              <MovieFilter cityName={city.name} cinemas={cinemas} movies={nowPlaying} />
-            ) : (
-              <p>Der går ingen film i {city.name} lige nu.</p>
-            )}
-          </div>
-        </ComingSoonSection>
+        {/* Figma "Filtrering": filtrer de film, der kører nu i byen. Filmene står under filtrene. */}
+        <div className={styles.nowPlaying}>
+          {nowPlaying.length > 0 ? (
+            <MovieFilter cityName={city.name} cinemas={cinemas} movies={nowPlaying} />
+          ) : (
+            <p>Der går ingen film i {city.name} lige nu.</p>
+          )}
+        </div>
+
+        {/* Figma "Kommende film – udfold": overskrift, filtre, 2 rækker plakater og "Se alle kommende film" */}
+        <ComingSoonSection movies={comingSoon} />
       </div>
 
       {/* Figma "Finale (motion)": Nordisk Films slogan i et stjernerum – det sidste på forsiden, i fuld bredde */}

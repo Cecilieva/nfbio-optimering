@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PosterPlaceholder from "@/components/features/PosterPlaceholder";
+import { SHOWTIMES_HASH } from "@/components/features/showtimes/ScrollToShowtimes";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { formatAgeShort, formatDayMonthShort, formatDuration } from "@/lib/format";
 import styles from "./MovieCard.module.css";
@@ -16,7 +17,7 @@ import styles from "./MovieCard.module.css";
  *
  * @param {object} props
  * @param {{ slug: string, title: string, poster_url?: string, age_rating?: string, duration_min?: number,
- *   premiere_date?: string, ticket_sale_opens?: string | null }} props.movie
+ *   premiere_date?: string, ticket_sale_opens?: string | null, ticket_sale_open?: boolean }} props.movie
  * @param {"default" | "coming-soon" | "feed"} [props.variant="default"]
  * @param {string} [props.format] Variant "feed": the format in the corner, e.g. "2D"
  */
@@ -48,16 +49,21 @@ export default function MovieCard({ movie, variant = "default", format }) {
 
 /**
  * Figma "Kommer snart" (node 927:6300): plakaten under "Kommende film".
- * Billede med mørk toning, premieren i midten og titlen nederst. Hele plakaten er et link til filmsiden.
- * Holder man musen over (eller står på den med tastaturet), skjules teksten, og "Se spilletider" vises i midten –
- * Figma "Filmplakat", Property 1=få notifikationer (node 913:14280).
+ * Billede med mørk toning, premieren i midten og titlen nederst. Hele plakaten er et link til toppen af filmsiden,
+ * så man ser billede, trailer og handling først.
+ * Holder man musen over (eller står på den med tastaturet), skjules teksten, og en knap vises i midten –
+ * Figma "Filmplakat", Property 1=få notifikationer (node 913:14280): "Se spilletider", når billetsalget er åbent,
+ * ellers "Læs mere".
  */
 function ComingSoonPoster({ movie }) {
-  // Teksten under datoen: "Billetsalg fra 10. nov", hvis vi kender datoen (lib/data/ticket-sale.js),
-  // ellers er billetsalget allerede åbent
-  const ticketSale = movie.ticket_sale_opens
-    ? `Billetsalg fra ${formatDayMonthShort(movie.ticket_sale_opens)}`
-    : "Billetsalg åbent";
+  // ticket_sale_open regnes ud i getComingSoon() (7 dage før premieren, lib/data/ticket-sale.js)
+  const canBuy = movie.ticket_sale_open;
+
+  // Teksten under datoen: "Billetsalget er åbent", ellers hvornår det åbner, fx "Billetsalg fra 24. nov"
+  const ticketSale =
+    canBuy || !movie.ticket_sale_opens
+      ? "Billetsalget er åbent"
+      : `Billetsalg fra ${formatDayMonthShort(movie.ticket_sale_opens)}`;
 
   return (
     <Link href={`/film/${movie.slug}`} className={`${styles.poster} ${styles.comingSoon}`}>
@@ -83,10 +89,10 @@ function ComingSoonPoster({ movie }) {
       {/* Figma "Bund": titlen. Lange titler slutter med "…" (se MovieCard.module.css). */}
       <h3 className={styles.title}>{movie.title}</h3>
 
-      {/* Figma "få notifikationer": "Se spilletider" ved hover. En span, fordi hele plakaten allerede er linket
+      {/* Figma "få notifikationer": knappen ved hover. En span, fordi hele plakaten allerede er linket
           (se FeedPoster). aria-hidden: skærmlæsere hører titlen fra linket. */}
       <span className={`${buttonStyles.button} ${styles.action}`} data-variant="primary" aria-hidden="true">
-        Se spilletider
+        {canBuy ? "Se spilletider" : "Læs mere"}
       </span>
     </Link>
   );
@@ -104,7 +110,7 @@ function FeedPoster({ movie, format }) {
   const details = [movie.genres?.[0], formatAgeShort(movie.age_rating)].filter(Boolean);
 
   return (
-    <Link href={`/film/${movie.slug}`} className={`${styles.poster} ${styles.feed}`}>
+    <Link href={`/film/${movie.slug}${SHOWTIMES_HASH}`} className={`${styles.poster} ${styles.feed}`}>
       {/* Billedet er pynt – titlen står som tekst nedenfor, så alt="" er nok.
           Har filmen intet billede, ses den blå gradient fra CSS'en i stedet. */}
       {movie.poster_url && <img src={movie.poster_url} alt="" className={styles.image} />}
