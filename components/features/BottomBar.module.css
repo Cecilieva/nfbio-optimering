@@ -1,4 +1,4 @@
-/* Only what the bar needs to stick. The look comes from Figma. */
+/* Kun det, der får bjælken til at blive hængende i bunden. Udseendet kommer, når skærmen bygges */
 .bar {
   position: sticky;
   bottom: 0;

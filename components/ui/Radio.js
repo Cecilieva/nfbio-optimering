@@ -1,13 +1,10 @@
-/**
- * One radio button with its label. Group them with the same name, e.g. the payment methods.
- *
- * @param {object} props
- * @param {React.ReactNode} props.label
- * @param {string} props.name
- * @param {string} props.value
- * @param {boolean} [props.defaultChecked]
- * @param {boolean} [props.required]
- */
+// Én radioknap med sin tekst. Knapper med samme name hører sammen, fx betalingsmetoderne.
+//
+//   label          - teksten ved knappen
+//   name           - gruppens navn
+//   value          - værdien, der sendes, når knappen er valgt
+//   defaultChecked - valgt fra start
+//   required       - man skal vælge en i gruppen
 export default function Radio({ label, name, value, ...rest }) {
   return (
     <label>

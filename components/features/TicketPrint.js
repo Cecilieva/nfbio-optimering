@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-/**
- * "Din billet printes …" for a moment, then the finished ticket (children).
- * The animation itself comes from Figma.
- *
- * @param {object} props
- * @param {number} [props.durationMs=2000]
- * @param {React.ReactNode} props.children The finished ticket
- */
+// Viser "Din billet printes …" et øjeblik og derefter den færdige billet.
+//
+//   durationMs - hvor længe "printes" vises (2000 = 2 sekunder)
+//   children   - den færdige billet
 export default function TicketPrint({ durationMs = 2000, children }) {
   const [printed, setPrinted] = useState(false);
 
