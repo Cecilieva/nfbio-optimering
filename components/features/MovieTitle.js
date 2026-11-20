@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { splitSeries } from "@/lib/format";
 import styles from "./MovieTitle.module.css";
 
 /**
@@ -17,7 +18,7 @@ import styles from "./MovieTitle.module.css";
  * @param {"standard" | "melt"} [props.variant="standard"]
  */
 export default function MovieTitle({ title, id, variant = "standard" }) {
-  // overtitel + titel (splitSeries nederst)
+  // overtitel + titel (splitSeries i lib/format.js)
   const [series, name] = splitSeries(title);
   // span pr. ord → bølgen + dråber pr. ord
   const words = name.split(" ");
@@ -105,14 +106,4 @@ function MeltDrips({ letters }) {
       style={{ "--left": toEm(drip.left), "--width": toEm(drip.width), "--height": toEm(drip.height) }}
     />
   ));
-}
-
-// "The Hunger Games: Sunrise on the Reaping" → ["The Hunger Games", "Sunrise on the Reaping"]
-// Uden kolon: [null, hele titlen]
-function splitSeries(title) {
-  const index = title.indexOf(": ");
-  if (index === -1) {
-    return [null, title];
-  }
-  return [title.slice(0, index), title.slice(index + 2)];
 }

@@ -75,50 +75,30 @@ export default function FollowButton({ title, variant = "default" }) {
     setRinging(true);
   }
 
-  if (isCard) {
-    return (
-      <div className={styles.wrapper} data-variant={variant}>
-        {/* På et kort er knappen blå (Button "primary") */}
-        <Button
-          variant="primary"
-          className={styles.cardButton}
-          onClick={handleClick}
-          aria-pressed={following}
-          aria-label={`Giv mig besked om ${title}`}
-        >
-          <Image src="/icons/bell.svg" alt="" width={16} height={18} />
-          Giv mig besked
-        </Button>
-
-        {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}
-        <p role="status" className={styles.toast} data-visible={showToast}>
-          {showToast && "Vi giver besked på mail, når billetsalget åbner."}
-        </p>
-      </div>
-    );
-  }
-
+  // Plakat-knappen: altid blå med "Giv mig besked". Ellers Figma "Notifikationsknap": kant og "Følg film" (Fra),
+  // eller blå med kun den fyldte klokke (Til).
+  const on = !isCard && following;
   return (
     <div className={styles.wrapper} data-variant={variant}>
-      {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
-        variant={following ? "primary" : "outline"}
-        className={following ? styles.on : undefined}
+        variant={isCard || on ? "primary" : "outline"}
+        className={isCard ? styles.cardButton : on ? styles.on : undefined}
         onClick={handleClick}
         aria-pressed={following}
-        aria-label={`Følg ${title}`}
+        aria-label={isCard ? `Giv mig besked om ${title}` : `Følg ${title}`}
       >
         <Image
-          src={following ? "/icons/bell-filled.svg" : "/icons/bell.svg"}
+          src={on ? "/icons/bell-filled.svg" : "/icons/bell.svg"}
           alt=""
           width={16}
           height={18}
           className={styles.bell}
           data-ringing={ringing || undefined}
         />
-        {!following && "Følg film"}
+        {isCard ? "Giv mig besked" : !on && "Følg film"}
       </Button>
 
+      {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}
       <p role="status" className={styles.toast} data-visible={showToast}>
         {showToast && "Vi giver besked på mail, når billetsalget åbner."}
       </p>

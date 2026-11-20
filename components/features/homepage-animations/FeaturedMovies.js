@@ -7,10 +7,6 @@ import ComingSoonCard from "@/components/features/ComingSoonCard";
 import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
 
-// Hvor meget mere af billedets bund (og mindre af toppen) et kort viser (se lift i ParallaxFrame).
-// Sunrise: mere af teltene og græsset, mindre himmel.
-const IMAGE_LIFT = { "sunrise-on-the-reaping": 0.35 };
-
 // Antal plakater, der svæver forbi i stjernehimlen, før den sidste folder sig ud til kort 1
 const INTRO_POSTER_COUNT = 8;
 
@@ -176,7 +172,6 @@ export default function FeaturedMovies({ movies, introPosters = [] }) {
         label="Velkommen"
         targetRef={firstCardRef}
         targetImage={first?.hero_url}
-        targetLift={IMAGE_LIFT[first?.slug] ?? 0}
         films={films}
       >
         {first && <ComingSoonCard movie={first} copy />}
@@ -190,7 +185,6 @@ export default function FeaturedMovies({ movies, introPosters = [] }) {
               movie={movie}
               preload={index === 0}
               loading={index === 0 ? undefined : "eager"}
-              lift={IMAGE_LIFT[movie.slug] ?? 0}
             />
           </div>
         ))}
