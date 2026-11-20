@@ -90,7 +90,8 @@
 }
 
 .button[data-variant="primary"]:disabled,
-.button[data-variant="secondary"]:disabled {
+.button[data-variant="secondary"]:disabled,
+.button[data-variant="more"]:disabled {
   opacity: var(--opacity-hover);
   cursor: not-allowed;
 }

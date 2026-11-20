@@ -1,76 +1,75 @@
-/* Figma "Log ind side": to lige brede kolonner – billede til venstre, formular til højre */
+/* Figma "Log ind side" → "Indhold": et 12-kolonne-grid med 20px gutter og ingen margen.
+   Billedet fylder kolonne 1-6, formularen står i kolonne 8-11.
+   Siden starter helt oppe under den gennemsigtige header (data-hero-under-header i page.js),
+   så den er headerens højde højere end Figmas indhold. */
 .page {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: var(--size-auth-image-height);
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  min-height: calc(var(--size-auth-image-height) + var(--size-header-height));
   /* Den globale main-regel giver max-bredde og padding – siden skal gå helt ud til kanten */
   max-width: none;
   padding: 0;
   background: var(--color-background-secondary);
 }
 
-/* Headeren får samme baggrund som siden – men kun her på Log ind.
-   :has(.page) betyder "body, når den indeholder login-siden". Så snart man går
-   til en anden side, gælder reglen ikke længere, og headeren får sin normale farve.
-   Vi ændrer kun tokenet, som Header.module.css i forvejen bruger. */
-:global(body):has(.page) {
-  --color-header-background: var(--color-background-secondary);
-}
-
-/* Billedet fylder hele venstre kolonne */
+/* Figma "Billede-kolonne": kolonne 1-6 */
 .image {
   position: relative;
+  grid-column: 1 / span 6;
+  overflow: hidden;
 }
 
 .photo {
   object-fit: cover;
 }
 
-/* Figma "Fade højre" og "Fade bund": billedet toner ud mod højre og nedad.
-   Den første gradient er ekstra: toppen af fotoet er mørkere end headeren,
-   så den toner billedet ind fra sidens baggrundsfarve, og der ikke ses en kant under headeren. */
+/* Figmas tre "Toning"-lag oven på billedet. Hver går fra 0 % over 85 % (ved 55 %) til 100 %:
+   - "Toning – top": 300px fra toppen, så der ikke ses en kant under headeren
+   - "Toning/skygge-bund": den nederste del af billedet
+   - "Toning – højre": 360px i højre side, så billedet glider over i baggrunden */
 .image::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, var(--color-background-secondary), transparent 25%),
-    linear-gradient(to bottom, transparent 35%, color-mix(in srgb, var(--color-fade) 95%, transparent)),
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-fade) 15%, transparent),
-      color-mix(in srgb, var(--color-fade) 35%, transparent) 70%,
-      var(--color-fade)
-    );
+    linear-gradient(to top, transparent, var(--color-fade-strong) 55%, var(--color-fade)) top / 100%
+      var(--size-auth-fade-top) no-repeat,
+    linear-gradient(to bottom, transparent, var(--color-fade-strong) 55%, var(--color-fade)) bottom / 100%
+      var(--size-auth-fade-bottom) no-repeat,
+    linear-gradient(to right, transparent, var(--color-fade-strong) 55%, var(--color-fade)) right /
+      var(--size-auth-fade-right) 100% no-repeat;
 }
 
-/* Formularen står centreret i højre kolonne, 130px under headeren */
+/* Figma "Log ind-formular": overskrift, felter og "Ny her?" med 32px imellem.
+   Står i kolonne 8-11 og lodret i midten af området under headeren:
+   margin-top skubber den ned forbi headeren, og align-self: center regner margen med. */
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  /* Figmas bredde, men aldrig bredere end kolonnen */
-  width: min(100%, var(--size-auth-form-width));
-  justify-self: center;
-  padding: var(--space-auth-top) 0 var(--space-12);
+  gap: var(--space-8);
+  grid-column: 8 / span 4;
+  align-self: center;
+  margin-top: var(--size-header-height);
+  padding-block: var(--space-12);
 }
 
-/* Figma "Overskrift": tre linjer med 10px imellem.
-   Den ekstra margin svarer til Figmas "Afstand" (8px) under overskriften. */
+/* Figma "Overskrift": tre linjer med 8px imellem */
 .heading {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2-5);
-  margin-bottom: var(--space-2);
+  gap: var(--space-2);
   line-height: var(--line-height-snug);
 }
 
+/* XS/Sekundær/Bold i text/Hover */
 .eyebrow {
-  color: var(--color-cta);
+  color: var(--color-accent);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
 }
 
+/* L/Primær/Regular */
 .title {
   color: var(--color-text-primary);
   font-family: var(--font-family-display);
@@ -80,12 +79,15 @@
   margin-bottom: 0; /* Fjerner den globale h1-margin; afstanden kommer fra gap */
 }
 
+/* S/Sekundær/Regular i text/Sekundær */
 .intro {
   color: var(--color-text-muted);
   font-size: var(--font-size-md);
 }
 
-/* Felterne og knappen har samme afstand som resten af siden */
+/* Figma "Felter og knapper": alt fra E-mail til "Fortsæt med Google" med 16px imellem.
+   Formularen har samme afstand indeni, så det hele ser ud som én kolonne. */
+.fields,
 .form {
   display: flex;
   flex-direction: column;
@@ -106,16 +108,15 @@
   justify-content: space-between;
 }
 
-/* Ser ud som et link (understreget tekst) */
+/* XS/Sekundær/Regular i text/input (muted) – som teksten ved "Husk mig" */
 .forgot {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--color-text-primary);
+  color: var(--color-text-input-muted);
   font: inherit;
   font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-medium);
-  text-decoration: underline;
+  line-height: var(--line-height-snug);
 }
 
 /* Knapperne fylder hele formularens bredde */
@@ -123,13 +124,14 @@
   width: 100%;
 }
 
-/* Figma "eller": en streg på hver side af ordet */
+/* Figma "eller": en streg (border/Standard) på hver side af ordet med 8px imellem */
 .divider {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  color: var(--color-text-subtle);
+  gap: var(--space-2);
+  color: var(--color-text-input-muted);
   font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
 }
 
 .divider::before,
@@ -140,17 +142,16 @@
   background: var(--color-divider);
 }
 
-/* "Ny her? Opret profil". margin-top svarer til Figmas "Afstand" (4px) */
+/* "Ny her? Opret profil": XS/Sekundær/Bold. "Opret profil" er blå som links (text/Hover). */
 .signup {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
+  color: var(--color-text-input-muted);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
 
 .signup a {
-  color: var(--color-text-primary);
+  color: var(--color-accent);
   text-decoration: none;
 }
 
@@ -162,7 +163,7 @@
    (CSS-variabler virker ikke i @media, derfor står 48rem her.) */
 @media (max-width: 48rem) {
   .page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     min-height: auto;
     padding-inline: var(--space-4); /* 16px luft i siderne */
   }
@@ -172,6 +173,9 @@
   }
 
   .content {
+    grid-column: 1;
+    align-self: start;
+    margin-top: var(--size-header-height-compact); /* Headeren er lavere på mobil */
     padding-top: var(--space-10);
   }
 }
