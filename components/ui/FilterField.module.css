@@ -134,3 +134,27 @@
     gap: var(--space-2);
   }
 }
+
+/* Variant "box" (biograf-vælgeren ved spilletiderne):
+   et felt for sig selv med baggrund, kant og fast bredde */
+.field[data-variant="box"] {
+  flex: 0 0 var(--size-cinema-select-width);
+}
+
+.field[data-variant="box"] .trigger {
+  gap: var(--space-0-5);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-option-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+}
+
+/* Åben: samme lysere baggrund som i baren */
+.field[data-variant="box"][data-open="true"] .trigger {
+  background: var(--color-option-background-active);
+}
+
+/* Pilen står helt ude til højre */
+.field[data-variant="box"] .row {
+  justify-content: space-between;
+}
