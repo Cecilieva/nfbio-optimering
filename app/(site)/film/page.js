@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedMovies from "@/components/features/homepage-animations/FeaturedMovies";
-import Finale from "@/components/features/Finale";
+import Finale from "@/components/features/homepage-animations/Finale";
 import MovieFilter from "@/components/features/MovieFilter";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";

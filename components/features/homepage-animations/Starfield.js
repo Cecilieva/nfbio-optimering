@@ -11,7 +11,7 @@ import styles from "./Starfield.module.css";
  * Når man scroller hurtigt, stiger farten, og stjernerne trækkes ud til lysstriber. Farten klinger blødt af igen.
  *
  * Læg den som første barn i en sektion med position: relative – den fylder hele sektionen og ligger bag indholdet.
- * Farven er text/Primær (--color-text-primary, sat i Starfield.module.css).
+ * Farven er Figmas Stjerner/Stjerne primær (--color-star, sat i Starfield.module.css).
  * Den holder pause, når den er ude af billedet, og står stille ved "reducer bevægelse".
  *
  * @param {object} props
@@ -31,7 +31,7 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     // dpr: hvor skarp skærmen er (2 på en Retina-skærm). Canvas'et tegnes i den opløsning, så stjernerne er skarpe.
-    // Farven hentes fra CSS'en (tokenet --color-text-primary), så der står ingen farve her
+    // Farven hentes fra CSS'en (tokenet --color-star), så der står ingen farve her
     const color = getComputedStyle(canvas).color;
 
     // Hver stjerne har en retning ud fra midten (x, y) og en afstand (z: 1 = langt væk, 0 = lige foran en).
