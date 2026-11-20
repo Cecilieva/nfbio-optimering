@@ -15,7 +15,7 @@
      → ændr en farve her, så ændres den alle steder */
 
   /* Standard */
-  --palette-navy-darkest: #0d0f1e; /* bg/Primær baggrund, Toning/100% og Stjerner/bg/Primær baggrund */
+  --palette-navy-darkest: #0d0f1e; /* bg/Primær baggrund og Toning/100% */
   --palette-navy-darkest-85: #0d0f1ed9; /* Toning/85% */
   --palette-navy-darkest-0: #0d0f1e00; /* Toning/0% */
   --palette-navy-dark: #161a30; /* bg/Blå og Option button/Standard baggrund */
@@ -54,7 +54,7 @@
   --palette-cream-0: #fbf4e800; /* Toning/0% */
   --palette-cream-dark: #f2e7d4; /* bg/Blå */
   --palette-sand: #e0d2ba; /* border/Standard og Option button/Border standard */
-  --palette-ink: #1d2a5c; /* text/Primær og Buttons/Sekundær border */
+  --palette-ink: #1d2a5c; /* text/Primær, Buttons/Sekundær border og Stjerner/Stjerne primær */
   --palette-ink-light: #4a5378; /* text/Sekundær */
   --palette-ink-muted: #56608a; /* text/input (muted) */
   --palette-blue-pale: #dce6ff; /* Option button/Aktiv baggrund */
@@ -86,7 +86,7 @@
   --figma-option-border-active: var(--palette-blue); /* Option button/Border aktiv */
   --figma-status-error: var(--palette-red); /* status/error */
   --figma-star: var(--palette-star); /* Stjerner/Stjerne primær */
-  --figma-stars-bg: var(--palette-navy-darkest); /* Stjerner/bg/Primær baggrund */
+  --figma-stars-bg: var(--figma-bg-primary); /* Stjerner/bg/Primær baggrund → bg/Primær baggrund */
   --figma-projector-strong: var(--palette-projector-strong); /* Lysprojektor/Projekter kraftig */
   --figma-projector-soft: var(--palette-projector-soft); /* Lysprojektor/Projekter sart */
 
@@ -189,11 +189,10 @@
   );
   --color-button-secondary-border: var(--figma-button-secondary-border);
   --color-button-secondary-hover: var(--figma-button-secondary-hover);
-  /* Finalen nederst på forsiden (Figma "Finale (motion)") */
-  --color-finale-center: var(--figma-stars-bg); /* finale-rum: midten … */
-  --color-finale-edge: var(--figma-bg-secondary); /* … kanten */
-  --color-finale-glimt: var(--figma-star); /* De små stjerner, der glimter */
-  --color-finale-star: var(--figma-star); /* "Stjerner – nær" */
+  /* Figma "Stjernehimmel": rummet bag hero'en og finalen på forsiden. Radial gradient fra
+     bg/Sekundær Baggrund i midten (0 %) til Stjerner/bg/Primær baggrund ved kanten (100 %), så rummet har dybde. */
+  --gradient-space: radial-gradient(closest-side, var(--figma-bg-secondary), var(--figma-stars-bg));
+  --color-star: var(--figma-star); /* Stjernerne i "Stjernehimmel" (Starfield): Stjerner/Stjerne primær */
   --color-poster-hover-overlay: color-mix(in srgb, var(--figma-bg-primary) 70%, transparent); /* hover på filmkort, så knappen kan ses */
   /* trailer-vinduet (figma 596:3073) – altid mørkt, også i familie → farver direkte fra paletten */
   --color-trailer-background: var(--palette-black); /* bg/Sekundær baggrund */
@@ -425,17 +424,9 @@
   --size-intro-scroll-track: 4rem; /* 64px – sporet under "SCROLL" i hero'en */
   --perspective-hero: 900px; /* Hvor dybt stjernerummet i hero'en føles – mindre tal giver mere 3D */
   --space-hero-cue: clamp(1.75rem, 6vh, 3.5rem); /* Scroll-markøren over bunden af hero'en */
-  --size-finale-height: min(64rem, 100svh); /* Figmas ramme er 1024px høj – aldrig højere end skærmen */
-  --size-finale-height-compact: min(32rem, 80svh); /* Mobil: sloganet er mindre, så rummet er lavere */
-  --size-finale-fade: 16rem; /* Hvor langt finalen toner over i sidens baggrund foroven og forneden */
-  --size-finale-glimt: 4px; /* De små stjerner, der glimter */
-  --distance-finale-line: 48px; /* Hver linje i sloganet glider 48px op */
-  --blur-finale-line: 14px; /* … og går fra sløret til skarp */
-  --scale-finale-start: 1.35; /* Rummet zoomer ind fra 135 % */
-  --scale-finale-stars: 1.03; /* Stjernefeltet vokser 3 % i løbet af løkken */
-  --scale-finale-near: 1.035; /* De nære stjerner zoomer 3,5 % ind og ud */
-  --distance-finale-drift-x: 14px; /* De nære stjerner svæver 14px til hver side … */
-  --distance-finale-drift-y: 18px; /* … og 18px op (9px halvvejs) */
+  --size-finale-height: 100svh; /* Finalen fylder hele skærmen, mens den står fast */
+  --space-finale-slogan-bottom: 12vh; /* Sloganet står lidt over midten af skærmen */
+  --space-finale-slogan-inline: clamp(1.25rem, 5vw, 5rem); /* Luft til siderne, så sloganet ikke rører kanten */
   --size-countdown-ring: min(21.25rem, 60vmin); /* 340px – ringen i nedtællingen, mindre på små skærme */
   --font-size-countdown: calc(var(--size-countdown-ring) * 0.647); /* 220px ved fuld størrelse */
   --letter-spacing-countdown: -0.04em; /* -8.8px ved 220px */
@@ -476,13 +467,6 @@
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
   --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
   --duration-title-melt: 7s; /* ned 3,5 s → hænger 2,1 s → op 1,4 s */
-  /* Finalen nederst på forsiden (Figma "Finale (motion)" – tider fra Figmas tidslinje) */
-  --duration-finale-loop: 8s; /* Stjernerne svæver og glimter i en løkke på 8 sekunder */
-  --duration-finale-fade: 1.2s; /* Rummet toner frem (15 % af 8 s) … */
-  --duration-finale-zoom: 2.4s; /* … og zoomer på plads (30 % af 8 s) */
-  --duration-finale-line: 737ms; /* Hver linje i sloganet */
-  --delay-finale-line: 332ms; /* Tid mellem linjerne */
-  --easing-finale-line: cubic-bezier(0, 0, 0.58, 1); /* Figmas easing på sloganet */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -537,6 +521,7 @@
   --figma-text-secondary: var(--palette-grey); /* text/Sekundær */
   --figma-text-input-muted: var(--palette-grey); /* text/input (muted) */
   --figma-button-secondary-border: var(--palette-white-soft); /* Buttons/Sekundær border */
+  --figma-stars-bg: var(--figma-bg-secondary); /* Stjerner/bg/Primær baggrund → bg/Sekundær Baggrund */
 }
 
 :root:has(main[data-theme="familie"]) {
@@ -554,6 +539,7 @@
   --figma-option-background: var(--palette-white-soft); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */
+  --figma-star: var(--palette-ink); /* Stjerner/Stjerne primær */
   /* gør de lyse ikoner mørkeblå (~#1d2a5c). tallene er bare regnet ud så farven passer */
   --filter-icon: brightness(0) saturate(100%) invert(2%) sepia(94%) saturate(7060%) hue-rotate(237deg) brightness(138%)
     contrast(78%);

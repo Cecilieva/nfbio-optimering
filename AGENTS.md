@@ -44,7 +44,7 @@ app/
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, DataDump
   features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, …
-    homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies
+    homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime
 lib/
   data/                   Læsning: cities, movies, featured, showtimes, seats, bookings, profile
@@ -88,7 +88,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside – "Kommende film" (udfold) | 2221:15159 (lukket: 2848:14500, åben: 2849:14585) | `/film` | ComingSoonSection, MovieCard (`variant="coming-soon"`), Chip (Option button), Button (`variant="secondary"`). Billetsalgsdatoer står i `lib/data/ticket-sale.js` |
 | Forside – "Filtrering" | 2848:14506 (komponent "Filtering" 464:12550, "Filterfelt" 2087:9999, "Dropdown valg" 535:2814) | `/film` | MovieFilter, FilterField, Chip (`variant="subtle"` – Figma "Formater"), MovieCard |
 | Forside – "Program" (filmene under filtreringen) | 2867:21344 (kortet "card i feed" 214:3673) | `/film` | MovieFilter, MovieCard (`variant="feed"`), Button (`variant="secondary"`) – "Se flere film" |
-| Forside – Finale (motion) | 1883:12291 | `/film` | Finale (stjernerne i `finaleStars.js`, stjernefeltet i `public/finale/stjerner.svg`) |
+| Forside – Finale (motion) | 1883:12291 | `/film` | Finale (i `features/homepage-animations/` – scroll-styret med GSAP: sektionen pinnes, og sloganet lyses op bogstav for bogstav), Starfield |
 | Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
 | Filmside | Projektor – standard: 3063:14519, Titel – standard: 3063:14531, Titel – smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="melt"` til kommende thrillere/gysere – dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal |
 | Filmside – "Filmdetaljer" (plakat, handling, fakta) | 2250:15224 (Anmeldelse: 2249:15255) | `/film/[slug]` | MovieDetails, TrailerButton, ShareButton, BearRating, PosterPlaceholder |

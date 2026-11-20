@@ -5,8 +5,8 @@
   z-index: 0;
   overflow: hidden;
   height: var(--size-hero-height);
-  /* Figma "Rum": lysere i midten, mørkere ud mod kanterne */
-  background: radial-gradient(closest-side, var(--color-surface), var(--color-background));
+  /* Figma "Rum": mørkest i midten, hvor stjernerne kommer fra – samme rum som finalen */
+  background: var(--gradient-space);
 }
 
 /* Rummet: perspektivet flytter sig let med musen (--hero-origin-x/y sættes i HeroScroll.js) */
