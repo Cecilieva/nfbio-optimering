@@ -1,0 +1,45 @@
+/* Siden, billedet og overskriften kommer fra AuthScreen. Her er kun formularens egne styles. */
+
+/* Figma "Felter": E-mail, Adgangskode, "Husk mig" og "Log ind" med 16px imellem */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* "Vi har sendt dig en mail …": samme størrelse som fejlen, men lys tekst, fordi det ikke er en fejl */
+.notice {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+}
+
+/* Figma "Husk mig / glemt": checkbox til venstre, link til højre */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* XS/Sekundær/Regular i text/input (muted) – som teksten ved "Husk mig" */
+.forgot {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-input-muted);
+  font: inherit;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-snug);
+}
+
+/* Knappen fylder hele formularens bredde */
+.fullWidth {
+  width: 100%;
+}

@@ -105,6 +105,10 @@ create table profiles (
   id                  uuid primary key references auth.users(id) on delete cascade,
   full_name           text,
   phone               text,
+  birthday            date,                                -- Opret profil, trin 2
+  postal_code         text,                                -- Opret profil, trin 2
+  gender              text check (gender in ('kvinde', 'mand', 'andet', 'vil-ikke-oplyse')),
+  newsletter          boolean not null default false,      -- Opret profil, trin 1
   points              int not null default 0,
   favorite_cinema_id  bigint references cinemas(id) on delete set null,
   created_at          timestamptz not null default now()
@@ -114,8 +118,17 @@ create table profiles (
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into public.profiles (id, full_name)
-  values (new.id, new.raw_user_meta_data ->> 'full_name');
+  -- Felterne fra "Opret profil" (signUp i lib/actions/auth.js sender dem som raw_user_meta_data)
+  insert into public.profiles (id, full_name, phone, birthday, postal_code, gender, newsletter)
+  values (
+    new.id,
+    new.raw_user_meta_data ->> 'full_name',
+    new.raw_user_meta_data ->> 'phone',
+    (new.raw_user_meta_data ->> 'birthday')::date,
+    new.raw_user_meta_data ->> 'postal_code',
+    new.raw_user_meta_data ->> 'gender',
+    coalesce((new.raw_user_meta_data ->> 'newsletter')::boolean, false)
+  );
   return new;
 end $$;
 

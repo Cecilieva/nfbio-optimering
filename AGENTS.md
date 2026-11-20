@@ -41,7 +41,8 @@ app/
     [bookingId]/login/    Log ind / gæst / opret profil
     [bookingId]/betaling/ Betaling (+ fejl/ til fejlsiden)
     [bookingId]/billet/   Billet
-  (site)/login/ signup/ profile/ Konto
+  (site)/profile/         Konto
+  (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
