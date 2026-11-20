@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PosterPlaceholder from "@/components/features/PosterPlaceholder";
+import { SHOWTIMES_HASH } from "@/components/features/showtimes/ScrollToShowtimes";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { formatAgeShort, formatDayMonthShort, formatDuration } from "@/lib/format";
 import styles from "./MovieCard.module.css";
@@ -109,7 +110,7 @@ function FeedPoster({ movie, format }) {
   const details = [movie.genres?.[0], formatAgeShort(movie.age_rating)].filter(Boolean);
 
   return (
-    <Link href={`/film/${movie.slug}`} className={`${styles.poster} ${styles.feed}`}>
+    <Link href={`/film/${movie.slug}${SHOWTIMES_HASH}`} className={`${styles.poster} ${styles.feed}`}>
       {/* Billedet er pynt – titlen står som tekst nedenfor, så alt="" er nok.
           Har filmen intet billede, ses den blå gradient fra CSS'en i stedet. */}
       {movie.poster_url && <img src={movie.poster_url} alt="" className={styles.image} />}
