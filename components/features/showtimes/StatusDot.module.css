@@ -1,0 +1,21 @@
+/* En rund prik på 10px */
+.dot {
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--size-status-dot);
+  height: var(--size-status-dot);
+  border-radius: var(--radius-pill);
+}
+
+/* Farven: grøn = ledige pladser, gul = få pladser, rød = udsolgt */
+.dot[data-status="available"] {
+  background: var(--color-seats-available);
+}
+
+.dot[data-status="few"] {
+  background: var(--color-seats-few);
+}
+
+.dot[data-status="sold_out"] {
+  background: var(--color-seats-sold-out);
+}

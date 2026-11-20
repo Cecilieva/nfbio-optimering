@@ -1,0 +1,148 @@
+/* "Din forestilling": boks med runde hjørner under skemaet */
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+}
+
+/* Plakat, tekst og knapper på én linje */
+.top {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.poster {
+  flex-shrink: 0;
+  width: var(--size-showtime-poster-width);
+  height: var(--size-showtime-poster-height);
+  object-fit: cover;
+}
+
+/* Teksten fylder pladsen mellem plakat og knapper */
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.text p {
+  margin: 0;
+}
+
+/* "Din forestilling" og teksten under titlen – lille og dæmpet */
+.label,
+.details {
+  color: var(--color-text-input-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Titlen, fx "Clayface · I dag kl. 18.20" – stor og fed */
+.title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.buttons {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-4);
+}
+
+/* "Billetsalg fra 3. december" – står i stedet for "Vælg billetter", før billetsalget åbner */
+.saleOpens {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Den lille pil i "Se salen" */
+.chevron {
+  width: var(--size-showtime-chevron-width);
+  height: auto;
+}
+
+/* ---------- Boksen med salen (når "Se salen" er klikket) ---------- */
+
+/* Boksen med salen til venstre og teksten til højre */
+.hall {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.hallBox {
+  display: flex;
+  flex: 0 1 60%;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-8);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.hallBox p,
+.hallText p {
+  margin: 0;
+}
+
+/* Salens navn, fx "Sal 5" – fed */
+.hallName {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+/* "94 ledige pladser" – lille tekst */
+.hallSeats {
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+}
+
+.hallText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* "Overblik over salen" – stor og fed */
+.hallTitle {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.hallHint {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+}
+
+/* Tablet og mobil: knapperne under teksten, og salen over teksten */
+@media (max-width: 48rem) {
+  .top {
+    flex-wrap: wrap;
+  }
+
+  .buttons {
+    width: 100%;
+  }
+
+  .title {
+    font-size: var(--font-size-md);
+  }
+
+  .hall {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

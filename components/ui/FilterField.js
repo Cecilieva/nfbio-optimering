@@ -13,6 +13,10 @@ import styles from "./FilterField.module.css";
  *
  * Forælderen styrer, hvilket felt der er åbent, så der kun er ét ad gangen.
  *
+ * Varianter:
+ *   bar – feltet i filtreringsbaren på forsiden (uden kant)
+ *   box – et felt for sig selv med baggrund og kant, fx biograf-vælgeren ved spilletiderne
+ *
  * @param {object} props
  * @param {string} props.label Den lille tekst øverst, fx "Biograf"
  * @param {{ value: string, label: string }[]} props.options Det første punkt er "ingen filtrering", fx "Alle biografer"
@@ -20,8 +24,9 @@ import styles from "./FilterField.module.css";
  * @param {(value: string) => void} props.onChange Kaldes, når man vælger et punkt
  * @param {boolean} props.open Er dropdownen åben?
  * @param {(open: boolean) => void} props.onOpenChange Kaldes, når feltet skal åbne eller lukke
+ * @param {"bar" | "box"} [props.variant="bar"]
  */
-export default function FilterField({ label, options, value, onChange, open, onOpenChange }) {
+export default function FilterField({ label, options, value, onChange, open, onOpenChange, variant = "bar" }) {
   // Et unikt id, så knappen kan pege på sin liste (aria-controls)
   const listId = useId();
   const fieldRef = useRef(null);
@@ -67,7 +72,13 @@ export default function FilterField({ label, options, value, onChange, open, onO
   }
 
   return (
-    <div ref={fieldRef} className={styles.field} data-open={open} data-filtered={isFiltered}>
+    <div
+      ref={fieldRef}
+      className={styles.field}
+      data-variant={variant}
+      data-open={open}
+      data-filtered={isFiltered}
+    >
       {/* aria-expanded fortæller skærmlæsere, om listen er åben */}
       <button
         ref={triggerRef}
@@ -91,7 +102,7 @@ export default function FilterField({ label, options, value, onChange, open, onO
         </span>
       </button>
 
-      {/* Figma "Dropdown": listen ligger lige under feltet. aria-pressed viser det valgte punkt. */}
+      {/* Dropdown listen ligger lige under feltet. aria-pressed viser det valgte punkt. */}
       {open && (
         <ul id={listId} className={styles.dropdown} aria-label={label}>
           {options.map((option) => (
