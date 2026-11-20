@@ -5,11 +5,9 @@
   padding: 0;
 }
 
-/* Spilletiderne er 1197px brede i Figma */
+/* Spilletiderne står i kolonne 2-11 i 12-kolonne-gridet, ligesom hero'en og detaljerne ovenover */
 .content {
-  max-width: calc(var(--layout-showtimes-width) + 2 * var(--space-6));
-  margin: 0 auto;
-  padding: var(--space-20) var(--space-6);
+  padding: var(--space-20) var(--layout-page-margin);
 }
 
 /* tablet + mobil: mindre luft */

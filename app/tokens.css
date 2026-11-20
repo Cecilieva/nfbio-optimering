@@ -514,10 +514,13 @@
   --grid-columns: 12;
   --grid-gutter: var(--space-5); /* 20px mellem kolonnerne */
   --grid-margin: 0rem; /* Kolonnerne går helt ud til kanten */
+  /* Luften i siderne, så indholdet står i kolonne 2-11 som på filmsiden (MovieHero, MovieDetails).
+     Én kolonne + ét mellemrum = (bredden + 20px) / 12. % regnes ud fra den boks, der får padding'en,
+     så den skal bruges på et element i fuld bredde. Mobil: 16px (--space-4). */
+  --layout-page-margin: calc((100% + var(--grid-gutter)) / var(--grid-columns));
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene - over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren (Figma) */
-  --layout-showtimes-width: 74.792rem; /* 1197px - spilletiderne på filmsiden (Figma) */
 }
 
 /* ---------- Modes (fra figma) ----------
