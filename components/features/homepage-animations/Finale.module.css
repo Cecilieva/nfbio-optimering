@@ -3,12 +3,12 @@
   position: relative;
 }
 
-/* Samme rum som hero'en: lysere i midten, mørkere ud mod kanterne. Starfield ligger øverst i rummet. */
+/* Samme rum som hero'en: mørkest i midten, så det har dybde. Starfield ligger øverst i rummet. */
 .stage {
   position: relative;
   height: var(--size-finale-height);
   overflow: hidden;
-  background: radial-gradient(closest-side, var(--color-surface), var(--color-background));
+  background: var(--gradient-space);
 }
 
 /* Libre Franklin Black med store bogstaver – lidt over midten af skærmen */

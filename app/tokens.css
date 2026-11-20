@@ -175,6 +175,9 @@
   );
   --color-button-secondary-border: var(--figma-button-secondary-border);
   --color-button-secondary-hover: var(--figma-button-secondary-hover);
+  /* Figma "Stjernehimmel": rummet bag hero'en og finalen på forsiden. Radial gradient fra
+     bg/Sekundær Baggrund i midten (0 %) til Stjerner/bg/Primær baggrund ved kanten (100 %), så rummet har dybde. */
+  --gradient-space: radial-gradient(closest-side, var(--figma-bg-secondary), var(--figma-stars-bg));
   --color-poster-hover-overlay: color-mix(in srgb, var(--figma-bg-primary) 70%, transparent); /* hover på filmkort, så knappen kan ses */
 
   /* Skrift */
