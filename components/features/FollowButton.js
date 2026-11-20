@@ -7,14 +7,18 @@ import styles from "./FollowButton.module.css";
 
 // How long the message under the button stays visible
 const TOAST_MS = 3000;
+// How long the bell rings before the button turns on (same as --duration-bell-ring in tokens.css)
+const RING_MS = 500;
 
 /**
- * Knappen med klokken. Figma: "Notifikationsknap" med "Toast".
+ * Knappen med klokken. Figma: "Notifikationsknap" (node 1118:26041) med "Toast".
  * Klik viser en kort besked om, at man får besked, når billetsalget åbner.
  * Følgningen gemmes ikke endnu – det er kun beskeden.
  *
  * Varianter:
- *   default – "Følg film" med lys kant øverst på det store "Kommer snart"-kort
+ *   default – "Følg film" med kant, fx øverst på det store "Kommer snart"-kort. Tilstandene fra Figma:
+ *             Fra (kant og tekst) → klik: Ringer 1–4 (klokken ringer) → Til (blå knap med fyldt klokke
+ *             og beskeden) → Til stille (beskeden er væk efter 3 sekunder). Et klik mere slår den fra igen.
  *   card    – "Giv mig besked" som blå knap midt på en plakat under "Kommende film"
  *             (Figma "Filmplakat", Property 1=få notifikationer)
  *
@@ -25,9 +29,9 @@ const TOAST_MS = 3000;
 export default function FollowButton({ title, variant = "default" }) {
   // Teksten og udseendet afhænger af, hvor knappen står
   const isCard = variant === "card";
-  const label = isCard ? "Giv mig besked" : "Følg film";
 
   const [following, setFollowing] = useState(false);
+  const [ringing, setRinging] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
   // Skjul beskeden igen efter lidt tid. Funktionen, der returneres, stopper timeren, hvis man klikker igen.
@@ -39,27 +43,82 @@ export default function FollowButton({ title, variant = "default" }) {
     return () => clearTimeout(timer);
   }, [showToast]);
 
+  // Når klokken har ringet færdig, slås knappen til, og beskeden vises
+  useEffect(() => {
+    if (!ringing) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      setRinging(false);
+      setFollowing(true);
+      setShowToast(true);
+    }, RING_MS);
+    return () => clearTimeout(timer);
+  }, [ringing]);
+
   function handleClick() {
-    const next = !following;
-    setFollowing(next);
-    setShowToast(next);
+    if (ringing) {
+      return;
+    }
+    // Slå fra igen
+    if (following) {
+      setFollowing(false);
+      setShowToast(false);
+      return;
+    }
+    // Plakat-knappen og "mindre bevægelse": slå til med det samme. Ellers ringer klokken først.
+    if (isCard || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setFollowing(true);
+      setShowToast(true);
+      return;
+    }
+    setRinging(true);
+  }
+
+  if (isCard) {
+    return (
+      <div className={styles.wrapper} data-variant={variant}>
+        {/* På et kort er knappen blå (Button "primary") */}
+        <Button
+          variant="primary"
+          className={styles.cardButton}
+          onClick={handleClick}
+          aria-pressed={following}
+          aria-label={`Giv mig besked om ${title}`}
+        >
+          <Image src="/icons/bell.svg" alt="" width={16} height={18} />
+          Giv mig besked
+        </Button>
+
+        {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}
+        <p role="status" className={styles.toast} data-visible={showToast}>
+          {showToast && "Vi giver besked på mail, når billetsalget åbner."}
+        </p>
+      </div>
+    );
   }
 
   return (
     <div className={styles.wrapper} data-variant={variant}>
-      {/* På et kort er knappen blå (Button "primary"), ellers har den en lys kant (Button "outline") */}
+      {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
-        variant={isCard ? "primary" : "outline"}
-        className={isCard ? styles.cardButton : undefined}
+        variant={following ? "primary" : "outline"}
+        className={following ? styles.on : undefined}
         onClick={handleClick}
         aria-pressed={following}
-        aria-label={isCard ? `Giv mig besked om ${title}` : `Følg ${title}`}
+        aria-label={`Følg ${title}`}
       >
-        <Image src="/icons/bell.svg" alt="" width={16} height={18} />
-        {label}
+        <Image
+          src={following ? "/icons/bell-filled.svg" : "/icons/bell.svg"}
+          alt=""
+          width={16}
+          height={18}
+          className={styles.bell}
+          data-ringing={ringing || undefined}
+        />
+        {!following && "Følg film"}
       </Button>
 
-      {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}
       <p role="status" className={styles.toast} data-visible={showToast}>
         {showToast && "Vi giver besked på mail, når billetsalget åbner."}
       </p>
