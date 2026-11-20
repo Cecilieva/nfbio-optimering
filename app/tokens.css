@@ -79,7 +79,7 @@
   --figma-button-primary: var(--palette-blue); /* Buttons/Primær */
   --figma-button-primary-hover: var(--palette-blue-light); /* Buttons/Primær hover */
   --figma-button-primary-text: var(--palette-white-soft); /* Buttons/Primær tekst */
-  --figma-button-secondary-border: var(--palette-navy); /* Buttons/Sekundær border */
+  --figma-button-secondary-border: var(--figma-text-primary); /* Buttons/Sekundær border -> text/Primær (følger med i alle modes) */
   --figma-button-secondary-hover: var(--palette-blue-12); /* Buttons/Sekundær hover */
   --figma-option-background: var(--palette-navy-dark); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-navy); /* Option button/Border standard */
@@ -537,7 +537,6 @@
   --figma-toning-100: var(--palette-black); /* Toning/100% */
   --figma-text-secondary: var(--palette-grey); /* text/Sekundær */
   --figma-text-input-muted: var(--palette-grey); /* text/input (muted) */
-  --figma-button-secondary-border: var(--palette-white-soft); /* Buttons/Sekundær border */
   --figma-stars-bg: var(--figma-bg-secondary); /* Stjerner/bg/Primær baggrund -> bg/Sekundær Baggrund */
 }
 
@@ -552,7 +551,6 @@
   --figma-text-secondary: var(--palette-ink-light); /* text/Sekundær */
   --figma-text-input-muted: var(--palette-ink-muted); /* text/input (muted) */
   --figma-border-standard: var(--palette-sand); /* border/Standard */
-  --figma-button-secondary-border: var(--palette-ink); /* Buttons/Sekundær border */
   --figma-option-background: var(--palette-white-soft); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */
