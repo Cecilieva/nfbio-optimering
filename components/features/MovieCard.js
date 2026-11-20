@@ -59,10 +59,10 @@ function ComingSoonPoster({ movie }) {
   // ticket_sale_open regnes ud i getComingSoon() (7 dage før premieren, lib/data/ticket-sale.js)
   const canBuy = movie.ticket_sale_open;
 
-  // Teksten under datoen: "Billetsalg er åbent", ellers hvornår det åbner, fx "Billetsalg fra 24. nov"
+  // Teksten under datoen: "Billetsalget er åbent", ellers hvornår det åbner, fx "Billetsalg fra 24. nov"
   const ticketSale =
     canBuy || !movie.ticket_sale_opens
-      ? "Billetsalg er åbent"
+      ? "Billetsalget er åbent"
       : `Billetsalg fra ${formatDayMonthShort(movie.ticket_sale_opens)}`;
 
   return (

@@ -62,7 +62,7 @@ Den lille pilleformede knap til filtrene. Den valgte får `aria-pressed="true"` 
 ### `components/features/MovieCard.js` – variant `coming-soon`
 Figma "Kommer snart" (node `927:6300`). Plakaten består af:
 - billedet med en mørk toning (Figma "Overlay")
-- kalender-ikonet (`public/icons/calendar.svg`), premieredatoen og "Billetsalg er åbent" (når billetsalget er åbent) eller "Billetsalg fra …" i midten
+- kalender-ikonet (`public/icons/calendar.svg`), premieredatoen og "Billetsalget er åbent" (når billetsalget er åbent) eller "Billetsalg fra …" i midten
 - titlen nederst, som slutter med "…", hvis den er for lang
 
 Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) er uændret.
