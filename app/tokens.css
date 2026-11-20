@@ -28,6 +28,8 @@
   --palette-white-soft-50: #f2f2f280; /* text/input (muted) */
   --palette-black: #0d0c0c; /* bg/Sekundær Baggrund */
   --palette-red: #c94545; /* status/error */
+  --palette-green: #2fbf71; /* Spilletider: "Ledige pladser" */
+  --palette-yellow: #d9b23a; /* Spilletider: "Få pladser" */
   --palette-star: #f4f0e6; /* Stjerner/Stjerne primær */
   --palette-projector-strong: #a0beff80; /* Lysprojektor/Projekter kraftig */
   --palette-projector-soft: #a0beff00; /* Lysprojektor/Projekter sart */
@@ -151,6 +153,10 @@
   --color-on-accent: var(--figma-button-primary-text); /* Tekst på en blå knap */
   --color-danger: var(--figma-status-error); /* Fejlbeskeder */
   --color-status-error: var(--figma-status-error); /* Fx "REC" på filmsiden til kommende thrillere og gysere */
+  /* Prikkerne ved spilletiderne (Figma "Ledighed") – samme farver i alle modes */
+  --color-seats-available: var(--palette-green); /* Ledige pladser */
+  --color-seats-few: var(--palette-yellow); /* Få pladser */
+  --color-seats-sold-out: var(--palette-red); /* Udsolgt */
   --color-backdrop: color-mix(in srgb, var(--figma-bg-primary) 60%, transparent); /* Mørk baggrund bag en modal */
   --color-header-background: var(--color-background);
   --color-toning: var(--figma-toning-100); /* hinden over billedet på filmsiden */
@@ -383,6 +389,18 @@
   --size-countdown-unit-compact: 3.5rem; /* Små telefoner */
   --size-flashlight: 33.333cqw; /* lyskeglen: 480 af 1440px = 1/3 af heroen */
   --size-rec-dot: 0.625rem; /* 10px – den røde prik ved "REC" */
+  /* Spilletider på filmsiden (Figma "Spilletider" 627:3145 og "Din forestilling" 2010:26575) */
+  --size-status-dot: 0.625rem; /* 10px – prikken, der viser ledige pladser */
+  --size-week-arrow: 2.75rem; /* 44px – pilene til forrige/næste uge */
+  --size-showtime-day-min: 8.5rem; /* En dag bliver aldrig smallere – på mobil kan skemaet scrolles til siden */
+  --size-cinema-select-width: 13.75rem; /* 220px – "Biograf"-vælgeren */
+  --size-showtime-poster-width: 3rem; /* 48px – den lille plakat i "Din forestilling" */
+  --size-showtime-poster-height: 4.5rem; /* 72px */
+  --size-showtime-chevron-width: 0.75rem; /* 12px – pilen i "Se salen" */
+  --opacity-sold-out: 0.7; /* Et udsolgt tidspunkt er dæmpet … */
+  --opacity-sold-out-text: 0.5; /* … og teksten endnu mere */
+  --opacity-arrow-disabled: 0.3; /* Pilen, når man ikke kan gå længere */
+  --opacity-day-empty: var(--opacity-arrow-disabled); /* En dag uden spilletider – tonet ned som pilen */
   /* Trailer-vinduet (Figma 596:3073: 960 × 600 – 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
   --space-trailer-button: 0.625rem; /* 10px – luft rundt om "Luk" */
@@ -483,6 +501,7 @@
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene – over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px – indholdets bredde i footeren (Figma) */
+  --layout-showtimes-width: 74.792rem; /* 1197px – spilletiderne på filmsiden (Figma) */
 }
 
 /* ---------- Modes (fra figma) ----------

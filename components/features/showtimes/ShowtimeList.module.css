@@ -1,0 +1,166 @@
+/* Hele sektionen: alle delene står under hinanden med 16px imellem */
+.showtimes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ---------- 1. Overskrift til venstre, knapper og biograf-vælger til højre ---------- */
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Overskriften "Spilletider i Aarhus Bio" – stor og fed */
+.heading {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.formats {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* ---------- 2. Forklaring til venstre, pile til højre ---------- */
+
+.week {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Én forklaring: prik + lille tekst, fx "Ledige pladser" */
+.legendItem {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.arrows {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+}
+
+/* Pilene: en firkant på 44px med kant */
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-week-arrow);
+  height: var(--size-week-arrow);
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--color-text-muted);
+}
+
+/* Grå pil, når man ikke kan komme længere */
+.arrow:disabled {
+  opacity: var(--opacity-arrow-disabled);
+  cursor: not-allowed;
+}
+
+.arrow:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* ---------- 3. Skemaet: 7 lige brede kolonner ---------- */
+
+.schedule {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(var(--size-showtime-day-min), 1fr));
+  gap: var(--space-2);
+  align-items: start;
+  /* På små skærme er der ikke plads til 7 dage – så kan skemaet scrolles til siden */
+  overflow-x: auto;
+  padding-bottom: var(--space-2);
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Toppen af hver dag: ugedag over datoen med en streg under */
+.dayHeading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  margin: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: var(--border-width) solid var(--color-border);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
+}
+
+/* En dag uden spilletider tones ned – på samme måde som pilen, når man ikke kan komme videre */
+.day[data-empty="true"] .dayHeading {
+  opacity: var(--opacity-day-empty);
+}
+
+/* Ugedagen, "I dag" eller "Premiere" – lille og dæmpet */
+.dayLabel {
+  color: var(--color-text-input-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Datoen, fx "11. nov" – fed */
+.dayDate {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.empty {
+  color: var(--color-text-muted);
+}
+
+/* Tablet og mobil: mindre overskrift */
+@media (max-width: 48rem) {
+  .heading {
+    font-size: var(--font-size-xl);
+  }
+}

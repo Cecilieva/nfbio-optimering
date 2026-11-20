@@ -1,8 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import MovieDetails from "@/components/features/MovieDetails";
 import MovieHero from "@/components/features/MovieHero";
-import ShowtimeList from "@/components/features/ShowtimeList";
-import DataDump from "@/components/ui/DataDump";
+import ShowtimeList from "@/components/features/showtimes/ShowtimeList";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getMovieBySlug } from "@/lib/data/movies";
 import { getShowtimes } from "@/lib/data/showtimes";
@@ -23,7 +22,7 @@ export async function generateMetadata({ params }) {
 // Filmsiden (Figma "Filmside"). Rækkefølge på siden:
 //   1. MovieHero    – det store billede med titel, fakta-bar og knapper
 //   2. MovieDetails – plakat, handling og fakta
-//   3. Spilletider  – ikke stylet fra Figma endnu
+//   3. ShowtimeList – spilletiderne (Figma "Spilletider" og "Din forestilling")
 export default async function MoviePage({ params }) {
   // Find filmen ud fra adressen, fx /film/clayface → "clayface"
   const { slug } = await params;
@@ -58,14 +57,9 @@ export default async function MoviePage({ params }) {
       {/* Figma "Filmdetaljer/Default": plakat, handling og fakta */}
       <MovieDetails movie={movie} />
 
-      {/* Spilletiderne – mangler stadig styling fra Figma */}
+      {/* Spilletiderne. Overskriften har id="spilletider", så knappen "Køb billet" i toppen hopper herned */}
       <div className={styles.content}>
-        {/* id="spilletider": knappen "Køb billet" i toppen hopper herned */}
-        <h2 id="spilletider">Spilletider i {city.name}</h2>
-        <ShowtimeList showtimes={showtimes} />
-
-        {/* Viser alle rå data nederst på siden – kun en hjælp, mens siden bygges. Fjernes når siden er færdig */}
-        <DataDump label="movie, showtimes" data={{ movie, showtimes }} />
+        <ShowtimeList movie={movie} showtimes={showtimes} />
       </div>
     </main>
   );
