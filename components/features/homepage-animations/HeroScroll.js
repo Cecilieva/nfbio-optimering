@@ -10,22 +10,12 @@ import { useLenis } from "@/components/features/SmoothScroll";
 import { getParallaxBox, PARALLAX_STRENGTH } from "@/components/ui/ParallaxFrame";
 import styles from "./HeroScroll.module.css";
 
-// Plakaterne, der svæver forbi. Den sidste (Sunrise) folder sig ud til det første "Kommer snart"-kort.
+// Plakaterne, der svæver forbi, kommer fra FeaturedMovies (tilfældige plakater fra Supabase).
 // position: hvilken del af billedet plakaten viser (object-position i CSS).
-// Den sidste plakat har ikke sit eget billede: den viser kort 1's billede (targetImage) hele vejen,
+// Den sidste plakat har ikke sit eget billede: den viser kort 1's hero-billede (targetImage) hele vejen,
 // så plakaten bare strækker sig ud til kortet – der er aldrig to billeder oven på hinanden.
-const FILMS = [
-  { src: "/intro/plakater/dune.jpg" },
-  { src: "/intro/plakater/paper-tiger.jpg" },
-  { src: "/intro/plakater/hexe.jpg" },
-  { src: "/intro/plakater/angry-birds.jpg" },
-  { src: "/intro/plakater/faderhuset.jpg" },
-  { src: "/intro/plakater/you-can-see-everything.jpg" },
-  { src: "/intro/plakater/markens-groede.jpg" },
-  { src: "/intro/plakater/jumanji.jpg" },
-  // Billedet er kvadratisk: i den stående plakat skæres kun siderne fra, så midten viser teltene og bjergene
-  { position: "50% 50%" },
-];
+// Uden films vises kun den sidste plakat.
+const FILMS = [{ position: "50% 50%" }];
 
 // Faste pladser i rummet: [x, y (andel af skærmen ud fra midten), bredde i px]. Genbruges, hvis der er flere film.
 const SLOTS = [
