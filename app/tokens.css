@@ -31,6 +31,14 @@
   --palette-star: #f4f0e6; /* Stjerner/Stjerne primær */
   --palette-projector-strong: #a0beff80; /* Lysprojektor/Projekter kraftig */
   --palette-projector-soft: #a0beff00; /* Lysprojektor/Projekter sart */
+  /* Fortæppet foran traileren (figma "Fortæppe" 636:3749) */
+  --palette-curtain-dark: #1a0104; /* mørk */
+  --palette-curtain-mid: #5a060b; /* mellem */
+  --palette-curtain-light: #b51a1c; /* lys */
+  --palette-spot-center: #ff8c7361; /* "Spotlys" midten – 38 % */
+  --palette-spot-middle: #ff735929; /* "Spotlys" 60 % ude – 16 % */
+  --palette-spot-edge: #ff664d00; /* "Spotlys" kanten – usynlig */
+  --palette-pure-black: #000000; /* Bag videoen + skyggerne på tæppet */
 
   /* Thriller */
   --palette-black-85: #0d0c0cd9; /* Toning/85% */
@@ -181,6 +189,52 @@
   --color-finale-glimt: var(--figma-star); /* De små stjerner, der glimter */
   --color-finale-star: var(--figma-star); /* "Stjerner – nær" */
   --color-poster-hover-overlay: color-mix(in srgb, var(--figma-bg-primary) 70%, transparent); /* hover på filmkort, så knappen kan ses */
+  /* trailer-vinduet (figma 596:3073) – altid mørkt, også i familie → farver direkte fra paletten */
+  --color-trailer-background: var(--palette-black); /* bg/Sekundær baggrund */
+  --color-trailer-text: var(--palette-white-soft); /* text/Primær */
+  --color-trailer-button-border: var(--palette-navy); /* Buttons/Sekundær border */
+  --color-trailer-video: var(--palette-pure-black); /* bag videoen, mens den loader */
+  /* én fold i tæppet: mørk → lys → mørk */
+  --gradient-curtain-fold: linear-gradient(
+    90deg,
+    var(--palette-curtain-dark) 0%,
+    var(--palette-curtain-mid) 18%,
+    var(--palette-curtain-light) 48%,
+    var(--palette-curtain-mid) 72%,
+    var(--palette-curtain-dark) 100%
+  );
+  /* "Skygge lodret": mørkt i top og bund */
+  --gradient-curtain-shade: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--palette-pure-black) 55%, transparent) 0%,
+    transparent 25%,
+    color-mix(in srgb, var(--palette-pure-black) 5%, transparent) 85%,
+    color-mix(in srgb, var(--palette-pure-black) 60%, transparent) 100%
+  );
+  /* "Forkant": skygge de sidste 9px, hvor tæpperne mødes */
+  --gradient-curtain-edge-left: linear-gradient(
+    to right,
+    transparent calc(100% - 9px),
+    color-mix(in srgb, var(--palette-pure-black) 70%, transparent)
+  );
+  --gradient-curtain-edge-right: linear-gradient(
+    to left,
+    transparent calc(100% - 9px),
+    color-mix(in srgb, var(--palette-pure-black) 70%, transparent)
+  );
+  /* "Vignet": mørke hjørner */
+  /* "Spotlys": varmt lys midt på tæppet */
+  --gradient-curtain-spot: radial-gradient(
+    closest-side,
+    var(--palette-spot-center) 0%,
+    var(--palette-spot-middle) 60%,
+    var(--palette-spot-edge) 100%
+  );
+  --gradient-curtain-vignette: radial-gradient(
+    50% 50% at 50% 50%,
+    transparent 45%,
+    color-mix(in srgb, var(--palette-pure-black) 65%, transparent) 100%
+  );
 
   /* Skrift */
   --font-family-body: var(--figma-font-family-secondary); /* Al almindelig tekst: Inter */
@@ -332,6 +386,15 @@
   --size-countdown-unit-compact: 3.5rem; /* Små telefoner */
   --size-flashlight: 33.333cqw; /* lyskeglen: 480 af 1440px = 1/3 af heroen */
   --size-rec-dot: 0.625rem; /* 10px – den røde prik ved "REC" */
+  /* Trailer-vinduet (Figma 596:3073: 960 × 600 – 60px top + 960 × 540 video) */
+  --size-trailer-width: 60rem; /* 960px */
+  --space-trailer-button: 0.625rem; /* 10px – luft rundt om "Luk" */
+  --aspect-trailer: 16 / 9; /* 960 × 540 */
+  --size-curtain-half: 50.556%; /* 485 af 960px – overlapper lidt på midten */
+  --size-curtain-folds: 9; /* antal folder i hvert tæppe */
+  --position-curtain-spot-left: 23.611%; /* "Spotlys" – 227 af 960px */
+  --size-curtain-spot-width: 52.778%; /* 507 af 960px */
+  --size-curtain-spot-height: 95%; /* 513 af 540px */
   --size-age-badge: 1.5rem; /* 24px – boksen med aldersgrænsen, fx "7" */
   --opacity-rating-empty: 0.25; /* hvor synlige de tomme bjørne er i "Anmeldelse" (0 = usynlig, 1 = helt synlig) */
   --size-coming-card-height: 56rem; /* 896px – "Kommer snart"-kortet */
@@ -386,6 +449,11 @@
   --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
   --duration-flashlight-follow: 600ms; /* … og hurtigere, når den følger musen */
   --duration-rec-blink: 1s; /* Prikken ved "REC" tænder og slukker – ét blink i sekundet */
+  /* trailer: vinduet toner frem, tæppet går til siden (figma: 1600 ms ease in-out) */
+  --duration-trailer-in: 300ms;
+  --duration-curtain-open: 1.6s;
+  --delay-curtain-open: 500ms; /* tæppet venter lidt før det åbner */
+  --scale-trailer-start: 0.96; /* vinduet vokser fra 96 % */
   --duration-title-wave-loop: 4s; /* Bølgen i titlen går hvert 4. sekund (ét ord bevæger sig i 450ms af dem) */
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
   --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
