@@ -84,7 +84,8 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
   - `--color-text-input-muted` → `text/input (muted)`
   - `--border-width-active` → den 1,5px blå kant på et valgt felt
   - `--shadow-dropdown` → skyggen under dropdown-listen
-- Text styles: `L/Sekundær/Bold` (titlen), `S/Sekundær/Regular` (værdierne og punkterne) og `XS/Sekundær/Regular` (labels, format-knapper og "Nulstil filter").
+- Text styles: `L/Sekundær/Bold` (titlen), `S/Sekundær/Regular` (værdierne, punkterne og "Nulstil filter") og `XS/Sekundær/Regular` (labels og format-knapper).
+- **Hover:** format-knapperne får blå kant (`Option button/Border aktiv`, Figma "Knap" Type=Chip, Tilstand=Hover). Felterne får `Option button/Aktiv baggrund` (som "Dropdown valg", Hover). Søgeknappen får `Buttons/Primær hover`, og "Nulstil filter" bliver blå (`text/Hover`). Format-knapperne har 16px runde hjørner (`Border-radius/Medium`) og ingen streger før og efter.
 - **Mobil** (under 48rem): felterne står to og to, søgeknappen fylder en hel linje, format-knapperne kan scrolles vandret, og "Nulstil filter" står under dem.
 
 ## Det skal du vide

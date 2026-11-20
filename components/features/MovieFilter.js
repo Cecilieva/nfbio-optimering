@@ -181,7 +181,8 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
           </div>
         ))}
 
-        {/* Den blå søgeknap til højre */}
+        {/* Den blå søgeknap til højre – med samme "Skille" foran som mellem felterne, så afstanden er ens */}
+        <span className={styles.divider} aria-hidden="true" />
         <button type="button" className={styles.search} aria-label="Vis film" onClick={showResults}>
           <img src="/icons/search-filter.svg" alt="" width={24} height={24} />
         </button>
@@ -189,9 +190,8 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
 
       {/* Figma: format-knapperne til venstre og "Nulstil filter" til højre */}
       <div className={styles.options}>
-        {/* Figma "Formater": en streg før og efter knapperne. role="group" samler dem for skærmlæsere. */}
+        {/* Figma "Formater": knapperne med 8px imellem. role="group" samler dem for skærmlæsere. */}
         <div className={styles.formats} role="group" aria-label="Format">
-          <span className={styles.formatDivider} aria-hidden="true" />
           <Chip variant="subtle" selected={filters.format === "all"} onClick={() => setFilter("format", "all")}>
             Alle formater
           </Chip>
@@ -205,7 +205,6 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
               {format}
             </Chip>
           ))}
-          <span className={styles.formatDivider} aria-hidden="true" />
         </div>
 
         <button type="button" className={styles.reset} onClick={resetFilters}>

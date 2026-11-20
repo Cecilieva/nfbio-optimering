@@ -25,8 +25,10 @@
   border-color: var(--color-option-background);
 }
 
-.chip:hover {
-  border-color: var(--color-text-muted);
+/* Figma "Knap", Type=Chip, Tilstand=Hover: kun kanten bliver blå (Option button/Border aktiv).
+   Baggrund og tekst er uændrede. */
+.chip:hover:not(:disabled) {
+  border-color: var(--color-option-border-active);
 }
 
 .chip[aria-pressed="true"] {

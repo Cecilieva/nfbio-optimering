@@ -323,7 +323,7 @@
   --radius-intro-poster: 0.875rem; /* 14px - plakaterne i hero'en */
   --radius-button-outline: 0.625rem; /* 10px - "Følg film" */
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
-  --radius-option-button: 1.125rem; /* 18px - Option button, fx "November" */
+  --radius-option-button: var(--figma-radius-medium); /* 16px - Border-radius/Medium, Option button, fx "November" */
   --radius-filter-bar: var(--figma-radius-large); /* 24px: filtreringsbaren, dens felter og søgeknappen */
   --radius-dropdown: var(--figma-radius-medium); /* 16px - dropdown-listen under et filterfelt */
   --radius-dropdown-item: 0.625rem; /* 10px - et punkt i dropdown-listen */
