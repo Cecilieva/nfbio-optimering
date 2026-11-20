@@ -1,0 +1,93 @@
+/* scenen: 16:9 ligesom i figma (960 × 540) */
+.stage {
+  position: relative;
+  aspect-ratio: var(--aspect-trailer);
+  overflow: hidden;
+  background: var(--color-trailer-video);
+}
+
+/* tæppet ligger over hele videoen. klik går igennem, så man kan trykke på videoen */
+.curtain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* et halvt tæppe. baggrunden er 3 lag: skygge top/bund, skygge ved kanten og folderne
+   folden gentages 9 gange */
+.half {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--size-curtain-half);
+  background-size:
+    100% 100%,
+    100% 100%,
+    calc(100% / var(--size-curtain-folds)) 100%;
+}
+
+/* venstre tæppe -> glider ud til venstre */
+.left {
+  left: 0;
+  background-image: var(--gradient-curtain-shade), var(--gradient-curtain-edge-left), var(--gradient-curtain-fold);
+  transform-origin: left;
+  animation: openLeft var(--duration-curtain-open) var(--easing-in-out) var(--delay-curtain-open) forwards;
+}
+
+/* højre tæppe -> glider ud til højre */
+.right {
+  right: 0;
+  background-image: var(--gradient-curtain-shade), var(--gradient-curtain-edge-right), var(--gradient-curtain-fold);
+  transform-origin: right;
+  animation: openRight var(--duration-curtain-open) var(--easing-in-out) var(--delay-curtain-open) forwards;
+}
+
+/* spotlys midt på tæppet */
+.spot {
+  position: absolute;
+  top: 0;
+  left: var(--position-curtain-spot-left);
+  width: var(--size-curtain-spot-width);
+  height: var(--size-curtain-spot-height);
+  background: var(--gradient-curtain-spot);
+  mix-blend-mode: screen;
+}
+
+/* mørke hjørner */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-curtain-vignette);
+}
+
+/* lys og hjørner forsvinder samtidig med tæppet */
+.spot,
+.vignette {
+  animation: fadeOut var(--duration-curtain-open) var(--easing-in-out) var(--delay-curtain-open) forwards;
+}
+
+/* tæppet glider ud og bliver smallere, så det ligner det samles i siden */
+@keyframes openLeft {
+  to {
+    transform: translateX(-100%) scaleX(0.4);
+  }
+}
+
+@keyframes openRight {
+  to {
+    transform: translateX(100%) scaleX(0.4);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* reduced motion: intet tæppe, videoen vises med det samme */
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    display: none;
+  }
+}

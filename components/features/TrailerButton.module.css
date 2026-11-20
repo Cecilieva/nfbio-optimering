@@ -1,0 +1,19 @@
+/* videoen fylder hele scenen bag tæppet */
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* "Traileren er ikke ude endnu." - i midten */
+.empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: var(--color-trailer-text);
+  font-size: var(--font-size-md);
+}

@@ -1,20 +1,24 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
+import Button from "@/components/ui/Button";
 import styles from "./Modal.module.css";
 
 /**
- * A dialog on top of the page, e.g. the trailer. Uses <dialog>, so Escape and focus work.
+ * Pop op-vindue
+ * bruger <dialog>, så Escape lukker af sig selv
  *
  * @param {object} props
- * @param {boolean} props.open
- * @param {() => void} props.onClose Called on Escape and on the close button
- * @param {string} props.title
- * @param {React.ReactNode} props.children
+ * @param {boolean} props.open true = vinduet er åbent
+ * @param {() => void} props.onClose lukker vinduet
+ * @param {string} props.title overskriften
+ * @param {React.ReactNode} props.children indholdet under overskriften
  */
 export default function Modal({ open, onClose, title, children }) {
   const dialogRef = useRef(null);
 
+  // åbn/luk vinduet når "open" skifter
   useEffect(() => {
     const dialog = dialogRef.current;
 
@@ -26,12 +30,28 @@ export default function Modal({ open, onClose, title, children }) {
   }, [open]);
 
   return (
-    <dialog ref={dialogRef} onClose={onClose} aria-label={title} className={styles.modal}>
-      <h2>{title}</h2>
+    <dialog
+      ref={dialogRef}
+      onClose={onClose}
+      // klik på baggrunden lukker vinduet
+      onClick={(event) => {
+        if (event.target === dialogRef.current) {
+          onClose();
+        }
+      }}
+      aria-label={title}
+      className={styles.modal}
+    >
+      {/* titel til venstre, luk til højre */}
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
+        <Button variant="secondary" onClick={onClose}>
+          <Image src="/icons/close.svg" alt="" width={15.536} height={12} />
+          Luk
+        </Button>
+      </div>
+
       {children}
-      <button type="button" onClick={onClose}>
-        Luk
-      </button>
     </dialog>
   );
 }
