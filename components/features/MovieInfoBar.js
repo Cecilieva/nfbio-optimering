@@ -9,7 +9,8 @@ import styles from "./MovieInfoBar.module.css";
  *
  * @param {object} props
  * @param {{ title: string, tagline?: string, short_description?: string, genres?: string[],
- *   duration_min?: number, age_rating?: string, premiere_date?: string, trailer_url?: string }} props.movie
+ *   duration_min?: number, age_rating?: string, premiere_date?: string, trailer_url?: string,
+ *   ticket_sale_open?: boolean }} props.movie "Følg film" vises kun, når billetsalget ikke er åbent endnu
  * @param {string} props.ticketsHref hvor "Køb billet" fører hen
  */
 export default function MovieInfoBar({ movie, ticketsHref }) {
@@ -42,7 +43,8 @@ export default function MovieInfoBar({ movie, ticketsHref }) {
       {/* de knapper vi allerede har */}
       <div className={styles.actions}>
         <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
-        <FollowButton title={movie.title} />
+        {/* "Følg film" giver besked, når billetsalget åbner – ikke relevant, når salget allerede er åbent */}
+        {!movie.ticket_sale_open && <FollowButton title={movie.title} />}
         <Button href={ticketsHref}>Køb billet</Button>
       </div>
     </div>

@@ -65,9 +65,9 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
     >
       {/* Figma: "Følg film" til venstre, nøgletal til højre */}
       <div className={styles.top}>
-        <div data-reveal>
-          <FollowButton title={movie.title} />
-        </div>
+        {/* "Følg film" giver besked, når billetsalget åbner – så den skjules, når salget allerede er åbent.
+            Boksen bliver stående, så nøgletallene stadig står i højre side. */}
+        <div data-reveal>{!saleOpen && <FollowButton title={movie.title} />}</div>
 
         {stats.length > 0 && (
           <dl className={styles.stats}>
