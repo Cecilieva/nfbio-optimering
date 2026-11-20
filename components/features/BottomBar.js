@@ -1,12 +1,10 @@
 import styles from "./BottomBar.module.css";
 
-/**
- * Sticks to the bottom of the screen in the booking flow: summary on the left, action on the right.
- *
- * @param {object} props
- * @param {React.ReactNode} [props.summary] E.g. "2 billetter · 270 kr."
- * @param {React.ReactNode} props.children The action, e.g. a submit Button
- */
+// Bjælken i bunden af skærmen i købsflowet: en kort opsummering til venstre og en knap til højre.
+// Den bliver hængende i bunden, når man scroller.
+//
+//   summary  - teksten til venstre, fx "2 billetter · 270 kr."
+//   children - knappen til højre, fx "Reservér"
 export default function BottomBar({ summary, children }) {
   return (
     <div className={styles.bar}>

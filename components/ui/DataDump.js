@@ -1,11 +1,8 @@
-/**
- * Placeholder: shows the data a page has as JSON, until the Figma design replaces it.
- * Remove it from a page when the screen is built.
- *
- * @param {object} props
- * @param {string} props.label
- * @param {unknown} props.data
- */
+// Pladsholder: viser sidens data som rå tekst (JSON), indtil skærmen er bygget.
+// Fjern den fra siden, når skærmen er færdig.
+//
+//   label - en overskrift over dataene
+//   data  - dataene, der skal vises
 export default function DataDump({ label, data }) {
   return (
     <details>

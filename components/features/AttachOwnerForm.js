@@ -5,15 +5,11 @@ import Button from "@/components/ui/Button";
 import TextField from "@/components/ui/TextField";
 import { attachBookingOwner } from "@/lib/actions/booking";
 
-/**
- * Makes the reservation yours and continues to payment.
- * asGuest: asks for name and email. Otherwise it uses the logged-in user.
- *
- * @param {object} props
- * @param {string} props.bookingId
- * @param {boolean} [props.asGuest]
- * @param {string} [props.email] The logged-in user's email, shown on the button
- */
+// Gør reservationen til din og går videre til betaling.
+//
+//   bookingId - id'et på reservationen
+//   asGuest   - true: spørg efter navn og e-mail (gæst). Ellers bruges den, der er logget ind
+//   email     - e-mailen på den, der er logget ind (står på knappen)
 export default function AttachOwnerForm({ bookingId, asGuest = false, email }) {
   const [state, formAction, pending] = useActionState(attachBookingOwner, null);
 

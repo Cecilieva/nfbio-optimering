@@ -1,0 +1,64 @@
+/* Hver tilstand sætter tre farver:
+   --seat-main (ryglæn, armlæn og kørestolsfirkanten), --seat-soft (hyndet) og --seat-symbol (kørestolen) */
+.seat {
+  display: block;
+  flex-shrink: 0;
+  width: var(--size-icon);
+  height: var(--size-icon);
+}
+
+.seat[data-state="free"] {
+  --seat-main: var(--color-seat-free);
+  --seat-soft: var(--color-seat-free-soft);
+  --seat-symbol: var(--color-seat-symbol);
+}
+
+.seat[data-state="selected"] {
+  --seat-main: var(--color-seat-selected);
+  --seat-soft: var(--color-seat-selected-soft);
+  --seat-symbol: var(--color-seat-symbol);
+}
+
+.seat[data-state="taken"] {
+  --seat-main: var(--color-seat-taken);
+  --seat-soft: var(--color-seat-taken-soft);
+  /* En optaget kørestolsplads: mørk firkant med kørestolen i "Ledig"-farven */
+  --seat-symbol: var(--color-seat-free);
+}
+
+.frame {
+  stroke: var(--seat-main);
+}
+
+.arm {
+  fill: var(--seat-main);
+}
+
+.cushion {
+  fill: var(--seat-soft);
+}
+
+/* Kørestolsfirkanten. Optaget: "Optaget sart" (som baggrunden) */
+.box {
+  fill: var(--seat-main);
+}
+
+.seat[data-state="taken"] .box {
+  fill: var(--seat-soft);
+}
+
+.head {
+  fill: var(--seat-symbol);
+}
+
+.symbol {
+  stroke: var(--seat-symbol);
+}
+
+.cross {
+  stroke: var(--color-seat-taken-cross);
+}
+
+.crossGap {
+  stroke: var(--seat-soft);
+}

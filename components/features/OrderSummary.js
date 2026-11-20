@@ -1,13 +1,10 @@
 import { formatDay, formatPrice, formatSeats, formatTime } from "@/lib/format";
 
-/**
- * What the user is buying: film, cinema, hall, time, seats and total.
- *
- * @param {object} props
- * @param {object} props.showtime From getShowtime()
- * @param {Array<{ id: number, row_number: number, seat_number: number }>} [props.seats]
- * @param {number} [props.totalDkk]
- */
+// Det, man er ved at købe: film, biograf, sal, tid, sæder og pris i alt.
+//
+//   showtime - forestillingen fra getShowtime()
+//   seats    - de valgte sæder (vises kun, hvis der er nogen)
+//   totalDkk - prisen i alt (vises kun, hvis den er med)
 export default function OrderSummary({ showtime, seats = [], totalDkk }) {
   return (
     <dl>
