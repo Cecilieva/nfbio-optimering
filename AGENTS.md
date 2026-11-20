@@ -47,7 +47,7 @@ components/
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
 lib/
-  data/                   Læsning: cities, movies, featured, showtimes, seats, bookings, profile
+  data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, profile
   actions/                Server actions: auth, city, booking
   supabase/server.js      Supabase-klienten til serveren
   auth.js                 getCurrentUser()
@@ -83,8 +83,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
 | Vælg by | 2141:155168 | `/` og `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
-| Forside - intro (motion) | 1869:14851 (nedtælling: 1869:15878) | `/film` | HeroScroll (scroll-styret med GSAP - plakaterne står i `FILMS` øverst i filen), Starfield, IntroCountdown - alle i `features/homepage-animations/`. Den sidste plakat folder sig ud til kort 1 i FeaturedMovies |
-| Forside - "Kommer snart"-kort | 11:34 | `/film` | FeaturedMovies (i `features/homepage-animations/` - kortene under hinanden, scroll-effekter og prikker), ComingSoonCard, ParallaxFrame, SmoothScroll (Lenis, i `(site)/layout.js`), FollowButton, TrailerButton, Button (`variant="outline"`). Filmene vælges i `lib/data/featured.js` |
+| Forside - intro (motion) | 1869:14851 (nedtælling: 1869:15878) | `/film` | HeroScroll (scroll-styret med GSAP - 8 tilfældige plakater fra `lib/data/intro-posters.js`, valgt i FeaturedMovies), Starfield, IntroCountdown - alle i `features/homepage-animations/`. Den sidste plakat folder sig ud til kort 1 i FeaturedMovies |
+| Forside - "Kommer snart"-kort | 11:34 | `/film` | FeaturedMovies (i `features/homepage-animations/` - kortene under hinanden, scroll-effekter og prikker), ComingSoonCard, ParallaxFrame, SmoothScroll (Lenis, i `(site)/layout.js`), FollowButton, TrailerButton, Button (`variant="outline"`). Filmene (de 3 med nærmeste premiere fra i morgen, med `hero_url`) vælges i `lib/data/featured.js` |
 | Forside - "Kommende film" (udfold) | 2221:15159 (lukket: 2848:14500, åben: 2849:14585) | `/film` | ComingSoonSection, MovieCard (`variant="coming-soon"`), Chip (Option button), Button (`variant="secondary"`). Billetsalgsdatoer står i `lib/data/ticket-sale.js` |
 | Forside - "Filtrering" | 2848:14506 (komponent "Filtering" 464:12550, "Filterfelt" 2087:9999, "Dropdown valg" 535:2814) | `/film` | MovieFilter, FilterField, Chip (`variant="subtle"` - Figma "Formater"), MovieCard |
 | Forside - "Program" (filmene under filtreringen) | 2867:21344 (kortet "card i feed" 214:3673) | `/film` | MovieFilter, MovieCard (`variant="feed"`), Button (`variant="secondary"`) - "Se flere film" |

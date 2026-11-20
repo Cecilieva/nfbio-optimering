@@ -5,7 +5,7 @@
   /* Kortet tilpasser sig skærmens højde, så titel og knapper altid kan ses */
   height: var(--size-featured-card-height);
   border-radius: var(--radius-card-lg);
-  background: var(--color-background-secondary); /* ses kun indtil billedet er loadet */
+  background: var(--color-background); /* Figma bg/Primær baggrund – ses kun indtil billedet er loadet */
 }
 
 /* Med billede: ingen baggrund. Kortets kant kan ligge på en halv pixel, og så tegner Chrome baggrunden
@@ -96,8 +96,10 @@
   gap: var(--space-4);
 }
 
+/* Figma "Overtitel": serien med store bogstaver, fx "THE HUNGER GAMES" */
 .eyebrow {
   color: var(--color-text-label);
+  text-transform: uppercase;
   font-size: var(--font-size-xs);
   line-height: var(--line-height-snug);
 }
@@ -119,7 +121,7 @@
   font-family: var(--font-family-display);
   font-size: var(--font-size-hero-title);
   font-weight: var(--font-weight-black);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-snug); /* Figma "XL": 1.25 */
 }
 
 .credits {

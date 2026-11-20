@@ -71,9 +71,9 @@ Figma "Kommer snart" (node `927:6300`). Plakaten består af:
 
 Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) er uændret.
 
-**Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), skjules dato og titel, og knappen **"Giv mig besked"** vises i midten. Det er `FollowButton` med `variant="card"`: en blå knap med klokke, som viser beskeden "Vi giver besked på mail, når billetsalget åbner." Knappen må ikke ligge inde i linket, så plakaten og knappen står ved siden af hinanden i en boks (`.card`), og knappen lægges oven på plakaten.
+**Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), bliver toningen lysere, dato og titel skjules, og **"Se spilletider"** vises i midten. Det er en `span` med `Button`'s "primary"-styles (klassen `.action`, som kortene i feedet også bruger), fordi hele plakaten allerede er et link til filmsiden.
 
-**Touchskærme** (mobil og tablet, `@media (hover: none)`) kan ikke holde musen over et kort. Dér står "Giv mig besked" altid nederst på plakaten, under titlen, og datoen bliver stående.
+Plakaten har 8px runde hjørner (`--radius-md`) og toningen `Toning/85%` (`--color-poster-overlay`).
 
 ### `components/ui/Button.js` – variant `secondary`
 Bruges til "Se alle kommende film" og "Skjul kommende film". Kanten bruger Figmas `buttons/sekundær-border`.

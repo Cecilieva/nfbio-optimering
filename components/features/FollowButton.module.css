@@ -3,12 +3,12 @@
   position: relative;
 }
 
-/* Figma "Toast": lille boks under knappen */
+/* Figma "Toast": lille boks under knappen (Notifikationsknap, Til: 22px under knappen, luft 8/16px) */
 .toast {
   position: absolute;
-  top: calc(100% + var(--space-3-5));
+  top: calc(100% + var(--space-5-5));
   left: 0;
-  padding: var(--space-2-5) var(--space-3-5);
+  padding: var(--space-2) var(--space-4);
   border: var(--border-width) solid var(--color-border-default);
   border-radius: var(--radius-md);
   background: var(--color-background);
@@ -26,24 +26,38 @@
   opacity: 1;
 }
 
-/* ---------- Variant "card" – "Giv mig besked" midt på en plakat (Figma "Notifikationsknap") ---------- */
-
-/* 201px bred som i Figma, men aldrig bredere end kortet (fx på mobil) */
-.wrapper[data-variant="card"] {
-  width: min(100%, var(--size-card-action-width));
+/* Figma "Til": kun den fyldte klokke, så knappen er kvadratisk med 16px luft på siderne */
+.on {
+  padding-inline: var(--space-4);
 }
 
-.cardButton {
-  width: 100%;
-  padding-inline: var(--space-5);
+/* Figma "Ringer 1–4": klokken svinger fra side til side og falder til ro.
+   Den drejer om toppen, som en klokke der hænger. */
+.bell {
+  transform-origin: 50% 0;
 }
 
-/* Figma "Toast" på kortet: lige under knappen, lige så bred, og teksten må gå over flere linjer */
-.wrapper[data-variant="card"] .toast {
-  top: calc(100% + var(--space-0-5));
-  right: 0;
-  padding: var(--space-2-25) var(--space-3);
-  border-color: var(--color-border);
-  box-shadow: var(--shadow-toast-card);
-  white-space: normal;
+.bell[data-ringing] {
+  animation: ring var(--duration-bell-ring) ease-out;
+}
+
+@keyframes ring {
+  20% {
+    rotate: 18deg;
+  }
+  40% {
+    rotate: -16deg;
+  }
+  60% {
+    rotate: 12deg;
+  }
+  80% {
+    rotate: -8deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bell[data-ringing] {
+    animation: none;
+  }
 }
