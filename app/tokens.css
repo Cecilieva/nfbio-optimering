@@ -453,9 +453,16 @@
   --opacity-hall-out-of-order: 0.3; /* Sæder ude af drift */
 
   /* Købsflowet (Figma "Trin-header" og "Vælg antal-kort") */
+  --layout-booking-width: 74.792rem; /* 1197px - indholdet i købsflowet */
   --size-step-bar-height: 4px; /* en streg i trinbjælken */
   --color-step-done: var(--figma-accent-primary); /* trin, man er nået til */
   --color-step-todo: var(--figma-border-standard); /* trin, der mangler */
+  --size-ticket-card-width: 29.167rem; /* 467px - "Vælg antal-kort" */
+  --size-stepper-button: var(--figma-btn-height-small); /* 32px - plus og minus */
+  --size-stepper-count: 1.25rem; /* 20px - tallet mellem plus og minus */
+  --color-stepper-button: var(--figma-accent-secondary); /* plus og minus */
+  --color-stepper-button-disabled: var(--figma-option-background-active); /* minus ved 0 */
+  --opacity-stepper-disabled: 0.4;
   /* Trailer-vinduet (Figma 596:3073: 960 × 600 - 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
   --space-trailer-button: 0.625rem; /* 10px - luft rundt om "Luk" */

@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
-import OrderSummary from "@/components/features/OrderSummary";
 import SeatPicker from "@/components/features/SeatPicker";
-import StepHeader from "@/components/features/StepHeader";
-import DataDump from "@/components/ui/DataDump";
 import { getSeatMap } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
+import { formatDayKey, formatDayMonthShort, formatTime } from "@/lib/format";
+import styles from "./page.module.css";
 
 export const metadata = {
-  title: "Vælg sæder",
+  title: "Vælg billetter",
 };
 
-// Figma: "Sædevalg" + the overlays "Vi popper dine pladser" / "Dine popkorn blev brændt"
+// Trin 1 og 2 i købet: vælg antal billetter og derefter sæder.
+// Begge trin er på samme side - SeatPicker skifter mellem dem.
 export default async function SeatsPage({ params }) {
   const { showtimeId } = await params;
   const showtime = await getShowtime(Number(showtimeId));
@@ -21,12 +21,19 @@ export default async function SeatsPage({ params }) {
 
   const rows = await getSeatMap(showtime);
 
+  // Underteksten i trin-headeren, fx "Clayface · i dag kl. 19.30 · Aarhus Bio"
+  const isToday = formatDayKey(showtime.starts_at) === formatDayKey(new Date());
+  const day = isToday ? "i dag" : formatDayMonthShort(showtime.starts_at);
+  const subtitle = `${showtime.movie.title} · ${day} kl. ${formatTime(showtime.starts_at)} · ${showtime.hall.cinema.name}`;
+
   return (
-    <main>
-      <StepHeader step={1} title="Vælg sæder" backHref={`/film/${showtime.movie.slug}`} />
-      <OrderSummary showtime={showtime} />
-      <SeatPicker showtime={showtime} rows={rows} />
-      <DataDump label="showtime, rows" data={{ showtime, rows }} />
+    <main className={styles.page}>
+      <SeatPicker
+        showtime={showtime}
+        rows={rows}
+        subtitle={subtitle}
+        backHref={`/film/${showtime.movie.slug}`}
+      />
     </main>
   );
 }
