@@ -5,7 +5,7 @@ import styles from "./FilterField.module.css";
 
 /**
  * Ét felt i filtreringsbaren med en dropdown under sig.
- * Figma: "Filterfelt" (node 2087:9999) og punkterne i listen "Dropdown valg" (node 535:2814).
+ * Figma: "Filterfelt" og punkterne i listen "Dropdown valg".
  *
  * Tilstande som i Figma:
  *   Valgt – der er valgt noget andet end det første punkt ("Alle …"): blå kant

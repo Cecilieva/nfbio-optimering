@@ -15,7 +15,7 @@ import Seat from "@/components/ui/Seat";
 import { reserveSeats } from "@/lib/actions/booking";
 import { formatSeats } from "@/lib/format";
 import { findBestSeats, findLoneSeats } from "@/lib/seat-rules";
-import { countTickets } from "@/lib/ticket-types";
+import { countTickets, TICKET_TYPES } from "@/lib/ticket-types";
 import styles from "./SeatPicker.module.css";
 
 // Vi starter med 2 voksne
@@ -28,20 +28,26 @@ const HOLD_MINUTES = 10;
 //   1. "Vælg antal pladser" (TicketCounter) - hvor mange billetter af hver type
 //   2. "Vælg dine pladser" (SeatMap + SeatView) - vælg sæderne og reservér med "Til betaling".
 //      Uret i bundbjælken starter her. Pladserne holdes først rigtigt i databasen efter "Til betaling"
-// Mens vi reserverer: "Vi popper dine pladser". Var et sæde taget: "Dine popkorn blev brændt".
+// Er et sæde lige blevet taget af en anden, vises "Dine popkorn blev brændt".
+// ("Vi popper dine pladser" vises først på næste trin - se AttachOwnerForm)
 //
 //   showtime - fra getShowtime()
 //   rows     - fra getSeatMap()
 //   subtitle - underteksten i trin-headeren, fx "Clayface · i dag kl. 19.30 · Aarhus Bio"
 //   backHref - "Tilbage" på første trin (filmsiden)
-export default function SeatPicker({ showtime, rows, subtitle, backHref }) {
+//   resume   - ens reservation, når man kommer tilbage fra "Dine oplysninger".
+//              Så starter vi på "Vælg dine pladser" med de samme sæder, billetter og ur
+export default function SeatPicker({ showtime, rows, subtitle, backHref, resume }) {
   const router = useRouter();
   // "count" = vælg antal, "seats" = vælg sæder
-  const [phase, setPhase] = useState("count");
-  const [counts, setCounts] = useState(START_COUNTS);
-  const [selectedIds, setSelectedIds] = useState([]);
+  const [phase, setPhase] = useState(resume ? "seats" : "count");
+  // Kommer man tilbage, men vi ved ikke hvilke billettyper man valgte, tæller vi dem alle som voksen
+  const [counts, setCounts] = useState(
+    resume?.tickets ?? (resume ? { ...START_COUNTS, adult: resume.seat_ids.length } : START_COUNTS)
+  );
+  const [selectedIds, setSelectedIds] = useState(resume?.seat_ids ?? []);
   // Hvornår uret i bundbjælken når 00:00. Sættes, når man kommer til sædevalget
-  const [holdUntil, setHoldUntil] = useState(null);
+  const [holdUntil, setHoldUntil] = useState(resume?.reserved_until ?? null);
   const [state, formAction, pending] = useActionState(reserveSeats, null);
   // Den fejl, man har lukket - så bliver overlayet lukket indtil næste fejl
   const [dismissed, setDismissed] = useState(null);
@@ -125,8 +131,14 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref }) {
   return (
     <form action={formAction} className={styles.picker}>
       <input type="hidden" name="showtime_id" value={showtime.id} />
+      {/* Den reservation, man kom tilbage fra - så kan reserveSeats genbruge eller frigive den */}
+      {resume && <input type="hidden" name="booking_id" value={resume.id} />}
       {selectedIds.map((id) => (
         <input key={id} type="hidden" name="seat_id" value={id} />
+      ))}
+      {/* Antal pr. billettype, fx ticket_adult = 2 - så "Din ordre" kan vise "2 × Voksen" */}
+      {TICKET_TYPES.map((type) => (
+        <input key={type.id} type="hidden" name={`ticket_${type.id}`} value={counts[type.id]} />
       ))}
 
       <StepHeader step={2} title="Vælg dine pladser" subtitle={subtitle} onBack={() => goTo("count")} />
@@ -181,10 +193,6 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref }) {
           Ryk dine pladser, så {formatSeats(loneSeats)} ikke står {loneSeats.length === 1 ? "tom" : "tomme"}.
         </p>
       </Modal>
-
-      <Overlay open={pending} title="Vi popper dine pladser …">
-        <p>{formatSeats(selectedSeats)}</p>
-      </Overlay>
 
       <Overlay open={seatTaken} role="alert" title="Dine popkorn blev brændt">
         <p>{state?.error?.message}</p>

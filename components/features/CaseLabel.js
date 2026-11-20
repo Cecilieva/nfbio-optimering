@@ -3,7 +3,7 @@ import styles from "./CaseLabel.module.css";
 
 /**
  * KAMPAGNE: CLAYFACE – "Sagsmappe"-linjen under "Tilbage"
- * Figma "Sag" (1842:64049) + "REC" (570:3180)
+ * Figma "Sag" + "REC"
  *
  * @param {object} props
  * @param {string} props.text fx "SAG NR. 0217 · THRILLER"

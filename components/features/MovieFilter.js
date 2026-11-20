@@ -22,11 +22,11 @@ const NO_FILTERS = { cinema: "all", day: "all", genre: "all", extra: "all", form
 
 /**
  * Filtreringen af de film, der kører nu i byen – og listen med filmene under den.
- * Figma: "Filtrering" (node 2848:14506, komponent "Filtering" 464:12550).
+ * Figma: "Filtrering" (komponent "Filtering").
  *
  * Fire felter med dropdown (Biograf, Dato, Genre, Ekstra filtrering), søgeknappen,
  * format-knapperne og "Nulstil filter". Filmene filtreres med det samme, når man vælger noget.
- * Under filtrene står filmene som plakater – Figma "Program" (node 2867:21344).
+ * Under filtrene står filmene som plakater – Figma "Program".
  *
  * @param {object} props
  * @param {string} props.cityName Fx "Aarhus" – står i overskriften

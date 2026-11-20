@@ -17,7 +17,7 @@ const REFRESH_DELAY = 150; // ms – hvor længe vi venter, før siden måles ig
 
 /**
  * Finalen nederst på forsiden: Nordisk Films slogan i et stjernerum – samme rum og stjerner som hero'en.
- * Figma: "Finale (motion)" (node 1883:12291).
+ * Figma: "Finale (motion)".
  *
  * Mens man scroller:
  * 1. Bogstaverne lyses op ét ad gangen. Det starter, når sloganet tydeligt kan ses,

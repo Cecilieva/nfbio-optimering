@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import SeatPicker from "@/components/features/SeatPicker";
+import { getBooking, isReservationActive } from "@/lib/data/bookings";
 import { getSeatMap } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
 import { formatDayKey, formatDayMonthShort, formatTime } from "@/lib/format";
@@ -11,15 +12,33 @@ export const metadata = {
 
 // Trin 1 og 2 i købet: vælg antal billetter og derefter sæder.
 // Begge trin er på samme side - SeatPicker skifter mellem dem.
-export default async function SeatsPage({ params }) {
+//
+// Står der ?booking=… i adressen, kommer man tilbage fra "Dine oplysninger".
+// Så starter siden på "Vælg dine pladser" med de sæder, man allerede har reserveret.
+export default async function SeatsPage({ params, searchParams }) {
   const { showtimeId } = await params;
+  const { booking: bookingId } = await searchParams;
   const showtime = await getShowtime(Number(showtimeId));
 
   if (!showtime) {
     notFound();
   }
 
-  const rows = await getSeatMap(showtime);
+  // Hent salen og (hvis man kommer tilbage) ens reservation på samme tid
+  const [seatMap, booking] = await Promise.all([
+    getSeatMap(showtime),
+    bookingId ? getBooking(bookingId) : null,
+  ]);
+
+  // Reservationen bruges kun, hvis den er til denne forestilling, og tiden ikke er løbet ud
+  const resume = booking?.showtime_id === showtime.id && isReservationActive(booking) ? booking : null;
+
+  // Ens egne sæder skal ikke vises som optaget - de er jo ens egne
+  const ownSeatIds = resume?.seat_ids ?? [];
+  const rows = seatMap.map((row) => ({
+    ...row,
+    seats: row.seats.map((seat) => ({ ...seat, taken: seat.taken && !ownSeatIds.includes(seat.id) })),
+  }));
 
   // Underteksten i trin-headeren, fx "Clayface · i dag kl. 19.30 · Aarhus Bio"
   const isToday = formatDayKey(showtime.starts_at) === formatDayKey(new Date());
@@ -34,6 +53,7 @@ export default async function SeatsPage({ params }) {
         rows={rows}
         subtitle={subtitle}
         backHref={`/film/${showtime.movie.slug}`}
+        resume={resume}
       />
     </main>
   );

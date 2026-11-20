@@ -5,7 +5,7 @@ const DIGITS = [3, 2, 1];
 
 /**
  * Nedtællingen 3-2-1 i starten af introen, bygget som CSS-animation.
- * Figma: "Nedtælling" (node 1869:15878) i "Forside – intro (motion)". Tiderne er fra Figmas tidslinje:
+ * Figma: "Nedtælling" i "Forside – intro (motion)". Tiderne er fra Figmas tidslinje:
  * hvert tal i 0,55 s, viseren drejer tre omgange, og efter 1,75 s glider det hele op ud af skærmen.
  *
  * @param {object} props

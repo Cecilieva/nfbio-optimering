@@ -25,7 +25,7 @@ const MORE_LINKS = [
   { label: "Om Nordisk Film Biografer", href: "/film" },
 ];
 
-// Figma: "Menu" (node 1056:25687).
+// Figma: "Menu".
 // Burgerknappen i headeren plus menuen, der glider ind fra venstre.
 // Menuen er et HTML-<dialog>. Så giver browseren os gratis:
 //   - Escape lukker menuen

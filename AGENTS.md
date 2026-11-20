@@ -105,9 +105,9 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Trailer-modal | 596:3073 (Fortæppe: 636:3749) | `/film/[slug]` og `/film` | TrailerButton, Modal, Curtain (fortæppet, der åbner over videoen), Button (`variant="secondary"` - "Luk" med kryds) |
 | Sædevalg - vælg antal ("Antal pladser") | 737:6375 (Trin-header: 811:6487, Vælg antal-kort: 775:6366) | `/bestil/saeder/[showtimeId]` | StepHeader, SeatPicker (trin 1 af 2 på siden), TicketCounter, Button. Billettyper og priser i `lib/ticket-types.js` |
 | Sædevalg - vælg sæder | 214:4067 (Info-boks: 838:6543, Bundbar: 843:6569) | `/bestil/saeder/[showtimeId]` | SeatPicker (trin 2 af 2 på siden), SeatMap (salen - tegnes med Seat som HallMap), SeatView ("Udsigt fra sædet": lærredet i perspektiv, Række/Sæder, pris og "Til betaling"), BottomBar (valgte sæder + Countdown "Dine pladser holdes i"), Button |
-| Overlay: Vi popper dine pladser | | `/bestil/saeder/[showtimeId]` | Overlay |
+| Overlay: Vi popper dine pladser | | `/bestil/[bookingId]/login` | Overlay (i AttachOwnerForm - vises efter log ind eller "Fortsæt som gæst") |
 | Overlay: Dine popkorn blev brændt | | `/bestil/saeder/[showtimeId]` | Overlay, Button |
-| Log ind / gæst / opret profil | | `/bestil/[bookingId]/login` | StepHeader, OrderSummary, TextField, Button, AttachOwnerForm |
+| Log ind / gæst / opret profil ("Dine oplysninger") | 214:5116 (Gæstebestilling: 1519:35087, Opret profil: 1894:29458, Ordreoversigt: 214:3695) | `/bestil/[bookingId]/login` | StepHeader, OrderSummary ("Din ordre"), CheckoutLogin (log ind; `?gaest=1` giver "Gæstebestilling", `?opret=1` giver "Opret en BioPlus-profil" med CheckoutSignupForm, Chip og Checkbox), AttachOwnerForm, TextField, Button, BottomBar + Countdown. Billettyperne (fx "2 × Voksen") gemmes kun i booking-cookien (`tickets`) |
 | Betaling | | `/bestil/[bookingId]/betaling` | StepHeader, Countdown, OrderSummary, PaymentForm, Radio, Button |
 | Betalingsfejl (inline) | | `/bestil/[bookingId]/betaling` | PaymentForm |
 | Betalingsfejl (side) | | `/bestil/[bookingId]/betaling/fejl` | Button |

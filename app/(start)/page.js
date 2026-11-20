@@ -10,7 +10,7 @@ export const metadata = {
   title: "Vælg by",
 };
 
-// Figma: "01 Vælg by" (node 2141:155168).
+// Figma: "01 Vælg by".
 // Det er den første skærm i flowet. Den vises på "/" og på "/by".
 export default async function CityPage({ searchParams }) {
   // ?next= i URL'en fortæller, hvilken side vi skal videre til, når byen er valgt.

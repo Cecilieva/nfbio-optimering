@@ -36,7 +36,7 @@
   --palette-star: #f4f0e6; /* Stjerner/Stjerne primær */
   --palette-projector-strong: #a0beff80; /* Lysprojektor/Projekter kraftig */
   --palette-projector-soft: #a0beff00; /* Lysprojektor/Projekter sart */
-  /* Fortæppet foran traileren (figma "Fortæppe" 636:3749) */
+  /* Fortæppet foran traileren (figma "Fortæppe") */
   --palette-curtain-dark: #1a0104; /* mørk */
   --palette-curtain-mid: #5a060b; /* mellem */
   --palette-curtain-light: #b51a1c; /* lys */
@@ -239,7 +239,7 @@
   --gradient-space: radial-gradient(closest-side, var(--figma-bg-secondary), var(--figma-stars-bg));
   --color-star: var(--figma-star); /* Stjernerne i "Stjernehimmel" (Starfield): Stjerner/Stjerne primær */
   --color-poster-hover-overlay: var(--figma-toning-70); /* Toning/70% – hover på filmkort, så knappen kan ses */
-  /* trailer-vinduet (figma 596:3073) - altid mørkt, også i familie -> farver direkte fra paletten */
+  /* trailer-vinduet - altid mørkt, også i familie -> farver direkte fra paletten */
   --color-trailer-background: var(--palette-black); /* bg/Sekundær baggrund */
   --color-trailer-text: var(--palette-white-soft); /* text/Primær */
   --color-trailer-button-border: var(--palette-navy); /* Buttons/Sekundær border */
@@ -407,7 +407,7 @@
   --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
   --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
-  /* Figma "Projektor - standard" (node 3063:14519): Start -> Tændt -> Drift */
+  /* Figma "Projektor - standard": Start -> Tændt -> Drift */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
   --scale-projector-drift: 1.06; /* Drift: … og glider langsomt mellem 100 % og 106 % */
   --distance-projector-drift-x: -3%; /* Drift: billedet glider 3 % mod venstre */
@@ -421,13 +421,13 @@
   --size-projector-beam-height: 196%; /* 1100px af 560px */
   --position-projector-beam-start: -67%; /* Lysstriben starter til venstre for billedet … */
   --position-projector-beam-end: 100%; /* … og fejer ud til højre */
-  /* Figma "Titel - standard" (node 3063:14531) */
+  /* Figma "Titel - standard" */
   --distance-title-in: 40px; /* Skjult -> Ind: titlen glider 40px op */
   --distance-title-wave: 10px; /* Bølgen: hvert ord løftes 10px (og falder til 5px på vej ned) */
   --space-movie-title-word: 1.625rem; /* 26px mellem ordene i titlen */
   --size-countdown-unit: 4.75rem; /* 76px - en boks i nedtællingen til premieren (Figma "Nedtælling") */
   --size-countdown-unit-compact: 3.5rem; /* Små telefoner */
-  /* Spilletider på filmsiden (Figma "Spilletider" 627:3145 og "Din forestilling" 2010:26575) */
+  /* Spilletider på filmsiden (Figma "Spilletider" og "Din forestilling") */
   --size-status-dot: 0.625rem; /* 10px - prikken, der viser ledige pladser */
   --size-week-arrow: 2.75rem; /* 44px - pilene til forrige/næste uge */
   --size-showtime-day-min: 8.5rem; /* En dag bliver aldrig smallere - på mobil kan skemaet scrolles til siden */
@@ -479,6 +479,9 @@
   --space-seat-columns: 1.25rem; /* 20px - mellem salen og panelet */
   --space-bottom-bar: var(--figma-padding-medium); /* 24px - Paddings/Medium, luft over og under i bundbjælken med tiden */
   --size-bottom-bar-height: calc(var(--size-icon) + 2 * var(--space-bottom-bar)); /* 72px - 24px stol + luften over og under */
+  /* "Dine oplysninger": "Din ordre" og "Har du en profil?" */
+  --size-order-poster-width: 3.75rem; /* 60px - plakaten i "Din ordre" */
+  --size-order-poster-height: 5.5rem; /* 88px */
   --size-seat-map-screen-width: 35rem; /* 560px - lærredet over salen */
   --size-seat-view-screen-height: 5.938rem; /* 95px - lærredet set fra sædet … */
   --size-seat-view-screen-box-width: 14.75rem; /* 236px - … selve lærredet uden glød */
@@ -495,7 +498,7 @@
   --distance-seat-view-screen: 1.5px; /* Lærredet glider lidt op på plads */
   --color-seat-view-top: var(--figma-bg-primary); /* Udsigten toner fra mørk … */
   --color-seat-view-bottom: var(--figma-option-background); /* … til kortets farve */
-  /* Trailer-vinduet (Figma 596:3073: 960 × 600 - 60px top + 960 × 540 video) */
+  /* Trailer-vinduet (Figma: 960 × 600 - 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
   --size-message-modal-width: 40rem; /* 640px - Modal med en kort besked (size="small"): 480px tekst + 80px luft i hver side */
   --space-message-modal: var(--figma-padding-xx-large); /* 80px - Paddings/XX-Large, luften i Modal med en kort besked */
@@ -603,7 +606,7 @@
   --layout-page-margin: calc((100% + var(--grid-gutter)) / var(--grid-columns));
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene - over siden, under headeren */
-  --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren (Figma) */
+  --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren */
   /* ========================================================================
      KAMPAGNE: KATTEN MED HATTEN – kun til den film
      Figma "Titel – hopper"

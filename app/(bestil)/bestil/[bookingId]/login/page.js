@@ -1,31 +1,37 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import AttachOwnerForm from "@/components/features/AttachOwnerForm";
+import BottomBar from "@/components/features/BottomBar";
+import CheckoutLogin from "@/components/features/CheckoutLogin";
+import Countdown from "@/components/features/Countdown";
 import OrderSummary from "@/components/features/OrderSummary";
 import StepHeader from "@/components/features/StepHeader";
-import Button from "@/components/ui/Button";
-import TextField from "@/components/ui/TextField";
-import { signIn } from "@/lib/actions/auth";
+import Seat from "@/components/ui/Seat";
 import { getCurrentUser } from "@/lib/auth";
 import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
+import { formatSeats } from "@/lib/format";
+import styles from "./page.module.css";
 
 export const metadata = {
   title: "Log ind eller fortsæt som gæst",
 };
 
-// Trin 2 i købet: log ind eller fortsæt som gæst.
-// Sæderne er reserveret, men reservationen har endnu ingen ejer.
-// Her vælger man: log ind, fortsæt som gæst eller opret en profil.
-// Når man logger ind, kommer man tilbage hertil og kan gøre sig til ejer af reservationen.
-export default async function BookingLoginPage({ params }) {
+// Trin 3 i købet: "Dine oplysninger". Her vælger man at logge ind eller fortsætte som gæst.
+// Sæderne er reserveret, men vi ved endnu ikke, hvem der køber dem.
+// Til venstre står "Din ordre", til højre log ind / gæst, og i bunden uret.
+// Logger man ind, kommer man tilbage hertil bagefter.
+export default async function BookingLoginPage({ params, searchParams }) {
   // bookingId er id'et i adressen, fx /bestil/abc123/login
   const { bookingId } = await params;
+  // Hvilket kort der vises til højre: ?gaest=1 er "Fortsæt som gæst", ?opret=1 er "Opret profil"
+  const { gaest, opret } = await searchParams;
+  let mode = "login";
+  if (gaest === "1") mode = "guest";
+  if (opret === "1") mode = "signup";
   const booking = await getBooking(bookingId);
 
   // Findes reservationen ikke, viser vi 404-siden
-
   if (!booking) {
     notFound();
   }
@@ -44,51 +50,57 @@ export default async function BookingLoginPage({ params }) {
   ]);
   // Adressen på denne side - så login og "Opret profil" kan sende en tilbage hertil bagefter
   const here = `/bestil/${bookingId}/login`;
+  // "Tilbage" fører til "Vælg dine pladser" for samme forestilling, med de sæder man har valgt
+  const seatsHref = `/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`;
 
   // Sæderne holdes kun i en kort tid. Er tiden gået, skal man vælge sæder igen
   if (!isReservationActive(booking)) {
     return (
       <main>
         <h1>Reservationen er udløbet</h1>
-        <Link href={`/bestil/saeder/${booking.showtime_id}`}>Vælg sæder igen</Link>
+        <Link href={seatsHref}>Vælg sæder igen</Link>
       </main>
     );
   }
 
   return (
-    <main>
-      <StepHeader step={2} title="Log ind eller fortsæt som gæst" />
-      <OrderSummary showtime={showtime} seats={seats} totalDkk={booking.total_dkk} />
+    // Opret profil er et langt kort. På desktop står siden derfor stille (data-fit-screen),
+    // og man scroller kun inde i kortet til højre
+    <main className={styles.page} data-fit-screen={mode === "signup" || undefined}>
+      {/* Fra gæst eller opret profil fører "Tilbage" kun ét skridt tilbage: til "Har du en profil?" */}
+      <StepHeader step={3} title="Dine oplysninger" backHref={mode === "login" ? seatsHref : here} />
 
-      {/* Logget ind: én knap, der gør brugeren til ejer. Ellers: log ind, gæst eller opret profil */}
-      {user ? (
-        <AttachOwnerForm bookingId={bookingId} email={user.email} />
-      ) : (
-        <>
-          <h2>Log ind</h2>
-          <form action={signIn}>
-            {/* Skjult felt: efter login sendes man tilbage til denne side */}
-            <input type="hidden" name="next" value={here} />
-            <TextField label="E-mail" name="email" type="email" autoComplete="email" required />
-            <TextField
-              label="Adgangskode"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-            />
-            <Button type="submit">Log ind</Button>
-          </form>
+      {/* "Din ordre" og log ind / gæst ved siden af hinanden - under hinanden på mobil */}
+      <div className={styles.columns}>
+        <OrderSummary
+          showtime={showtime}
+          seats={seats}
+          tickets={booking.tickets}
+          totalDkk={booking.total_dkk}
+        />
+        {/* Boksen om kortet til højre. Ved "Opret profil" er det den, man scroller i (se CSS'en) */}
+        <div className={styles.side}>
+          <CheckoutLogin
+            bookingId={bookingId}
+            next={here}
+            email={user?.email}
+            seatsLabel={formatSeats(seats)}
+            mode={mode}
+          />
+        </div>
+      </div>
 
-          <h2>Fortsæt som gæst</h2>
-          <AttachOwnerForm bookingId={bookingId} asGuest />
-
-          <h2>Ny her?</h2>
-          <Button variant="secondary" href={`/signup?next=${encodeURIComponent(here)}`}>
-            Opret profil
-          </Button>
-        </>
-      )}
+      {/* Bunden: de valgte sæder og hvor længe de holdes */}
+      <BottomBar
+        summary={
+          <>
+            <Seat state="selected" />
+            {formatSeats(seats)}
+          </>
+        }
+      >
+        <Countdown until={booking.reserved_until} />
+      </BottomBar>
     </main>
   );
 }

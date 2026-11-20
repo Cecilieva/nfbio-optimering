@@ -6,7 +6,7 @@ import { formatAgeRating, formatDuration, formatPremiere } from "@/lib/format";
 import styles from "./MovieDetails.module.css";
 
 /**
- * Plakat, handling og fakta under heroen. Figma "Filmdetaljer/Default" (2250:15224)
+ * Plakat, handling og fakta under heroen. Figma "Filmdetaljer/Default"
  *
  * @param {object} props
  * @param {object} props.movie filmen fra getMovieBySlug (lib/data/movies.js)

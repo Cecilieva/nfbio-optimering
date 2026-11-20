@@ -17,7 +17,7 @@ const AUTO_STEP_MS = 2000;
 
 /**
  * KAMPAGNE: CLAYFACE – kun på Clayface-filmsiden
- * Lommelygten: billedet i mørke, kun lyskeglen viser det. Figma "Lommelygte" (570:3160)
+ * Lommelygten: billedet i mørke, kun lyskeglen viser det. Figma "Lommelygte"
  * Følger musen zone for zone – ellers vandrer den selv
  *
  * @param {object} props

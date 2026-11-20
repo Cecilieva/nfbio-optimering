@@ -32,7 +32,7 @@ const SOCIAL_LINKS = [
 ];
 
 /**
- * Figma: Footer (node 1084:25941), varianten "Generel".
+ * Figma: Footer, varianten "Generel".
  * Vises nederst på alle sider undtagen Vælg by.
  *
  * @param {object} props

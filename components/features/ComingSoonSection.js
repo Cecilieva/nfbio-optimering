@@ -25,7 +25,7 @@ const VISIBLE_COUNT = 10;
 
 /**
  * "Kommende film" på forsiden – under filmene, der kører nu.
- * Figma: "Kommende film – udfold" (node 2521:34621) i "Forside – samlet" (node 1856:79051).
+ * Figma: "Kommende film – udfold" i "Forside – samlet".
  *
  * Overskrift, filtre og de første 10 plakater står altid fremme. "Se alle kommende film" nederst viser resten,
  * og "Skjul kommende film" viser kun de første 10 igen og ruller op til overskriften.

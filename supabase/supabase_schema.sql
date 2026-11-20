@@ -230,6 +230,21 @@ begin
   return v_booking;
 end $$;
 
+-- Slip en reservation igen (når man går tilbage og vælger andre sæder).
+-- Kun en reservation uden ejer, eller ens egen, kan slippes
+create or replace function public.release_booking(p_booking_id uuid)
+returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  update bookings set status = 'cancelled'
+   where id = p_booking_id
+     and status = 'reserved'
+     and ((user_id is null and guest_email is null) or user_id = auth.uid());
+
+  delete from booking_seats bs using bookings b
+   where bs.booking_id = b.id and b.id = p_booking_id and b.status = 'cancelled';
+end $$;
+
 -- Gennemfør / afvis betaling (simuleret i prototypen) - kræver ejer og aktiv reservation
 create or replace function public.complete_payment(
   p_booking_id uuid,
@@ -294,6 +309,7 @@ grant select on taken_seats to anon, authenticated;
 grant execute on function public.reserve_seats    to anon, authenticated;
 grant execute on function public.complete_payment to anon, authenticated;
 grant execute on function public.attach_booking_owner to anon, authenticated;
+grant execute on function public.release_booking to anon, authenticated;
 
 -- =====================================================================
 --  TESTDATA

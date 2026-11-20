@@ -8,7 +8,7 @@ import styles from "./ComingSoonCard.module.css";
 
 /**
  * Det store kort med en kommende film øverst på forsiden.
- * Figma: "Kommende film – kort" (node 1758:9775). Bruges i FeaturedMovies og som kopi i hero'en (HeroScroll).
+ * Figma: "Kommende film – kort". Bruges i FeaturedMovies og som kopi i hero'en (HeroScroll).
  *
  * Billedet er en vindues-parallax (ParallaxFrame). Titlen er delt op i bogstaver (data-char), og det, der
  * tones ind og ud omkring den, er markeret med data-reveal – FeaturedMovies animerer dem, mens man scroller.

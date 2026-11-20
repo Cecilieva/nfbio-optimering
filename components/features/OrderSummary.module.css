@@ -1,0 +1,106 @@
+/* Kortet: 24px luft inden i og 16px mellem delene */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-snug);
+}
+
+/* "Din ordre" */
+.heading {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Plakaten til venstre og teksten til højre */
+.movie {
+  display: flex;
+  gap: var(--space-4);
+}
+
+/* Plakaten: fast størrelse med runde hjørner */
+.poster {
+  flex-shrink: 0;
+  width: var(--size-order-poster-width);
+  height: var(--size-order-poster-height);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+/* Billedet fylder hele boksen uden at blive strakt */
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Uden plakat: titlen i lille skrift i boksen */
+.poster [data-poster-placeholder] {
+  padding: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Titel, tid, biograf og sæder - 8px imellem */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.info p {
+  margin: 0;
+}
+
+/* Filmens titel: større og fed */
+.info .title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Billetter og gebyr: en streg over og under */
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding-block: var(--space-4);
+  border-block: var(--border-width) solid var(--color-divider);
+  font-size: var(--font-size-xs);
+}
+
+/* Teksten til venstre og prisen til højre */
+.line,
+.total {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.line dt {
+  color: var(--color-text-muted);
+}
+
+.line dd,
+.total dd {
+  margin: 0;
+}
+
+/* "I alt": større og fed */
+.total {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
