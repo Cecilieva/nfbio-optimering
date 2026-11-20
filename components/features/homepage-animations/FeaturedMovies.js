@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ComingSoonCard from "@/components/features/ComingSoonCard";
 import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
 
-// Hvor meget mere af billedets bund (og mindre af toppen) et kort viser (se lift i ParallaxFrame).
-// Sunrise: mere af teltene og græsset, mindre himmel.
-const IMAGE_LIFT = { "sunrise-on-the-reaping": 0.35 };
+// Antal plakater, der svæver forbi i stjernehimlen, før den sidste folder sig ud til kort 1
+const INTRO_POSTER_COUNT = 8;
 
 /**
  * Toppen af forsiden: hero'en (HeroScroll) og de store "Kommer snart"-kort under hinanden.
@@ -29,12 +28,28 @@ const IMAGE_LIFT = { "sunrise-on-the-reaping": 0.35 };
  *
  * @param {object} props
  * @param {object[]} props.movies Filmene i den rækkefølge, de vises (se lib/data/featured.js)
+ * @param {{ slug: string, src: string }[]} [props.introPosters] Plakaterne til stjernehimlen i tilfældig
+ *   rækkefølge (se lib/data/intro-posters.js)
  */
-export default function FeaturedMovies({ movies }) {
+export default function FeaturedMovies({ movies, introPosters = [] }) {
   const sectionRef = useRef(null);
   const firstCardRef = useRef(null);
   const dotsRef = useRef(null);
   const first = movies[0];
+
+  // Stjernehimlens plakater: de første 8 fra den blandede liste – uden kort 1's film, for den er den sidste
+  // plakat. Den sidste har ikke sit eget billede: HeroScroll viser kort 1's hero-billede (targetImage) i den,
+  // så den bare strækker sig ud til kortet. useMemo: samme liste ved hver render, så animationen ikke starter forfra.
+  const films = useMemo(
+    () => [
+      ...introPosters
+        .filter((poster) => poster.slug !== first?.slug)
+        .slice(0, INTRO_POSTER_COUNT)
+        .map((poster) => ({ src: poster.src })),
+      { position: "50% 50%" },
+    ],
+    [introPosters, first?.slug],
+  );
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -156,8 +171,8 @@ export default function FeaturedMovies({ movies }) {
       <HeroScroll
         label="Velkommen"
         targetRef={firstCardRef}
-        targetImage={first?.hero_url || first?.poster_url}
-        targetLift={IMAGE_LIFT[first?.slug] ?? 0}
+        targetImage={first?.hero_url}
+        films={films}
       >
         {first && <ComingSoonCard movie={first} copy />}
       </HeroScroll>
@@ -170,7 +185,6 @@ export default function FeaturedMovies({ movies }) {
               movie={movie}
               preload={index === 0}
               loading={index === 0 ? undefined : "eager"}
-              lift={IMAGE_LIFT[movie.slug] ?? 0}
             />
           </div>
         ))}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import FollowButton from "@/components/features/FollowButton";
 import PosterPlaceholder from "@/components/features/PosterPlaceholder";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { formatAgeShort, formatDayMonthShort, formatDuration } from "@/lib/format";
@@ -50,8 +49,8 @@ export default function MovieCard({ movie, variant = "default", format }) {
 /**
  * Figma "Kommer snart" (node 927:6300): plakaten under "Kommende film".
  * Billede med mørk toning, premieren i midten og titlen nederst. Hele plakaten er et link til filmsiden.
- * Holder man musen over (eller står på den med tastaturet), skjules teksten, og knappen "Giv mig besked"
- * vises i midten – Figma "Filmplakat", Property 1=få notifikationer (node 913:14280).
+ * Holder man musen over (eller står på den med tastaturet), skjules teksten, og "Se spilletider" vises i midten –
+ * Figma "Filmplakat", Property 1=få notifikationer (node 913:14280).
  */
 function ComingSoonPoster({ movie }) {
   // Teksten under datoen: "Billetsalg fra 10. nov", hvis vi kender datoen (lib/data/ticket-sale.js),
@@ -61,38 +60,35 @@ function ComingSoonPoster({ movie }) {
     : "Billetsalg åbent";
 
   return (
-    // Knappen må ikke ligge inde i linket (en knap i et link er ikke gyldig HTML).
-    // Derfor står linket og knappen ved siden af hinanden i en boks, og knappen lægges oven på plakaten.
-    <div className={styles.card}>
-      <Link href={`/film/${movie.slug}`} className={`${styles.poster} ${styles.comingSoon}`}>
-        {/* Billedet er pynt – titlen står som tekst nedenfor, så alt="" er nok.
-            Har filmen intet billede, ses den blå gradient fra CSS'en i stedet. */}
-        {movie.poster_url && <img src={movie.poster_url} alt="" className={styles.image} />}
+    <Link href={`/film/${movie.slug}`} className={`${styles.poster} ${styles.comingSoon}`}>
+      {/* Billedet er pynt – titlen står som tekst nedenfor, så alt="" er nok.
+          Har filmen intet billede, ses den blå gradient fra CSS'en i stedet. */}
+      {movie.poster_url && <img src={movie.poster_url} alt="" className={styles.image} />}
 
-        {/* Figma "Midte": kalender, premiere og billetsalg står i midten af plakaten */}
-        <div className={styles.middle}>
-          {movie.premiere_date && (
-            <p className={styles.premiere}>
-              <img src="/icons/calendar.svg" alt="" width={24} height={24} className={styles.icon} />
-              <span className={styles.date}>
-                {/* Kun til skærmlæsere, så datoen læses op som "Premiere 19. nov" */}
-                <span className={styles.visuallyHidden}>Premiere </span>
-                {formatDayMonthShort(movie.premiere_date)}
-              </span>
-              <span className={styles.ticketSale}>{ticketSale}</span>
-            </p>
-          )}
-        </div>
-
-        {/* Figma "Bund": titlen. Lange titler slutter med "…" (se MovieCard.module.css). */}
-        <h3 className={styles.title}>{movie.title}</h3>
-      </Link>
-
-      {/* Figma "få notifikationer": "Giv mig besked" vises midt på plakaten ved hover */}
-      <div className={styles.hoverAction}>
-        <FollowButton variant="card" title={movie.title} />
+      {/* Figma "Midte": kalender, premiere og billetsalg står i midten af plakaten */}
+      <div className={styles.middle}>
+        {movie.premiere_date && (
+          <p className={styles.premiere}>
+            <img src="/icons/calendar.svg" alt="" width={24} height={24} className={styles.icon} />
+            <span className={styles.date}>
+              {/* Kun til skærmlæsere, så datoen læses op som "Premiere 19. nov" */}
+              <span className={styles.visuallyHidden}>Premiere </span>
+              {formatDayMonthShort(movie.premiere_date)}
+            </span>
+            <span className={styles.ticketSale}>{ticketSale}</span>
+          </p>
+        )}
       </div>
-    </div>
+
+      {/* Figma "Bund": titlen. Lange titler slutter med "…" (se MovieCard.module.css). */}
+      <h3 className={styles.title}>{movie.title}</h3>
+
+      {/* Figma "få notifikationer": "Se spilletider" ved hover. En span, fordi hele plakaten allerede er linket
+          (se FeedPoster). aria-hidden: skærmlæsere hører titlen fra linket. */}
+      <span className={`${buttonStyles.button} ${styles.action}`} data-variant="primary" aria-hidden="true">
+        Se spilletider
+      </span>
+    </Link>
   );
 }
 
@@ -126,7 +122,7 @@ function FeedPoster({ movie, format }) {
       {/* Figma "se spilletider": ligner en blå knap (samme styles som Button "primary").
           Det er en span og ikke en knap, fordi hele kortet allerede er et link til filmsiden med spilletiderne.
           aria-hidden: skærmlæsere hører titlen fra linket, så teksten ville bare blive læst op to gange. */}
-      <span className={`${buttonStyles.button} ${styles.feedAction}`} data-variant="primary" aria-hidden="true">
+      <span className={`${buttonStyles.button} ${styles.action}`} data-variant="primary" aria-hidden="true">
         Se spilletider
       </span>
 

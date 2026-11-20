@@ -5,6 +5,7 @@ import Finale from "@/components/features/homepage-animations/Finale";
 import MovieFilter from "@/components/features/MovieFilter";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";
+import { getIntroPosters } from "@/lib/data/intro-posters";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 import styles from "./page.module.css";
 
@@ -17,18 +18,19 @@ export default async function HomePage() {
   }
 
   // Alt hentes samtidig, så siden ikke venter på én ting ad gangen
-  const [nowPlaying, comingSoon, featured, cinemas] = await Promise.all([
+  const [nowPlaying, comingSoon, featured, cinemas, introPosters] = await Promise.all([
     getNowPlaying(city.id),
     getComingSoon(),
     getFeaturedMovies(),
     getCinemas(city.id),
+    getIntroPosters(),
   ]);
 
   return (
     <main className={styles.page}>
       {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
           Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
-      <FeaturedMovies movies={featured} />
+      <FeaturedMovies movies={featured} introPosters={introPosters} />
 
       {/* Figma "Kommende film – udfold": knappen "Se alle kommende film" står øverst, og sektionen med
           de kommende film folder sig ud nederst – under filmene, der kører nu (som i prototypen) */}
