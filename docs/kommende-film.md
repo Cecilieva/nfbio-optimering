@@ -62,12 +62,12 @@ Den lille pilleformede knap til filtrene. Den valgte får `aria-pressed="true"` 
 ### `components/features/MovieCard.js` – variant `coming-soon`
 Figma "Kommer snart" (node `927:6300`). Plakaten består af:
 - billedet med en mørk toning (Figma "Overlay")
-- kalender-ikonet (`public/icons/calendar.svg`), premieredatoen og "Billetsalg fra …" / "Billetsalg åbent" i midten
+- kalender-ikonet (`public/icons/calendar.svg`), premieredatoen og "Billetsalg er åbent" (når billetsalget er åbent) eller "Billetsalg fra …" i midten
 - titlen nederst, som slutter med "…", hvis den er for lang
 
 Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) er uændret.
 
-**Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), bliver toningen lysere, dato og titel skjules, og **"Se spilletider"** vises i midten. Det er en `span` med `Button`'s "primary"-styles (klassen `.action`, som kortene i feedet også bruger), fordi hele plakaten allerede er et link til filmsiden.
+**Hover – Figma "få notifikationer" (node `913:14280`):** holder man musen over plakaten (eller står på den med tastaturet), bliver toningen lysere, dato og titel skjules, og en knap vises i midten. Er billetsalget åbent (`ticket_sale_open`), står der **"Se spilletider"**, ellers **"Læs mere"**. Begge fører til toppen af filmsiden, så man ser billede, trailer og handling først. Det er en `span` med `Button`'s "primary"-styles (klassen `.action`, som kortene i feedet også bruger), fordi hele plakaten allerede er et link til filmsiden.
 
 Plakaten har 8px runde hjørner (`--radius-md`) og toningen `Toning/85%` (`--color-poster-overlay`).
 
