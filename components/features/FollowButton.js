@@ -15,21 +15,14 @@ const RING_MS = 500;
  * Klik viser en kort besked om, at man får besked, når billetsalget åbner.
  * Følgningen gemmes ikke endnu – det er kun beskeden.
  *
- * Varianter:
- *   default – "Følg film" med kant, fx øverst på det store "Kommer snart"-kort. Tilstandene fra Figma:
- *             Fra (kant og tekst) → klik: Ringer 1–4 (klokken ringer) → Til (blå knap med fyldt klokke
- *             og beskeden) → Til stille (beskeden er væk efter 3 sekunder). Et klik mere slår den fra igen.
- *   card    – "Giv mig besked" som blå knap midt på en plakat under "Kommende film"
- *             (Figma "Filmplakat", Property 1=få notifikationer)
+ * Bruges øverst på det store "Kommer snart"-kort og på filmsiden. Tilstandene fra Figma:
+ * Fra (kant og "Følg film") → klik: Ringer 1–4 (klokken ringer) → Til (blå knap med fyldt klokke og beskeden)
+ * → Til stille (beskeden er væk efter 3 sekunder). Et klik mere slår den fra igen.
  *
  * @param {object} props
  * @param {string} props.title Filmens titel (til skærmlæsere)
- * @param {"default" | "card"} [props.variant="default"]
  */
-export default function FollowButton({ title, variant = "default" }) {
-  // Teksten og udseendet afhænger af, hvor knappen står
-  const isCard = variant === "card";
-
+export default function FollowButton({ title }) {
   const [following, setFollowing] = useState(false);
   const [ringing, setRinging] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -66,8 +59,8 @@ export default function FollowButton({ title, variant = "default" }) {
       setShowToast(false);
       return;
     }
-    // Plakat-knappen og "mindre bevægelse": slå til med det samme. Ellers ringer klokken først.
-    if (isCard || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // "Mindre bevægelse": slå til med det samme. Ellers ringer klokken først.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setFollowing(true);
       setShowToast(true);
       return;
@@ -75,27 +68,25 @@ export default function FollowButton({ title, variant = "default" }) {
     setRinging(true);
   }
 
-  // Plakat-knappen: altid blå med "Giv mig besked". Ellers Figma "Notifikationsknap": kant og "Følg film" (Fra),
-  // eller blå med kun den fyldte klokke (Til).
-  const on = !isCard && following;
   return (
-    <div className={styles.wrapper} data-variant={variant}>
+    <div className={styles.wrapper}>
+      {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
-        variant={isCard || on ? "primary" : "outline"}
-        className={isCard ? styles.cardButton : on ? styles.on : undefined}
+        variant={following ? "primary" : "outline"}
+        className={following ? styles.on : undefined}
         onClick={handleClick}
         aria-pressed={following}
-        aria-label={isCard ? `Giv mig besked om ${title}` : `Følg ${title}`}
+        aria-label={`Følg ${title}`}
       >
         <Image
-          src={on ? "/icons/bell-filled.svg" : "/icons/bell.svg"}
+          src={following ? "/icons/bell-filled.svg" : "/icons/bell.svg"}
           alt=""
           width={16}
           height={18}
           className={styles.bell}
           data-ringing={ringing || undefined}
         />
-        {isCard ? "Giv mig besked" : !on && "Følg film"}
+        {!following && "Følg film"}
       </Button>
 
       {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}

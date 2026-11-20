@@ -48,11 +48,11 @@
   min-height: 0;
 }
 
-/* Figma "Premiere": 4px mellem kalender, dato og billetsalg */
+/* Figma "Premiere": 8px mellem kalender, dato og billetsalg */
 .premiere {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
   align-items: center;
   line-height: var(--line-height-snug);
   text-align: center;
@@ -87,66 +87,45 @@
   white-space: nowrap;
 }
 
-/* ---------- Hover på "Kommer snart" – Figma "få notifikationer" ---------- */
-
-/* Boksen om plakaten og knappen "Giv mig besked" */
-.card {
-  position: relative;
+/* Figma "Kommer snart": 8px runde hjørner og toningen Toning/85% */
+.comingSoon {
+  border-radius: var(--radius-md);
 }
 
-/* Knappen ligger midt på plakaten, skjult indtil man holder musen over kortet.
-   pointer-events: none, så man kan klikke igennem til linket, mens knappen er skjult. */
-.hoverAction {
+.comingSoon::after {
+  background: var(--color-poster-overlay);
+  transition: background var(--duration-fast) var(--easing-standard);
+}
+
+/* ---------- Hover – Figma "få notifikationer" (Kommer snart) og "se spilletider" (feed) ---------- */
+
+/* "Se spilletider" ligger midt på plakaten og er skjult, indtil man holder musen over */
+.action {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Ingen padding: knappen er 201px i Figma og må gerne gå lidt ud over kortets 16px luft */
+  translate: -50% -50%;
   opacity: 0;
-  pointer-events: none;
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-/* Hover – eller tastaturfokus et sted i kortet: knappen vises og kan klikkes */
-.card:hover .hoverAction,
-.card:focus-within .hoverAction {
+.poster:hover .action,
+.poster:focus-visible .action {
   opacity: 1;
 }
 
-.card:hover .hoverAction > *,
-.card:focus-within .hoverAction > * {
-  pointer-events: auto;
+/* Kommer snart: toningen bliver lysere (Figma: bg/Primær 70 %), og premieren og titlen skjules */
+.comingSoon:hover::after,
+.comingSoon:focus-visible::after {
+  background: var(--color-poster-hover-overlay);
 }
 
-/* Touchskærme (mobil og tablet) kan ikke holde musen over et kort.
-   Derfor står "Giv mig besked" altid nederst på plakaten, og datoen og titlen bliver stående over den. */
-@media (hover: none) {
-  .hoverAction {
-    align-items: flex-end;
-    padding: var(--space-3);
-    opacity: 1;
-  }
-
-  .hoverAction > * {
-    pointer-events: auto;
-  }
-
-  /* Plads til knappen under titlen. .poster.comingSoon, så mobilreglen for .poster længere nede ikke overskriver den. */
-  .poster.comingSoon {
-    padding-bottom: calc(var(--space-3) + var(--size-button-height) + var(--space-2));
-  }
-}
-
-/* ...og datoen og titlen skjules, som i Figma (kun hvor man kan holde musen over) */
-@media (hover: hover) {
-  .card:hover .comingSoon .middle,
-  .card:hover .comingSoon .title,
-  .card:focus-within .comingSoon .middle,
-  .card:focus-within .comingSoon .title {
-    opacity: 0;
-  }
+.comingSoon:hover .middle,
+.comingSoon:hover .title,
+.comingSoon:focus-visible .middle,
+.comingSoon:focus-visible .title {
+  opacity: 0;
 }
 
 .poster:focus-visible {
@@ -179,18 +158,7 @@
 
 /* ---------- Hover på kortene i feedet – Figma "se spilletider" ---------- */
 
-/* "Se spilletider" ligger midt på kortet og er skjult, indtil man holder musen over */
-.feedAction {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  translate: -50% -50%;
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--easing-standard);
-}
-
-/* Hover eller tastaturfokus: kortet bliver ensartet mørkt, teksten skjules, og knappen vises */
+/* Hover eller tastaturfokus: kortet bliver ensartet mørkt, og teksten skjules (knappen: se .action) */
 .feed:hover::after,
 .feed:focus-visible::after {
   background: var(--color-poster-hover-overlay);
@@ -201,11 +169,6 @@
 .feed:focus-visible .feedTop,
 .feed:focus-visible .feedBottom {
   opacity: 0;
-}
-
-.feed:hover .feedAction,
-.feed:focus-visible .feedAction {
-  opacity: 1;
 }
 
 .feedTop,
