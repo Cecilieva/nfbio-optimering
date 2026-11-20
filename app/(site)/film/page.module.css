@@ -5,7 +5,7 @@
   padding: 0;
 }
 
-/* Knappen "Se alle kommende film", filtreringen og de kommende film: samme bredde som kortet i hero'en */
+/* Filtreringen og de kommende film: samme bredde som kortet i hero'en */
 .sections {
   width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
   margin: 0 auto;

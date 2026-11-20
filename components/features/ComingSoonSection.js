@@ -20,16 +20,15 @@ function scrollToAndFocus(element) {
   element.focus({ preventScroll: true });
 }
 
+// Antal plakater, før man skal trykke "Se alle kommende film": 2 rækker á 5 som i Figma
+const VISIBLE_COUNT = 10;
+
 /**
- * "Kommende film" på forsiden.
- * Figma: "Kommende film – udfold" (node 2221:15159) og prototypen "Forside – samlet" (node 1856:79051).
+ * "Kommende film" på forsiden – under filmene, der kører nu.
+ * Figma: "Kommende film – udfold" (node 2521:34621) i "Forside – samlet" (node 1856:79051).
  *
- * Knappen og sektionen står to forskellige steder på siden, som i prototypen:
- *   1. Knappen "Se alle kommende film" står øverst, lige under de fremhævede film (2848:14500).
- *   2. Det, komponenten får som children (filtreringen og filmene, der kører nu), står i midten.
- *   3. Sektionen med overskrift, filtre og plakater (2849:14585) folder sig ud nederst, under children.
- * Når man trykker på knappen, folder sektionen sig ud, og siden ruller ned til den.
- * "Skjul kommende film" folder den sammen igen og ruller op til knappen.
+ * Overskrift, filtre og de første 10 plakater står altid fremme. "Se alle kommende film" nederst viser resten,
+ * og "Skjul kommende film" viser kun de første 10 igen og ruller op til overskriften.
  *
  * Filmene hentes på siden med getComingSoon() og kommer ind som props –
  * komponenten taler aldrig selv med databasen. Se docs/kommende-film.md.
@@ -37,47 +36,33 @@ function scrollToAndFocus(element) {
  * @param {object} props
  * @param {Array<{ id: number, slug: string, title: string, poster_url?: string, premiere_date?: string,
  *   ticket_sale_opens?: string | null, ticket_sale_open: boolean }>} props.movies Fra getComingSoon()
- * @param {React.ReactNode} [props.children] Det, der står mellem knappen og sektionen
  */
-export default function ComingSoonSection({ movies, children }) {
-  // Er sektionen foldet ud? Den starter lukket, så man kun ser knappen.
-  const [open, setOpen] = useState(false);
+export default function ComingSoonSection({ movies }) {
+  // Vises alle plakater, eller kun de første 10?
+  const [showAll, setShowAll] = useState(false);
 
   // Det valgte filter: "all" (Alle), en måned som "2026-11" eller "presale" (Forsalg åben)
   const [filter, setFilter] = useState("all");
 
-  // Referencer til overskriften og knappen, så vi kan rulle og flytte fokus hen til dem
+  // Overskriften, så vi kan rulle og flytte fokus hen til den, når plakaterne skjules igen
   const headingRef = useRef(null);
-  const openButtonRef = useRef(null);
 
-  // Hvor skal vi hen, når sektionen er foldet ud eller sammen? "section", "button" eller null.
-  // Vi kan først rulle ned til sektionen, når React har vist den – derfor sker det i useEffect nedenfor.
-  const scrollTarget = useRef(null);
+  // Er plakaterne lige blevet skjult? Vi kan først rulle, når React har vist den kortere liste – derfor useEffect.
+  const scrollToHeading = useRef(false);
 
-  // Når sektionen er foldet ud eller sammen: rul til sektionen eller knappen
   useEffect(() => {
-    if (!scrollTarget.current) {
+    if (!scrollToHeading.current) {
       return;
     }
-    scrollToAndFocus(scrollTarget.current === "section" ? headingRef.current : openButtonRef.current);
-    scrollTarget.current = null;
-  }, [open]);
+    scrollToAndFocus(headingRef.current);
+    scrollToHeading.current = false;
+  }, [showAll]);
 
-  // Knappen øverst: fold sektionen ud og rul ned til den.
-  // Er den allerede åben, ruller vi bare ned til den igen.
-  function showSection() {
-    if (open) {
-      scrollToAndFocus(headingRef.current);
-      return;
+  function toggleShowAll() {
+    if (showAll) {
+      scrollToHeading.current = true;
     }
-    scrollTarget.current = "section";
-    setOpen(true);
-  }
-
-  // "Skjul kommende film": fold sektionen sammen og rul op til knappen igen
-  function hideSection() {
-    scrollTarget.current = "button";
-    setOpen(false);
+    setShowAll(!showAll);
   }
 
   // Ét filter pr. måned, hvor en film har premiere – i samme rækkefølge som filmene.
@@ -112,73 +97,62 @@ export default function ComingSoonSection({ movies, children }) {
     return movie.premiere_date?.startsWith(filter);
   });
 
+  // De første 10, indtil man trykker "Se alle kommende film"
+  const visible = showAll ? shown : shown.slice(0, VISIBLE_COUNT);
+
   return (
-    <>
-      {/* 1. Knappen øverst. Den bliver stående, også når sektionen er åben (som i prototypen).
-          aria-expanded fortæller skærmlæsere, om sektionen er foldet ud, og aria-controls peger på den. */}
-      <div className={styles.closed}>
-        <Button
-          ref={openButtonRef}
-          variant="secondary"
-          className={styles.toggle}
-          aria-expanded={open}
-          aria-controls="kommende-film-sektion"
-          onClick={showSection}
-        >
-          Se alle kommende film
-        </Button>
+    <section className={styles.section} aria-labelledby="kommende-film">
+      {/* Figma "Kommende film – header" */}
+      <div className={styles.header}>
+        {/* tabIndex={-1} gør, at overskriften kan få fokus fra koden (se useEffect ovenfor),
+            uden at den bliver et ekstra stop, når man tabber gennem siden */}
+        <h2 id="kommende-film" ref={headingRef} tabIndex={-1} className={styles.title}>
+          Kommende film
+        </h2>
+        <p className={styles.intro}>Få besked, når billetsalget åbner – eller køb i forsalg allerede nu</p>
+
+        {/* Figma "Filtre": en streg før og efter knapperne.
+            role="group" samler knapperne, så skærmlæsere læser dem op som én gruppe.
+            Stregerne er kun pynt, så de skjules for skærmlæsere med aria-hidden. */}
+        <div className={styles.filters} role="group" aria-label="Vis kommende film">
+          <span className={styles.divider} aria-hidden="true" />
+          {filters.map((item) => (
+            // Chip er Figmas "Option button". selected giver den blå kant på det valgte filter.
+            <Chip key={item.key} selected={filter === item.key} onClick={() => setFilter(item.key)}>
+              {item.label}
+            </Chip>
+          ))}
+          <span className={styles.divider} aria-hidden="true" />
+        </div>
       </div>
 
-      {/* 2. Det, der står imellem – på forsiden er det filtreringen og filmene, der kører nu */}
-      {children}
-
-      {/* 3. Sektionen folder sig ud her, under filmene, der kører nu */}
-      {open && (
-        <section id="kommende-film-sektion" className={styles.section} aria-labelledby="kommende-film">
-          {/* Figma "Kommende film – header" */}
-          <div className={styles.header}>
-            {/* tabIndex={-1} gør, at overskriften kan få fokus fra koden (se useEffect ovenfor),
-                uden at den bliver et ekstra stop, når man tabber gennem siden */}
-            <h2 id="kommende-film" ref={headingRef} tabIndex={-1} className={styles.title}>
-              Kommende film
-            </h2>
-            <p className={styles.intro}>Få besked, når billetsalget åbner – eller køb i forsalg allerede nu</p>
-
-            {/* Figma "Filtre": en streg før og efter knapperne.
-                role="group" samler knapperne, så skærmlæsere læser dem op som én gruppe.
-                Stregerne er kun pynt, så de skjules for skærmlæsere med aria-hidden. */}
-            <div className={styles.filters} role="group" aria-label="Vis kommende film">
-              <span className={styles.divider} aria-hidden="true" />
-              {filters.map((item) => (
-                // Chip er Figmas "Option button". selected giver den blå kant på det valgte filter.
-                <Chip key={item.key} selected={filter === item.key} onClick={() => setFilter(item.key)}>
-                  {item.label}
-                </Chip>
-              ))}
-              <span className={styles.divider} aria-hidden="true" />
-            </div>
-          </div>
-
-          {/* Figma "Filmgitter": en plakat pr. film. Er der ingen film i filteret, vises en kort tekst i stedet. */}
-          {shown.length > 0 ? (
-            <ul className={styles.grid}>
-              {shown.map((movie) => (
-                <li key={movie.id}>
-                  {/* variant="coming-soon" er Figmas "Kommer snart"-plakat (se MovieCard.js) */}
-                  <MovieCard movie={movie} variant="coming-soon" />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className={styles.empty}>Der er ingen kommende film her lige nu.</p>
-          )}
-
-          {/* Folder sektionen sammen igen og ruller op til knappen */}
-          <Button variant="secondary" className={styles.toggle} onClick={hideSection}>
-            Skjul kommende film
-          </Button>
-        </section>
+      {/* Figma "Filmgitter": en plakat pr. film. Er der ingen film i filteret, vises en kort tekst i stedet. */}
+      {visible.length > 0 ? (
+        <ul id="kommende-film-liste" className={styles.grid}>
+          {visible.map((movie) => (
+            <li key={movie.id}>
+              {/* variant="coming-soon" er Figmas "Kommer snart"-plakat (se MovieCard.js) */}
+              <MovieCard movie={movie} variant="coming-soon" />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className={styles.empty}>Der er ingen kommende film her lige nu.</p>
       )}
-    </>
+
+      {/* Figma "Se mere": kun når der er flere end 10 film i filteret.
+          aria-expanded fortæller skærmlæsere, om alle plakater vises, og aria-controls peger på listen. */}
+      {shown.length > VISIBLE_COUNT && (
+        <Button
+          variant="secondary"
+          className={styles.toggle}
+          aria-expanded={showAll}
+          aria-controls="kommende-film-liste"
+          onClick={toggleShowAll}
+        >
+          {showAll ? "Skjul kommende film" : "Se alle kommende film"}
+        </Button>
+      )}
+    </section>
   );
 }

@@ -1,16 +1,12 @@
 # Kommende film
 
-Alle kommende film på forsiden (`/film`). Lige under de fremhævede film står knappen **"Se alle kommende film"**. Klikker man, folder sektionen sig ud **længere nede på siden, under filmene, der kører nu**, og siden ruller ned til den (som i prototypen "Forside – samlet", node `1856:79051`). Sektionen viser alle kommende film i et gitter, som kan filtreres efter måned eller forsalg. **"Skjul kommende film"** folder den sammen igen og ruller op til knappen.
-
-Knappen og sektionen er samme komponent, men står to steder. Det, der står imellem dem (filtreringen og filmene, der kører nu), får komponenten som `children`:
+Alle kommende film på forsiden (`/film`). Sektionen står altid fremme **under filmene, der kører nu**, med overskrift, filtre og de første **10 plakater** (2 rækker á 5 som i Figma). Filmene kan filtreres efter måned eller forsalg. Er der flere end 10 film i filteret, står **"Se alle kommende film"** nederst og viser resten. **"Skjul kommende film"** viser kun de første 10 igen og ruller op til overskriften.
 
 ```jsx
-<ComingSoonSection movies={comingSoon}>
-  <MovieFilter … />
-</ComingSoonSection>
+<ComingSoonSection movies={comingSoon} />
 ```
 
-**Figma:** "Kommende film – udfold" (node `2221:15159`). Lukket tilstand: `2848:14500`. Åben tilstand: `2849:14585`.
+**Figma:** "Kommende film – udfold" (node `2521:34621`) i "Forside – samlet (uden animationer)" (node `1856:79051`).
 
 ## Overblik
 
@@ -20,12 +16,12 @@ Supabase (movies)
    ▼
 lib/data/movies.js  getComingSoon()      ← fjerner dubletter, tilføjer plakat og billetsalg
    │                    ▲
-   │                    └─ lib/data/ticket-sale.js  (datoer for billetsalg)
+   │                    └─ lib/data/ticket-sale.js  (billetsalg: 7 dage før premieren)
    ▼
 app/(site)/film/page.js                  ← henter data og sender dem videre som props
    │
    ▼
-components/features/ComingSoonSection.js ← folder ud/ind og filtrerer
+components/features/ComingSoonSection.js ← filtrerer og viser 10 eller alle
    ├─ components/ui/Button.js            ("Se alle" / "Skjul")
    ├─ components/ui/Chip.js              (filtrene – Figma "Option button")
    └─ components/features/MovieCard.js   (plakaterne – variant "coming-soon")
@@ -43,7 +39,7 @@ Henter alle film med `status = 'coming_soon'`, sorteret efter premiere. Før fil
   - `ticket_sale_open` er `true`, hvis man kan købe billet nu. Den bruges af filteret "Forsalg åben".
 
 ### `ticket-sale.js`
-Databasen har ingen kolonne til, hvornår billetsalget åbner, så datoerne står her. Film, der ikke står på listen, har åbent billetsalg. Listen bruges både af det store "Kommer snart"-kort øverst (`featured.js`) og af denne sektion.
+Databasen har ingen kolonne til, hvornår billetsalget åbner. `getTicketSaleOpens(premiereDate)` regner det ud: **7 dage før premieren** (`DAYS_BEFORE_PREMIERE`). Reglen bruges af det store "Kommer snart"-kort øverst (`featured.js`), af denne sektion og af filmsiden.
 
 ## 2. Formatering – `lib/format.js`
 
@@ -84,11 +80,12 @@ En **client component** (`"use client"`), fordi den skal kunne huske, hvad bruge
 
 | State | Værdier | Hvad den styrer |
 |---|---|---|
-| `open` | `true` / `false` | Lukket: kun knappen. Åben: sektionen med overskrift, filtre, gitter og "Skjul"-knap står også under `children`. Knappen bliver stående. |
+| `showAll` | `true` / `false` | `false`: de første 10 plakater (`VISIBLE_COUNT`). `true`: alle plakater i filteret. |
 | `filter` | `"all"`, `"2026-11"` …, `"presale"` | Hvilke film der vises i gitteret |
 
 - **Filtrene** laves ud fra dataene: "Alle", én knap pr. måned med en premiere og "Forsalg åben". Kommer der film i en ny måned, kommer der automatisk en ny knap.
-- **Rulning og tilgængelighed:** når sektionen foldes ud, ruller siden ned til overskriften "Kommende film", og fokus flytter med. Når den foldes sammen, ruller siden op til knappen igen. Trykker man på knappen, mens sektionen er åben, ruller siden bare ned til den. Bruger man "mindre bevægelse" i styresystemet, hopper siden i stedet for at glide. Knappen har `aria-expanded` og `aria-controls`, og filtrene er samlet i en `role="group"`.
+- **Knappen** vises kun, når der er flere end 10 film i det valgte filter.
+- **Rulning og tilgængelighed:** når man trykker "Skjul kommende film", ruller siden op til overskriften "Kommende film", og fokus flytter med, så man ikke står langt nede på siden. Bruger man "mindre bevægelse" i styresystemet, hopper siden i stedet for at glide. Knappen har `aria-expanded` og `aria-controls`, og filtrene er samlet i en `role="group"`.
 
 ## 5. Siden – `app/(site)/film/page.js`
 
@@ -122,7 +119,8 @@ Derfor står der 5 plakater pr. række på desktop som i Figma, og der bliver au
 
 | Jeg vil … | Ret her |
 |---|---|
-| sætte en dato for billetsalg | `lib/data/ticket-sale.js` |
+| ændre hvor mange dage før premieren billetsalget åbner | `lib/data/ticket-sale.js` |
+| ændre hvor mange plakater der vises før "Se alle" | `VISIBLE_COUNT` i `components/features/ComingSoonSection.js` |
 | give en film uden plakat et billede | `POSTER_FALLBACKS` i `lib/data/movies.js` |
 | ændre teksterne i sektionen | `components/features/ComingSoonSection.js` |
 | ændre plakatens udseende | `components/features/MovieCard.module.css` |

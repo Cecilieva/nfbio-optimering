@@ -1,17 +1,11 @@
-/* Knappen "Se alle kommende film": 16px her plus 16px under kortet (.hero) giver 32px som i prototypen.
-   Luften under knappen kommer fra filtreringen (.nowPlaying på siden). */
-.closed {
-  padding-top: var(--space-4);
-}
-
-/* Knapperne er lige så brede som indholdet (Figma "Se mere") */
+/* Knappen er lige så bred som indholdet (Figma "Se mere") */
 .toggle {
   width: 100%;
 }
 
 /* Figma "Kommende film – sektion": 8px/24px inde i headeren og 24px mellem header, gitter og knap.
    Den står under filmene, der kører nu – de 96px imellem kommer fra luften under filtreringen (som i prototypen).
-   96px i bunden, så der er samme luft ned til footeren. */
+   96px i bunden ned til finalen. */
 .section {
   display: flex;
   flex-direction: column;
@@ -79,11 +73,6 @@
 
 /* Mobil: to plakater pr. række og mindre luft */
 @media (max-width: 48rem) {
-  /* 12px her plus 12px under kortet, og 48px ned til footeren */
-  .closed {
-    padding-top: var(--space-3);
-  }
-
   .section {
     padding-bottom: var(--space-12);
   }
