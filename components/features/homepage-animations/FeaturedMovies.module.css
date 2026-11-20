@@ -9,12 +9,17 @@
   align-items: center;
   gap: var(--space-featured-gap);
   padding: var(--space-4) var(--layout-page-margin);
+  /* Sektionen ligger oven på hero'en. Selve fladen må ikke fange klik, ellers kan man ikke trykke på
+     knapperne i hero'ens kopi af kort 1, mens det rigtige kort endnu er skjult (se HeroScroll). */
+  pointer-events: none;
 }
 
-/* Kortene vokser fra toppen, så de ikke rykker op og ned, mens de vokser */
+/* Kortene vokser fra toppen, så de ikke rykker op og ned, mens de vokser.
+   Kortene selv fanger klik igen. Et skjult kort (visibility: hidden) fanger ingen klik. */
 .card {
   width: 100%;
   transform-origin: 50% 0%;
+  pointer-events: auto;
 }
 
 /* Med bevægelse: sektionen trækkes en skærmhøjde op under den pinnede hero, og kort 1 er skjult,
