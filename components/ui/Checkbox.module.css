@@ -32,3 +32,18 @@
   outline: var(--focus-ring-width) solid var(--color-text);
   outline-offset: var(--space-1);
 }
+
+/* Rød kant, når den mangler et flueben */
+.input[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+/* Kun for skærmlæsere (display: none ville også skjule den for dem) */
+.hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
