@@ -58,6 +58,14 @@
   background: var(--color-divider);
 }
 
+/* "Udfyld de markerede felter." øverst i formularen */
+.error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
 /* "Brug mindst 8 tegn …" */
 .hint {
   margin: 0;

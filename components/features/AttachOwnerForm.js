@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import Button from "@/components/ui/Button";
+import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import Overlay from "@/components/ui/Overlay";
 import TextField from "@/components/ui/TextField";
 import { attachBookingOwner } from "@/lib/actions/booking";
@@ -21,6 +22,8 @@ export default function AttachOwnerForm({ bookingId, asGuest = false, email, sea
   return (
     <form action={formAction} className={styles.form}>
       <input type="hidden" name="booking_id" value={bookingId} />
+      {/* "Udfyld de markerede felter.", hvis et felt mangler (fx e-mailen) */}
+      <InvalidFieldsMessage className={styles.error} />
       {asGuest && (
         <>
           {/* autoFocus: felterne vises først, når man har valgt "Fortsæt som gæst" - så står man klar i det første */}

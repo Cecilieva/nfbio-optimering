@@ -1,0 +1,80 @@
+/* Siden, billedet og overskriften kommer fra AuthScreen. Her er kun formularens egne styles. */
+
+/* Den samlede fejlbesked øverst og trinnet under med 16px imellem (skjulte elementer tæller ikke med) */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Figma "Felter": felterne, samtykke og knappen med 16px imellem */
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Det trin, man ikke er på (display: flex ovenfor ville ellers vise det alligevel) */
+.step[hidden] {
+  display: none;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+}
+
+/* Figma "Navn", "Fødselsdag" og "Telefon og postnummer": felter ved siden af hinanden med 16px imellem */
+.row {
+  display: flex;
+  gap: var(--space-4);
+}
+
+/* Felterne i en række deler bredden ligeligt */
+.grow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Figma "Samtykke": de to checkbokse med 8px imellem */
+.consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Teksten kan gå over flere linjer, så boksen står øverst ved første linje som i Figma */
+.consentItem {
+  align-items: flex-start;
+}
+
+/* "medlemsvilkår" og "Læs mere": blå som links (text/Hover) */
+.link {
+  color: var(--color-accent);
+}
+
+/* Figma "Køn": teksten over knapperne med 8px imellem */
+.gender {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* XS/Sekundær/Regular i text/input (muted) – Figma viser "Køn" dæmpet, ikke som feltlabels */
+.genderLabel {
+  color: var(--color-text-input-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "Køn-valg": 8px mellem knapperne. Går på to linjer, hvis der ikke er plads. */
+.genderOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Knapperne fylder hele formularens bredde */
+.fullWidth {
+  width: 100%;
+}

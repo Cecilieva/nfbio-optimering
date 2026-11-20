@@ -156,7 +156,7 @@
   --color-background: var(--figma-bg-primary);
   --color-background-secondary: var(--figma-bg-secondary); /* Fx Log ind-siden */
   --color-fade: var(--figma-bg-secondary); /* Farven billedet på Log ind toner ud i */
-  --color-divider: var(--figma-border-standard); /* Stregerne ved "eller" på Log ind */
+  --color-fade-strong: color-mix(in srgb, var(--color-fade) 85%, transparent); /* Toning/85% i fade'en på Log ind */
   --color-text-subtle: var(--figma-text-secondary); /* Ordet "eller" på Log ind */
   --color-surface: var(--figma-bg-blue); /* Kort og bokse */
   --color-surface-raised: var(--figma-bg-blue); /* Modal og overlay */
@@ -395,9 +395,17 @@
   --size-checkbox: 1.125rem; /* 18px - boksen i en checkbox */
   --size-checkbox-icon: 1rem; /* 16px - fluebenet i boksen */
   --size-form-width: 32rem; /* 512px - formularerne på pladsholdersiderne (opret profil m.m.) */
-  --size-auth-form-width: 29.167rem; /* 467px - formularen på Log ind */
-  --size-auth-image-height: 57.938rem; /* 927px - billedet på Log ind */
-  --space-auth-top: 8.125rem; /* 130px - fra headeren ned til formularen på Log ind */
+  --size-auth-fade-right: 22.5rem; /* 360px - Figma "Toning – højre" på billedet på Log ind */
+  --size-auth-fade-top: 18.75rem; /* 300px - Figma "Toning – top" */
+  --size-auth-fade-bottom: 65%; /* 602px af 928px - Figma "Toning/skygge-bund" */
+  /* 404-siden (Figma "404 side", node 1580:35416) */
+  --size-not-found-illustration-width: 21.25rem; /* 340px - illustrationen */
+  --size-not-found-title-width: 37.5rem; /* 600px - "Vi kunne ikke finde …" */
+  --size-not-found-text-width: 32.5rem; /* 520px - teksten under overskriften */
+  --size-not-found-button-width: 11rem; /* 176px - de to knapper */
+  --space-not-found-top: 7.5rem; /* 120px - luft over indholdet */
+  --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
+  --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   /* Figma "Projektor - standard": Start -> Tændt -> Drift */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */

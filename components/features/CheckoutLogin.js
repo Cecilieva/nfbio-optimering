@@ -3,8 +3,9 @@
 import { useActionState, useState } from "react";
 import Link from "next/link";
 import AttachOwnerForm from "@/components/features/AttachOwnerForm";
-import SignupForm from "@/components/features/SignupForm";
+import CheckoutSignupForm from "@/components/features/CheckoutSignupForm";
 import Button from "@/components/ui/Button";
+import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import TextField from "@/components/ui/TextField";
 import { signInOnPage } from "@/lib/actions/auth";
 import styles from "./CheckoutLogin.module.css";
@@ -41,7 +42,7 @@ export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode
         intro="Bestil hurtigere, anmeld film og få invitationer til forpremierer og events."
         spacious
       >
-        <SignupForm next={next} />
+        <CheckoutSignupForm next={next} />
       </Card>
     );
   }
@@ -74,6 +75,8 @@ export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode
       <form action={loginAction} className={styles.form}>
         {/* Efter login sendes man tilbage til denne side */}
         <input type="hidden" name="next" value={next} />
+        {/* "Udfyld de markerede felter.", hvis et felt mangler */}
+        <InvalidFieldsMessage className={styles.error} />
         <TextField
           label="E-mail"
           name="email"

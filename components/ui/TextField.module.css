@@ -1,12 +1,13 @@
-/* Figma "Inputfelt": label over feltet og 6px imellem */
+/* Figma "Inputfelt": label over feltet og 8px imellem */
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1-5);
+  gap: var(--space-2);
 }
 
+/* XS/Sekundær/Regular i text/Primær */
 .label {
-  color: var(--color-text-label);
+  color: var(--color-text-primary);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-snug);
 }
@@ -25,10 +26,11 @@
 .input {
   width: 100%;
   height: var(--size-button-height);
-  padding: var(--space-3) var(--space-3-5);
-  border: var(--border-width) solid var(--color-border);
+  padding: 0 var(--space-4);
+  /* Figma "Felt": samme farver som Option button */
+  border: var(--border-width) solid var(--color-option-border);
   border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   color: var(--color-text-primary);
   font: inherit;
   font-size: var(--font-size-xs);
@@ -36,23 +38,43 @@
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
 
+/* text/input (muted) */
 .input::placeholder {
-  color: var(--color-text-label);
+  color: var(--color-text-input-muted);
 }
 
 .input:hover {
   border-color: var(--color-text-muted);
 }
 
-/* Synlig ramme, når man står i feltet med tastaturet */
+/* Når man står i feltet, bliver kanten accent-blå (Option button/Border aktiv) – samme blå som et valgt filter.
+   Outlinen lægger en ekstra blå streg uden om kanten, så rammen er 2px og nem at se. */
 .input:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-text);
-  outline-offset: var(--space-1);
+  border-color: var(--color-option-border-active);
+  outline: var(--border-width) solid var(--color-option-border-active);
+  outline-offset: 0;
+}
+
+/* Autoudfyld: browseren giver feltet sin egen baggrund og tekstfarve, som ikke kan slås fra.
+   En indvendig skygge i feltets farve dækker baggrunden, og teksten får vores farve igen.
+   Lang transition på background-color for browsere, der ellers blinker med deres egen farve. */
+.input:autofill {
+  -webkit-text-fill-color: var(--color-text-primary);
+  caret-color: var(--color-text-primary);
+  box-shadow: inset 0 0 0 100vmax var(--color-option-background);
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    background-color 600000s 0s;
 }
 
 /* Rød kant, når feltet har en fejl */
 .input[aria-invalid="true"] {
   border-color: var(--color-danger);
+}
+
+/* … også når man står i feltet, så fejlen ikke bliver skjult af den blå ramme */
+.input[aria-invalid="true"]:focus-visible {
+  outline-color: var(--color-danger);
 }
 
 .error {

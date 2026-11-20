@@ -41,7 +41,8 @@ app/
     [bookingId]/login/    Log ind / gæst / opret profil
     [bookingId]/betaling/ Betaling (+ fejl/ til fejlsiden)
     [bookingId]/billet/   Billet
-  (site)/login/ signup/ profile/ Konto
+  (site)/profile/         Konto
+  (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
@@ -106,7 +107,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Sædevalg - vælg sæder | 214:4067 (Info-boks: 838:6543, Bundbar: 843:6569) | `/bestil/saeder/[showtimeId]` | SeatPicker (trin 2 af 2 på siden), SeatMap (salen - tegnes med Seat som HallMap), SeatView ("Udsigt fra sædet": lærredet i perspektiv, Række/Sæder, pris og "Til betaling"), BottomBar (valgte sæder + Countdown "Dine pladser holdes i"), Button |
 | Overlay: Vi popper dine pladser | | `/bestil/[bookingId]/login` | Overlay (i AttachOwnerForm - vises efter log ind eller "Fortsæt som gæst") |
 | Overlay: Dine popkorn blev brændt | | `/bestil/saeder/[showtimeId]` | Overlay, Button |
-| Log ind / gæst / opret profil ("Dine oplysninger") | 214:5116 (Gæstebestilling: 1519:35087, Opret profil: 1894:29458, Ordreoversigt: 214:3695) | `/bestil/[bookingId]/login` | StepHeader, OrderSummary ("Din ordre"), CheckoutLogin (log ind; `?gaest=1` giver "Gæstebestilling", `?opret=1` giver "Opret en BioPlus-profil" med SignupForm, Chip og Checkbox), AttachOwnerForm, TextField, Button, BottomBar + Countdown. Billettyperne (fx "2 × Voksen") gemmes kun i booking-cookien (`tickets`) |
+| Log ind / gæst / opret profil ("Dine oplysninger") | 214:5116 (Gæstebestilling: 1519:35087, Opret profil: 1894:29458, Ordreoversigt: 214:3695) | `/bestil/[bookingId]/login` | StepHeader, OrderSummary ("Din ordre"), CheckoutLogin (log ind; `?gaest=1` giver "Gæstebestilling", `?opret=1` giver "Opret en BioPlus-profil" med CheckoutSignupForm, Chip og Checkbox), AttachOwnerForm, TextField, Button, BottomBar + Countdown. Billettyperne (fx "2 × Voksen") gemmes kun i booking-cookien (`tickets`) |
 | Betaling | | `/bestil/[bookingId]/betaling` | StepHeader, Countdown, OrderSummary, PaymentForm, Radio, Button |
 | Betalingsfejl (inline) | | `/bestil/[bookingId]/betaling` | PaymentForm |
 | Betalingsfejl (side) | | `/bestil/[bookingId]/betaling/fejl` | Button |
