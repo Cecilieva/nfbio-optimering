@@ -14,8 +14,8 @@ const FORMATS = ["2D", "3D", "4D", "IMAX", "70MM"];
 // "Ekstra filtrering": de punkter, databasen har data til (movies.language, fx "Engelsk tale")
 const LANGUAGES = ["Dansk tale", "Engelsk tale"];
 
-// Der vises én række med 5 film ad gangen. "Se flere film" viser 5 mere, "Se færre film" går tilbage til 5.
-const PAGE_SIZE = 5;
+// Der vises altid mindst 10 film (2 rækker á 5). "Se flere film" viser 10 mere ad gangen.
+const PAGE_SIZE = 10;
 
 // Alle filtre står på "Alle …", når man kommer ind på siden, og når man trykker "Nulstil filter"
 const NO_FILTERS = { cinema: "all", day: "all", genre: "all", extra: "all", format: "all" };
@@ -41,13 +41,13 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   // Hvilket felt har sin dropdown åben? Kun ét ad gangen ("Aktivt felt" i Figma), eller null
   const [openField, setOpenField] = useState(null);
 
-  // Hvor mange film der vises – "Se flere film" lægger PAGE_SIZE til, "Se færre film" sætter den tilbage
+  // Hvor mange film der vises – "Se flere film" lægger PAGE_SIZE til
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Listen med film – søgeknappen hopper ned til den
   const resultsRef = useRef(null);
 
-  // Sæt ét filter og behold de andre. Listen starter forfra med 5 film, når filtrene ændres.
+  // Sæt ét filter og behold de andre. Listen starter forfra med 10 film, når filtrene ændres.
   function setFilter(key, value) {
     setFilters((current) => ({ ...current, [key]: value }));
     setVisibleCount(PAGE_SIZE);
@@ -123,16 +123,8 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   // Kun de første film vises, indtil man trykker "Se flere film"
   const visible = shown.slice(0, visibleCount);
 
-  // Er der flere film, end der vises? Og har man trykket "Se flere film"?
+  // Er der flere film, end der vises?
   const hasMore = shown.length > visible.length;
-  const hasExpanded = visibleCount > PAGE_SIZE && shown.length > PAGE_SIZE;
-
-  // "Se færre film": tilbage til den første række.
-  // Listen bliver kortere, så vi ruller op til starten af filmene, så man ikke står langt nede på siden.
-  function showFewer() {
-    setVisibleCount(PAGE_SIZE);
-    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }
 
   // Formatet i hjørnet af kortet: det valgte format – ellers formatet på filmens første passende spilletid
   function formatFor(movie) {
@@ -242,25 +234,15 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
           <p className={styles.empty}>Ingen film passer til dine filtre. Prøv at nulstille filteret.</p>
         )}
 
-        {/* Figma "Se mere". "Se flere film" vises, når der er flere film, end der står på siden.
-            "Se færre film" vises, når man har trykket "Se flere film". Er der brug for begge, står de side om side. */}
-        {(hasMore || hasExpanded) && (
-          <div className={styles.moreButtons}>
-            {hasExpanded && (
-              <Button variant="secondary" className={styles.more} onClick={showFewer}>
-                Se færre film
-              </Button>
-            )}
-            {hasMore && (
-              <Button
-                variant="secondary"
-                className={styles.more}
-                onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-              >
-                Se flere film
-              </Button>
-            )}
-          </div>
+        {/* Figma "Se mere": vises kun, når der er flere film, end der står på siden. Man kan kun se flere – ikke færre. */}
+        {hasMore && (
+          <Button
+            variant="secondary"
+            className={styles.more}
+            onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+          >
+            Se flere film
+          </Button>
         )}
       </div>
     </section>

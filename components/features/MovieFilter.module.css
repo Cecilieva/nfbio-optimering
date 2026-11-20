@@ -152,14 +152,9 @@
   list-style: none;
 }
 
-/* "Se flere film" og "Se færre film": fylder gitterets bredde – deler den, hvis begge vises */
-.moreButtons {
-  display: flex;
-  gap: var(--space-4);
-}
-
+/* "Se flere film": fylder gitterets bredde */
 .more {
-  flex: 1;
+  width: 100%;
 }
 
 .empty {
