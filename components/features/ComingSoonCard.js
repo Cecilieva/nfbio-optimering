@@ -38,13 +38,16 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
 
   // Figma "Nøgletal" øverst til højre. Har filmen haft premiere, står der "I biografen nu" i nedtællingen,
   // så alle kort har de samme tre tal.
+  // Er billetsalget åbent? Det åbner 7 dage før premieren (lib/data/ticket-sale.js)
+  const saleOpen = isTicketSaleOpen(movie.ticket_sale_opens);
+
   const stats = [
     { label: "Premiere", value: movie.premiere_date && formatPremiereShort(movie.premiere_date) },
     {
       label: "Nedtælling",
       value: movie.premiere_date && (formatCountdown(movie.premiere_date) ?? "I biografen nu"),
     },
-    { label: "Billetsalg", value: formatTicketSale(movie.ticket_sale_opens) },
+    { label: "Billetsalg", value: saleOpen ? "Åbent" : `Åbner ${formatPremiereShort(movie.ticket_sale_opens)}` },
   ].filter((stat) => stat.value);
 
   return (
@@ -62,9 +65,9 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
     >
       {/* Figma: "Følg film" til venstre, nøgletal til højre */}
       <div className={styles.top}>
-        <div data-reveal>
-          <FollowButton title={movie.title} />
-        </div>
+        {/* "Følg film" giver besked, når billetsalget åbner – så den skjules, når salget allerede er åbent.
+            Boksen bliver stående, så nøgletallene stadig står i højre side. */}
+        <div data-reveal>{!saleOpen && <FollowButton title={movie.title} />}</div>
 
         {stats.length > 0 && (
           <dl className={styles.stats}>
@@ -118,7 +121,9 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
         <div className={styles.actions} data-reveal>
           {/* Altid med, så alle kort har de samme knapper. Uden trailer viser vinduet en besked i stedet. */}
           <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
-          <Button href={`/film/${movie.slug}`}>Se filmtider</Button>
+          {/* Som plakaterne under "Kommende film": "Se spilletider", når billetsalget er åbent, ellers "Læs mere".
+              Begge fører til toppen af filmsiden. */}
+          <Button href={`/film/${movie.slug}`}>{saleOpen ? "Se spilletider" : "Læs mere"}</Button>
         </div>
       </div>
     </ParallaxFrame>
@@ -141,10 +146,7 @@ function withCountingNumber(text) {
   );
 }
 
-// "Åbent", eller "Åbner 27.11", så længe billetsalget ikke er åbnet endnu
-function formatTicketSale(opens) {
-  if (opens && opens > formatDayKey(new Date())) {
-    return `Åbner ${formatPremiereShort(opens)}`;
-  }
-  return "Åbent";
+// Uden dato er billetsalget åbent. Ellers er det åbent fra og med datoen, fx "2026-11-24".
+function isTicketSaleOpen(opens) {
+  return !opens || opens <= formatDayKey(new Date());
 }

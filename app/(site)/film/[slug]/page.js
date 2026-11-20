@@ -1,7 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import MovieDetails from "@/components/features/MovieDetails";
 import MovieHero from "@/components/features/MovieHero";
-import ScrollToShowtimes from "@/components/features/showtimes/ScrollToShowtimes";
 import ShowtimeList from "@/components/features/showtimes/ShowtimeList";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getMovieBySlug } from "@/lib/data/movies";
@@ -51,8 +50,6 @@ export default async function MoviePage({ params }) {
       <div className={styles.content}>
         <ShowtimeList movie={movie} showtimes={showtimes} halls={halls} />
       </div>
-
-      <ScrollToShowtimes />
     </main>
   );
 }

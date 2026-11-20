@@ -6,38 +6,9 @@
   width: 100%;
 }
 
-/* "Tilbage" - samme udseende som link og som knap */
+/* "Tilbage" (BackLink): står i venstre side i stedet for at fylde hele bredden */
 .back {
-  display: inline-flex;
-  align-items: center;
   align-self: flex-start;
-  gap: var(--space-2);
-  padding: var(--space-2) 0;
-  border: 0;
-  background: none;
-  color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-snug);
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity var(--duration-fast) var(--easing-standard);
-}
-
-.back:hover {
-  opacity: var(--opacity-hover);
-}
-
-.back:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-cta);
-  outline-offset: var(--focus-ring-width);
-}
-
-/* Samme pil som i "Se salen" (chevron-down.svg), drejet så den peger til venstre */
-.backIcon {
-  width: var(--size-icon-small);
-  height: auto;
-  transform: rotate(90deg);
 }
 
 /* Trinbjælken: lige brede streger med 8px imellem */

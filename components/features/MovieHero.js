@@ -1,10 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
 import CaseLabel from "@/components/features/CaseLabel";
 import Countdown from "@/components/features/Countdown";
 import Flashlight from "@/components/features/Flashlight";
 import MovieInfoBar from "@/components/features/MovieInfoBar";
 import MovieTitle from "@/components/features/MovieTitle";
+import BackLink from "@/components/ui/BackLink";
 import styles from "./MovieHero.module.css";
 
 /**
@@ -35,10 +34,8 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider" }) {
 
       <div className={styles.top}>
         <div className={styles.topLeft}>
-          <Link href="/film" className={styles.back}>
-            <Image src="/icons/chevron-down.svg" alt="" width={12} height={9} className={styles.backIcon} />
-            Tilbage
-          </Link>
+          {/* Figma "Knap", Type=Tilbage */}
+          <BackLink href="/film" />
           {/* fx 1 → "0001" */}
           {caseGenre && <CaseLabel text={`Sag nr. ${String(movie.id).padStart(4, "0")} · ${caseGenre}`} />}
         </div>

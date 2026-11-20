@@ -111,18 +111,15 @@ export default function ComingSoonSection({ movies }) {
         </h2>
         <p className={styles.intro}>Få besked, når billetsalget åbner – eller køb i forsalg allerede nu</p>
 
-        {/* Figma "Filtre": en streg før og efter knapperne.
-            role="group" samler knapperne, så skærmlæsere læser dem op som én gruppe.
-            Stregerne er kun pynt, så de skjules for skærmlæsere med aria-hidden. */}
+        {/* Figma "Filtre": knapperne med 8px imellem.
+            role="group" samler knapperne, så skærmlæsere læser dem op som én gruppe. */}
         <div className={styles.filters} role="group" aria-label="Vis kommende film">
-          <span className={styles.divider} aria-hidden="true" />
           {filters.map((item) => (
             // Chip er Figmas "Option button". selected giver den blå kant på det valgte filter.
             <Chip key={item.key} selected={filter === item.key} onClick={() => setFilter(item.key)}>
               {item.label}
             </Chip>
           ))}
-          <span className={styles.divider} aria-hidden="true" />
         </div>
       </div>
 
@@ -140,11 +137,12 @@ export default function ComingSoonSection({ movies }) {
         <p className={styles.empty}>Der er ingen kommende film her lige nu.</p>
       )}
 
-      {/* Figma "Se mere": kun når der er flere end 10 film i filteret.
+      {/* Figma "Se mere": kun når der er flere end 10 film i filteret. Samme knap som "Se flere film"
+          (Button "more", Figma "Knap" Type=Se flere).
           aria-expanded fortæller skærmlæsere, om alle plakater vises, og aria-controls peger på listen. */}
       {shown.length > VISIBLE_COUNT && (
         <Button
-          variant="secondary"
+          variant="more"
           className={styles.toggle}
           aria-expanded={showAll}
           aria-controls="kommende-film-liste"

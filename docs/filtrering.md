@@ -39,7 +39,7 @@ components/features/MovieFilter.js                 ← Figma "Filtrering": huske
 - **Dato:** "Alle datoer" + hver dag med mindst én spilletid: "I dag", "I morgen", "Fredag 20. nov" …
 - **Genre:** "Alle genrer" + alle genrer, filmene har, i alfabetisk rækkefølge.
 - **Ekstra filtrering:** "Alle forestillinger", "Dansk tale", "Engelsk tale" og "Andre tale" (alle andre sprog).
-- **Format:** står fast som i Figma: Alle formater, 2D, 3D, 4D, IMAX og 70MM.
+- **Format:** står fast som i Figma: Alle formater, 2D, 3D, 4DX og 70MM. Nordisk Film har ikke IMAX.
 
 **En film vises, når:**
 1. den har genren og sproget, der er valgt, og
@@ -57,7 +57,7 @@ Under filtrene står filmene som plakater i et gitter (Figma "Program", node `28
 - **Hover – Figma "se spilletider" (node `455:11441`):** holder man musen over et kort (eller står på det med tastaturet), bliver kortet mørkere, teksten skjules, og en blå knap **"Se spilletider"** vises i midten. Den bruger de samme styles som `Button` med `variant="primary"`, men er en `span`, fordi hele kortet allerede er et link til filmsiden.
 - **Formatet i hjørnet** er det valgte format, eller formatet på filmens første spilletid, der passer til filtrene.
 - **Alderen** skrives kort med `formatAgeShort()` i `lib/format.js`: "15 år" → "15+", "Tilladt for alle" → "Alle".
-- **"Se flere film"** (`Button variant="secondary"`): der vises 5 film ad gangen (én række). Knappen vises kun, når der er flere film, og den viser 5 mere. Har man trykket på den, kommer **"Se færre film"**, som går tilbage til de første 5. Er der brug for begge knapper, står de side om side. Listen starter forfra, når man ændrer et filter.
+- **"Se flere film"** (`Button variant="more"`, Figma "Knap" Type=Se flere – mørk kant `border/Standard`): der vises altid mindst 10 film (2 rækker á 5, `PAGE_SIZE`). Knappen vises kun, når der er flere film, og den viser 10 mere ad gangen. Man kan kun se flere film, ikke færre. Listen starter forfra med 10, når man ændrer et filter.
 
 ## Komponenterne
 
@@ -84,12 +84,13 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
   - `--color-text-input-muted` → `text/input (muted)`
   - `--border-width-active` → den 1,5px blå kant på et valgt felt
   - `--shadow-dropdown` → skyggen under dropdown-listen
-- Text styles: `L/Sekundær/Bold` (titlen), `S/Sekundær/Regular` (værdierne og punkterne) og `XS/Sekundær/Regular` (labels, format-knapper og "Nulstil filter").
+- Text styles: `L/Sekundær/Bold` (titlen), `S/Sekundær/Regular` (værdierne, punkterne og "Nulstil filter") og `XS/Sekundær/Regular` (labels og format-knapper).
+- **Hover:** format-knapperne får blå kant (`Option button/Border aktiv`, Figma "Knap" Type=Chip, Tilstand=Hover). Felterne får `Option button/Aktiv baggrund` (som "Dropdown valg", Hover). Søgeknappen får `Buttons/Primær hover`, og "Nulstil filter" bliver blå (`text/Hover`). Format-knapperne har 16px runde hjørner (`Border-radius/Medium`) og ingen streger før og efter.
 - **Mobil** (under 48rem): felterne står to og to, søgeknappen fylder en hel linje, format-knapperne kan scrolles vandret, og "Nulstil filter" står under dem.
 
 ## Det skal du vide
 
-- **Formater:** alle spilletider i databasen er i 2D, så 3D, 4D, IMAX og 70MM viser "Ingen film passer til dine filtre", indtil der kommer spilletider i de formater.
+- **Formater:** spilletiderne i databasen er i 2D og 4DX, så 3D og 70MM viser "Ingen film passer til dine filtre", indtil der kommer spilletider i de formater.
 - **Ekstra filtrering:** Figma har flere punkter (Babybio, Liveshow, Filmklub …), men databasen har ingen data til dem. Derfor er kun sprogene med. Kommer der data, kan punkterne tilføjes i `MovieFilter.js`.
 
 ## Hvis du vil ændre noget

@@ -17,6 +17,7 @@
   /* Standard */
   --palette-navy-darkest: #0d0f1e; /* bg/Primær baggrund og Toning/100% */
   --palette-navy-darkest-85: #0d0f1ed9; /* Toning/85% */
+  --palette-navy-darkest-70: #0d0f1eb3; /* Toning/70% */
   --palette-navy-darkest-0: #0d0f1e00; /* Toning/0% */
   --palette-navy-dark: #161a30; /* bg/Blå og Option button/Standard baggrund */
   --palette-navy: #22346b; /* border/Standard, Buttons/Sekundær border og Option button/Aktiv baggrund */
@@ -46,6 +47,7 @@
 
   /* Thriller */
   --palette-black-85: #0d0c0cd9; /* Toning/85% */
+  --palette-black-70: #0d0c0cb3; /* Toning/70% */
   --palette-black-0: #0d0c0c00; /* Toning/0% */
   --palette-graphite: #1f1f22; /* bg/Blå */
   --palette-grey: #a0a0a8; /* text/Sekundær og text/input (muted) */
@@ -53,6 +55,7 @@
   /* Familie */
   --palette-cream: #fbf4e8; /* bg/Primær baggrund og Toning/100% */
   --palette-cream-85: #fbf4e8d9; /* Toning/85% */
+  --palette-cream-70: #fbf4e8b3; /* Toning/70% */
   --palette-cream-0: #fbf4e800; /* Toning/0% */
   --palette-cream-dark: #f2e7d4; /* bg/Blå */
   --palette-sand: #e0d2ba; /* border/Standard og Option button/Border standard */
@@ -75,6 +78,7 @@
   --figma-bg-secondary: var(--palette-black); /* bg/Sekundær Baggrund */
   --figma-bg-blue: var(--palette-navy-dark); /* bg/Blå */
   --figma-toning-0: var(--palette-navy-darkest-0); /* Toning/0% */
+  --figma-toning-70: var(--palette-navy-darkest-70); /* Toning/70% */
   --figma-toning-85: var(--palette-navy-darkest-85); /* Toning/85% */
   --figma-toning-100: var(--palette-navy-darkest); /* Toning/100% */
   --figma-text-primary: var(--palette-white-soft); /* text/Primær */
@@ -87,7 +91,7 @@
   --figma-button-primary: var(--palette-blue); /* Buttons/Primær */
   --figma-button-primary-hover: var(--palette-blue-light); /* Buttons/Primær hover */
   --figma-button-primary-text: var(--palette-white-soft); /* Buttons/Primær tekst */
-  --figma-button-secondary-border: var(--palette-navy); /* Buttons/Sekundær border */
+  --figma-button-secondary-border: var(--figma-text-primary); /* Buttons/Sekundær border -> text/Primær (følger med i alle modes) */
   --figma-button-secondary-hover: var(--palette-blue-12); /* Buttons/Sekundær hover */
   --figma-option-background: var(--palette-navy-dark); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-navy); /* Option button/Border standard */
@@ -220,11 +224,12 @@
   --color-poster-overlay: var(--figma-toning-85); /* Figma "Overlay" på "Kommer snart"-plakaten: Toning/85% */
   --color-poster-chip: color-mix(in srgb, var(--figma-bg-primary) 50%, transparent); /* "2D"-mærket - figma "Genre-chip" 50 % */
   /* "card i feed" overlay: klart foroven, mørkt bag titlen - præcis som i figma */
+  /* Figma "Program – filmgitter": toningen på kortene i "Film der kører nu".
+     Toning/0% til og med 40 %, Toning/70% ved 65 % og Toning/100% i bunden. */
   --gradient-poster-feed-overlay: linear-gradient(
     to bottom,
-    var(--figma-toning-0) 0%,
     var(--figma-toning-0) 40%,
-    var(--figma-toning-85) 65%,
+    var(--figma-toning-70) 65%,
     var(--figma-toning-100) 100%
   );
   --color-button-secondary-border: var(--figma-button-secondary-border);
@@ -233,7 +238,7 @@
      bg/Sekundær Baggrund i midten (0 %) til Stjerner/bg/Primær baggrund ved kanten (100 %), så rummet har dybde. */
   --gradient-space: radial-gradient(closest-side, var(--figma-bg-secondary), var(--figma-stars-bg));
   --color-star: var(--figma-star); /* Stjernerne i "Stjernehimmel" (Starfield): Stjerner/Stjerne primær */
-  --color-poster-hover-overlay: color-mix(in srgb, var(--figma-bg-primary) 70%, transparent); /* hover på filmkort, så knappen kan ses */
+  --color-poster-hover-overlay: var(--figma-toning-70); /* Toning/70% – hover på filmkort, så knappen kan ses */
   /* trailer-vinduet (figma 596:3073) - altid mørkt, også i familie -> farver direkte fra paletten */
   --color-trailer-background: var(--palette-black); /* bg/Sekundær baggrund */
   --color-trailer-text: var(--palette-white-soft); /* text/Primær */
@@ -347,7 +352,7 @@
   --radius-intro-poster: 0.875rem; /* 14px - plakaterne i hero'en */
   --radius-button-outline: 0.625rem; /* 10px - "Følg film" */
   --scale-carousel-covered: 0.94; /* Det gamle kort trækker sig lidt tilbage under det nye */
-  --radius-option-button: 1.125rem; /* 18px - Option button, fx "November" */
+  --radius-option-button: var(--figma-radius-medium); /* 16px - Border-radius/Medium, Option button, fx "November" */
   --radius-filter-bar: var(--figma-radius-large); /* 24px: filtreringsbaren, dens felter og søgeknappen */
   --radius-dropdown: var(--figma-radius-medium); /* 16px - dropdown-listen under et filterfelt */
   --radius-dropdown-item: 0.625rem; /* 10px - et punkt i dropdown-listen */
@@ -369,7 +374,6 @@
   --size-header-height-compact: 5.5rem; /* 88px - på mobil: logo + 12px luft over og under */
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-option-button-height: var(--figma-btn-height-small); /* 32px */
-  --size-option-divider-height: 1.375rem; /* 22px - "Skille" før og efter filtrene */
   --size-filter-divider-height: 2rem; /* 32px - "Skille" mellem felterne i filtreringsbaren */
   --size-dropdown-max-height: 20rem; /* Lange dropdown-lister (fx Genre) kan scrolles */
   --size-icon-small: 1rem; /* 16px - fx pilen i et filterfelt og ikonet i "Nulstil filter" */
@@ -557,11 +561,13 @@
   --grid-columns: 12;
   --grid-gutter: var(--space-5); /* 20px mellem kolonnerne */
   --grid-margin: 0rem; /* Kolonnerne går helt ud til kanten */
+  /* Luften i siderne, så indholdet står i kolonne 2-11 som på filmsiden (MovieHero, MovieDetails).
+     Én kolonne + ét mellemrum = (bredden + 20px) / 12. % regnes ud fra den boks, der får padding'en,
+     så den skal bruges på et element i fuld bredde. Mobil: 16px (--space-4). */
+  --layout-page-margin: calc((100% + var(--grid-gutter)) / var(--grid-columns));
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene - over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren (Figma) */
-  --layout-showtimes-width: 74.792rem; /* 1197px - spilletiderne på filmsiden (Figma) */
-
   /* ========================================================================
      KAMPAGNE: KATTEN MED HATTEN – kun til den film
      Figma "Titel – hopper"
@@ -616,11 +622,11 @@
   --figma-bg-primary: var(--palette-black); /* bg/Primær baggrund */
   --figma-bg-blue: var(--palette-graphite); /* bg/Blå */
   --figma-toning-0: var(--palette-black-0); /* Toning/0% */
+  --figma-toning-70: var(--palette-black-70); /* Toning/70% */
   --figma-toning-85: var(--palette-black-85); /* Toning/85% */
   --figma-toning-100: var(--palette-black); /* Toning/100% */
   --figma-text-secondary: var(--palette-grey); /* text/Sekundær */
   --figma-text-input-muted: var(--palette-grey); /* text/input (muted) */
-  --figma-button-secondary-border: var(--palette-white-soft); /* Buttons/Sekundær border */
   --figma-stars-bg: var(--figma-bg-secondary); /* Stjerner/bg/Primær baggrund -> bg/Sekundær Baggrund */
 }
 
@@ -629,13 +635,13 @@
   --figma-bg-primary: var(--palette-cream); /* bg/Primær baggrund */
   --figma-bg-blue: var(--palette-cream-dark); /* bg/Blå */
   --figma-toning-0: var(--palette-cream-0); /* Toning/0% */
+  --figma-toning-70: var(--palette-cream-70); /* Toning/70% */
   --figma-toning-85: var(--palette-cream-85); /* Toning/85% */
   --figma-toning-100: var(--palette-cream); /* Toning/100% */
   --figma-text-primary: var(--palette-ink); /* text/Primær */
   --figma-text-secondary: var(--palette-ink-light); /* text/Sekundær */
   --figma-text-input-muted: var(--palette-ink-muted); /* text/input (muted) */
   --figma-border-standard: var(--palette-sand); /* border/Standard */
-  --figma-button-secondary-border: var(--palette-ink); /* Buttons/Sekundær border */
   --figma-option-background: var(--palette-white-soft); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */

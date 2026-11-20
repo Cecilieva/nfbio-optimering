@@ -93,24 +93,6 @@
   gap: var(--space-8);
 }
 
-.back {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
-  text-decoration: none;
-}
-
-.back:hover {
-  opacity: var(--opacity-hover);
-}
-
-/* pilen peger nedad → drejes til venstre */
-.backIcon {
-  transform: rotate(90deg);
-}
-
 /* subgrid → MovieInfoBar bruger heroens kolonner */
 .bottom {
   align-self: end;
