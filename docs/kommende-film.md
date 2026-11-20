@@ -33,7 +33,6 @@ components/features/ComingSoonSection.js ← filtrerer og viser 10 eller alle
 Henter alle film med `status = 'coming_soon'` **og premiere efter i dag**, sorteret efter premiere. Datoreglen er den samme som i karrusellen øverst (`featured.js`), så en film med forkert status (fx en premiere, der allerede har været) ikke står som kommende. Før filmene sendes videre, bliver de rettet lidt til:
 
 - **Ingen dubletter:** `uniqueByTitle()` beholder kun én række pr. titel. Databasen har fx "SORT – En film af Ukendt Kunstner" to gange, og der bruges den række, der har en plakat.
-- **Plakat til film uden billede:** `POSTER_FALLBACKS` giver film uden `poster_url` et billede, der allerede ligger i projektet (fx Sunrise). Hvis databasen senere får en `poster_url`, bliver den brugt i stedet.
 - **Billetsalg:** hver film får to felter:
   - `ticket_sale_opens` er datoen, hvor billetsalget åbner, eller `null`.
   - `ticket_sale_open` er `true`, hvis man kan købe billet nu. Den bruges af filteret "Forsalg åben".
@@ -121,7 +120,6 @@ Derfor står der 5 plakater pr. række på desktop som i Figma, og der bliver au
 |---|---|
 | ændre hvor mange dage før premieren billetsalget åbner | `lib/data/ticket-sale.js` |
 | ændre hvor mange plakater der vises før "Se alle" | `VISIBLE_COUNT` i `components/features/ComingSoonSection.js` |
-| give en film uden plakat et billede | `POSTER_FALLBACKS` i `lib/data/movies.js` |
 | ændre teksterne i sektionen | `components/features/ComingSoonSection.js` |
 | ændre plakatens udseende | `components/features/MovieCard.module.css` |
 | ændre farver, størrelser og afstande | `app/tokens.css` |
