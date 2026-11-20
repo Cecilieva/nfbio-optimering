@@ -92,7 +92,6 @@ async function details(id, status) {
     tmdb_id: m.id,
     title: m.title,
     slug: slugify(m.title),
-    tagline: m.tagline || null,
     short_description: overview ? overview.split(/(?<=\.)\s/)[0] : null,
     description: overview || null,
     director: m.credits?.crew?.find((c) => c.job === 'Director')?.name ?? null,

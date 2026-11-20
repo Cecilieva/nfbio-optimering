@@ -1,51 +1,34 @@
-/*
-  Figma "Filmdetaljer/Default"
-
-  Sektionen bruger samme 12-kolonne-grid som Figma:
-  12 kolonner, ingen margen ude ved kanten og 20px mellem kolonnerne.
-  Tallene kommer fra tokens.css (--grid-columns, --grid-margin, --grid-gutter).
-
-  Placering på desktop:
-    kolonne 2–4  → plakat + knapper
-    kolonne 6–11 → tekst + fakta
-*/
+/* Figma "Filmdetaljer/Default". plakat i kolonne 2–4, tekst + fakta i kolonne 6–11 */
 .details {
   display: grid;
-  /* 12 lige brede kolonner, der deler pladsen. De må gerne blive smalle, når skærmen er lille */
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-  column-gap: var(--grid-gutter); /* 20px mellem kolonnerne */
-  row-gap: var(--space-8); /* 32px mellem rækkerne (bruges kun på mobil, hvor tingene står under hinanden) */
-  align-items: start; /* plakat og tekst starter i toppen */
-  padding: var(--space-20) var(--grid-margin); /* 80px over og under, 0 i siderne */
+  column-gap: var(--grid-gutter);
+  row-gap: var(--space-8);
+  align-items: start;
+  padding: var(--space-20) var(--grid-margin);
   background: var(--color-background);
 }
 
-/* ---------- Venstre side: plakat + knapper ---------- */
-
-/* "2 / span 3" = start i kolonne 2 og fyld 3 kolonner → kolonne 2, 3 og 4 */
 .posterColumn {
   grid-column: 2 / span 3;
   display: flex;
-  flex-direction: column; /* plakat øverst, knapper under */
-  gap: var(--space-8); /* 32px mellem plakat og knapper */
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
-/* Plakatens bredde kommer fra de 3 kolonner (345px på en 1440px-skærm).
-   Højden kommer fra billedet selv – plakater er 2:3, så den bliver ca. 520px høj som i Figma. */
 .poster {
   overflow: hidden;
-  /* farveovergang der kun ses, hvis billedet mangler */
+  /* ses kun, hvis billedet mangler */
   background: linear-gradient(var(--color-poster-gradient-top), var(--color-poster-gradient-bottom));
 }
 
 .poster img {
-  display: block; /* fjerner det lille mellemrum under billeder */
-  width: 100%; /* lige så bred som kolonnerne */
-  height: auto; /* højden passer selv til billedet */
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* Hvis filmen ikke har en plakat: en boks med titlen i midten.
-   Boksen får samme format som plakaterne på forsiden (--aspect-poster-card). */
+/* ingen plakat → boks med titlen */
 .poster [data-poster-placeholder] {
   display: flex;
   align-items: center;
@@ -59,37 +42,30 @@
   text-align: center;
 }
 
-/* Knapperne står ved siden af hinanden med 16px imellem */
 .actions {
   display: flex;
   gap: var(--space-4);
 }
 
-/* "Se trailer" fylder den plads der er tilbage – "Del" er kun så bred som sin tekst */
+/* "Se trailer" fylder resten af pladsen */
 .trailer {
   flex: 1 1 0;
   min-width: 0;
 }
 
-/* ---------- Højre side: tekst + fakta ---------- */
-
-/* "6 / span 6" = start i kolonne 6 og fyld 6 kolonner → kolonne 6 til 11.
-   Indholdet står under hinanden: handling, streg, fakta */
 .text {
   grid-column: 6 / span 6;
   display: flex;
   flex-direction: column;
-  gap: var(--space-16); /* 64px mellem handling, streg og fakta */
+  gap: var(--space-16);
 }
 
-/* Figma "Handling": den store tekst + den lille grå tekst */
 .plot {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6); /* 24px mellem de to tekster */
+  gap: var(--space-6);
 }
 
-/* Den store tekst – Figma "L/Primær/Regular" (Libre Franklin, 32px) */
 .plotText {
   margin: 0;
   color: var(--color-text-primary);
@@ -99,103 +75,79 @@
   line-height: var(--line-height-snug);
 }
 
-/* Den lille grå tekst – Figma "S/Sekundær/Regular" (Inter, 16px) i den dæmpede farve */
-.more {
-  margin: 0;
-  color: var(--color-text-input-muted);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-snug);
-}
-
-/* Figma "Skillelinje": en streg på 1px i hele bredden */
 .divider {
   width: 100%;
   height: var(--border-width);
   margin: 0;
-  border: 0; /* fjerner browserens egen streg på <hr> */
-  background: var(--color-border); /* stregens farve – skifter med mode */
+  border: 0;
+  background: var(--color-border);
 }
 
-/* Figma "Om filmen": 3 lige brede fakta-kolonner med samme mellemrum som griddet (20px).
-   Så starter de præcis i kolonne 6, 8 og 10 – som i Figma. */
+/* 3 fakta-kolonner med samme mellemrum som griddet → starter i kolonne 6, 8 og 10 */
 .facts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: var(--grid-gutter);
-  row-gap: var(--space-8); /* 32px – bruges kun på mobil, når en kolonne ryger ned på ny linje */
+  row-gap: var(--space-8);
 }
 
-/* Én fakta-kolonne, fx "Premiere, Spilletid, Censur" */
 .factColumn {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8); /* 32px mellem hvert faktum */
-  margin: 0; /* fjerner browserens egen luft om <dl> */
+  gap: var(--space-8);
+  margin: 0;
 }
 
-/* Ét faktum: overskrift over værdi med 8px imellem */
 .fact {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-/* Overskriften, fx "Premiere" – lille og dæmpet (12px) */
 .label {
   color: var(--color-text-input-muted);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-snug);
 }
 
-/* Værdien, fx "22. december" (16px) */
 .value {
-  margin: 0; /* fjerner browserens indryk på <dd> */
+  margin: 0;
   color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-snug);
 }
 
-/* Listen med genrer/medvirkende: én pr. linje uden prikker og indryk */
 .lines {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* ---------- Tablet og mobil (skærme under 768px) ----------
-   Stadig 12 kolonner, men plakaten står over teksten,
-   og der er 16px luft ude i siderne ligesom i toppen af siden. */
+/* tablet og mobil: plakaten over teksten */
 @media (max-width: 48rem) {
   .details {
-    padding: var(--space-12) var(--space-4); /* 48px over/under, 16px i siderne */
+    padding: var(--space-12) var(--space-4);
   }
 
-  /* Plakaten fylder kolonne 1–6 (halv bredde), så den ikke bliver kæmpe stor på en tablet */
   .posterColumn {
     grid-column: 1 / span 6;
   }
 
-  /* Teksten fylder hele bredden */
   .text {
     grid-column: 1 / -1;
-    gap: var(--space-8); /* mindre luft end på desktop */
+    gap: var(--space-8);
   }
 
-  /* Den store tekst bliver lidt mindre (24px) */
   .plotText {
     font-size: var(--font-size-xl);
   }
 
-  /* 2 fakta-kolonner ved siden af hinanden.
-     Den 3. kolonne (Medvirkende + Anmeldelser) ryger ned på næste linje. */
   .facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* ---------- Små telefoner (skærme under 480px) ---------- */
 @media (max-width: 30rem) {
-  /* Plakaten fylder hele bredden */
   .posterColumn {
     grid-column: 1 / -1;
   }

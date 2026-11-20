@@ -3,7 +3,8 @@
 <defs>
 <radialGradient id="paint0_radial_0_5" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(240 240) scale(240)">
 <stop stop-color="white"/>
-<stop offset="0.45" stop-color="white" stop-opacity="0.9"/>
+<stop offset="0.55" stop-color="white"/>
+<stop offset="0.8" stop-color="white" stop-opacity="0.6"/>
 <stop offset="1" stop-color="white" stop-opacity="0"/>
 </radialGradient>
 </defs>

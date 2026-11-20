@@ -59,6 +59,11 @@
   --palette-ink-light: #4a5378; /* text/Sekundær */
   --palette-ink-muted: #56608a; /* text/input (muted) */
   --palette-blue-pale: #dce6ff; /* Option button/Aktiv baggrund */
+ 
+  /* KAMPAGNE: KATTEN MED HATTEN – farverne i "Titel – hopper" (1817:9662) */
+  --palette-hop-red: #e8473b;
+  --palette-hop-blue: #3fa7e8;
+  --palette-hop-yellow: #ffc43d;
 
   /* ---------- Figma-variabler ---------- */
 
@@ -153,7 +158,7 @@
   --color-cta-soft: var(--figma-accent-secondary);
   --color-on-accent: var(--figma-button-primary-text); /* Tekst på en blå knap */
   --color-danger: var(--figma-status-error); /* Fejlbeskeder */
-  --color-status-error: var(--figma-status-error); /* Fx "REC" på filmsiden til kommende thrillere og gysere */
+  --color-status-error: var(--figma-status-error); /* Fx "REC" på Clayface-filmsiden */
   /* Prikkerne ved spilletiderne (Figma "Ledighed") - samme farver i alle modes */
   --color-seats-available: var(--palette-green); /* Ledige pladser */
   --color-seats-few: var(--palette-yellow); /* Få pladser */
@@ -161,6 +166,29 @@
   --color-backdrop: color-mix(in srgb, var(--figma-bg-primary) 60%, transparent); /* Mørk baggrund bag en modal */
   --color-header-background: var(--color-background);
   --color-toning: var(--figma-toning-100); /* hinden over billedet på filmsiden */
+  /* Skyggerne i filmsidens hero (Figma "Toning" og "Toning/skygge-bund"). Mange trin = blød overgang */
+  --gradient-movie-hero-shadow-top: linear-gradient(
+    to top,
+    var(--figma-toning-0) 0%,
+    color-mix(in srgb, var(--figma-toning-100) 3%, transparent) 20%,
+    color-mix(in srgb, var(--figma-toning-100) 11%, transparent) 35%,
+    color-mix(in srgb, var(--figma-toning-100) 24%, transparent) 50%,
+    color-mix(in srgb, var(--figma-toning-100) 42%, transparent) 65%,
+    color-mix(in srgb, var(--figma-toning-100) 58%, transparent) 78%,
+    color-mix(in srgb, var(--figma-toning-100) 70%, transparent) 90%,
+    color-mix(in srgb, var(--figma-toning-100) 80%, transparent) 100%
+  );
+  --gradient-movie-hero-shadow-bottom: linear-gradient(
+    to bottom,
+    var(--figma-toning-0) 0%,
+    color-mix(in srgb, var(--figma-toning-100) 4%, transparent) 20%,
+    color-mix(in srgb, var(--figma-toning-100) 14%, transparent) 35%,
+    color-mix(in srgb, var(--figma-toning-100) 30%, transparent) 50%,
+    color-mix(in srgb, var(--figma-toning-100) 52%, transparent) 65%,
+    color-mix(in srgb, var(--figma-toning-100) 72%, transparent) 78%,
+    color-mix(in srgb, var(--figma-toning-100) 88%, transparent) 90%,
+    var(--figma-toning-100) 100%
+  );
 
   /* Forsiden: hero'en og "Kommer snart"-kortene */
   --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
@@ -262,21 +290,6 @@
   --font-size-movie-title: 6rem; /* 96px - filmtitlen på filmsiden (Figma "Titel - standard") */
   --line-height-movie-title: 1.05;
   --letter-spacing-overtitle: 0.16em; /* 2.56px ved 16px - fx "THE HUNGER GAMES" over titlen */
-  /* "Titel - smelter": figma 245.7px, her 208px (8 × 26) så CLAYFACE passer i kolonne 2-11
-     14,45vw ≈ 208px ved 1440px -> mindre på smalle skærme */
-  --font-size-movie-title-melt: min(13rem, 14.45vw);
-  /* dråberne - i em så de følger titlen (figma px ÷ 245.697) */
-  --position-title-melt-drip: 0.64714em; /* Fast: dråben starter 159px nede … */
-  --size-title-melt-drip-start: 0.01628em; /* … og er 4px høj */
-  --distance-title-melt-drip: 0.01814em; /* Smelter: dråben er rykket 4.457px ned (til 163.457px) */
-  --blur-title-melt-drip: 0.00509em; /* Smelter: let sløret (Layer blur 1.25px) */
-  --color-title-melt-drip: var(--figma-text-primary); /* Dråbens gradient: text/Primær … */
-  --color-title-melt-drip-middle: color-mix(in srgb, var(--figma-text-primary) 95%, transparent); /* … 95 % ved 45 % … */
-  --color-title-melt-drip-end: color-mix(in srgb, var(--figma-text-primary) 0%, transparent); /* … og gennemsigtig forneden */
-  --space-movie-title-melt-drip: 0.4em; /* plads til dråberne - halv længde, ellers sidder titlen for højt */
-  --space-movie-title-melt-row: 0.1em; /* hvis en lang titel går over 2 linjer */
-  --font-size-movie-title-melt-compact: 4rem; /* 64px (8 × 8) på tablet og mobil */
-  --line-height-movie-title-melt: 0.8;
   --font-size-hero-title: 4rem; /* Font-Size/XX-Large - 64px, titlen på "Kommer snart"-kortet */
   --font-size-finale: clamp(3rem, 11.667vw, 10.5rem); /* 168px i Figmas 1440px-ramme - sloganet i finalen, mindre på små skærme */
   --line-height-finale: 0.86;
@@ -341,6 +354,8 @@
   /* Sizes */
   --size-avatar: 2.5rem;
   --size-header-side: 6.5rem;
+  --size-header-height: 6rem; /* 96px - headerens højde: logo (64px) + 16px luft over og under */
+  --size-header-height-compact: 5.5rem; /* 88px - på mobil: logo + 12px luft over og under */
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-option-button-height: var(--figma-btn-height-small); /* 32px */
   --size-option-divider-height: 1.375rem; /* 22px - "Skille" før og efter filtrene */
@@ -373,8 +388,9 @@
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
   --scale-projector-drift: 1.06; /* Drift: … og glider langsomt mellem 100 % og 106 % */
   --distance-projector-drift-x: -3%; /* Drift: billedet glider 3 % mod venstre */
-  --opacity-projector-on: 0.35; /* Toningen over billedet, når projektoren er tændt … */
-  --opacity-projector-drift: 0.45; /* … og under driften */
+  --opacity-projector-on: 0.15; /* Toningen over billedet, når projektoren er tændt … */
+  --opacity-projector-drift: 0.25; /* … og under driften */
+  --size-movie-hero-shadow: min(30rem, 46%); /* Højden på skyggerne foroven og forneden på filmsidens hero */
   --color-projector-beam: var(--figma-projector-strong); /* Lysstriben: Lysprojektor/Projekter kraftig i midten … */
   --color-projector-beam-edge: var(--figma-projector-soft); /* … og Lysprojektor/Projekter sart ude ved kanterne */
   --angle-projector-beam: 14deg;
@@ -388,8 +404,6 @@
   --space-movie-title-word: 1.625rem; /* 26px mellem ordene i titlen */
   --size-countdown-unit: 4.75rem; /* 76px - en boks i nedtællingen til premieren (Figma "Nedtælling") */
   --size-countdown-unit-compact: 3.5rem; /* Små telefoner */
-  --size-flashlight: 33.333cqw; /* lyskeglen: 480 af 1440px = 1/3 af heroen */
-  --size-rec-dot: 0.625rem; /* 10px - den røde prik ved "REC" */
   /* Spilletider på filmsiden (Figma "Spilletider" 627:3145 og "Din forestilling" 2010:26575) */
   --size-status-dot: 0.625rem; /* 10px - prikken, der viser ledige pladser */
   --size-week-arrow: 2.75rem; /* 44px - pilene til forrige/næste uge */
@@ -469,9 +483,6 @@
   --duration-movie-hero-title: 900ms;
   --delay-movie-hero-title: 400ms;
   --delay-movie-hero-details: 800ms; /* Fakta og knapper kommer til sidst */
-  --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
-  --duration-flashlight-follow: 600ms; /* … og hurtigere, når den følger musen */
-  --duration-rec-blink: 1s; /* Prikken ved "REC" tænder og slukker - ét blink i sekundet */
   /* trailer: vinduet toner frem, tæppet går til siden (figma: 1600 ms ease in-out) */
   --duration-bell-ring: 500ms; /* Klokken i "Følg film" ringer (Figma Notifikationsknap, Ringer 1-4) */
   --duration-trailer-in: 300ms;
@@ -479,9 +490,9 @@
   --delay-curtain-open: 500ms; /* tæppet venter lidt før det åbner */
   --scale-trailer-start: 0.96; /* vinduet vokser fra 96 % */
   --duration-title-wave-loop: 4s; /* Bølgen i titlen går hvert 4. sekund (ét ord bevæger sig i 450ms af dem) */
+  --duration-title-wave-hop: 450ms; /* Ét hop i bølgen - bruges, når man holder musen over titlen */
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
   --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
-  --duration-title-melt: 7s; /* ned 3,5 s -> hænger 2,1 s -> op 1,4 s */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -490,7 +501,6 @@
   --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
   --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
   --easing-slide: cubic-bezier(0.65, 0, 0.35, 1); /* Roligt i gang, roligt i stå - fx kortene i karrusellen */
-  --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* dråberne: langsom start, blødt stop */
 
   /* Interaction */
   --opacity-hover: 0.75;
@@ -502,6 +512,7 @@
   /* Lag: hvad der ligger øverst */
   /* Hero'en på forsiden: headeren over stjernerummet, nedtællingen over alt (som i Figma) */
   --z-intro-header: 101; /* Headeren oven på hero'en */
+  --z-header-over-hero: 2; /* Filmsiden: headeren oven på heroens billede og skygger */
   --z-intro-countdown: 102; /* Nedtællingen - over alt */
 
   /* Layout */
@@ -518,6 +529,48 @@
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene - over siden, under headeren */
   --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren (Figma) */
   --layout-showtimes-width: 74.792rem; /* 1197px - spilletiderne på filmsiden (Figma) */
+
+  /* ========================================================================
+     KAMPAGNE: KATTEN MED HATTEN – kun til den film
+     Figma "Titel – hopper"
+     ======================================================================== */
+  --color-title-hop-red: var(--palette-hop-red);
+  --color-title-hop-blue: var(--palette-hop-blue);
+  --color-title-hop-yellow: var(--palette-hop-yellow);
+  --color-title-hop-ink: var(--color-text-primary);
+  --font-family-title-hop: var(--font-fredoka), var(--figma-font-family-primary);
+  --font-size-movie-title-hop: min(9.375rem, 7.5vw); /* 150px i Figma "Titel – hopper", mindre på smalle skærme */
+  --font-size-movie-title-hop-compact: 3.5rem; /* 56px på tablet og mobil */
+  --line-height-movie-title-hop: 1.2;
+  --duration-title-hop: 900ms; /* Ét hop i "Titel – hopper" ved hover: op, hænger lidt, lander */
+  --delay-title-hop-letter: 50ms; /* Tid mellem bogstaverne i "Titel – hopper" */
+
+  /* ========================================================================
+     KAMPAGNE: CLAYFACE – kun til den film
+     Figma "Titel – smelter", "Lommelygte" og "REC"
+     ======================================================================== */
+  /* titlen: figma 245.7px, her 208px (8 × 26) så CLAYFACE passer i kolonne 2-11.
+     14,45vw ≈ 208px ved 1440px -> mindre på smalle skærme */
+  --font-size-movie-title-melt: min(13rem, 14.45vw);
+  /* dråberne - i em, så de følger titlen (figma px ÷ 245.697) */
+  --position-title-melt-drip: 0.64714em; /* Fast: dråben starter 159px nede … */
+  --size-title-melt-drip-start: 0.01628em; /* … og er 4px høj */
+  --distance-title-melt-drip: 0.01814em; /* Smelter: dråben er rykket 4.457px ned (til 163.457px) */
+  --blur-title-melt-drip: 0.00509em; /* Smelter: let sløret (Layer blur 1.25px) */
+  --color-title-melt-drip: var(--figma-text-primary); /* Dråbens gradient: text/Primær … */
+  --color-title-melt-drip-middle: color-mix(in srgb, var(--figma-text-primary) 95%, transparent); /* … 95 % ved 45 % … */
+  --color-title-melt-drip-end: color-mix(in srgb, var(--figma-text-primary) 0%, transparent); /* … og gennemsigtig forneden */
+  --space-movie-title-melt-drip: 0.4em; /* plads til dråberne - halv længde, ellers sidder titlen for højt */
+  --space-movie-title-melt-row: 0.1em; /* hvis en lang titel går over 2 linjer */
+  --font-size-movie-title-melt-compact: 4rem; /* 64px (8 × 8) på tablet og mobil */
+  --line-height-movie-title-melt: 0.8;
+  --duration-title-melt: 7s; /* ned 3,5 s -> hænger 2,1 s -> op 1,4 s */
+  --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* dråberne: langsom start, blødt stop */
+  --size-flashlight: 40cqw; /* lyskeglen: 576px ved 1440px = 40 % af heroens bredde (i Figma 480px – gjort større) */
+  --size-rec-dot: 0.625rem; /* 10px - den røde prik ved "REC" */
+  --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
+  --duration-flashlight-follow: 300ms; /* … og meget hurtigere, når den følger musen */
+  --duration-rec-blink: 1s; /* Prikken ved "REC" tænder og slukker - ét blink i sekundet */
 }
 
 /* ---------- Modes (fra figma) ----------
@@ -555,6 +608,9 @@
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */
   --figma-star: var(--palette-ink); /* Stjerner/Stjerne primær */
+  /* mindre hinde, så cremen ikke bleger billedet */
+  --opacity-projector-on: 0.05;
+  --opacity-projector-drift: 0.1;
   /* gør de lyse ikoner mørkeblå (~#1d2a5c). tallene er bare regnet ud så farven passer */
   --filter-icon: brightness(0) saturate(100%) invert(2%) sepia(94%) saturate(7060%) hue-rotate(237deg) brightness(138%)
     contrast(78%);

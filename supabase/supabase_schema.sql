@@ -73,7 +73,6 @@ create table movies (
   tmdb_id       int unique,                -- id fra The Movie Database
   title         text not null,
   slug          text not null unique,
-  tagline       text,                      -- "Han kan blive hvem som helst. Også dig."
   short_description text,
   description   text,                      -- "Om filmen"
   director      text,
@@ -359,14 +358,14 @@ join (values
     'SSSSSSSSSHH'])
 ) l(name, layout) on l.name = h.name;
 
-insert into movies (title, slug, tagline, short_description, director, cast_members,
+insert into movies (title, slug, short_description, director, cast_members,
                     genres, age_rating, duration_min, language, status, rating, review_count)
 values
-  ('Clayface', 'clayface', 'Han kan blive hvem som helst. Også dig.',
+  ('Clayface', 'clayface',
    'Efter en ulykke vansiret af en gangster, får filmstjernen Matt Hagen evnen til at forme sin krop som ler.',
    'James Watkins', array['Tom Rhys Harries','Naomi Ackie','David Dencik','Max Minghella','Eddie Marsan'],
    array['Thriller'], '15 år', 108, 'Engelsk tale', 'now_playing', 5.0, 597),
-  ('The Hunger Games: Sunrise on the Reaping', 'sunrise-on-the-reaping', null, null,
+  ('The Hunger Games: Sunrise on the Reaping', 'sunrise-on-the-reaping', null,
    null, '{}', array['Action','Eventyr'], '15 år', null, 'Engelsk tale', 'coming_soon', null, 0);
 
 -- Spilletider de næste 7 dage for Clayface i alle biografer.
