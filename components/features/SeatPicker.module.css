@@ -5,9 +5,65 @@
   gap: var(--space-8);
 }
 
-/* "Vælg antal"-kortet står i midten med 32px ekstra luft over */
+/* Salen og "Udsigt fra sædet" - under hinanden på små skærme */
+.seats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-seat-columns);
+}
+
+/* "Vælg antal"-kortet står i midten */
 .counter {
   display: flex;
   justify-content: center;
-  padding-top: var(--space-8);
+}
+
+.error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+}
+
+/* Desktop: siden følger 12-kolonne-griddet. Siden står i kolonne 2–11,
+   så her inde er der 10 kolonner at fordele */
+@media (min-width: 64rem) { /* 1024px */
+  .seats,
+  .counter {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  /* Salen fylder 7 kolonner og "Udsigt fra sædet" 3 */
+  .seats > :first-child {
+    grid-column: span 7;
+  }
+
+  .seats > :last-child {
+    grid-column: span 3;
+  }
+
+  /* "Vælg antal"-kortet fylder de 4 midterste kolonner */
+  .counter > * {
+    grid-column: 4 / span 4;
+  }
+
+  /* Siden kan ikke scrolles. Er skærmen for lav, bliver kortene lavere
+     (sæderne scroller inde i salen, og udsigten bliver mindre - se SeatMap og SeatView) */
+  .picker {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .seats,
+  .seats > * {
+    min-height: 0;
+  }
+}
+
+/* Lav skærm (fx en bærbar): lidt mindre luft mellem trin-headeren og kortene */
+@media (min-width: 64rem) and (max-height: 60rem) { /* 1024px bred, under 960px høj */
+  .picker {
+    gap: var(--space-6);
+  }
 }

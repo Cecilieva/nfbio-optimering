@@ -13,9 +13,10 @@ import styles from "./Modal.module.css";
  * @param {boolean} props.open true = vinduet er åbent
  * @param {() => void} props.onClose lukker vinduet
  * @param {string} props.title overskriften
+ * @param {"large" | "small"} [props.size="large"] large = trailer-vinduet, small = en kort besked med luft om teksten
  * @param {React.ReactNode} props.children indholdet under overskriften
  */
-export default function Modal({ open, onClose, title, children }) {
+export default function Modal({ open, onClose, title, size = "large", children }) {
   const dialogRef = useRef(null);
 
   // åbn/luk vinduet når "open" skifter
@@ -41,17 +42,19 @@ export default function Modal({ open, onClose, title, children }) {
       }}
       aria-label={title}
       className={styles.modal}
+      data-size={size}
     >
       {/* titel til venstre, luk til højre */}
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={onClose} className={styles.close}>
           <Image src="/icons/close.svg" alt="" width={15.536} height={12} />
           Luk
         </Button>
       </div>
 
-      {children}
+      {/* en besked får luft om teksten - traileren fylder hele bredden */}
+      {size === "small" ? <div className={styles.body}>{children}</div> : children}
     </dialog>
   );
 }

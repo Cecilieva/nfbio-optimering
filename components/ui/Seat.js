@@ -14,7 +14,7 @@ const WHEELCHAIR =
 //   state      - "free" (ledig), "selected" (valgt) eller "taken" (optaget)
 //   wheelchair - true for en kørestolsplads
 //   className  - ekstra klasse fra forælderen, fx til størrelse og placering
-//   …rest      - fx style og data-out-of-order
+//   …rest      - fx style
 export default function Seat({ state = "free", wheelchair = false, className, ...rest }) {
   let classes = styles.seat;
   if (className) {

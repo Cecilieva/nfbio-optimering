@@ -1,20 +1,28 @@
-/* heroen i fuld bredde → slår main-reglen fra globals.css fra
-   resten (.content) får den normale spalte igen */
+/* heroen i fuld bredde → slår main-reglen fra globals.css fra */
 .page {
   max-width: none;
   padding: 0;
 }
 
-/* Spilletiderne er 1197px brede i Figma */
+/* Spilletiderne står i kolonne 2–11 på 12-kolonne-griddet, ligesom resten af filmsiden */
 .content {
-  max-width: calc(var(--layout-showtimes-width) + 2 * var(--space-6));
-  margin: 0 auto;
-  padding: var(--space-20) var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  padding: var(--space-20) 0;
 }
 
-/* tablet + mobil: mindre luft */
+.content > * {
+  grid-column: 2 / 12;
+}
+
+/* tablet + mobil: hele bredden med 16px luft i siderne */
 @media (max-width: 48rem) {
   .content {
     padding: var(--space-6) var(--space-4);
+  }
+
+  .content > * {
+    grid-column: 1 / -1;
   }
 }

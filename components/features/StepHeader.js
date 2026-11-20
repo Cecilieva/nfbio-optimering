@@ -24,22 +24,25 @@ export default function StepHeader({ step, totalSteps = 4, title, subtitle, back
 
   return (
     <div className={styles.header}>
-      {onBack && (
-        <button type="button" className={styles.back} onClick={onBack}>
-          {backContent}
-        </button>
-      )}
-      {!onBack && backHref && (
-        <Link href={backHref} className={styles.back}>
-          {backContent}
-        </Link>
-      )}
+      {/* "Tilbage" og trinbjælken står sammen - titlen står længere nede */}
+      <div className={styles.top}>
+        {onBack && (
+          <button type="button" className={styles.back} onClick={onBack}>
+            {backContent}
+          </button>
+        )}
+        {!onBack && backHref && (
+          <Link href={backHref} className={styles.back}>
+            {backContent}
+          </Link>
+        )}
 
-      {/* Trinbjælken. Skærmlæsere får teksten "Trin 1 af 4" i stedet for stregerne */}
-      <div className={styles.steps} role="img" aria-label={`Trin ${step} af ${totalSteps}`}>
-        {steps.map((number) => (
-          <span key={number} className={styles.step} data-done={number <= step} />
-        ))}
+        {/* Trinbjælken. Skærmlæsere får teksten "Trin 1 af 4" i stedet for stregerne */}
+        <div className={styles.steps} role="img" aria-label={`Trin ${step} af ${totalSteps}`}>
+          {steps.map((number) => (
+            <span key={number} className={styles.step} data-done={number <= step} />
+          ))}
+        </div>
       </div>
 
       <div className={styles.titles}>

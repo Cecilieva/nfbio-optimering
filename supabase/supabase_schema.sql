@@ -40,30 +40,28 @@ create table seats (
   row_number  int    not null,             -- række 4
   seat_number int    not null,             -- sæde 6
   col         int    not null,             -- kolonnen i salen (1 = længst til venstre). Huller = gange
-  type        seat_type not null default 'standard',   -- couple = daybed, fylder 2 kolonner
-  out_of_order boolean not null default false,          -- "Ude af drift" - kan ikke bookes
+  type        seat_type not null default 'standard',   -- couple (daybed) bruges ikke længere
   unique (hall_id, row_number, seat_number),
   unique (hall_id, row_number, col)
 );
 
 -- Bygger sæderne i en sal ud fra et layout - én tekst pr. række, ét tegn pr. kolonne:
---   S = sæde   H = kørestolsplads   D = daybed (fylder også næste kolonne, skriv "Dd")
---   X = sæde ude af drift   . = gang/tom plads
+--   S = sæde   H = kørestolsplads
+--   . = gang/tom plads
 -- Sædenumrene tælles fra venstre i hver række. Eksisterende sæder i salen slettes først.
 create or replace function public.seed_hall_seats(p_hall_id bigint, p_layout text[])
 returns void language sql as $$
   delete from seats where hall_id = p_hall_id;
 
-  insert into seats (hall_id, row_number, seat_number, col, type, out_of_order)
+  insert into seats (hall_id, row_number, seat_number, col, type)
   select p_hall_id,
          r.rn,
          row_number() over (partition by r.rn order by c.col),
          c.col,
-         case c.ch when 'H' then 'handicap' when 'D' then 'couple' else 'standard' end::seat_type,
-         c.ch = 'X'
+         case c.ch when 'H' then 'handicap' else 'standard' end::seat_type
   from unnest(p_layout) with ordinality as r(line, rn)
   cross join lateral unnest(string_to_array(r.line, null)) with ordinality as c(ch, col)
-  where c.ch in ('S', 'H', 'D', 'X');
+  where c.ch in ('S', 'H');
 $$;
 revoke execute on function public.seed_hall_seats(bigint, text[]) from public, anon, authenticated;
 
@@ -178,10 +176,6 @@ begin
 
   select price_dkk into v_price from showtimes where id = p_showtime_id;
   if v_price is null then raise exception 'Forestillingen findes ikke'; end if;
-
-  if exists (select 1 from seats where id = any(p_seat_ids) and out_of_order) then
-    raise exception 'Et af sæderne er ude af drift';
-  end if;
 
   insert into bookings (showtime_id, user_id, guest_email, guest_name, total_dkk)
   values (p_showtime_id, auth.uid(), p_guest_email, p_guest_name,
@@ -318,8 +312,8 @@ select public.seed_hall_seats(h.id, l.layout)
 from halls h
 join (values
   ('Bio 1', array[
-    '..DdDdDdDdDdDdDdDdHH...',
-    '..XXXXXXXXXXXXXXXXXXX..',
+    '..SSSSSSSSSSSSSSSSHH...',
+    '..SSSSSSSSSSSSSSSSSSS..',
     '..SSSSSSSSSSSSSSSSSSS..',
     '..SSSSSSSSSSSSSSSSSSS..',
     '..SSSSSSSSSSSSSSSSSSS..',

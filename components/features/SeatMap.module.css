@@ -1,0 +1,153 @@
+/* Kortet rundt om salen */
+.hall {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 0; /* kortet må gerne være smallere end sæderne - så kan man scrolle i stedet */
+  padding: var(--space-8);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+}
+
+.screenLabel {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* ---------- Lærredet: blå glød med en lys streg øverst (samme billeder som "Se salen") ---------- */
+
+.screen {
+  position: relative;
+  width: 100%;
+  max-width: var(--size-seat-map-screen-width);
+  height: var(--size-hall-screen-height);
+  overflow: hidden;
+}
+
+.screenGlow,
+.screenLine {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.screenGlow {
+  top: var(--space-hall-screen-top);
+  height: calc(100% - var(--space-hall-screen-top));
+}
+
+.screenLine {
+  top: 0;
+  height: var(--size-hall-screen-line);
+}
+
+/* ---------- Sæderne ---------- */
+
+.scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-top: var(--space-4);
+}
+
+/* Rækkenummer | én kolonne pr. sæde. --hall-columns sættes i SeatMap.js */
+.grid {
+  display: grid;
+  grid-template-columns: var(--size-hall-row-label) repeat(var(--hall-columns), var(--size-hall-seat));
+  grid-auto-rows: var(--size-hall-seat);
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.rowLabel {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Knappen om hvert sæde - kun selve stolen skal kunne ses */
+.seatButton {
+  display: block;
+  width: 100%;
+  height: var(--size-hall-seat);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+/* Et ledigt sæde løfter sig lidt, når man holder musen over det */
+.seatButton:hover:not(:disabled) {
+  transform: scale(var(--scale-seat-hover));
+}
+
+.seatButton:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-cta);
+  outline-offset: var(--focus-ring-width);
+}
+
+.seatButton:disabled {
+  cursor: not-allowed;
+}
+
+.seat {
+  width: var(--size-hall-seat);
+  height: var(--size-hall-seat);
+}
+
+/* ---------- Forklaringen nederst ---------- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: var(--space-4) 0 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Desktop: siden kan ikke scrolles. Er skærmen for lav, scroller sæderne inde i kortet,
+   mens lærredet og forklaringen bliver stående */
+@media (min-width: 64rem) { /* 1024px */
+  .scroll {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .screenLabel,
+  .screen,
+  .legend {
+    flex-shrink: 0;
+  }
+}
+
+/* Lav skærm (fx en bærbar): mindre luft foroven og forneden i kortet */
+@media (min-width: 64rem) and (max-height: 60rem) { /* 1024px bred, under 960px høj */
+  .hall {
+    padding-block: var(--space-4);
+  }
+}
+
+/* Små skærme: mindre luft i kortet */
+@media (max-width: 30rem) { /* 480px */
+  .hall {
+    padding: var(--space-4);
+  }
+}

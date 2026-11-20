@@ -1,9 +1,16 @@
-/* Tilbage, trinbjælke og titel - 32px mellem dem */
+/* "Tilbage" + trinbjælke øverst og titlen under - 64px imellem (Gabs/X-Large) */
 .header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--space-16);
   width: 100%;
+}
+
+/* "Tilbage" og trinbjælken - 32px imellem (Gabs/Large) */
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
 /* "Tilbage" - samme udseende som link og som knap */

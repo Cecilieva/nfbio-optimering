@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { startOfDanishDay } from "@/lib/format";
 import styles from "./Countdown.module.css";
 
+// ms -> "09:59"
 function formatRemaining(ms) {
   const seconds = Math.max(0, Math.ceil(ms / 1000));
   const minutes = Math.floor(seconds / 60);
 
-  return `${minutes}:${String(seconds % 60).padStart(2, "0")}`;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
 }
 
 // ms → { days, hours, minutes, seconds }
@@ -46,7 +47,7 @@ function useNow() {
 /**
  * Nedtælling
  *
- *   reservation – tid tilbage, fx "9:58" (until = reserved_until)
+ *   reservation – "Dine pladser holdes i 09:58" (until = reserved_until). Står i bundbjælken
  *   premiere    – "PREMIERE OM" + 4 bokse (until = premiere_date). Bruges i MovieHero
  *
  * @param {object} props
@@ -61,19 +62,21 @@ export default function Countdown({ until, variant = "reservation" }) {
     return <PremiereCountdown start={startOfDanishDay(until)} now={now} />;
   }
 
-  if (now === null) {
-    return <p>Dine pladser er reserveret</p>;
-  }
+  // "--:--" indtil browseren har tiden
+  const remaining = now === null ? null : new Date(until).getTime() - now;
 
-  const remaining = new Date(until).getTime() - now;
-
-  if (remaining <= 0) {
-    return <p role="alert">Reservationen er udløbet.</p>;
+  if (remaining !== null && remaining <= 0) {
+    return (
+      <p role="alert" className={styles.reservation}>
+        Tiden er udløbet
+      </p>
+    );
   }
 
   return (
-    <p>
-      Dine pladser er reserveret i <time>{formatRemaining(remaining)}</time>
+    <p className={styles.reservation}>
+      Dine pladser holdes i
+      <time className={styles.time}>{remaining === null ? "--:--" : formatRemaining(remaining)}</time>
     </p>
   );
 }

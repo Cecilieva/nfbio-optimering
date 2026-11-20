@@ -27,7 +27,8 @@ export default async function SeatsPage({ params }) {
   const subtitle = `${showtime.movie.title} · ${day} kl. ${formatTime(showtime.starts_at)} · ${showtime.hall.cinema.name}`;
 
   return (
-    <main className={styles.page}>
+    // data-fit-screen: siden er lige så høj som skærmen og kan ikke scrolles (på desktop)
+    <main className={styles.page} data-fit-screen>
       <SeatPicker
         showtime={showtime}
         rows={rows}

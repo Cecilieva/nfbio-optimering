@@ -10,11 +10,6 @@ export default function BookingLayout({ children }) {
     <div className={styles.screen}>
       <Header variant="logo" />
       {children}
-
-      {/* Sitet er et studieprojekt - det skal stå på siden, også når der ikke er en footer */}
-      <footer className={styles.notice}>
-        <p>Studieprojekt uden tilknytning til Nordisk Film Biografer</p>
-      </footer>
     </div>
   );
 }

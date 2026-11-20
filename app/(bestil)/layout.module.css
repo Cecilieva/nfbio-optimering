@@ -1,19 +1,32 @@
-/* Hele skærmen: header øverst, siden i midten og studieprojekt-linjen nederst */
+/* Hele skærmen: header øverst og siden under den */
 .screen {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  overflow-x: clip; /* Bundbjælkens baggrund stikker ud til siderne - det må ikke kunne scrolles */
 }
 
-/* Siden fylder resten af højden, så linjen altid står nederst */
+/* Siden fylder resten af højden */
 .screen > main {
   flex: 1;
 }
 
-.notice {
-  padding: var(--space-4);
-  color: var(--color-text-label);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-snug);
-  text-align: center;
+/* Desktop: en side med data-fit-screen på <main> (fx sædevalget) er præcis så høj som skærmen
+   og kan ikke scrolles. Er skærmen meget lav, scroller kortene inde i siden i stedet */
+@media (min-width: 64rem) { /* 1024px */
+  .screen:has(main[data-fit-screen]) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Passer indholdet slet ikke (meget lav skærm), kan man scrolle inde i siden, så intet bliver skjult */
+  .screen:has(main[data-fit-screen]) > main {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Bundbjælken står fast i bunden - der skal være plads til den under siden */
+  .screen:has([data-bottom-bar]) {
+    padding-bottom: var(--size-bottom-bar-height);
+  }
 }
