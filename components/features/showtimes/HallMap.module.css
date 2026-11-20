@@ -1,0 +1,148 @@
+/* Boksen rundt om salen */
+.hall {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 0; /* boksen må gerne være smallere end sæderne - så kan man scrolle i stedet */
+  max-width: 100%;
+  padding: var(--space-7-5);
+  border-radius: var(--radius-hall-map);
+  background: var(--color-option-background);
+}
+
+.hall p {
+  margin: 0;
+}
+
+/* "Bio 5" i venstre side og "94 ledige pladser" i højre */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--space-4);
+}
+
+.name {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.free,
+.screenLabel {
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* ---------- Lærredet: blå glød med en lys streg øverst ---------- */
+
+.screen {
+  position: relative;
+  align-self: stretch;
+  height: var(--size-hall-screen-height);
+  overflow: hidden;
+}
+
+/* Begge billeder strækkes ud, så de er lige så brede som salen */
+.screenGlow,
+.screenLine {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+/* Gløden starter lidt under toppen og fylder resten */
+.screenGlow {
+  top: var(--space-hall-screen-top);
+  bottom: 0;
+  height: calc(100% - var(--space-hall-screen-top));
+}
+
+/* Den lyse streg øverst */
+.screenLine {
+  top: 0;
+  height: var(--size-hall-screen-line);
+}
+
+/* ---------- Sæderne ---------- */
+
+/* En stor sal (fx Bio 1) kan scrolles til siden på mobil */
+.scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Griddet: rækkenummer | én kolonne pr. sæde | rækkenummer.
+   --hall-columns er antal kolonner i salen - det sættes i HallMap.js */
+.grid {
+  display: grid;
+  grid-template-columns:
+    var(--size-hall-row-label)
+    repeat(var(--hall-columns), var(--size-hall-seat))
+    var(--size-hall-row-label);
+  grid-auto-rows: var(--size-hall-seat);
+  gap: var(--space-2) var(--space-1-5);
+  align-items: center;
+}
+
+.rowLabel {
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+}
+
+.rowLabelRight {
+  text-align: right;
+}
+
+.seat {
+  display: block;
+  width: var(--size-hall-seat);
+  height: var(--size-hall-seat);
+}
+
+/* En daybed er en bred boks, der fylder to kolonner */
+.daybed {
+  display: block;
+  height: var(--size-hall-seat);
+  border-radius: var(--radius-hall-daybed);
+  background: var(--color-hall-daybed);
+  opacity: var(--opacity-hall-daybed);
+}
+
+.daybed[data-taken="true"] {
+  background: var(--color-hall-daybed-taken);
+}
+
+/* Sæder ude af drift er næsten gennemsigtige */
+.seat[data-out-of-order="true"],
+.daybed[data-out-of-order="true"] {
+  opacity: var(--opacity-hall-out-of-order);
+}
+
+/* ---------- Forklaringen nederst ---------- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-hall-legend);
+  margin: 0;
+  padding: var(--space-3-5) 0 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  color: var(--color-text-label);
+  font-size: var(--font-size-hall-legend);
+}
+
+/* Daybed i forklaringen - lige så bred som to sæder */
+.legendDaybed {
+  width: calc(var(--size-hall-seat) * 2 + var(--space-1-5));
+}

@@ -5,6 +5,7 @@ import ScrollToShowtimes from "@/components/features/showtimes/ScrollToShowtimes
 import ShowtimeList from "@/components/features/showtimes/ShowtimeList";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getMovieBySlug } from "@/lib/data/movies";
+import { getHallLayouts } from "@/lib/data/seats";
 import { getShowtimes } from "@/lib/data/showtimes";
 import styles from "./page.module.css";
 
@@ -21,11 +22,11 @@ export async function generateMetadata({ params }) {
 }
 
 // Filmsiden (Figma "Filmside"). Rækkefølge på siden:
-//   1. MovieHero    – det store billede med titel, fakta-bar og knapper
-//   2. MovieDetails – plakat, handling og fakta
-//   3. ShowtimeList – spilletiderne (Figma "Spilletider" og "Din forestilling")
+//   1. MovieHero    - det store billede med titel, fakta-bar og knapper
+//   2. MovieDetails - plakat, handling og fakta
+//   3. ShowtimeList - spilletiderne (Figma "Spilletider" og "Din forestilling")
 export default async function MoviePage({ params }) {
-  // Find filmen ud fra adressen, fx /film/clayface → "clayface"
+  // Find filmen ud fra adressen, fx /film/clayface -> "clayface"
   const { slug } = await params;
   const movie = await getMovieBySlug(slug);
 
@@ -37,7 +38,7 @@ export default async function MoviePage({ params }) {
   // Hvilken by har brugeren valgt? (gemt i en cookie)
   const city = await getSelectedCity();
 
-  // Ingen by valgt → send brugeren til "Vælg by".
+  // Ingen by valgt -> send brugeren til "Vælg by".
   // ?next= sørger for, at de kommer tilbage til denne film bagefter.
   if (!city) {
     redirect(`/by?next=/film/${slug}`);
@@ -45,6 +46,9 @@ export default async function MoviePage({ params }) {
 
   // Filmens spilletider i den valgte by
   const showtimes = await getShowtimes(movie.id, city.id);
+
+  // Hvordan salene ser ud - bruges når man klikker "Se salen"
+  const halls = await getHallLayouts(showtimes.map((showtime) => showtime.hall_id));
 
   return (
     // data-theme bestemmer farverne på hele siden:
@@ -60,7 +64,7 @@ export default async function MoviePage({ params }) {
 
       {/* Spilletiderne. Overskriften har id="spilletider", så knappen "Køb billet" i toppen hopper herned */}
       <div className={styles.content}>
-        <ShowtimeList movie={movie} showtimes={showtimes} />
+        <ShowtimeList movie={movie} showtimes={showtimes} halls={halls} />
       </div>
 
       {/* Kommer man fra "Se spilletider" på en plakat, scroller siden blødt ned til spilletiderne */}
