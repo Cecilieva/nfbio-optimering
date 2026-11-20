@@ -3,8 +3,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-muted);
+  color: var(--color-text-input-muted); /* text/input (muted) */
   font-size: var(--font-size-caption);
+  line-height: var(--line-height-snug);
   cursor: pointer;
 }
 
