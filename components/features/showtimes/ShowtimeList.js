@@ -21,11 +21,11 @@ const DAYS_PER_WEEK = 7;
 //   1. Overskrift, format-knapper og biograf-vælger
 //   2. Forklaring på de farvede prikker og pilene til næste/forrige uge
 //   3. Skemaet med en kolonne for hver dag
-//   4. "Din forestilling" – det tidspunkt, man har valgt
+//   4. "Din forestilling" - det tidspunkt, man har valgt
 //
 // Aktuelle film vises fra i dag. Kommende film vises fra premieren.
-// Den får filmen (movie) og alle filmens spilletider (showtimes) fra filmsiden.
-export default function ShowtimeList({ movie, showtimes }) {
+// Den får filmen (movie), alle filmens spilletider (showtimes) og salenes layout (halls) fra filmsiden.
+export default function ShowtimeList({ movie, showtimes, halls }) {
   // Det, brugeren har valgt på siden
   const [cinemaId, setCinemaId] = useState(null); // valgt biograf
   const [format, setFormat] = useState("all"); // valgt format: "all", "2D" eller "4DX"
@@ -265,11 +265,12 @@ export default function ShowtimeList({ movie, showtimes }) {
         ))}
       </div>
 
-      {/* 4. "Din forestilling" – vises kun, når der er valgt et tidspunkt */}
+      {/* 4. "Din forestilling" - vises kun, når der er valgt et tidspunkt */}
       {selected && (
         <SelectedShowtime
           movie={movie}
           showtime={selected}
+          hallLayout={halls[selected.hall_id]}
           canBuy={movie.ticket_sale_open}
           ticketSaleOpens={movie.ticket_sale_opens}
         />
