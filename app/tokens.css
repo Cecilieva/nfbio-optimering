@@ -343,7 +343,6 @@
   --size-header-side: 6.5rem;
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-option-button-height: var(--figma-btn-height-small); /* 32px */
-  --size-option-divider-height: 1.375rem; /* 22px - "Skille" før og efter filtrene */
   --size-filter-divider-height: 2rem; /* 32px - "Skille" mellem felterne i filtreringsbaren */
   --size-dropdown-max-height: 20rem; /* Lange dropdown-lister (fx Genre) kan scrolles */
   --size-icon-small: 1rem; /* 16px - fx pilen i et filterfelt og ikonet i "Nulstil filter" */

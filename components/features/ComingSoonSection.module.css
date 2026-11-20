@@ -42,21 +42,14 @@
   line-height: var(--line-height-snug);
 }
 
-/* Figma "Luft" (8px) over filtrene – plus de 8px fra gap */
+/* Figma "Filtre": 24px under underteksten (8px gap + "Luft" 8px + 8px gap) og 8px mellem knapperne.
+   margin-top 16px + de 8px fra .header's gap = 24px. */
 .filters {
   display: flex;
   gap: var(--space-2);
   align-items: center;
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
   overflow-x: auto;
-}
-
-/* Figma "Skille" */
-.divider {
-  flex-shrink: 0;
-  width: var(--border-width);
-  height: var(--size-option-divider-height);
-  background: var(--color-option-border);
 }
 
 /* Figma "Filmgitter": 220px brede plakater med 24px imellem – 5 pr. række i fuld bredde */
