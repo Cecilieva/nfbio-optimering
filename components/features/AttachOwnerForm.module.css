@@ -1,0 +1,20 @@
+/* Felterne og knappen under hinanden med 16px imellem */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Fejlbesked, fx hvis reservationen er udløbet */
+.error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Knappen fylder hele kortets bredde. En meget lang e-mail bliver klippet, så den ikke stikker ud */
+.button {
+  width: 100%;
+  overflow: hidden;
+}

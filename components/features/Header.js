@@ -4,7 +4,7 @@ import { getSelectedCity } from "@/lib/data/cities";
 import MainMenu from "./MainMenu";
 import styles from "./Header.module.css";
 
-// Figma: Header (node 455:9848). Den findes i to udgaver (varianter):
+// Figma: Header. Den findes i to udgaver (varianter):
 //   variant="full" (standard) – burgermenu, logo, søg, by og profil. Bruges på de fleste sider.
 //   variant="logo"            – kun logoet i midten. Bruges på Vælg by.
 export default async function Header({ variant = "full" }) {

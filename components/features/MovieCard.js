@@ -9,9 +9,9 @@ import styles from "./MovieCard.module.css";
  *
  * Variants:
  *   default     – poster, title, age rating and length (not styled yet)
- *   coming-soon – Figma "Kommer snart" (node 927:6300): the poster with premiere and ticket sale on top.
+ *   coming-soon – Figma "Kommer snart": the poster with premiere and ticket sale on top.
  *                 Used in ComingSoonSection.
- *   feed        – Figma "card i feed" (node 214:3673): the poster with format, title, genre and age.
+ *   feed        – Figma "card i feed": the poster with format, title, genre and age.
  *                 Used in the list under the filter on /film (MovieFilter).
  *
  * @param {object} props
@@ -47,11 +47,11 @@ export default function MovieCard({ movie, variant = "default", format }) {
 }
 
 /**
- * Figma "Kommer snart" (node 927:6300): plakaten under "Kommende film".
+ * Figma "Kommer snart": plakaten under "Kommende film".
  * Billede med mørk toning, premieren i midten og titlen nederst. Hele plakaten er et link til toppen af filmsiden,
  * så man ser billede, trailer og handling først.
  * Holder man musen over (eller står på den med tastaturet), skjules teksten, og en knap vises i midten –
- * Figma "Filmplakat", Property 1=få notifikationer (node 913:14280): "Se spilletider", når billetsalget er åbent,
+ * Figma "Filmplakat", Property 1=få notifikationer: "Se spilletider", når billetsalget er åbent,
  * ellers "Læs mere".
  */
 function ComingSoonPoster({ movie }) {
@@ -98,11 +98,11 @@ function ComingSoonPoster({ movie }) {
 }
 
 /**
- * Figma "card i feed" (node 214:3673): plakaten i listen med de film, der kører nu.
+ * Figma "card i feed": plakaten i listen med de film, der kører nu.
  * Billede med mørk toning, formatet øverst til højre og titel, genre og alder nederst.
  * Hele kortet er et link til filmsiden. Holder man musen over (eller står på det med tastaturet),
  * bliver kortet mørkere, teksten skjules, og "Se spilletider" vises i midten –
- * Figma "Filmplakat", Property 1=se spilletider (node 455:11441).
+ * Figma "Filmplakat", Property 1=se spilletider.
  */
 function FeedPoster({ movie, format }) {
   // Figma viser kun én genre og alderen som "15+", fx "Thriller · 15+"

@@ -5,9 +5,9 @@ import styles from "./MovieTitle.module.css";
 /**
  * Titlen øverst på filmsiden
  *
- *   standard – alle film. Figma "Titel – standard" (3063:14531)
- *   katten   – KAMPAGNE, kun Katten med Hatten. Figma "Titel – hopper" (1817:9681)
- *   clayface – KAMPAGNE, kun Clayface. Figma "Titel – smelter" (1797:9068 / 1797:9099)
+ *   standard – alle film. Figma "Titel – standard"
+ *   katten   – KAMPAGNE, kun Katten med Hatten. Figma "Titel – hopper"
+ *   clayface – KAMPAGNE, kun Clayface. Figma "Titel – smelter"
  *
  * kolon i titlen → delen før bliver en lille overtitel
  *

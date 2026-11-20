@@ -9,11 +9,14 @@ import styles from "./Checkbox.module.css";
  * @param {string} props.name
  * @param {boolean} [props.defaultChecked]
  * @param {boolean} [props.required]
+ * @param {string} [props.className] Ekstra CSS-klasse fra forælderen
  */
-export default function Checkbox({ label, name, ...rest }) {
+export default function Checkbox({ label, name, className, ...rest }) {
+  const classes = className ? `${styles.checkbox} ${className}` : styles.checkbox;
+
   // Inputtet ligger inde i <label>, så et klik på teksten også krydser af
   return (
-    <label className={styles.checkbox}>
+    <label className={classes}>
       <input type="checkbox" name={name} className={styles.input} {...rest} />
       <span>{label}</span>
     </label>

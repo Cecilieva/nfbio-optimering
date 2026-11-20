@@ -11,7 +11,7 @@ const TOAST_MS = 3000;
 const RING_MS = 500;
 
 /**
- * Knappen med klokken. Figma: "Notifikationsknap" (node 1118:26041) med "Toast".
+ * Knappen med klokken. Figma: "Notifikationsknap" med "Toast".
  * Klik viser en kort besked om, at man får besked, når billetsalget åbner.
  * Følgningen gemmes ikke endnu – det er kun beskeden.
  *

@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./BackLink.module.css";
 
 /**
- * "Tilbage"-knappen. Figma: "Knap", Type=Tilbage (node 2858:15010).
+ * "Tilbage"-knappen. Figma: "Knap", Type=Tilbage.
  * Pil og tekst; ved hover bliver begge accent/Sekundær.
  * Pilen er SVG direkte i koden med currentColor, så den altid har samme farve som teksten.
  * Bruges øverst på filmsiden (MovieHero) og i bestillingsflowet (StepHeader).

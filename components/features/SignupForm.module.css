@@ -1,0 +1,89 @@
+/* Alle delene under hinanden med 24px imellem */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* "Personlige oplysninger" og "Login" */
+.heading {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* To felter ved siden af hinanden (tre ved fødselsdagen) med 8px imellem */
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.row[data-columns="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* En gruppe med én overskrift (Fødselsdag og Køn). Browserens egen ramme fjernes */
+.group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Ser ud som labelen over et tekstfelt */
+.legend {
+  padding: 0;
+  margin-bottom: var(--space-1-5);
+  color: var(--color-text-label);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Køn-knapperne på én linje - de bryder om på smalle skærme */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Stregen mellem afsnittene */
+.divider {
+  width: 100%;
+  height: var(--border-width);
+  margin: 0;
+  border: 0;
+  background: var(--color-divider);
+}
+
+/* "Brug mindst 8 tegn …" */
+.hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Checkbox med lang tekst: boksen står øverst ved teksten i stedet for i midten */
+.consent {
+  align-items: flex-start;
+  line-height: var(--line-height-snug);
+}
+
+/* "medlemsvilkår" i blå */
+.accent {
+  color: var(--color-accent);
+}
+
+.button {
+  width: 100%;
+}
+
+/* Mobil: felterne under hinanden (fødselsdagen bliver stående på én linje) */
+@media (max-width: 30rem) { /* 480px */
+  .row:not([data-columns="3"]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

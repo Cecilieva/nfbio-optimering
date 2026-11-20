@@ -1,0 +1,89 @@
+/* Samme kort som "Din ordre": 24px luft inden i og 16px mellem delene */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-option-background);
+  line-height: var(--line-height-snug);
+}
+
+/* "Opret profil" har lidt mere luft mellem delene */
+.card[data-spacious="true"] {
+  gap: var(--space-6);
+}
+
+/* Overskriften, fx "Har du en profil?" */
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Den lille grå tekst under overskriften og nederst i kortet */
+.intro,
+.note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Felterne og "Log ind" under hinanden */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Fejlbesked under felterne, fx "Vi kan ikke finde en profil …" */
+.error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+}
+
+/* Knapperne fylder hele kortets bredde */
+.button {
+  width: 100%;
+}
+
+/* "eller" med en streg på hver side */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-xs);
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: var(--border-width);
+  background: var(--color-divider);
+}
+
+/* "Opret profil" og "Klik her" nederst i kortet: blå tekst, understreget når man holder musen over */
+.note a,
+.link {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.note a:hover,
+.link:hover {
+  text-decoration: underline;
+}
+
+/* "Klik her" er en knap, men skal ligne et link */
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}

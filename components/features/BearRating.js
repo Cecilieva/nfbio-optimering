@@ -6,7 +6,7 @@ const ALL_BEARS = [1, 2, 3, 4, 5, 6];
 
 /**
  * Bedømmelsen med bjørne, fx 4 hvide bjørne + 2 falmede + teksten "4 / 6".
- * Figma: "Anmeldelse" (node 2249:15255) – varianterne Bjørne=0 til Bjørne=6
+ * Figma: "Anmeldelse" – varianterne Bjørne=0 til Bjørne=6
  *
  * @param {object} props
  * @param {number} props.rating et tal fra 0 til 6, fx 4 eller 4.5

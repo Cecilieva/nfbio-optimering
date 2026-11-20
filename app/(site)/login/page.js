@@ -14,7 +14,7 @@ export const metadata = {
   title: "Log ind",
 };
 
-// Figma: "Log ind side" (node 761:18178).
+// Figma: "Log ind side".
 // Billede til venstre og formularen til højre. Header og footer kommer fra (site)/layout.js.
 export default async function LoginPage({ searchParams }) {
   // ?error=true sættes af signIn, når e-mail eller adgangskode er forkert

@@ -14,7 +14,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* premiere – "Nedtælling" (594:3212): "PREMIERE OM" over 4 bokse, højrestillet */
+/* premiere – "Nedtælling": "PREMIERE OM" over 4 bokse, højrestillet */
 .premiere {
   display: flex;
   flex-direction: column;
