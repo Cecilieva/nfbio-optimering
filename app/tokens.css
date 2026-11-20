@@ -452,6 +452,10 @@
   --opacity-hall-daybed: 0.6; /* Daybeds er lidt gennemsigtige, som i Figma */
   --opacity-hall-out-of-order: 0.3; /* Sæder ude af drift */
 
+  /* Købsflowet (Figma "Trin-header" og "Vælg antal-kort") */
+  --size-step-bar-height: 4px; /* en streg i trinbjælken */
+  --color-step-done: var(--figma-accent-primary); /* trin, man er nået til */
+  --color-step-todo: var(--figma-border-standard); /* trin, der mangler */
   /* Trailer-vinduet (Figma 596:3073: 960 × 600 - 60px top + 960 × 540 video) */
   --size-trailer-width: 60rem; /* 960px */
   --space-trailer-button: 0.625rem; /* 10px - luft rundt om "Luk" */
