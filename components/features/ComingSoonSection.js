@@ -137,11 +137,12 @@ export default function ComingSoonSection({ movies }) {
         <p className={styles.empty}>Der er ingen kommende film her lige nu.</p>
       )}
 
-      {/* Figma "Se mere": kun når der er flere end 10 film i filteret.
+      {/* Figma "Se mere": kun når der er flere end 10 film i filteret. Samme knap som "Se flere film"
+          (Button "more", Figma "Knap" Type=Se flere).
           aria-expanded fortæller skærmlæsere, om alle plakater vises, og aria-controls peger på listen. */}
       {shown.length > VISIBLE_COUNT && (
         <Button
-          variant="secondary"
+          variant="more"
           className={styles.toggle}
           aria-expanded={showAll}
           aria-controls="kommende-film-liste"

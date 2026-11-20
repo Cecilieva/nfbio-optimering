@@ -71,8 +71,8 @@ Uden billede ses en blå gradient i stedet. Den almindelige variant (`default`) 
 
 Plakaten har 8px runde hjørner (`--radius-md`) og toningen `Toning/85%` (`--color-poster-overlay`).
 
-### `components/ui/Button.js` – variant `secondary`
-Bruges til "Se alle kommende film" og "Skjul kommende film". Kanten bruger Figmas `buttons/sekundær-border`.
+### `components/ui/Button.js` – variant `more`
+Bruges til "Se alle kommende film" og "Skjul kommende film" – samme knap som "Se flere film" under filtreringen (Figma "Knap", Type=Se flere). Kanten er `border/Standard`.
 
 ## 4. Sektionen – `components/features/ComingSoonSection.js`
 
