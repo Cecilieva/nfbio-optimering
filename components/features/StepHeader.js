@@ -1,4 +1,4 @@
-import Link from "next/link";
+import BackLink from "@/components/ui/BackLink";
 
 /**
  * The top of each step in the booking flow: back link, step number and title.
@@ -12,7 +12,8 @@ import Link from "next/link";
 export default function StepHeader({ step, totalSteps = 4, title, backHref }) {
   return (
     <div>
-      {backHref && <Link href={backHref}>Tilbage</Link>}
+      {/* Figma "Knap", Type=Tilbage – samme knap som på filmsiden */}
+      {backHref && <BackLink href={backHref} />}
       <p>
         Trin {step} af {totalSteps}
       </p>
