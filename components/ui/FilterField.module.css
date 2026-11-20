@@ -25,7 +25,8 @@
   transition: background var(--duration-fast) var(--easing-standard);
 }
 
-/* Tilstand "Åben": lysere baggrund */
+/* Hover og tilstand "Åben": Option button/Aktiv baggrund (som "Dropdown valg", Tilstand=Hover) */
+.trigger:hover,
 .field[data-open="true"] .trigger {
   background: var(--color-option-background-active);
 }

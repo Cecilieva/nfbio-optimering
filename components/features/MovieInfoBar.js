@@ -9,7 +9,8 @@ import styles from "./MovieInfoBar.module.css";
  *
  * @param {object} props
  * @param {{ title: string, short_description?: string, genres?: string[],
- *   duration_min?: number, age_rating?: string, premiere_date?: string, trailer_url?: string, ticket_sale_open?: boolean }} props.movie
+ *   duration_min?: number, age_rating?: string, premiere_date?: string, trailer_url?: string,
+ *   ticket_sale_open?: boolean }} props.movie "Følg film" før billetsalget åbner, "Køb billet" når det er åbent
  * @param {string} props.ticketsHref hvor "Køb billet" fører hen
  */
 export default function MovieInfoBar({ movie, ticketsHref }) {
@@ -36,8 +37,9 @@ export default function MovieInfoBar({ movie, ticketsHref }) {
 
       <div className={styles.actions}>
         <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
-        <FollowButton title={movie.title} />
-        {/* først når billetsalget er åbnet */}
+        {/* "Følg film" giver besked, når billetsalget åbner – så den vises kun, indtil salget er åbent.
+            "Køb billet" kommer først, når billetsalget er åbnet. */}
+        {!movie.ticket_sale_open && <FollowButton title={movie.title} />}
         {movie.ticket_sale_open && <Button href={ticketsHref}>Køb billet</Button>}
       </div>
     </div>

@@ -5,11 +5,9 @@
   padding: 0;
 }
 
-/* Filtreringen og de kommende film: samme bredde som kortet i hero'en */
+/* Filtreringen og de kommende film: samme margen som filmsiden (kolonne 2-11 i 12-kolonne-gridet) */
 .sections {
-  width: min(100%, calc(var(--layout-footer-width) + 2 * var(--space-4)));
-  margin: 0 auto;
-  padding-inline: var(--space-4);
+  padding-inline: var(--layout-page-margin);
 }
 
 /* Filtreringen og filmene, der kører nu: 96px luft over og under som i prototypen (48px på mobil) */
@@ -18,9 +16,9 @@
 }
 
 @media (max-width: 48rem) {
-  /* Samme luft i siderne som kortet, så kanterne flugter */
+  /* 16px i siderne som filmsiden på mobil */
   .sections {
-    padding-inline: var(--space-3);
+    padding-inline: var(--space-4);
   }
 
   .nowPlaying {

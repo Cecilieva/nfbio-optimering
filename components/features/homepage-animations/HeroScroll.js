@@ -58,6 +58,12 @@ function getServerReducedMotion() {
   return null;
 }
 
+// Har nedtællingen kørt, siden siden blev indlæst? Den skal kun vises, når siden faktisk indlæses –
+// kommer man tilbage til forsiden fra filmsiden via et link, springes den over.
+// Værdien ligger i browserens hukommelse og nulstilles ved en genindlæsning, så vises nedtællingen igen.
+// (På serveren er den altid false, ligesom i browseren ved en ny indlæsning – derfor matcher de to.)
+let introPlayed = false;
+
 // Hver film får en plads og en dybde (z). Den sidste står altid i midten, længst væk.
 // De andre fordeles jævnt i dybden, så de kommer forbi én ad gangen.
 function getLayout(films) {
@@ -76,6 +82,7 @@ function getLayout(films) {
  * Sektionen er pinned, mens det sker, og scroller man op igen, kører det hele baglæns.
  *
  * 1. Nedtællingen 3-2-1 (IntroCountdown) kører på tid ved indlæsning og ligger over alt, også headeren.
+ *    Den kører kun én gang pr. indlæsning af siden – kommer man tilbage til forsiden via et link, springes den over.
  *    Man kan ikke scrolle, mens den kører (Lenis er stoppet).
  * 2. Når den glider op, toner plakaterne frem, og "Scroll"-markøren venter nederst.
  * 3. Resten styres af scroll. "Pinned" betyder, at hero'en står fast på skærmen, mens man scroller, og
@@ -114,7 +121,8 @@ export default function HeroScroll({
 }) {
   // true/false i browseren, null på serveren
   const reduceMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
-  const [showCountdown, setShowCountdown] = useState(true);
+  // Nedtællingen vises, hvis den ikke allerede har kørt siden siden blev indlæst
+  const [showCountdown, setShowCountdown] = useState(() => !introPlayed);
   const lenis = useLenis();
   // Lenis til klik på kortets knapper under udfoldningen. En ref, så scroll-animationen ikke starter forfra,
   // når Lenis er klar.
@@ -130,9 +138,10 @@ export default function HeroScroll({
   const copyRef = useRef(null);
   const posterRefs = useRef([]);
   // Plakaterne toner frem, når nedtællingen glider væk. Selve animationen laves længere nede.
-  // fadeWanted husker, hvis nedtællingen var hurtigere end animationen.
+  // fadeWanted husker, hvis nedtællingen var hurtigere end animationen – og er sand fra start,
+  // når nedtællingen springes over, så plakaterne toner frem med det samme.
   const fadeTween = useRef(null);
-  const fadeWanted = useRef(false);
+  const fadeWanted = useRef(!showCountdown);
 
   // Headeren ligger gennemsigtig oven på stjernerne (se Header.module.css)
   useEffect(() => {
@@ -469,6 +478,12 @@ export default function HeroScroll({
     fadeTween.current?.play();
   }
 
+  // Nedtællingen er gledet ud: fjern den, og husk at den har kørt (til siden indlæses igen)
+  function handleCountdownDone() {
+    introPlayed = true;
+    setShowCountdown(false);
+  }
+
   return (
     <>
       <section ref={heroRef} className={styles.hero} aria-label={label}>
@@ -537,7 +552,7 @@ export default function HeroScroll({
           Før vi ved, om man har bedt om mindre bevægelse, står den stille ("pending"). */}
       {showCountdown && reduceMotion !== true && (
         <div className={styles.countdownLayer} data-status={reduceMotion === null ? "pending" : "playing"} aria-hidden="true">
-          <IntroCountdown onSlideStart={handleCountdownSlideStart} onDone={() => setShowCountdown(false)} />
+          <IntroCountdown onSlideStart={handleCountdownSlideStart} onDone={handleCountdownDone} />
         </div>
       )}
     </>

@@ -34,7 +34,8 @@
    Først det, de to har til fælles, og derefter det, der er forskelligt. */
 .button[data-variant="primary"],
 .button[data-variant="secondary"],
-.button[data-variant="outline"] {
+.button[data-variant="outline"],
+.button[data-variant="more"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -74,8 +75,15 @@
   background: transparent;
 }
 
+/* Figma "Knap", Type=Se flere: som secondary, men med den mørke kant border/Standard */
+.button[data-variant="more"] {
+  border-color: var(--color-border-default);
+  background: transparent;
+}
+
 /* Buttons/Sekundær hover – "Følg film" beholder den når den er slået til */
 .button[data-variant="secondary"]:hover,
+.button[data-variant="more"]:hover,
 .button[data-variant="outline"]:hover,
 .button[data-variant="outline"][aria-pressed="true"] {
   background: var(--color-button-secondary-hover);
@@ -89,6 +97,7 @@
 
 .button[data-variant="primary"]:focus-visible,
 .button[data-variant="secondary"]:focus-visible,
+.button[data-variant="more"]:focus-visible,
 .button[data-variant="outline"]:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-text);
   outline-offset: var(--space-1);

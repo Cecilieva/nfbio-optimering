@@ -1,4 +1,4 @@
-import Link from "next/link";
+import BackLink from "@/components/ui/BackLink";
 import styles from "./StepHeader.module.css";
 
 // Toppen af hvert trin i købsflowet:
@@ -8,17 +8,9 @@ import styles from "./StepHeader.module.css";
 //   totalSteps - hvor mange streger bjælken har
 //   title      - fx "Vælg antal pladser"
 //   subtitle   - fx "Clayface · i dag kl. 19.30 · Aarhus Bio"
-//   backHref   - "Tilbage" er et link hertil …
+//   backHref   - "Tilbage" er et link hertil (BackLink) …
 //   onBack     - … eller en knap, der kalder denne funktion (fx tilbage til forrige fase på samme side)
 export default function StepHeader({ step, totalSteps = 4, title, subtitle, backHref, onBack }) {
-  // Pilen og teksten er ens, uanset om "Tilbage" er et link eller en knap
-  const backContent = (
-    <>
-      <img src="/icons/chevron-down.svg" alt="" className={styles.backIcon} />
-      Tilbage
-    </>
-  );
-
   // Fx [1, 2, 3, 4] - én streg pr. trin
   const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
 
@@ -26,16 +18,8 @@ export default function StepHeader({ step, totalSteps = 4, title, subtitle, back
     <div className={styles.header}>
       {/* "Tilbage" og trinbjælken står sammen - titlen står længere nede */}
       <div className={styles.top}>
-        {onBack && (
-          <button type="button" className={styles.back} onClick={onBack}>
-            {backContent}
-          </button>
-        )}
-        {!onBack && backHref && (
-          <Link href={backHref} className={styles.back}>
-            {backContent}
-          </Link>
-        )}
+        {/* Figma "Knap", Type=Tilbage – samme knap som på filmsiden. En knap med onBack, ellers et link */}
+        {(onBack || backHref) && <BackLink href={backHref} onClick={onBack} className={styles.back} />}
 
         {/* Trinbjælken. Skærmlæsere får teksten "Trin 1 af 4" i stedet for stregerne */}
         <div className={styles.steps} role="img" aria-label={`Trin ${step} af ${totalSteps}`}>

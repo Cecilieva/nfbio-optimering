@@ -94,7 +94,7 @@ create table showtimes (
   movie_id   bigint not null references movies(id) on delete cascade,
   hall_id    bigint not null references halls(id) on delete cascade,
   starts_at  timestamptz not null,
-  format     text not null default '2D',   -- 2D / 3D / IMAX / Dolby
+  format     text not null default '2D',   -- 2D / 3D / 4DX / 70MM
   price_dkk  int  not null default 130,
   unique (hall_id, starts_at)
 );

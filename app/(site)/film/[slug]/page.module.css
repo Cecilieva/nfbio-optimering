@@ -4,25 +4,14 @@
   padding: 0;
 }
 
-/* Spilletiderne står i kolonne 2–11 på 12-kolonne-griddet, ligesom resten af filmsiden */
+/* Spilletiderne står i kolonne 2-11 i 12-kolonne-gridet, ligesom hero'en og detaljerne ovenover */
 .content {
-  display: grid;
-  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
-  column-gap: var(--grid-gutter);
-  padding: var(--space-20) 0;
+  padding: var(--space-20) var(--layout-page-margin);
 }
 
-.content > * {
-  grid-column: 2 / 12;
-}
-
-/* tablet + mobil: hele bredden med 16px luft i siderne */
+/* tablet + mobil: mindre luft */
 @media (max-width: 48rem) {
   .content {
     padding: var(--space-6) var(--space-4);
-  }
-
-  .content > * {
-    grid-column: 1 / -1;
   }
 }
