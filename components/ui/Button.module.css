@@ -19,9 +19,8 @@
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
 
-/* Kanten bliver lysere ved hover, og på den by, der allerede er valgt */
-.button[data-variant="tile"]:hover,
-.button[data-variant="tile"][aria-current="true"] {
+/* Kanten bliver lysere ved hover */
+.button[data-variant="tile"]:hover {
   border-color: var(--color-text-muted);
 }
 
