@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import { redirect } from "next/navigation";
 import FormLoader from "@/components/features/FormLoader";
 import AuthScreen, { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
@@ -92,7 +93,7 @@ export default async function LoginPage({ searchParams }) {
       </form>
 
       <AuthNote>
-        Ny her? <Link href={`/signup?next=${encodeURIComponent(nextPath)}`}>Opret profil</Link>
+        Ny her? <Link href={`/signup?next=${encodeURIComponent(nextPath)}`}>Opret profil<LinkLoader /></Link>
       </AuthNote>
     </AuthScreen>
   );

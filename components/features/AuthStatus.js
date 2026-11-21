@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import FormLoader from "@/components/features/FormLoader";
 import { getCurrentUser } from "@/lib/auth";
 import { signOut } from "@/lib/actions/auth";
@@ -12,6 +13,7 @@ export default async function AuthStatus() {
     return (
       <Link href="/login" className={styles.login}>
         Log ind
+        <LinkLoader />
       </Link>
     );
   }
@@ -20,6 +22,7 @@ export default async function AuthStatus() {
     <div className={styles.status}>
       <Link href="/profile" className={styles.email}>
         {user.email}
+        <LinkLoader />
       </Link>
       <form action={signOut}>
         <button type="submit" className={styles.logout}>

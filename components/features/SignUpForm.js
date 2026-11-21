@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import { useEffect, useRef, useState } from "react";
 import FormLoader from "@/components/features/FormLoader";
 import { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
@@ -284,7 +285,7 @@ export default function SignUpForm({ next, error = false }) {
 
       {step === 1 ? (
         <AuthNote>
-          Har du allerede en profil? <Link href={`/login?next=${encodeURIComponent(next)}`}>Log ind</Link>
+          Har du allerede en profil? <Link href={`/login?next=${encodeURIComponent(next)}`}>Log ind<LinkLoader /></Link>
         </AuthNote>
       ) : (
         <AuthNote>

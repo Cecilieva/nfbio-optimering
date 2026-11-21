@@ -143,10 +143,12 @@ create table bookings (
   user_id         uuid references auth.users(id) on delete set null,  -- null = gæst
   guest_email     text,
   guest_name      text,
-  status          booking_status not null default 'reserved',
+  status          booking_status not null default 'reserved', -- reserved (i gang) eller paid (købt). Udløbne slettes
   reserved_until  timestamptz not null default now() + interval '10 minutes', -- nedtælling
   payment_method  payment_method,
   total_dkk       int not null default 0,
+  child_count     int not null default 0,              -- antal børnebilletter
+  senior_count    int not null default 0,              -- antal pensionistbilletter
   ticket_code     text unique default upper(substr(md5(random()::text), 1, 8)),
   error_code      text,                                -- fx "MP-408"
   created_at      timestamptz not null default now()
@@ -169,35 +171,98 @@ join bookings b on b.id = bs.booking_id
 where b.status = 'paid'
    or (b.status = 'reserved' and b.reserved_until > now());
 
--- Reservér sæder atomisk ("Vi popper dine pladser …")
+-- Prisen for en booking: voksenpris for hvert sæde minus fradraget for børn og pensionister.
+-- Fradragene er de samme som i lib/ticket-types.js (Barn 45 kr., Pensionist 30 kr.)
+create or replace function public.ticket_total(p_price int, p_seats int, p_child int, p_senior int)
+returns int
+language sql immutable as $$
+  select p_price * p_seats - 45 * p_child - 30 * p_senior
+$$;
+
+-- Reservér sæder atomisk ("Vi popper dine pladser …").
+-- p_child_count og p_senior_count: hvor mange af billetterne der er til børn og pensionister.
+-- Alle gamle udgaver slettes først, så der kun findes én reserve_seats
+do $$
+declare f regprocedure;
+begin
+  for f in select oid::regprocedure from pg_proc
+            where proname = 'reserve_seats' and pronamespace = 'public'::regnamespace
+  loop
+    execute 'drop function ' || f;
+  end loop;
+end $$;
 create or replace function public.reserve_seats(
-  p_showtime_id bigint,
-  p_seat_ids    bigint[],
-  p_guest_email text default null,
-  p_guest_name  text default null
+  p_showtime_id    bigint,
+  p_seat_ids       bigint[],
+  p_guest_email    text default null,
+  p_guest_name     text default null,
+  p_child_count    int  default 0,
+  p_senior_count   int  default 0
 ) returns bookings
 language plpgsql security definer set search_path = public as $$
 declare
   v_booking bookings;
   v_price   int;
+  v_seats   int := coalesce(array_length(p_seat_ids, 1), 0);
 begin
-  -- ryd udløbne reservationer for denne forestilling
-  update bookings set status = 'expired'
-   where showtime_id = p_showtime_id and status = 'reserved' and reserved_until < now();
-  delete from booking_seats bs using bookings b
-   where bs.booking_id = b.id and b.showtime_id = p_showtime_id and b.status = 'expired';
+  if p_child_count < 0 or p_senior_count < 0 or p_child_count + p_senior_count > v_seats then
+    raise exception 'Antallet af billetter passer ikke med sæderne';
+  end if;
+
+  -- slet alle udløbne reservationer, så tabellen kun har igangværende og betalte køb (sæderne slettes med)
+  delete from bookings
+   where status = 'reserved' and reserved_until < now();
 
   select price_dkk into v_price from showtimes where id = p_showtime_id;
   if v_price is null then raise exception 'Forestillingen findes ikke'; end if;
 
-  insert into bookings (showtime_id, user_id, guest_email, guest_name, total_dkk)
+  insert into bookings (showtime_id, user_id, guest_email, guest_name, total_dkk, child_count, senior_count)
   values (p_showtime_id, auth.uid(), p_guest_email, p_guest_name,
-          v_price * coalesce(array_length(p_seat_ids, 1), 0))
+          public.ticket_total(v_price, v_seats, p_child_count, p_senior_count),
+          p_child_count, p_senior_count)
   returning * into v_booking;
 
   insert into booking_seats (booking_id, showtime_id, seat_id)
   select v_booking.id, p_showtime_id, unnest(p_seat_ids);   -- fejler hvis et sæde er taget
 
+  return v_booking;
+end $$;
+
+-- Skift billettyper på en reservation med de samme sæder (fx en voksen bliver til et barn).
+-- Prisen regnes ud igen. Kun en reservation uden ejer, eller ens egen, kan ændres
+create or replace function public.update_booking_tickets(
+  p_booking_id     uuid,
+  p_child_count    int default 0,
+  p_senior_count   int default 0
+) returns bookings
+language plpgsql security definer set search_path = public as $$
+declare
+  v_booking bookings;
+  v_price   int;
+  v_seats   int;
+begin
+  select s.price_dkk, (select count(*) from booking_seats bs where bs.booking_id = b.id)
+    into v_price, v_seats
+    from bookings b join showtimes s on s.id = b.showtime_id
+   where b.id = p_booking_id;
+
+  if p_child_count < 0 or p_senior_count < 0 or p_child_count + p_senior_count > coalesce(v_seats, 0) then
+    raise exception 'Antallet af billetter passer ikke med sæderne';
+  end if;
+
+  update bookings
+     set total_dkk    = public.ticket_total(v_price, v_seats, p_child_count, p_senior_count),
+         child_count  = p_child_count,
+         senior_count = p_senior_count
+   where id = p_booking_id
+     and status = 'reserved'
+     and reserved_until > now()
+     and (user_id is null or user_id = auth.uid())
+  returning * into v_booking;
+
+  if v_booking.id is null then
+    raise exception 'Reservationen findes ikke, er udløbet eller tilhører en anden';
+  end if;
   return v_booking;
 end $$;
 
@@ -236,13 +301,11 @@ create or replace function public.release_booking(p_booking_id uuid)
 returns void
 language plpgsql security definer set search_path = public as $$
 begin
-  update bookings set status = 'cancelled'
+  -- reservationen slettes, og dens sæder slettes med (on delete cascade)
+  delete from bookings
    where id = p_booking_id
      and status = 'reserved'
      and ((user_id is null and guest_email is null) or user_id = auth.uid());
-
-  delete from booking_seats bs using bookings b
-   where bs.booking_id = b.id and b.id = p_booking_id and b.status = 'cancelled';
 end $$;
 
 -- Gennemfør / afvis betaling (simuleret i prototypen) - kræver ejer og aktiv reservation
@@ -306,10 +369,11 @@ create policy "own booking seats" on booking_seats for select
   using (exists (select 1 from bookings b where b.id = booking_id and b.user_id = auth.uid()));
 
 grant select on taken_seats to anon, authenticated;
-grant execute on function public.reserve_seats    to anon, authenticated;
+grant execute on function public.reserve_seats(bigint, bigint[], text, text, int, int) to anon, authenticated;
 grant execute on function public.complete_payment to anon, authenticated;
 grant execute on function public.attach_booking_owner to anon, authenticated;
 grant execute on function public.release_booking to anon, authenticated;
+grant execute on function public.update_booking_tickets to anon, authenticated;
 
 -- =====================================================================
 --  TESTDATA
@@ -475,3 +539,153 @@ where bs.showtime_id = s.id
   and se.hall_id <> s.hall_id;
 
 commit;
+
+-- 3D og 70MM: den sene forestilling (kl. 21.45) bliver 3D eller 70MM for udvalgte film.
+-- Kl. 17.00 forbliver 2D og kl. 19.30 forbliver 4DX. 3D koster 155 kr., 70MM koster 165 kr.
+-- Filmene findes på deres slug. Tiden er skubbet lidt pr. film, så "efter kl. 21" rammer den sene forestilling.
+update showtimes s
+set format    = case when m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt') then '3D' else '70MM' end,
+    price_dkk = case when m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt') then 155 else 165 end
+from movies m
+where m.id = s.movie_id
+  and m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt', 'sunrise-on-the-reaping', 'rose')
+  and extract(hour from s.starts_at at time zone 'Europe/Copenhagen') >= 21;
+
+-- Nye biografer: sale, sæder og spilletider til de biografer, der ikke har nogen spilletider endnu.
+-- De gamle biografer røres ikke. Kan køres igen, hvis der kommer flere biografer.
+begin;
+
+-- De biografer, der mangler spilletider
+create temp table new_cinemas on commit drop as
+select c.id from cinemas c
+where not exists (select 1 from halls h join showtimes s on s.hall_id = h.id where h.cinema_id = c.id);
+
+-- 1. Fire sale pr. ny biograf (samme fordeling som de andre: Bio 1, Bio 5 og Bio 3 + 7 eller Bio 6 + 4)
+insert into halls (cinema_id, name)
+select c.id, n.name
+from (select id, row_number() over (order by id) as nr from cinemas) c
+cross join lateral (values
+  ('Bio 1'), ('Bio 5'),
+  (case when c.nr % 2 = 1 then 'Bio 3' else 'Bio 6' end),
+  (case when c.nr % 2 = 1 then 'Bio 7' else 'Bio 4' end)
+) n(name)
+where c.id in (select id from new_cinemas)
+  and not exists (select 1 from halls h where h.cinema_id = c.id);
+
+-- 2. Sæderne i de nye sale (samme tegninger som de andre sale)
+select public.seed_hall_seats(h.id, l.layout)
+from halls h
+join (values
+  ('Bio 1', array[
+    '..SSSSSSSSSSSSSSSSHH...',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    '..SSSSSSSSSSSSSSSSSSS..',
+    'SSSSSSS.........SSSSSSS']),
+  ('Bio 3', array[
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    '.HHSSSSSS']),
+  ('Bio 4', array[
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    'SSSSSSHH.']),
+  ('Bio 5', array[
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSS..SSSS..SSSS',
+    'SSSH..HSSH..HSSS']),
+  ('Bio 6', array[
+    '..SSSSS..',
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    'SSSSSSSSS',
+    '.HHSSSSSS']),
+  ('Bio 7', array[
+    'SSSSSSSSSSS',
+    'SSSSSSSSSSS',
+    'SSSSSSSSSSS',
+    'SSSSSSSSSHH'])
+) l(name, layout) on l.name = h.name
+where h.cinema_id in (select id from new_cinemas)
+  and not exists (select 1 from seats s where s.hall_id = h.id);
+
+-- 3. Spilletider: samme opskrift som de andre biografer (30 dage fra premieren, kl. 17.00, 19.30 og 21.45)
+insert into showtimes (movie_id, hall_id, starts_at, format, price_dkk)
+select m.id, h.id,
+       ((m.premiere_date + d) + t + (m.id / 4) * interval '5 minutes') at time zone 'Europe/Copenhagen',
+       case when t = time '19:30' then '4DX' else '2D' end,
+       case when t = time '19:30' then 175 else 135 end
+from movies m
+join (select id, cinema_id, row_number() over (partition by cinema_id order by id) - 1 as idx from halls) h
+  on h.idx = m.id % 4
+cross join generate_series(0, 29) d
+cross join unnest(array[time '17:00', time '19:30', time '21:45']) t
+where h.cinema_id in (select id from new_cinemas)
+  and m.status in ('now_playing', 'coming_soon')
+  and m.premiere_date is not null
+  and m.premiere_date + 29 >= current_date
+on conflict (hall_id, starts_at) do nothing;
+
+-- 4. Fordel de nye spilletider på salene, så salen skifter med dag og klokkeslæt
+alter table showtimes drop constraint showtimes_hall_id_starts_at_key;
+
+with ranked as (
+  select s.id, s.starts_at, h.cinema_id,
+         row_number() over (partition by h.cinema_id, s.starts_at order by s.movie_id, s.id) - 1 as rank_in_slot
+  from showtimes s
+  join halls h on h.id = s.hall_id
+  where h.cinema_id in (select id from new_cinemas)
+),
+cinema_halls as (
+  select id as hall_id, cinema_id,
+         row_number() over (partition by cinema_id order by id) - 1 as idx,
+         count(*) over (partition by cinema_id) as n
+  from halls
+),
+target as (
+  select r.id, ch.hall_id
+  from ranked r
+  join cinema_halls ch
+    on ch.cinema_id = r.cinema_id
+   and ch.idx = (r.rank_in_slot
+                 + extract(doy  from r.starts_at at time zone 'Europe/Copenhagen')::int
+                 + extract(hour from r.starts_at at time zone 'Europe/Copenhagen')::int) % ch.n
+)
+update showtimes s
+set hall_id = t.hall_id
+from target t
+where t.id = s.id
+  and s.hall_id <> t.hall_id;
+
+alter table showtimes add constraint showtimes_hall_id_starts_at_key unique (hall_id, starts_at);
+
+-- 5. 3D og 70MM på den sene forestilling (samme film og priser som i de andre biografer)
+update showtimes s
+set format    = case when m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt') then '3D' else '70MM' end,
+    price_dkk = case when m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt') then 155 else 165 end
+from movies m
+where m.id = s.movie_id
+  and m.slug in ('0-0', 'katten-med-hatten', 'den-store-diamantjagt', 'sunrise-on-the-reaping', 'rose')
+  and extract(hour from s.starts_at at time zone 'Europe/Copenhagen') >= 21;
+
+commit;
+
+
+-- Udløbne reservationer slettes automatisk hvert minut (Supabase pg_cron).
+-- Så har bookings kun igangværende og betalte køb. Sæderne slettes med (on delete cascade).
+create extension if not exists pg_cron;
+select cron.schedule(
+  'slet-udloebne-reservationer',
+  '* * * * *',
+  $$delete from public.bookings where status = 'reserved' and reserved_until < now()$$
+);

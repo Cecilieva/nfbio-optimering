@@ -57,7 +57,7 @@ export default function SeatView({ seats, rows, quantity, totalDkk, children }) 
         <p className={styles.label}>LÆRRED</p>
         <div key={selectionKey} className={styles.screen}>
           <div className={styles.screenBox} style={viewStyle}>
-            <img src="/icons/seats/screen-perspective.svg" alt="" className={styles.screenImage} />
+            <img src="/icons/seats/screen-straight.svg" alt="" className={styles.screenImage} />
           </div>
         </div>
         <div className={styles.chairs}>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import Button from "@/components/ui/Button";
 import SidePanel, { SidePanelHeading, SidePanelItem } from "./SidePanel";
 import styles from "./MainMenu.module.css";
@@ -54,6 +55,7 @@ export default function MainMenu({ triggerClassName }) {
               <li key={link.label}>
                 <Link href={link.href} className={styles.moreLink}>
                   {link.label}
+                  <LinkLoader />
                 </Link>
               </li>
             ))}

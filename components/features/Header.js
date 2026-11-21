@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import { getCities, getSelectedCity } from "@/lib/data/cities";
 import { getSearchMovies } from "@/lib/data/movies";
 import CityMenu from "./CityMenu";
@@ -33,6 +34,7 @@ export default async function Header({ variant = "full" }) {
       {/* alt="" fordi linket allerede har en tekst (aria-label) til skærmlæsere.
           Størrelsen er fra Figma: 56px høj (samme form som logoet i menuen og footeren, bare mindre) */}
       <Image src="/logo.svg" alt="" width={74.45} height={56} priority />
+      <LinkLoader />
     </Link>
   );
 
@@ -70,6 +72,7 @@ export default async function Header({ variant = "full" }) {
           <li>
             <Link href="/profile" className={styles.iconButton} aria-label="Profil">
               <Image src="/icons/profile.svg" alt="" width={24} height={24} />
+              <LinkLoader />
             </Link>
           </li>
         </ul>

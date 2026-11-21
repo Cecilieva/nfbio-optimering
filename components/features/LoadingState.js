@@ -76,7 +76,7 @@ function subscribe(listener) {
 
 // ---------- Komponenterne ----------
 
-// Siger "jeg henter noget", så længe den er på siden. Bruges af loading.js, FormLoader og LinkLoader.
+// Siger "jeg henter noget", så længe den er på siden. Bruges af FormLoader og LinkLoader.
 //
 //   title  - overskriften (standard: "Indlæser"). Prikkerne kommer frem én ad gangen efter den
 //   text   - en tekst under overskriften, fx hvilke pladser der reserveres (valgfri)

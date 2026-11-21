@@ -178,10 +178,12 @@
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-/* Figma: formatet står i højre side */
+/* Figma: formaterne står i højre side med lidt luft imellem */
 .feedTop {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
+  gap: var(--space-1);
 }
 
 /* Figma "Genre-chip": lille mørk boks med formatet. XS/Sekundær/Regular */

@@ -1,3 +1,4 @@
+import FormLoader from "@/components/features/FormLoader";
 import { selectCity } from "@/lib/actions/city";
 import SidePanel, { SidePanelHeading, SidePanelItem } from "./SidePanel";
 import styles from "./CityMenu.module.css";
@@ -27,6 +28,8 @@ export default function CityMenu({ cities, city, triggerClassName }) {
           Panelet lukker selv, når formularen sendes. */}
       <form action={selectCity}>
         <input type="hidden" name="next" value="/film" />
+        {/* Loaderen, mens forsiden for den nye by hentes */}
+        <FormLoader />
         <SidePanelHeading>Vælg by</SidePanelHeading>
         <ul className={styles.list}>
           {cities.map((item) => (

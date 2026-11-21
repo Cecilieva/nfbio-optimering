@@ -4,6 +4,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import TextField from "@/components/ui/TextField";
@@ -209,6 +210,8 @@ export default function HeaderSearch({ movies, triggerClassName }) {
                           <span className={styles.title}>{movie.title}</span>
                           {movie.comingSoon && <span className={styles.meta}>Kommer snart</span>}
                         </span>
+                        {/* På vej ind på en filmside vises loaderen altid (som filmkortene) */}
+                        <LinkLoader always />
                       </Link>
                     </li>
                   ))}
