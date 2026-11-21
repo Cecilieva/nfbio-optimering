@@ -1,48 +1,44 @@
-// "use client" = komponenten kører i browseren, fordi den reagerer på klik
+// "use client": knappen kører i browseren, fordi den reagerer på klik
 "use client";
 
 import Image from "next/image";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 
-/**
- * Knappen "Del" på filmsiden.
- *
- * På telefoner åbner den telefonens egen del-menu (Messenger, SMS, mail osv.).
- * Hvis browseren ikke har en del-menu (fx de fleste computere),
- * kopieres linket i stedet, og knappen skriver "Link kopieret" i 2 sekunder.
- *
- * @param {object} props
- * @param {string} props.title filmens titel – sendes med, når man deler
- */
+// Knappen "Del" på filmsiden. På telefonen åbner den del-menuen.
+// På computeren kopieres linket, og der står "Link kopieret" i 2 sekunder.
+//
+//   title - filmens titel
 export default function ShareButton({ title }) {
-  // true = linket er lige blevet kopieret → knappen viser "Link kopieret"
+  // true = der står "Link kopieret"
   const [copied, setCopied] = useState(false);
 
-  // Det der sker, når man klikker
   function handleClick() {
-    // Adressen på den side man står på, fx https://…/film/clayface
+    // Adressen på siden, fx https://…/film/clayface
     const url = window.location.href;
 
-    // Har browseren en del-menu? Så åbn den.
-    // .catch = brugeren lukkede menuen uden at dele – det er fint, så sker der ingenting
+    // Har browseren en del-menu, åbnes den. Lukker man den uden at dele, sker der ingenting
     if (navigator.share) {
       navigator.share({ title, url }).catch(() => {});
       return;
     }
 
-    // Ellers: kopiér linket, vis "Link kopieret" og skift tilbage til "Del" efter 2 sekunder
-    navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    // Ellers kopieres linket. Teksten skifter kun, hvis det lykkes.
+    // Vil browseren ikke kopiere (fx uden https), bliver der bare stående "Del"
+    navigator.clipboard
+      ?.writeText(url)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(() => {});
   }
 
   return (
-    // Genbruger den almindelige knap (variant "secondary" = knap med kant)
-    // aria-label: skærmlæsere hører "Del Clayface" i stedet for bare "Del"
+    // aria-label: skærmlæsere hører fx "Del Clayface"
     <Button variant="secondary" onClick={handleClick} aria-label={`Del ${title}`}>
       <Image src="/icons/share.svg" alt="" width={18} height={18} />
-      {/* aria-live: skærmlæsere læser teksten op, når den skifter til "Link kopieret" */}
+      {/* aria-live: "Link kopieret" bliver læst op */}
       <span aria-live="polite">{copied ? "Link kopieret" : "Del"}</span>
     </Button>
   );
