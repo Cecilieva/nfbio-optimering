@@ -47,9 +47,20 @@ app/
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, PopcornShower, LoadingDots, ParallaxFrame, Seat, DataDump
-  features/               Domænekomponenter: Header, HeaderSearch, MainMenu, CityMenu, SidePanel, Footer, Spotlight, MovieCard, Poster, MessagePage, ErrorState, SeatMap, SeatPicker, SeatView, …
+  features/               Domænekomponenter, delt op efter hvor på sitet de bruges:
+    layout/               Rammen om siderne: Header, ScrollHeader, HeaderSearch, MainMenu, CityMenu, SidePanel, Footer, NewsletterForm, SmoothScroll
+    loading/              Loaderen: LoadingState, FormLoader, LinkLoader
+    messages/             404 og fejlsiden: MessagePage, ErrorState
+    city-picker/          Vælg by: Spotlight
+    movies/               Film, der bruges flere steder: MovieCard, Poster, PosterPlaceholder, MovieFilter, ComingSoonSection, ComingSoonCard, TrailerButton, Curtain, FollowButton, ShareButton
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
+    movie-page/           Filmsiden: MovieHero, MovieTitle, MovieInfoBar, MovieDetails, Flashlight, CaseLabel, BearRating
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
+    checkout/             Fælles for købsflowet + Dine oplysninger: StepHeader, BottomBar, Countdown, ReservationExpired, OrderSummary, CheckoutLogin, CheckoutSignupForm, AttachOwnerForm
+    seats/                Sædevalg: SeatPicker, SeatMap, SeatView, TicketCounter
+    payment/              Betaling: PaymentForm, PaymentFailed, PaymentLoader
+    ticket/               Billetten: Ticket, TicketPrint
+    auth/                 Log ind, Opret profil og Profil: AuthScreen, AuthStatus, SignUpForm, UserBadge
 lib/
   data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, profile
   actions/                Server actions: auth, city, booking
