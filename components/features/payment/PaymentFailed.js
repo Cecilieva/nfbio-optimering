@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import PaymentLoader from "@/components/features/PaymentLoader";
+import PaymentLoader from "./PaymentLoader";
 import Button from "@/components/ui/Button";
 import Overlay from "@/components/ui/Overlay";
 import PopcornLoader from "@/components/ui/PopcornLoader";

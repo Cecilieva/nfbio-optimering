@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import PaymentLoader from "@/components/features/PaymentLoader";
+import PaymentLoader from "./PaymentLoader";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";

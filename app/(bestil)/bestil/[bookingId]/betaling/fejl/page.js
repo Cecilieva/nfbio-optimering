@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import PaymentFailed from "@/components/features/PaymentFailed";
+import PaymentFailed from "@/components/features/payment/PaymentFailed";
 import ReservationExpired from "@/components/features/checkout/ReservationExpired";
 import { getBooking, getMinutesLeft, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
