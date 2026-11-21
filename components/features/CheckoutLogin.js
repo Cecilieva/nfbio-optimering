@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import FormLoader from "@/components/features/FormLoader";
 import AttachOwnerForm from "@/components/features/AttachOwnerForm";
 import CheckoutSignupForm from "@/components/features/CheckoutSignupForm";
@@ -119,7 +120,7 @@ export default function CheckoutLogin({ bookingId, next, email, mode = "login" }
       </Button>
 
       <p className={styles.note}>
-        Ingen profil? <Link href={`${next}?opret=1`}>Opret profil</Link>
+        Ingen profil? <Link href={`${next}?opret=1`}>Opret profil<LinkLoader /></Link>
       </p>
     </Card>
   );

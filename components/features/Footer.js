@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import NewsletterForm from "./NewsletterForm";
 import styles from "./Footer.module.css";
 
@@ -61,6 +62,7 @@ export default function Footer({ showNewsletter = true }) {
                 <li key={link.label}>
                   <Link href={link.href} className={styles.link}>
                     {link.label}
+                    <LinkLoader />
                   </Link>
                 </li>
               ))}
@@ -76,6 +78,7 @@ export default function Footer({ showNewsletter = true }) {
                 <li key={link.label}>
                   <Link href={link.href} className={styles.link}>
                     {link.label}
+                    <LinkLoader />
                   </Link>
                 </li>
               ))}

@@ -4,6 +4,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import { useRef } from "react";
 import Button from "@/components/ui/Button";
 import { useLenis } from "./SmoothScroll";
@@ -196,6 +197,7 @@ export function SidePanelItem({ href, divider, selected, children, ...rest }) {
         {...rest}
       >
         {content}
+        <LinkLoader />
       </Link>
     );
   }
