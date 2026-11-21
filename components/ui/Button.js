@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import styles from "./Button.module.css";
 
 /**

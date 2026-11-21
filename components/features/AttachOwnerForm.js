@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import Button from "@/components/ui/Button";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import TextField from "@/components/ui/TextField";

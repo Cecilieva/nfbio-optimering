@@ -1,4 +1,4 @@
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import { selectCity } from "@/lib/actions/city";
 import SidePanel, { SidePanelHeading, SidePanelItem } from "./SidePanel";
 import styles from "./CityMenu.module.css";

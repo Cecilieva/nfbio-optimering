@@ -2,8 +2,8 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
-import FormLoader from "@/components/features/FormLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import AttachOwnerForm from "@/components/features/AttachOwnerForm";
 import CheckoutSignupForm from "@/components/features/CheckoutSignupForm";
 import Button from "@/components/ui/Button";

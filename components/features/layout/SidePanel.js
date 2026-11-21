@@ -4,7 +4,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import { useRef } from "react";
 import Button from "@/components/ui/Button";
 import { useLenis } from "./SmoothScroll";

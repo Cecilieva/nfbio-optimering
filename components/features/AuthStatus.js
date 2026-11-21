@@ -1,6 +1,6 @@
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
-import FormLoader from "@/components/features/FormLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import { getCurrentUser } from "@/lib/auth";
 import { signOut } from "@/lib/actions/auth";
 import styles from "./AuthStatus.module.css";

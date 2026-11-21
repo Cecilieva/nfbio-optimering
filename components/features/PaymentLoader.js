@@ -1,6 +1,6 @@
 "use client";
 
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 
 // "Reserverer pladser", mens betalingen sendes. Læg den inde i <form>.
 // Bruges på betalingen og ved "Prøv igen". always: vises også på et hurtigt net.

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLinkStatus } from "next/link";
-import LoadingState from "@/components/features/LoadingState";
+import LoadingState from "./LoadingState";
 
 // Viser loaderen, mens et link henter den næste side. Læg den inde i et <Link>.
 // Den gamle side bliver stående, indtil den nye er klar - imens viser vi loaderen (efter 1 sekund).

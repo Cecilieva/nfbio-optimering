@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import BottomBar from "@/components/features/BottomBar";
 import Countdown from "@/components/features/Countdown";
 import SeatMap from "@/components/features/SeatMap";

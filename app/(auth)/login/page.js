@@ -1,7 +1,7 @@
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import { redirect } from "next/navigation";
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import AuthScreen, { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";

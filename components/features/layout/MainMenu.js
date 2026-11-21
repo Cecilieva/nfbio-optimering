@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import Button from "@/components/ui/Button";
 import SidePanel, { SidePanelHeading, SidePanelItem } from "./SidePanel";
 import styles from "./MainMenu.module.css";

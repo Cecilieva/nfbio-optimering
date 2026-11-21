@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import FormLoader from "@/components/features/FormLoader";
+import FormLoader from "@/components/features/loading/FormLoader";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
 import Chip from "@/components/ui/Chip";

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import NewsletterForm from "./NewsletterForm";
 import styles from "./Footer.module.css";
 

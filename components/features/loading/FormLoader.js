@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import LoadingState from "@/components/features/LoadingState";
+import LoadingState from "./LoadingState";
 
 // Viser den almindelige loader ("Indlæser"), mens formularen, den står i, bliver sendt.
 // Læg den inde i <form> - så virker den af sig selv (useFormStatus ved, om formularen er i gang).

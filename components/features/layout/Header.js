@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_rethrow } from "next/navigation";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import { getCities, getSelectedCity } from "@/lib/data/cities";
 import { getSearchMovies } from "@/lib/data/movies";
 import CityMenu from "./CityMenu";

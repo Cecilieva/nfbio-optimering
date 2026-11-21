@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import LinkLoader from "@/components/features/LinkLoader";
+import LinkLoader from "@/components/features/loading/LinkLoader";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import TextField from "@/components/ui/TextField";
