@@ -1,6 +1,6 @@
 import Footer from "@/components/features/layout/Footer";
 import Header from "@/components/features/layout/Header";
-import MessagePage from "@/components/features/MessagePage";
+import MessagePage from "@/components/features/messages/MessagePage";
 import Button from "@/components/ui/Button";
 
 export const metadata = {

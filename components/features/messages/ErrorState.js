@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import MessagePage from "@/components/features/MessagePage";
+import MessagePage from "./MessagePage";
 import Button from "@/components/ui/Button";
 
 // Fejlsiden. Vises af error.js og global-error.js. Samme design som 404-siden (MessagePage)

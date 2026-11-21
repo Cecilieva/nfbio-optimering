@@ -5,7 +5,7 @@
 // "use client" skal stå øverst, fordi Next.js kræver, at en fejlside kører i browseren.
 "use client";
 
-import ErrorState from "@/components/features/ErrorState";
+import ErrorState from "@/components/features/messages/ErrorState";
 
 // error - fejlen, der skete
 // retry - en funktion, der prøver at vise siden igen (bruges af "Prøv igen"-knappen)
