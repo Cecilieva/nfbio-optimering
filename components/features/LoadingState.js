@@ -94,7 +94,9 @@ export default function LoadingState({ title = "Indlæser", text, always = false
 // Lægges i hver route-gruppes layout (som bliver på skærmen, når siden skifter).
 // Henter popkorn-billederne på forhånd og tegner loaderen, når den skal vises
 export function LoadingHost() {
-  preloadPopcorn();
+  useEffect(() => {
+    preloadPopcorn();
+  }, []);
   const loader = useSyncExternalStore(subscribe, () => shown, () => null);
 
   // key: en ny loader (nyt tidspunkt) starter forfra og toner frem

@@ -48,7 +48,7 @@ export default function Footer({ showNewsletter = true }) {
             {/* Egmont-logoet (ejeren af Nordisk Film Biografer) som på nfbio.dk - linker til egmont.com.
                 150px bredt som på nfbio.dk. alt="" fordi linket allerede har en tekst (aria-label) */}
             <a href="https://www.egmont.com" className={styles.logo} aria-label="Egmont">
-              <Image src="/egmont-logo.svg" alt="" width={150} height={37.89} />
+              <Image src="/egmont-logo.svg" alt="" width={150} height={38} />
             </a>
           </div>
 

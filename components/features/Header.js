@@ -41,7 +41,7 @@ export default async function Header({ variant = "full" }) {
   const logo = (
     <Link href={logoLink} className={styles.logo} aria-label="Nordisk Film Biografer – forside">
       {/* alt="", fordi linket har en aria-label. 56px højt */}
-      <Image src="/logo.svg" alt="" width={74.45} height={56} priority />
+      <Image src="/logo.svg" alt="" width={74} height={56} priority />
       <LinkLoader />
     </Link>
   );

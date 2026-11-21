@@ -1,13 +1,15 @@
-import { preload } from "react-dom";
 import styles from "./PopcornLoader.module.css";
 
 // Billederne, loaderen bruger: bægeret med bunken og de tre popkorn-former
 const POPCORN_IMAGES = ["/popcorn/popkorn.svg", "/popcorn/pop-1.svg", "/popcorn/pop-2.svg", "/popcorn/pop-3.svg"];
 
-// Hent billederne på forhånd. Loaderen vises tit kun et kort øjeblik - er billederne ikke hentet endnu,
-// ser man kun overskriften. Kaldes af LoadingHost i layoutet, så billederne ligger klar, før en loader vises
+// Henter billederne på forhånd, så de ligger klar, når loaderen vises (ellers ser man kun overskriften).
+// Kaldes af LoadingHost, når siden er vist. new Image() i stedet for <link rel="preload">,
+// fordi browseren ellers advarer, når billederne ikke bliver brugt med det samme
 export function preloadPopcorn() {
-  POPCORN_IMAGES.forEach((href) => preload(href, { as: "image" }));
+  POPCORN_IMAGES.forEach((src) => {
+    new Image().src = src;
+  });
 }
 
 // De popkorn, der hopper op af bægeret. Tallene er placeringer i tegningen (viewBox 160 × 160):
