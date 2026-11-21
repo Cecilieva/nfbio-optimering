@@ -126,15 +126,14 @@ export default function HeaderSearch({ movies, triggerClassName }) {
           </form>
 
           {/* Resultaterne vises først, når man har skrevet noget */}
+          {/* Skærmlæsere får at vide, hvor mange film der passer. Feltet findes, så længe søgningen er åben -
+              ellers når skærmlæseren ikke at opdage det, før teksten ændrer sig første gang */}
+          <p className="visually-hidden" aria-live="polite">
+            {search && (results.length === 1 ? "1 film fundet" : `${results.length} film fundet`)}
+          </p>
+
           {search && (
             <div className={styles.results}>
-              {/* Skærmlæsere får at vide, hvor mange film der passer */}
-              <p className="visually-hidden" aria-live="polite">
-                {results.length === 1
-                  ? "1 film fundet"
-                  : `${results.length} film fundet`}
-              </p>
-
               {results.length > 0 ? (
                 <ul className={styles.list}>
                   {results.map((movie) => (
