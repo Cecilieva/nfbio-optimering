@@ -1,0 +1,49 @@
+/* 12-kolonne-griddet som i resten af købsflowet: indholdet står i kolonne 2–11 */
+.page {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  width: 100%;
+  max-width: none; /* <main> er ellers højst 1024px bred (globals.css) */
+  padding: var(--space-8) 0 var(--space-10);
+}
+
+/* Alt på siden står i kolonne 2-11 */
+.page > * {
+  grid-column: 2 / 12;
+}
+
+/* Overskrift og tekst under billetten - 8px imellem (Gabs/X-Small) */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* "Rigtig god fornøjelse!" */
+.heading {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg); /* Font-Size/Medium */
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* "Billetten er sendt til dig på SMS …" */
+.body {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm); /* Font-Size/Small */
+}
+
+/* Tablet og mobil: hele bredden med 16px luft i siderne */
+@media (max-width: 48rem) {
+  .page {
+    padding-right: var(--space-4);
+    padding-left: var(--space-4);
+  }
+
+  .page > * {
+    grid-column: 1 / -1;
+  }
+}

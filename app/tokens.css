@@ -44,6 +44,7 @@
   --palette-spot-middle: #ff735929; /* "Spotlys" 60 % ude - 16 % */
   --palette-spot-edge: #ff664d00; /* "Spotlys" kanten - usynlig */
   --palette-pure-black: #000000; /* Bag videoen + skyggerne på tæppet */
+  --palette-periwinkle: #a3b4dc; /* Billet/Papir mørk */
 
   /* Thriller */
   --palette-black-85: #0d0c0cd9; /* Toning/85% */
@@ -147,6 +148,12 @@
   --figma-radius-small: 0.5rem; /* Border-radius/Small - 8px */
   --figma-radius-medium: 1rem; /* Border-radius/Medium - 16px */
   --figma-radius-large: 1.5rem; /* Border-radius/Large - 24px */
+
+  /* Billetten (mode: Standard) */
+  --figma-accent-tertiary: var(--palette-navy); /* accent/Teritær */
+  --figma-ticket-paper-light: var(--palette-white-soft); /* Billet/Papir lys */
+  --figma-ticket-paper-dark: var(--palette-periwinkle); /* Billet/Papir mørk */
+  --figma-ticket-text: var(--figma-accent-tertiary); /* Billet/Billet tekst -> accent/Teritær */
 
   /* ---------- Sitets tokens ---------- */
 
@@ -507,6 +514,23 @@
   --size-ticket-card-width: 29.167rem; /* 467px - "Vælg antal-kort" */
   --size-payment-failed-text: 27.5rem; /* 440px - teksten på "Betalingen fejlede" */
   --size-payment-failed-actions: 14rem; /* 224px - knapperne på "Betalingen fejlede" */
+  /* "Din billet er printet": printeren, billetten og popkornene */
+  --size-printer-width: 466px; /* printersprækken */
+  --size-printer-slot-height: 26px; /* printersprækkens højde */
+  --radius-printer-slot: 14px; /* printersprækkens hjørner */
+  --shadow-printer-slot: inset 0 6px 10px var(--palette-pure-black); /* Sprækken er dyb */
+  --size-ticket-height: 192px; /* billetten */
+  --size-ticket-main-width: 256px; /* billetten til venstre for stubben */
+  --size-ticket-stub-width: 104px; /* stubben */
+  --shadow-ticket: 0 10px 24px color-mix(in srgb, var(--palette-pure-black) 45%, transparent); /* Skyggen under billetten */
+  --color-ticket-paper-light: var(--figma-ticket-paper-light); /* Papiret toner fra lys … */
+  --color-ticket-paper-dark: var(--figma-ticket-paper-dark); /* … til blå */
+  --color-ticket-text: var(--figma-ticket-text); /* Teksten og den stiplede linje */
+  --size-ticket-logo-width: 50px; /* isbjørnen på stubben */
+  --size-ticket-logo-height: 38px; /* isbjørnens højde */
+  --space-ticket-logo-bottom: 9px; /* isbjørnen fra bunden af stubben */
+  --scale-popcorn-start: 40%; /* Popkornet er lille, mens det flyver op … */
+  --scale-popcorn-pop: 135%; /* … og popper lidt for stort, før det falder på plads */
   --size-stepper-button: var(--figma-btn-height-small); /* 32px - plus og minus */
   --size-stepper-count: 1.25rem; /* 20px - tallet mellem plus og minus */
   --color-stepper-button: var(--figma-accent-secondary); /* plus og minus */
@@ -612,6 +636,11 @@
   --duration-loading-dots: 1.6s; /* Prikkerne: én runde fra ingen til tre prikker */
   --duration-popcorn-wobble: 1.4s; /* Popkorn-bægeret svinger fra den ene side til den anden */
   --duration-popcorn-smoke: 2.4s; /* Én røgstribe over de brændte popkorn */
+  --duration-ticket-print: 2.81s; /* Billetten printes ud af sprækken, og popkornene drysser imens */
+  --duration-popcorn-burst: 480ms; /* Ét popkorn: flyver op i fire hop og popper */
+  --duration-ticket-done: 400ms; /* "Rigtig god fornøjelse!" toner frem, når billetten er printet */
+  --delay-ticket-print: 3s; /* "Din billet klargøres til udprintning" står så længe, før billetten printes */
+  --delay-popcorn-shower: calc(var(--delay-ticket-print) + var(--duration-ticket-print)); /* Popkornene kommer først, når billetten er printet - som tegn på succes */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -729,6 +758,8 @@
   --figma-option-background: var(--palette-white-soft); /* Option button/Standard baggrund */
   --figma-option-border: var(--palette-sand); /* Option button/Border standard */
   --figma-option-background-active: var(--palette-blue-pale); /* Option button/Aktiv baggrund */
+  --figma-accent-tertiary: var(--palette-sand); /* accent/Teritær */
+  --figma-ticket-text: var(--palette-navy); /* Billet/Billet tekst - peger ikke på accent/Teritær i familie */
   --figma-star: var(--palette-ink); /* Stjerner/Stjerne primær */
   --figma-seat-free: var(--palette-seat-family); /* Biografstole/Ledig */
   --figma-seat-free-soft: var(--palette-seat-soft-family); /* Biografstole/Ledig sart */

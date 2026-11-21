@@ -1,0 +1,121 @@
+/* Papiret: toner fra lys til blå med skygge under. Hoveddelen til venstre og stubben til højre */
+.ticket {
+  position: relative;
+  display: flex;
+  height: var(--size-ticket-height);
+  overflow: hidden;
+  border-radius: var(--radius-sm); /* Border-radius/X-Small */
+  background: linear-gradient(
+    123.3deg,
+    var(--color-ticket-paper-light) 0%,
+    var(--color-ticket-paper-dark) 74%
+  );
+  box-shadow: var(--shadow-ticket);
+  color: var(--color-ticket-text);
+  font-family: var(--font-family-body);
+  line-height: var(--line-height-snug);
+}
+
+/* Ingen ekstra luft om teksterne */
+.ticket p {
+  margin: 0;
+}
+
+/* Splinterne dækker hele papiret */
+.pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hoveddelen: titel og detaljer øverst, det med småt nederst */
+.main {
+  position: relative; /* ligger over splinterne */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: var(--size-ticket-main-width);
+  padding: var(--space-6); /* Paddings/Medium */
+}
+
+/* Filmtitel og detaljer - alt med fed skrift */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4); /* Gabs/Small */
+  font-weight: var(--font-weight-bold);
+}
+
+/* Filmtitlen */
+.title {
+  font-size: var(--font-size-lg); /* Font-Size/Medium */
+}
+
+/* Sted til venstre og tid til højre */
+.details {
+  display: flex;
+  gap: var(--space-6); /* Gabs/Medium */
+  font-size: var(--font-size-xs); /* XS/Sekundær/Bold */
+}
+
+/* En kolonne med linjer under hinanden */
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Det med småt: højst to linjer */
+.terms {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: var(--font-size-xs); /* XS/Sekundær/Regular */
+}
+
+/* Stubben: den stiplede linje er dens venstre kant */
+.stub {
+  position: relative; /* ligger over splinterne */
+  display: flex;
+  justify-content: center;
+  width: var(--size-ticket-stub-width);
+  padding: var(--space-4); /* Paddings/Small */
+  border-left: var(--border-width) dashed var(--color-ticket-text);
+}
+
+/* Teksten står på langs og læses nedefra og op: lodret skrift (vertical-rl) vendt 180 grader.
+   z-index: teksten ligger foran isbjørnen */
+.stubText {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* Gabs/X-Small */
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  align-self: flex-start;
+}
+
+/* Filmtitlen på stubben */
+.stubTitle {
+  font-size: var(--font-size-sm); /* Font-Size/Small */
+  font-weight: var(--font-weight-bold);
+}
+
+/* Sal/række/sæde og dag/tid side om side */
+.stubDetails {
+  display: flex;
+  gap: var(--space-4); /* Gabs/Small */
+  font-size: var(--font-size-xs); /* Font-Size/X-Small */
+}
+
+/* Isbjørnen nederst i midten af stubben */
+.logo {
+  position: absolute;
+  bottom: var(--space-ticket-logo-bottom);
+  left: 50%;
+  width: var(--size-ticket-logo-width);
+  height: var(--size-ticket-logo-height);
+  translate: -50% 0;
+}
