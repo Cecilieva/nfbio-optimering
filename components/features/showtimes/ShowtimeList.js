@@ -28,7 +28,7 @@ const DAYS_PER_WEEK = 7;
 export default function ShowtimeList({ movie, showtimes, halls }) {
   // Det, brugeren har valgt på siden
   const [cinemaId, setCinemaId] = useState(null); // valgt biograf
-  const [format, setFormat] = useState("all"); // valgt format: "all", "2D" eller "4DX"
+  const [format, setFormat] = useState("all"); // valgt format: "all", "2D", "3D", "4DX" eller "70MM"
   const [week, setWeek] = useState(0); // hvilken uge: 0 = første uge, 1 = næste uge
   const [selectedId, setSelectedId] = useState(null); // det tidspunkt, man har klikket på
   const [cinemaOpen, setCinemaOpen] = useState(false); // er biograf-listen åben?
