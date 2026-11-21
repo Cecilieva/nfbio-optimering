@@ -406,6 +406,7 @@
   --space-not-found-top: 7.5rem; /* 120px - luft over indholdet */
   --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
   --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
+  --angle-popcorn-wobble: 8deg; /* "Tiden er udløbet": popkorn-bægeret vipper så meget til hver side */
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   /* Figma "Projektor - standard": Start -> Tændt -> Drift */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
@@ -568,6 +569,8 @@
   --duration-title-wave-hop: 450ms; /* Ét hop i bølgen - bruges, når man holder musen over titlen */
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
   --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
+  --duration-expired-in: 400ms; /* "Tiden er udløbet" toner frem */
+  --duration-popcorn-wobble: 1.4s; /* Popkorn-bægeret svinger fra den ene side til den anden */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
      Samles her, så alle animationer på sitet føles ens. */
@@ -589,6 +592,7 @@
   --z-intro-header: 101; /* Headeren oven på hero'en */
   --z-header-over-hero: 2; /* Filmsiden: headeren oven på heroens billede og skygger */
   --z-intro-countdown: 102; /* Nedtællingen - over alt */
+  --z-expired: 100; /* "Tiden er udløbet" dækker hele købsflowet, også headeren og bundbjælken */
 
   /* Layout */
   /* Breakpoints - CSS-variabler virker ikke i @media, så tallene skrives direkte i media queries.

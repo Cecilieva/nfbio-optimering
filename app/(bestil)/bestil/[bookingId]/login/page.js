@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import BottomBar from "@/components/features/BottomBar";
 import CheckoutLogin from "@/components/features/CheckoutLogin";
 import Countdown from "@/components/features/Countdown";
 import OrderSummary from "@/components/features/OrderSummary";
+import ReservationExpired from "@/components/features/ReservationExpired";
 import StepHeader from "@/components/features/StepHeader";
 import Seat from "@/components/ui/Seat";
 import { getCurrentUser } from "@/lib/auth";
@@ -53,12 +53,15 @@ export default async function BookingLoginPage({ params, searchParams }) {
   // "Tilbage" fører til "Vælg dine pladser" for samme forestilling, med de sæder man har valgt
   const seatsHref = `/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`;
 
-  // Sæderne holdes kun i en kort tid. Er tiden gået, skal man vælge sæder igen
+  // "Vælg pladser igen" på "Tiden er udløbet" fører til "Vælg dine pladser" med de samme billetter.
+  // ?booking=… fortæller sædevalget, hvilken reservation man kommer fra
+  const restartHref = `/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`;
+
+  // Sæderne holdes kun i en kort tid. Var tiden allerede gået, vises "Tiden er udløbet" i stedet for siden
   if (!isReservationActive(booking)) {
     return (
       <main>
-        <h1>Reservationen er udløbet</h1>
-        <Link href={seatsHref}>Vælg sæder igen</Link>
+        <ReservationExpired href={restartHref} />
       </main>
     );
   }
@@ -99,7 +102,8 @@ export default async function BookingLoginPage({ params, searchParams }) {
           </>
         }
       >
-        <Countdown until={booking.reserved_until} />
+        {/* Rammer uret 00:00, lægges "Tiden er udløbet" over siden */}
+        <Countdown until={booking.reserved_until} expiredHref={restartHref} />
       </BottomBar>
     </main>
   );
