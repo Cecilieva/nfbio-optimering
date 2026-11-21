@@ -45,7 +45,7 @@ app/
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
-  features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
+  features/               Domænekomponenter: Header, MainMenu, CityMenu, SidePanel, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
 lib/
@@ -91,7 +91,9 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
-| Header | 258:5371 | alle sider | Header (`variant="full"` og `variant="logo"`), ScrollHeader (gemmer headeren ved scroll ned, viser den ved scroll op), MainMenu |
+| Header | 258:5371 | alle sider | Header (`variant="full"` og `variant="logo"`), ScrollHeader (gemmer headeren ved scroll ned, viser den ved scroll op), MainMenu, CityMenu |
+| Menu | 1056:25687 | alle sider med fuld header | MainMenu (burgermenuen), SidePanel (panelet fra siden med "Luk" øverst - intet logo; deles med Byskift), Button |
+| Byskift | 2588:40783 | alle sider med fuld header | CityMenu (lokations-ikonet i headeren - panelet kommer fra højre, vælger by med `selectCity` og sender til `/film`), SidePanel |
 | Vælg by | 2141:155168 | `/` og `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"`) |
 | Forside - intro (motion) | 1869:14851 (nedtælling: 1869:15878) | `/film` | HeroScroll (scroll-styret med GSAP - 8 tilfældige plakater fra `lib/data/intro-posters.js`, valgt i FeaturedMovies), Starfield, IntroCountdown - alle i `features/homepage-animations/`. Den sidste plakat folder sig ud til kort 1 i FeaturedMovies. Nedtællingen kører én gang pr. indlæsning af siden – ikke når man kommer tilbage via et link |
 | Forside - "Kommer snart"-kort | 11:34 | `/film` | FeaturedMovies (i `features/homepage-animations/` - kortene under hinanden, scroll-effekter og prikker), ComingSoonCard, ParallaxFrame, SmoothScroll (Lenis, i `(site)/layout.js`), FollowButton, TrailerButton, Button (`variant="outline"`). Filmene (de 3 med nærmeste premiere fra i morgen, med `hero_url`) vælges i `lib/data/featured.js` |
