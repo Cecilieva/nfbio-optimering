@@ -40,14 +40,23 @@ export default function Button({
 
   // CSS'en vælger udseendet ud fra data-variant, fx .button[data-variant="tile"]
 
+  // Hop på samme side (fx "#spilletider"): et almindeligt link, så det også virker, når man klikker igen.
+  // (Next.js' Link gør ingenting, hvis adressen allerede ender på samme #.)
+  if (href?.startsWith("#")) {
+    return (
+      <a href={href} data-variant={variant} className={classes} {...rest}>
+        {children}
+      </a>
+    );
+  }
+
   // Med href: et link, der ligner en knap
   if (href) {
     return (
       <Link href={href} data-variant={variant} className={classes} {...rest}>
         {children}
-        {/* Viser "Indlæser", hvis den næste side er længe om at komme (fx på langsomt net).
-            Ikke ved et hop på samme side (fx "#spilletider") - der skal ikke hentes noget */}
-        {!href.startsWith("#") && <LinkLoader />}
+        {/* Viser "Indlæser", hvis den næste side er længe om at komme (fx på langsomt net) */}
+        <LinkLoader />
       </Link>
     );
   }
