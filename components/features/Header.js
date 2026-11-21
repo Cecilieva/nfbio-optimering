@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getCities, getSelectedCity } from "@/lib/data/cities";
+import { getSearchMovies } from "@/lib/data/movies";
 import CityMenu from "./CityMenu";
+import HeaderSearch from "./HeaderSearch";
 import MainMenu from "./MainMenu";
 import ScrollHeader from "./ScrollHeader";
 import styles from "./Header.module.css";
@@ -12,11 +14,14 @@ import styles from "./Header.module.css";
 // Headeren gemmer sig, når man scroller ned, og kommer frem igen, når man scroller op (ScrollHeader).
 export default async function Header({ variant = "full" }) {
   // Det er kun den fulde header, der bruger byen, så vi henter den kun dér
-  // (og listen over byer til byskiftet)
+  // (og listen over byer til byskiftet og filmene til søgningen)
   let city = null;
   let cities = [];
+  let searchMovies = [];
   if (variant === "full") {
-    [city, cities] = await Promise.all([getSelectedCity(), getCities()]);
+    // Byen skal kendes først, fordi søgningen kun viser film, der kører i byen
+    city = await getSelectedCity();
+    [cities, searchMovies] = await Promise.all([getCities(), getSearchMovies(city?.id)]);
   }
 
   // Hvor logoet linker hen: til filmoversigten, eller tilbage til Vælg by på startskærmen
@@ -55,10 +60,8 @@ export default async function Header({ variant = "full" }) {
         {/* Højre: ikoner for søg, by og profil */}
         <ul className={styles.actions}>
           <li>
-            {/* TODO: få søgning til at virke, når søgesiden findes */}
-            <button type="button" className={styles.iconButton} aria-label="Søg">
-              <Image src="/icons/search.svg" alt="" width={24} height={24} />
-            </button>
+            {/* Folder et søgefelt ud, hvor man kan søge efter film */}
+            <HeaderSearch movies={searchMovies} triggerClassName={styles.iconButton} />
           </li>
           <li>
             {/* Åbner byskiftet (Figma "Byskift"), hvor man vælger en anden by */}

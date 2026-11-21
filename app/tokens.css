@@ -416,6 +416,10 @@
   --size-poster-card-width-compact: 9rem; /* Mindste bredde på mobil, så der er to pr. række */
   --aspect-poster-card: 11 / 16; /* 220 × 320 */
   --size-icon: 1.5rem; /* 24px - fx kalenderen på plakaterne */
+  --size-header-search-width: 22.5rem; /* 360px - søgefeltet i headeren, når det er foldet ud */
+  --size-header-logo-width: 4.653rem; /* 74.45px - logoet i headeren (56px højt) */
+  --size-header-search-results: 26rem; /* 416px - højst så høj bliver listen med søgeresultater, før man scroller */
+  --size-search-poster-width: 2.5rem; /* 40px - de små plakater i søgeresultaterne */
   --opacity-poster-text: 0.85; /* "Billetsalg fra 10. nov" på plakaterne */
   --size-control-height: var(--figma-btn-height-medium); /* 40px - standardknappen */
   --size-button-height: var(--figma-btn-height-medium); /* 40px - knapper og tekstfelter */

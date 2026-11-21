@@ -37,7 +37,9 @@
   }
 }
 
+/* position: relative, så søgefeltet (HeaderSearch) på mobil kan strække sig fra headerens venstre kant */
 .bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -90,6 +92,14 @@
 }
 
 /* Mobil: mindre luft i siderne og ikonerne tættere sammen, så alt kan være på én linje */
+/* Mobil: søgefeltet fylder pladsen til venstre for ikonerne, så logoet og burgermenuen skjules imens */
+@media (max-width: 48rem) {
+  .bar:has([data-search-open]) .logo,
+  .bar:has([data-search-open]) .start {
+    visibility: hidden;
+  }
+}
+
 @media (max-width: 48rem) {
   .bar {
     padding: var(--space-3) var(--space-4);
