@@ -1,16 +1,13 @@
 import BearRating from "@/components/features/BearRating";
-import PosterPlaceholder from "@/components/features/PosterPlaceholder";
+import Poster from "@/components/features/Poster";
 import ShareButton from "@/components/features/ShareButton";
 import TrailerButton from "@/components/features/TrailerButton";
 import { formatAgeRating, formatDuration, formatPremiere } from "@/lib/format";
 import styles from "./MovieDetails.module.css";
 
-/**
- * Plakat, handling og fakta under heroen. Figma "Filmdetaljer/Default"
- *
- * @param {object} props
- * @param {object} props.movie filmen fra getMovieBySlug (lib/data/movies.js)
- */
+// Plakat, handling og fakta under toppen af filmsiden
+//
+//   movie - filmen fra getMovieBySlug
 export default function MovieDetails({ movie }) {
   const plot = movie.description || movie.short_description;
 
@@ -18,7 +15,7 @@ export default function MovieDetails({ movie }) {
     <section className={styles.details} aria-label={`Om ${movie.title}`}>
       <div className={styles.posterColumn}>
         <div className={styles.poster}>
-          {movie.poster_url ? <img src={movie.poster_url} alt="" /> : <PosterPlaceholder title={movie.title} />}
+          <Poster src={movie.poster_url} title={movie.title} />
         </div>
 
         <div className={styles.actions}>
@@ -59,7 +56,7 @@ export default function MovieDetails({ movie }) {
   );
 }
 
-// Ét faktum med overskrift. "list" vises med ét punkt pr. linje. Ingen værdi → vises ikke
+// Ét faktum med overskrift. "list" giver ét punkt pr. linje. Uden værdi vises det ikke
 function Fact({ label, value, list }) {
   const hasList = list && list.length > 0;
 
