@@ -25,7 +25,7 @@ export default async function CityPage({ searchParams }) {
   const nextPage = safePath(next, "/film");
 
   return (
-    <main className={styles.scene}>
+    <main id="indhold" className={styles.scene}>
       {/* Den animerede lyskegle bag teksten */}
       <Spotlight />
 

@@ -676,6 +676,7 @@
   --z-intro-header: 101; /* Headeren oven på hero'en */
   --z-intro-countdown: 102; /* Nedtællingen - over alt */
   --z-overlay: 110; /* Overlay (loader, "Tiden er udløbet" m.m.) dækker hele skærmen - over alt andet */
+  --z-skip-link: 120; /* "Spring til indhold" - øverst, når man tabber ind på siden */
 
   /* Layout */
   /* Breakpoints - CSS-variabler virker ikke i @media, så tallene skrives direkte i media queries.

@@ -11,7 +11,7 @@ import styles from "./MessagePage.module.css";
 //   buttons  - knapperne
 export default function MessagePage({ eyebrow, title, children, buttons }) {
   return (
-    <main className={styles.page}>
+    <main id="indhold" className={styles.page}>
       {/* Kun pynt, så alt="" */}
       <Image src={illustration} alt="" sizes="340px" className={styles.illustration} preload />
 

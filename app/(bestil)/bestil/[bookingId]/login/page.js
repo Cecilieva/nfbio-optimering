@@ -60,7 +60,7 @@ export default async function BookingLoginPage({ params, searchParams }) {
   // Sæderne holdes kun i en kort tid. Var tiden allerede gået, vises "Tiden er udløbet" i stedet for siden
   if (!isReservationActive(booking)) {
     return (
-      <main>
+      <main id="indhold">
         <ReservationExpired href={restartHref} />
       </main>
     );
@@ -69,7 +69,7 @@ export default async function BookingLoginPage({ params, searchParams }) {
   return (
     // Opret profil er et langt kort. På desktop står siden derfor stille (data-fit-screen),
     // og man scroller kun inde i kortet til højre
-    <main className={styles.page} data-fit-screen={mode === "signup" || undefined}>
+    <main id="indhold" className={styles.page} data-fit-screen={mode === "signup" || undefined}>
       {/* Fra gæst eller opret profil fører "Tilbage" kun ét skridt tilbage: til "Har du en profil?" */}
       <StepHeader step={3} title="Dine oplysninger" backHref={mode === "login" ? seatsHref : here} />
 

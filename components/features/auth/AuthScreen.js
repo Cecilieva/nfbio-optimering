@@ -26,7 +26,7 @@ import styles from "./AuthScreen.module.css";
 export default function AuthScreen({ children, backHref }) {
   return (
     // data-hero-under-header: headeren er gennemsigtig og ligger oven på billedet (samme regel som på filmsiden)
-    <main className={styles.page} data-hero-under-header data-has-back={backHref ? true : undefined}>
+    <main id="indhold" className={styles.page} data-hero-under-header data-has-back={backHref ? true : undefined}>
       {backHref && <BackLink href={backHref} className={styles.back} />}
 
       {/* Billedet er kun pynt, så alt="" – skærmlæsere springer det over.

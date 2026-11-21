@@ -46,7 +46,7 @@ export default async function MoviePage({ params }) {
   return (
     // data-theme: "thriller", "familie" eller ingenting (farverne står nederst i tokens.css)
     // data-hero-under-header: headeren ligger gennemsigtig oven på heroen
-    <main className={styles.page} data-theme={movie.theme ?? undefined} data-hero-under-header>
+    <main id="indhold" className={styles.page} data-theme={movie.theme ?? undefined} data-hero-under-header>
       <MovieHero movie={movie} loginHref={loginHref} />
 
       <MovieDetails movie={movie} />

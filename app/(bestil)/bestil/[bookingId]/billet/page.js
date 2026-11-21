@@ -43,7 +43,7 @@ export default async function TicketPage({ params }) {
     : `${tickets} er sendt til dig på SMS`;
 
   return (
-    <main className={styles.page}>
+    <main id="indhold" className={styles.page}>
       <TicketPrint
         subtitle={formatShowtimeLine(showtime)}
         ticket={<Ticket showtime={showtime} seats={seats} />}

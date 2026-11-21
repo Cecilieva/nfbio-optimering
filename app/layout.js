@@ -19,6 +19,11 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: MOTION_SCRIPT }} />
       </head>
       <body>
+        {/* Første ting, man møder med tastaturet: hop forbi headeren og menuen.
+            Hver side giver sin <main> id="indhold" */}
+        <a href="#indhold" className="skip-link">
+          Spring til indhold
+        </a>
         {children}
       </body>
     </html>

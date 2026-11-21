@@ -54,14 +54,14 @@ export default async function PaymentPage({ params, searchParams }) {
   // Sæderne holdes kun i en kort tid. Var tiden allerede gået, vises "Tiden er udløbet" i stedet for siden
   if (!isReservationActive(booking)) {
     return (
-      <main>
+      <main id="indhold">
         <ReservationExpired href={restartHref} />
       </main>
     );
   }
 
   return (
-    <main className={styles.page}>
+    <main id="indhold" className={styles.page}>
       <StepHeader step={3} title="Betaling" backHref={restartHref} />
 
       <div className={styles.columns}>
