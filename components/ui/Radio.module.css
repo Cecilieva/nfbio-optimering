@@ -1,0 +1,95 @@
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+  line-height: var(--line-height-snug);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.option:has(.input:checked) {
+  border-color: var(--color-cta);
+}
+
+/* Vi tegner selv cirklen i stedet for browserens */
+.input {
+  appearance: none;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: var(--size-radio);
+  height: var(--size-radio);
+  margin: 0;
+  border: var(--border-width-strong) solid var(--color-text-muted);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.input:checked {
+  border-color: var(--color-cta);
+}
+
+.input:checked::before {
+  content: "";
+  width: var(--size-radio-dot);
+  height: var(--size-radio-dot);
+  border-radius: 50%;
+  background: var(--color-cta);
+}
+
+.input:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text-primary);
+  outline-offset: var(--space-1);
+}
+
+.text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+}
+
+.label {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Fejl: rød i stedet for blå - også når boksen er valgt */
+.option[data-error="true"],
+.option[data-error="true"]:has(.input:checked) {
+  align-items: flex-start;
+  border-color: var(--color-danger);
+}
+
+.option[data-error="true"] .input {
+  margin-top: var(--space-0-5);
+  border-color: var(--color-danger);
+}
+
+.option[data-error="true"] .input:checked::before {
+  background: var(--color-danger);
+}
+
+.error {
+  margin-top: var(--space-2);
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: var(--size-radio-icon);
+  height: var(--size-radio-icon);
+  color: var(--color-danger);
+}
