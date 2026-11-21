@@ -78,7 +78,7 @@ supabase/supabase_schema.sql
 
 Sæder har `row_number` og `seat_number` (begge tal), og `col` (kolonnen i salen - huller er gange). Der er ingen daybeds - alle sæder er almindelige sæder eller handicappladser. Vis altid valgte sæder med `formatSeats(seats)` fra `lib/format.js`, fx "Række 4, sæde 6–7" eller "Række 4, sæde 6, 9" - skriv aldrig teksten selv.
 
-Man må ikke efterlade et ledigt sæde alene (optaget sæde, gang eller væg på begge sider), medmindre der ikke er nogen anden måde at vælge antallet på - fx når salen er næsten udsolgt. Reglen står i `lib/seat-rules.js` og tjekkes både i SeatPicker og i `reserveSeats`.
+Man må ikke efterlade et ledigt sæde alene (optaget sæde, gang eller væg på begge sider), medmindre det er den eneste mulighed - fx 3 personer, der vil sidde samlet, og der er kun 4 ledige sæder ved siden af hinanden, eller når salen er næsten udsolgt. Reglen står i `lib/seat-rules.js` og tjekkes både i SeatPicker og i `reserveSeats`.
 
 Når man kommer fra "Vælg antal" til sædevalget, får man automatisk tildelt pladser så tæt på midten af salen som muligt (`findBestSeats` i samme fil). Man kan frit ændre dem: et klik på et ledigt sæde bytter med det sæde, der blev valgt først.
 
