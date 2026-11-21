@@ -36,8 +36,9 @@
   text-decoration: none;
 }
 
+/* Samme hover-farve som de store punkter og footerens links (Figma text/Hover) */
 .moreLink:hover {
-  color: var(--color-cta-soft);
+  color: var(--color-accent);
 }
 
 .moreLink:focus-visible {
