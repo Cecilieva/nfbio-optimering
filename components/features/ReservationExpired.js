@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import Overlay from "@/components/ui/Overlay";
 import styles from "./ReservationExpired.module.css";
 
 // "Tiden er udløbet" - dækker hele skærmen, når sæderne ikke holdes længere.
@@ -9,17 +10,17 @@ import styles from "./ReservationExpired.module.css";
 export default function ReservationExpired({ href }) {
   return (
     // role="alert": skærmlæsere læser beskeden op med det samme, når den dukker op
-    <div className={styles.screen} role="alert">
-      {/* Det tomme popkorn-bæger, der svinger fra side til side. Kun pynt, så alt="" */}
-      <Image src="/popcorn/baeger.svg" alt="" width={90} height={73} className={styles.cup} />
-      <h1 className={styles.title}>Tiden er udløbet</h1>
+    <Overlay
+      role="alert"
+      title="Tiden er udløbet"
+      // Det tomme popkorn-bæger, der svinger fra side til side. Kun pynt, så alt=""
+      illustration={<Image src="/popcorn/baeger.svg" alt="" width={90} height={73} className={styles.cup} />}
+    >
       <p className={styles.text}>
         Vi beklager, men din bestilling er udløbet. Du kan begynde forfra ved at trykke på knappen nedenunder
       </p>
       {/* Fører tilbage til sædevalget, så man kan starte forfra */}
-      <Button href={href}>
-        Vælg pladser igen
-      </Button>
-    </div>
+      <Button href={href}>Vælg pladser igen</Button>
+    </Overlay>
   );
 }
