@@ -17,6 +17,7 @@ import { reserveSeats } from "@/lib/actions/booking";
 import { formatSeats } from "@/lib/format";
 import { findBestSeats, findLoneSeats } from "@/lib/seat-rules";
 import { countTickets, TICKET_TYPES } from "@/lib/ticket-types";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./SeatPicker.module.css";
 
 // Vi starter med 2 voksne
@@ -73,6 +74,8 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume,
     return null;
   });
   const [state, formAction, pending] = useActionState(reserveSeats, null);
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(pending);
   // Den fejl, man har lukket - så bliver overlayet lukket indtil næste fejl
   const [dismissed, setDismissed] = useState(null);
   // Det valg, man lukkede "En plads står alene"-vinduet for
@@ -153,7 +156,7 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume,
 
   // Trin 2: vælg sæder
   return (
-    <form action={formAction} className={styles.picker}>
+    <form action={formAction} onSubmit={submitOnce} className={styles.picker}>
       <input type="hidden" name="showtime_id" value={showtime.id} />
       {/* Hvornår uret når 00:00 - så det går videre på de næste sider i stedet for at starte forfra */}
       {holdUntil && <input type="hidden" name="hold_until" value={holdUntil} />}

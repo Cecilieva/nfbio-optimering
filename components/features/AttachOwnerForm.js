@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import TextField from "@/components/ui/TextField";
 import { attachBookingOwner } from "@/lib/actions/booking";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./AttachOwnerForm.module.css";
 
 // Gør reservationen til din og går videre til betaling.
@@ -17,9 +18,11 @@ import styles from "./AttachOwnerForm.module.css";
 //   email      - e-mailen på den, der er logget ind (står på knappen)
 export default function AttachOwnerForm({ bookingId, asGuest = false, email, children }) {
   const [state, formAction, pending] = useActionState(attachBookingOwner, null);
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(pending);
 
   return (
-    <form action={formAction} className={styles.form}>
+    <form action={formAction} onSubmit={submitOnce} className={styles.form}>
       <input type="hidden" name="booking_id" value={bookingId} />
       {/* "Udfyld de markerede felter.", hvis et felt mangler (fx e-mailen) */}
       <InvalidFieldsMessage className={styles.error} />
