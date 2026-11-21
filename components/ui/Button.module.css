@@ -1,4 +1,4 @@
-/* Variant "tile": by-knapperne på Vælg by (Figma "By – …") */
+/* Variant "tile": by-knapperne på Vælg by (Figma-komponenten "By-knap") */
 .button[data-variant="tile"] {
   display: flex;
   align-items: center;
@@ -12,16 +12,16 @@
   color: var(--color-text);
   font-family: inherit;
   font-size: var(--font-size-control);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular); /* Inter Regular som i Figma */
   line-height: var(--line-height-tight);
   text-decoration: none;
   cursor: pointer;
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
 
-/* Kanten bliver lysere ved hover */
+/* Kanten bliver blå ved hover (Figma "By-knap", Tilstand=Hover: accent/Primær) */
 .button[data-variant="tile"]:hover {
-  border-color: var(--color-text-muted);
+  border-color: var(--color-cta);
 }
 
 .button[data-variant="tile"]:focus-visible {
