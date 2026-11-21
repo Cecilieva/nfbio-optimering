@@ -1,25 +1,40 @@
+/* Headeren hænger fast i toppen. Scroller man ned, glider den op og ud (data-hidden);
+   scroller man op, kommer den frem igen. Se ScrollHeader.js */
 .header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
   background: var(--color-header-background);
   color: var(--color-header-text);
+  transition: transform var(--duration-header-slide) var(--easing-out);
 }
 
-/* På forsiden (HeroScroll sætter data-intro på <html>) ligger headeren gennemsigtig oven på
-   stjernerummet øverst, som i Figma. Den scroller væk med siden. */
+.header[data-hidden] {
+  transform: translateY(-100%);
+}
+
+/* Bruger man tastaturet i headeren, bliver den stående */
+.header:focus-within {
+  transform: none;
+}
+
+/* På forsiden (HeroScroll sætter data-intro på <html>) ligger headeren oven på stjernerummet, som i Figma */
 :global(html[data-intro]) .header {
-  position: absolute;
+  position: fixed;
   inset-inline: 0;
-  top: 0;
   z-index: var(--z-intro-header);
-  background: transparent;
 }
 
-/* På filmsiden ligger headeren også gennemsigtig oven på heroen */
+/* På filmsiden ligger headeren også oven på heroen */
 :global(html:has(main[data-hero-under-header])) .header {
-  position: absolute;
+  position: fixed;
   inset-inline: 0;
-  top: 0;
-  z-index: var(--z-header-over-hero);
-  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
 }
 
 .bar {

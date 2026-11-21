@@ -179,7 +179,7 @@
   --color-seats-few: var(--palette-yellow); /* Få pladser */
   --color-seats-sold-out: var(--palette-red); /* Udsolgt */
   --color-backdrop: color-mix(in srgb, var(--figma-bg-primary) 60%, transparent); /* Mørk baggrund bag en modal */
-  --color-header-background: var(--color-background);
+  --color-header-background: transparent; /* Headeren har ingen baggrund - den ligger oven på siden */
   --color-toning: var(--figma-toning-100); /* hinden over billedet på filmsiden */
   /* Skyggerne i filmsidens hero (Figma "Toning" og "Toning/skygge-bund"). Mange trin = blød overgang */
   --gradient-movie-hero-shadow-top: linear-gradient(
@@ -370,8 +370,8 @@
   /* Sizes */
   --size-avatar: 2.5rem;
   --size-header-side: 6.5rem;
-  --size-header-height: 6rem; /* 96px - headerens højde: logo (64px) + 16px luft over og under */
-  --size-header-height-compact: 5.5rem; /* 88px - på mobil: logo + 12px luft over og under */
+  --size-header-height: 5.5rem; /* 88px - headerens højde: logo (56px) + 16px luft over og under */
+  --size-header-height-compact: 5rem; /* 80px - på mobil: logo + 12px luft over og under */
   --size-header-side-compact: 6rem; /* Headerens sider på mobil: 3 ikoner med 12px imellem */
   --size-option-button-height: var(--figma-btn-height-small); /* 32px */
   --size-filter-divider-height: 2rem; /* 32px - "Skille" mellem felterne i filtreringsbaren */
@@ -537,6 +537,7 @@
   /* Motion */
   --duration-fast: 150ms;
   --duration-menu: 250ms;
+  --duration-header-slide: 300ms; /* Headeren glider ud og ind, når man scroller */
   --duration-spotlight: 2.4s;
   /* Nedtællingen 3-2-1 i introen (Figma "Nedtælling" - tider fra Figmas tidslinje) */
   --duration-countdown-step: 550ms; /* Hvert tal */
@@ -589,8 +590,8 @@
 
   /* Lag: hvad der ligger øverst */
   /* Hero'en på forsiden: headeren over stjernerummet, nedtællingen over alt (som i Figma) */
+  --z-header: 60; /* Headeren hænger fast i toppen - over siden og prikkerne, under "Tiden er udløbet" */
   --z-intro-header: 101; /* Headeren oven på hero'en */
-  --z-header-over-hero: 2; /* Filmsiden: headeren oven på heroens billede og skygger */
   --z-intro-countdown: 102; /* Nedtællingen - over alt */
   --z-expired: 100; /* "Tiden er udløbet" dækker hele købsflowet, også headeren og bundbjælken */
 

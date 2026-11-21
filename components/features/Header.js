@@ -2,11 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSelectedCity } from "@/lib/data/cities";
 import MainMenu from "./MainMenu";
+import ScrollHeader from "./ScrollHeader";
 import styles from "./Header.module.css";
 
-// Figma: Header. Den findes i to udgaver (varianter):
+// Figma: Header (258:5371). Den findes i to udgaver (varianter):
 //   variant="full" (standard) – burgermenu, logo, søg, by og profil. Bruges på de fleste sider.
 //   variant="logo"            – kun logoet i midten. Bruges på Vælg by.
+// Headeren gemmer sig, når man scroller ned, og kommer frem igen, når man scroller op (ScrollHeader).
 export default async function Header({ variant = "full" }) {
   // Det er kun den fulde header, der bruger byen, så vi henter den kun dér
   let city = null;
@@ -20,23 +22,24 @@ export default async function Header({ variant = "full" }) {
   // Logoet bruges i begge udgaver, så vi laver det én gang og genbruger det
   const logo = (
     <Link href={logoLink} className={styles.logo} aria-label="Nordisk Film Biografer – forside">
-      {/* alt="" fordi linket allerede har en tekst (aria-label) til skærmlæsere */}
-      <Image src="/logo.svg" alt="" width={84.75} height={63.75} priority />
+      {/* alt="" fordi linket allerede har en tekst (aria-label) til skærmlæsere.
+          Størrelsen er fra Figma: 56px høj (samme form som logoet i menuen og footeren, bare mindre) */}
+      <Image src="/logo.svg" alt="" width={74.45} height={56} priority />
     </Link>
   );
 
   // Udgave 1: kun logoet, centreret
   if (variant === "logo") {
     return (
-      <header className={styles.header}>
+      <ScrollHeader className={styles.header}>
         <div className={`${styles.bar} ${styles.barCentered}`}>{logo}</div>
-      </header>
+      </ScrollHeader>
     );
   }
 
   // Udgave 2: den fulde header
   return (
-    <header className={styles.header}>
+    <ScrollHeader className={styles.header}>
       <nav className={styles.bar} aria-label="Hovedmenu">
         {/* Venstre: burgermenuen (åbner sidemenuen) */}
         <div className={styles.start}>
@@ -71,6 +74,6 @@ export default async function Header({ variant = "full" }) {
           </li>
         </ul>
       </nav>
-    </header>
+    </ScrollHeader>
   );
 }
