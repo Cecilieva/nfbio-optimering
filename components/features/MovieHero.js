@@ -19,9 +19,11 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider", loginHr
   const image = movie.hero_url || movie.poster_url;
   const caseGenre = movie.case_genre;
   const flashlight = Boolean(caseGenre && image);
+  // Standard = ikke thriller, familie eller lommelygte
+  const standard = !movie.theme && !flashlight;
 
   return (
-    <section className={styles.hero} aria-labelledby="movie-title">
+    <section className={styles.hero} data-standard={standard || undefined} aria-labelledby="movie-title">
       {/* Billedet ligger i sit eget lag, så beskeden fra "Følg film" ikke bliver skåret væk */}
       <div className={styles.backdrop}>
         {flashlight ? (

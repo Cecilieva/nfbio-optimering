@@ -71,12 +71,24 @@
   background: var(--gradient-movie-hero-shadow-bottom);
 }
 
+/* Standard-filmsiden: mørkere skygge forneden */
+.hero[data-standard]::after {
+  height: var(--size-movie-hero-shadow-strong);
+  background: var(--gradient-movie-hero-shadow-bottom-strong);
+}
+
 /* Figma "Toning" (skygge-top) */
 .fadeTop {
   position: absolute;
   inset: 0 0 auto;
   height: var(--size-movie-hero-shadow);
   background: var(--gradient-movie-hero-shadow-top);
+}
+
+/* Standard-filmsiden: mørkere skygge foroven */
+.hero[data-standard] .fadeTop {
+  height: var(--size-movie-hero-shadow-strong);
+  background: var(--gradient-movie-hero-shadow-top-strong);
 }
 
 .top,
