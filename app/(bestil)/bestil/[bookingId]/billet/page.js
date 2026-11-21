@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import Ticket from "@/components/features/Ticket";
-import TicketPrint from "@/components/features/TicketPrint";
+import Ticket from "@/components/features/ticket/Ticket";
+import TicketPrint from "@/components/features/ticket/TicketPrint";
 import Button from "@/components/ui/Button";
 import { getCurrentUser } from "@/lib/auth";
 import { getBooking } from "@/lib/data/bookings";
