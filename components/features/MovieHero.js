@@ -13,24 +13,30 @@ import styles from "./MovieHero.module.css";
  * @param {object} props
  * @param {object} props.movie fra getMovieBySlug (+ hero_url, poster_url, before_premiere, case_genre)
  * @param {string} [props.ticketsHref="#spilletider"] hvor "Køb billet" fører hen
+ * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
  */
-export default function MovieHero({ movie, ticketsHref = "#spilletider" }) {
+export default function MovieHero({ movie, ticketsHref = "#spilletider", loginHref }) {
   const image = movie.hero_url || movie.poster_url;
   const caseGenre = movie.case_genre;
   const flashlight = Boolean(caseGenre && image);
+  // Standard = ikke thriller, familie eller lommelygte
+  const standard = !movie.theme && !flashlight;
 
   return (
-    <section className={styles.hero} aria-labelledby="movie-title">
-      {flashlight ? (
-        <Flashlight image={image} />
-      ) : (
-        <>
-          {image && <img src={image} alt="" className={styles.image} />}
-          <div className={styles.toning} aria-hidden="true" />
-          <div className={styles.beam} aria-hidden="true" />
-          <div className={styles.fadeTop} aria-hidden="true" />
-        </>
-      )}
+    <section className={styles.hero} data-standard={standard || undefined} aria-labelledby="movie-title">
+      {/* Billedet ligger i sit eget lag, så beskeden fra "Følg film" ikke bliver skåret væk */}
+      <div className={styles.backdrop}>
+        {flashlight ? (
+          <Flashlight image={image} />
+        ) : (
+          <>
+            {image && <img src={image} alt="" className={styles.image} />}
+            <div className={styles.toning} aria-hidden="true" />
+            <div className={styles.beam} aria-hidden="true" />
+            <div className={styles.fadeTop} aria-hidden="true" />
+          </>
+        )}
+      </div>
 
       <div className={styles.top}>
         <div className={styles.topLeft}>
@@ -48,7 +54,7 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider" }) {
         </div>
 
         <div className={styles.details}>
-          <MovieInfoBar movie={movie} ticketsHref={ticketsHref} />
+          <MovieInfoBar movie={movie} ticketsHref={ticketsHref} loginHref={loginHref} />
         </div>
       </div>
     </section>

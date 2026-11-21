@@ -16,10 +16,21 @@
   color: var(--color-text-primary);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-snug);
-  white-space: nowrap;
+  /* smal, så den ikke går ud over skærmen */
+  width: var(--size-toast-width);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Bred besked: lige så bred som knaprækken */
+.wrapper[data-wide-toast] {
+  position: static;
+}
+
+.wrapper[data-wide-toast] .toast {
+  right: 0;
+  width: auto;
 }
 
 .toast[data-visible="true"] {

@@ -46,7 +46,8 @@ export default function SelectedShowtime({ movie, showtime, hallLayout, canBuy, 
 
         <div className={styles.buttons}>
           {hallLayout && (
-            <Button variant="secondary" aria-expanded={hallOpen} onClick={() => setHallOpen(!hallOpen)}>
+            // samme kant som "Se flere film"
+            <Button variant="more" aria-expanded={hallOpen} onClick={() => setHallOpen(!hallOpen)}>
               {hallOpen ? "Skjul salen" : "Se salen"}
               {/* Pilen peger ned, når salen er skjult, og op, når den er vist */}
               <img

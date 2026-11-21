@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import MovieDetails from "@/components/features/MovieDetails";
 import MovieHero from "@/components/features/MovieHero";
 import ShowtimeList from "@/components/features/showtimes/ShowtimeList";
+import { getCurrentUser } from "@/lib/auth";
 import { getSelectedCity } from "@/lib/data/cities";
 import { getMovieBySlug } from "@/lib/data/movies";
 import { getHallLayouts } from "@/lib/data/seats";
@@ -34,7 +35,10 @@ export default async function MoviePage({ params }) {
     redirect(`/by?next=/film/${slug}`);
   }
 
-  const showtimes = await getShowtimes(movie.id, city.id);
+  const [showtimes, user] = await Promise.all([getShowtimes(movie.id, city.id), getCurrentUser()]);
+
+  // Ikke logget ind: "Følg film" sender en til login
+  const loginHref = user ? undefined : `/login?next=/film/${slug}`;
 
   // til "Se salen"
   const halls = await getHallLayouts(showtimes.map((showtime) => showtime.hall_id));
@@ -43,7 +47,7 @@ export default async function MoviePage({ params }) {
     // data-theme: "thriller", "familie" eller ingenting (farverne står nederst i tokens.css)
     // data-hero-under-header: headeren ligger gennemsigtig oven på heroen
     <main className={styles.page} data-theme={movie.theme ?? undefined} data-hero-under-header>
-      <MovieHero movie={movie} />
+      <MovieHero movie={movie} loginHref={loginHref} />
 
       <MovieDetails movie={movie} />
 

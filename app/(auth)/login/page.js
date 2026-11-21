@@ -33,7 +33,8 @@ export default async function LoginPage({ searchParams }) {
   }
 
   return (
-    <AuthScreen>
+    // "Tilbage" fører derhen, hvor man kom fra
+    <AuthScreen backHref={safePath(next, "/film")}>
       <AuthHeading
         eyebrow="LOG IND"
         title="Velkommen tilbage"

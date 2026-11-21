@@ -21,8 +21,10 @@ const RING_MS = 500;
  *
  * @param {object} props
  * @param {string} props.title Filmens titel (til skærmlæsere)
+ * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
+ * @param {boolean} [props.wideToast] Beskeden bliver lige så bred som knaprækken (den skal have position: relative)
  */
-export default function FollowButton({ title }) {
+export default function FollowButton({ title, loginHref, wideToast = false }) {
   const [following, setFollowing] = useState(false);
   const [ringing, setRinging] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -68,8 +70,18 @@ export default function FollowButton({ title }) {
     setRinging(true);
   }
 
+  // Ikke logget ind: knappen er et link til login
+  if (loginHref) {
+    return (
+      <Button variant="outline" href={loginHref} aria-label={`Log ind for at følge ${title}`}>
+        <Image src="/icons/bell.svg" alt="" width={16} height={18} className={styles.bell} />
+        Følg film
+      </Button>
+    );
+  }
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-wide-toast={wideToast || undefined}>
       {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
         variant={following ? "primary" : "outline"}

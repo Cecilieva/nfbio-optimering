@@ -3,6 +3,7 @@ import ComingSoonSection from "@/components/features/ComingSoonSection";
 import FeaturedMovies from "@/components/features/homepage-animations/FeaturedMovies";
 import Finale from "@/components/features/homepage-animations/Finale";
 import MovieFilter from "@/components/features/MovieFilter";
+import { getCurrentUser } from "@/lib/auth";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";
 import { getIntroPosters } from "@/lib/data/intro-posters";
@@ -18,19 +19,23 @@ export default async function HomePage() {
   }
 
   // Alt hentes samtidig, så siden ikke venter på én ting ad gangen
-  const [nowPlaying, comingSoon, featured, cinemas, introPosters] = await Promise.all([
+  const [nowPlaying, comingSoon, featured, cinemas, introPosters, user] = await Promise.all([
     getNowPlaying(city.id),
     getComingSoon(),
     getFeaturedMovies(),
     getCinemas(city.id),
     getIntroPosters(),
+    getCurrentUser(),
   ]);
+
+  // Ikke logget ind: "Følg film" sender en til login
+  const loginHref = user ? undefined : "/login?next=/film";
 
   return (
     <main className={styles.page}>
       {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
           Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
-      <FeaturedMovies movies={featured} introPosters={introPosters} />
+      <FeaturedMovies movies={featured} introPosters={introPosters} loginHref={loginHref} />
 
       {/* Figma "Forside – samlet": filmene, der kører nu, og under dem "Kommende film" */}
       <div className={styles.sections}>

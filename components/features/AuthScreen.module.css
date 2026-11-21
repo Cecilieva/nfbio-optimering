@@ -3,6 +3,7 @@
    Siden starter helt oppe under den gennemsigtige header og er præcis lige så høj som skærmen,
    så man ikke kan scrolle. Er skærmen for lav til formularen, bliver siden højere i stedet for at skære den af. */
 .page {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
   column-gap: var(--grid-gutter);
@@ -11,6 +12,14 @@
   max-width: none;
   padding: 0;
   background: var(--color-background-secondary);
+}
+
+/* "Tilbage" øverst til venstre, som på filmsiden */
+.back {
+  position: absolute;
+  top: calc(var(--size-header-height) + var(--space-6));
+  left: var(--layout-page-margin);
+  z-index: 1;
 }
 
 /* Figma "Billede-kolonne": kolonne 1-6 */
@@ -136,5 +145,15 @@
     align-self: start;
     margin-top: var(--size-header-height-compact); /* Headeren er lavere på mobil */
     padding-top: var(--space-10);
+  }
+
+  .back {
+    top: calc(var(--size-header-height-compact) + var(--space-4));
+    left: var(--space-4);
+  }
+
+  /* Mere luft, så "Tilbage" ikke rører overskriften */
+  .page[data-has-back] .content {
+    padding-top: var(--space-16);
   }
 }

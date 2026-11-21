@@ -31,7 +31,8 @@ export default function Flashlight({ image }) {
 
   // lytter på hele heroen, så det også virker over titel og knapper
   useEffect(() => {
-    const hero = ref.current?.parentElement;
+    // find heroen
+    const hero = ref.current?.closest("section");
     if (!hero) {
       return;
     }

@@ -1,7 +1,8 @@
 /* Figma "Filmside": stort billede med "Tilbage" øverst og titel + fakta nederst */
 .hero {
   position: relative;
-  overflow: hidden;
+  /* klip kun i siderne, så beskeden fra "Følg film" kan gå ud forneden */
+  overflow-x: clip;
   display: grid;
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
   grid-template-rows: auto 1fr;
@@ -10,6 +11,13 @@
   min-height: calc(var(--size-movie-hero-height) + var(--size-header-height));
   padding: calc(var(--size-header-height) + var(--space-6)) var(--grid-margin) var(--space-8);
   background: var(--color-background);
+}
+
+/* Laget med billedet og effekterne */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
 /* Figma "Projektor – standard": lysstriben fejer hen, og billedet zoomer langsomt frem og tilbage */
@@ -63,12 +71,24 @@
   background: var(--gradient-movie-hero-shadow-bottom);
 }
 
+/* Standard-filmsiden: mørkere skygge forneden */
+.hero[data-standard]::after {
+  height: var(--size-movie-hero-shadow-strong);
+  background: var(--gradient-movie-hero-shadow-bottom-strong);
+}
+
 /* Figma "Toning" (skygge-top) */
 .fadeTop {
   position: absolute;
   inset: 0 0 auto;
   height: var(--size-movie-hero-shadow);
   background: var(--gradient-movie-hero-shadow-top);
+}
+
+/* Standard-filmsiden: mørkere skygge foroven */
+.hero[data-standard] .fadeTop {
+  height: var(--size-movie-hero-shadow-strong);
+  background: var(--gradient-movie-hero-shadow-top-strong);
 }
 
 .top,

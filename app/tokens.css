@@ -204,6 +204,29 @@
     color-mix(in srgb, var(--figma-toning-100) 88%, transparent) 90%,
     var(--figma-toning-100) 100%
   );
+  /* Mørkere skygger på standard-filmsiden */
+  --gradient-movie-hero-shadow-top-strong: linear-gradient(
+    to top,
+    var(--figma-toning-0) 0%,
+    color-mix(in srgb, var(--figma-toning-100) 8%, transparent) 15%,
+    color-mix(in srgb, var(--figma-toning-100) 24%, transparent) 30%,
+    color-mix(in srgb, var(--figma-toning-100) 45%, transparent) 45%,
+    color-mix(in srgb, var(--figma-toning-100) 65%, transparent) 60%,
+    color-mix(in srgb, var(--figma-toning-100) 82%, transparent) 75%,
+    color-mix(in srgb, var(--figma-toning-100) 94%, transparent) 88%,
+    var(--figma-toning-100) 100%
+  );
+  --gradient-movie-hero-shadow-bottom-strong: linear-gradient(
+    to bottom,
+    var(--figma-toning-0) 0%,
+    color-mix(in srgb, var(--figma-toning-100) 10%, transparent) 15%,
+    color-mix(in srgb, var(--figma-toning-100) 28%, transparent) 30%,
+    color-mix(in srgb, var(--figma-toning-100) 50%, transparent) 45%,
+    color-mix(in srgb, var(--figma-toning-100) 72%, transparent) 60%,
+    color-mix(in srgb, var(--figma-toning-100) 88%, transparent) 75%,
+    color-mix(in srgb, var(--figma-toning-100) 97%, transparent) 88%,
+    var(--figma-toning-100) 100%
+  );
 
   /* Forsiden: hero'en og "Kommer snart"-kortene */
   --color-vignette: rgb(5 4 9); /* Mørk toning over billedet på "Kommer snart"-kortet */
@@ -421,6 +444,7 @@
   --opacity-projector-on: 0.15; /* Toningen over billedet, når projektoren er tændt … */
   --opacity-projector-drift: 0.25; /* … og under driften */
   --size-movie-hero-shadow: min(30rem, 46%); /* Højden på skyggerne foroven og forneden på filmsidens hero */
+  --size-movie-hero-shadow-strong: min(36rem, 55%); /* Højere skygger på standard-filmsiden */
   --color-projector-beam: var(--figma-projector-strong); /* Lysstriben: Lysprojektor/Projekter kraftig i midten … */
   --color-projector-beam-edge: var(--figma-projector-soft); /* … og Lysprojektor/Projekter sart ude ved kanterne */
   --angle-projector-beam: 14deg;
@@ -518,6 +542,7 @@
   --size-curtain-spot-width: 52.778%; /* 507 af 960px */
   --size-curtain-spot-height: 95%; /* 513 af 540px */
   --size-age-badge: 1.5rem; /* 24px - boksen med aldersgrænsen, fx "7" */
+  --size-toast-width: 12rem; /* 192px - bredden på beskeden under "Følg film" */
   --opacity-rating-empty: 0.25; /* hvor synlige de tomme bjørne er i "Anmeldelse" (0 = usynlig, 1 = helt synlig) */
   --size-coming-card-height: 56rem; /* 896px - "Kommer snart"-kortet */
   --size-featured-card-height: min(var(--size-coming-card-height), 85svh); /* Tilpasser sig skærmen, så titel og knapper kan ses */

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BackLink from "@/components/ui/BackLink";
 import publikum from "@/public/images/login-publikum.png";
 import styles from "./AuthScreen.module.css";
 
@@ -20,11 +21,14 @@ import styles from "./AuthScreen.module.css";
  *
  * @param {object} props
  * @param {React.ReactNode} props.children Overskrift, formular og tekst i bunden
+ * @param {string} [props.backHref] Viser "Tilbage" øverst til venstre
  */
-export default function AuthScreen({ children }) {
+export default function AuthScreen({ children, backHref }) {
   return (
     // data-hero-under-header: headeren er gennemsigtig og ligger oven på billedet (samme regel som på filmsiden)
-    <main className={styles.page} data-hero-under-header>
+    <main className={styles.page} data-hero-under-header data-has-back={backHref ? true : undefined}>
+      {backHref && <BackLink href={backHref} className={styles.back} />}
+
       {/* Billedet er kun pynt, så alt="" – skærmlæsere springer det over.
           ::after i CSS'en lægger fade-effekten oven på billedet. */}
       <div className={styles.image}>
