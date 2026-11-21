@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import ReservationExpired from "@/components/features/ReservationExpired";
+import ReservationExpired from "./ReservationExpired";
 import { startOfDanishDay } from "@/lib/format";
 import styles from "./Countdown.module.css";
 

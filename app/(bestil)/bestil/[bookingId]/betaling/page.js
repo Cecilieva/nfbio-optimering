@@ -1,10 +1,10 @@
 import { notFound, redirect } from "next/navigation";
-import BottomBar from "@/components/features/BottomBar";
-import Countdown from "@/components/features/Countdown";
-import OrderSummary from "@/components/features/OrderSummary";
+import BottomBar from "@/components/features/checkout/BottomBar";
+import Countdown from "@/components/features/checkout/Countdown";
+import OrderSummary from "@/components/features/checkout/OrderSummary";
 import PaymentForm from "@/components/features/PaymentForm";
-import ReservationExpired from "@/components/features/ReservationExpired";
-import StepHeader from "@/components/features/StepHeader";
+import ReservationExpired from "@/components/features/checkout/ReservationExpired";
+import StepHeader from "@/components/features/checkout/StepHeader";
 import Seat from "@/components/ui/Seat";
 import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";

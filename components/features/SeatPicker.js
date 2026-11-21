@@ -3,11 +3,11 @@
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
 import FormLoader from "@/components/features/loading/FormLoader";
-import BottomBar from "@/components/features/BottomBar";
-import Countdown from "@/components/features/Countdown";
+import BottomBar from "@/components/features/checkout/BottomBar";
+import Countdown from "@/components/features/checkout/Countdown";
 import SeatMap from "@/components/features/SeatMap";
 import SeatView from "@/components/features/SeatView";
-import StepHeader from "@/components/features/StepHeader";
+import StepHeader from "@/components/features/checkout/StepHeader";
 import TicketCounter from "@/components/features/TicketCounter";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";

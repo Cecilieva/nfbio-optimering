@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import StepHeader from "@/components/features/StepHeader";
+import StepHeader from "@/components/features/checkout/StepHeader";
 import LoadingDots from "@/components/ui/LoadingDots";
 import PopcornShower from "@/components/ui/PopcornShower";
 import styles from "./TicketPrint.module.css";

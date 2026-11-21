@@ -1,5 +1,5 @@
 import CaseLabel from "./CaseLabel";
-import Countdown from "@/components/features/Countdown";
+import Countdown from "@/components/features/checkout/Countdown";
 import Flashlight from "./Flashlight";
 import MovieInfoBar from "./MovieInfoBar";
 import MovieTitle from "./MovieTitle";
