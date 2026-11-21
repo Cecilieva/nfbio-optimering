@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import Countdown from "@/components/features/Countdown";
 import OrderSummary from "@/components/features/OrderSummary";
 import PaymentForm from "@/components/features/PaymentForm";
+import ReservationExpired from "@/components/features/ReservationExpired";
 import StepHeader from "@/components/features/StepHeader";
 import DataDump from "@/components/ui/DataDump";
 import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
@@ -43,12 +43,15 @@ export default async function PaymentPage({ params }) {
     getSeatsByIds(booking.seat_ids),
   ]);
 
-  // Sæderne holdes kun i en kort tid. Er tiden gået, skal man vælge sæder igen
+  // "Vælg pladser igen" på "Tiden er udløbet" fører til "Vælg dine pladser" med de samme billetter.
+  // ?booking=… fortæller sædevalget, hvilken reservation man kommer fra
+  const restartHref = `/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`;
+
+  // Sæderne holdes kun i en kort tid. Var tiden allerede gået, vises "Tiden er udløbet" i stedet for siden
   if (!isReservationActive(booking)) {
     return (
       <main>
-        <h1>Reservationen er udløbet</h1>
-        <Link href={`/bestil/saeder/${booking.showtime_id}`}>Vælg sæder igen</Link>
+        <ReservationExpired href={restartHref} />
       </main>
     );
   }
@@ -56,7 +59,8 @@ export default async function PaymentPage({ params }) {
   return (
     <main>
       <StepHeader step={3} title="Betaling" />
-      <Countdown until={booking.reserved_until} />
+      {/* Rammer uret 00:00, lægges "Tiden er udløbet" over siden */}
+      <Countdown until={booking.reserved_until} expiredHref={restartHref} />
       <OrderSummary showtime={showtime} seats={seats} totalDkk={booking.total_dkk} />
       <PaymentForm bookingId={bookingId} />
       {/* Pladsholder: viser rå data, indtil siden er bygget */}

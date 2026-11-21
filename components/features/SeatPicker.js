@@ -24,6 +24,16 @@ const START_COUNTS = { adult: 2, child: 0, senior: 0 };
 // Så længe tæller uret i bundbjælken ned (samme tid som reserved_until i databasen)
 const HOLD_MINUTES = 10;
 
+// Et nyt ur: tidspunktet om 10 minutter, fx "2026-11-21T12:40:00.000Z"
+function newHoldUntil() {
+  return new Date(Date.now() + HOLD_MINUTES * 60 * 1000).toISOString();
+}
+
+// Id'erne på de bedste ledige pladser midt i salen (se findBestSeats i lib/seat-rules.js)
+function bestSeatIds(rows, quantity) {
+  return findBestSeats(rows, quantity).map((seat) => seat.id);
+}
+
 // Købets to første trin på samme side:
 //   1. "Vælg antal pladser" (TicketCounter) - hvor mange billetter af hver type
 //   2. "Vælg dine pladser" (SeatMap + SeatView) - vælg sæderne og reservér med "Til betaling".
@@ -37,17 +47,31 @@ const HOLD_MINUTES = 10;
 //   backHref - "Tilbage" på første trin (filmsiden)
 //   resume   - ens reservation, når man kommer tilbage fra "Dine oplysninger".
 //              Så starter vi på "Vælg dine pladser" med de samme sæder, billetter og ur
-export default function SeatPicker({ showtime, rows, subtitle, backHref, resume }) {
+//   restart  - ens udløbne reservation, når man kommer fra "Tiden er udløbet".
+//              Så starter vi på "Vælg dine pladser" med de samme billetter, men nye pladser og et nyt ur
+export default function SeatPicker({ showtime, rows, subtitle, backHref, resume, restart }) {
   const router = useRouter();
-  // "count" = vælg antal, "seats" = vælg sæder
-  const [phase, setPhase] = useState(resume ? "seats" : "count");
+  // Den reservation, vi tager billetterne fra (den aktive eller den udløbne)
+  const previous = resume ?? restart;
   // Kommer man tilbage, men vi ved ikke hvilke billettyper man valgte, tæller vi dem alle som voksen
-  const [counts, setCounts] = useState(
-    resume?.tickets ?? (resume ? { ...START_COUNTS, adult: resume.seat_ids.length } : START_COUNTS)
-  );
-  const [selectedIds, setSelectedIds] = useState(resume?.seat_ids ?? []);
-  // Hvornår uret i bundbjælken når 00:00. Sættes, når man kommer til sædevalget
-  const [holdUntil, setHoldUntil] = useState(resume?.reserved_until ?? null);
+  const startCounts =
+    previous?.tickets ?? (previous ? { ...START_COUNTS, adult: previous.seat_ids.length } : START_COUNTS);
+
+  // "count" = vælg antal, "seats" = vælg sæder. Har man en reservation, starter man på sæderne
+  const [phase, setPhase] = useState(previous ? "seats" : "count");
+  const [counts, setCounts] = useState(startCounts);
+  // Aktiv reservation: de samme sæder. Udløbet: de bedste ledige pladser. Ellers: ingen endnu
+  const [selectedIds, setSelectedIds] = useState(() => {
+    if (resume) return resume.seat_ids;
+    if (restart) return bestSeatIds(rows, countTickets(startCounts, showtime.price_dkk).quantity);
+    return [];
+  });
+  // Hvornår uret i bundbjælken når 00:00. Aktiv reservation: samme ur. Udløbet: et nyt ur
+  const [holdUntil, setHoldUntil] = useState(() => {
+    if (resume) return resume.reserved_until;
+    if (restart) return newHoldUntil();
+    return null;
+  });
   const [state, formAction, pending] = useActionState(reserveSeats, null);
   // Den fejl, man har lukket - så bliver overlayet lukket indtil næste fejl
   const [dismissed, setDismissed] = useState(null);
@@ -84,8 +108,8 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume 
 
   // Til sædevalget: uret starter forfra, og man får de bedste pladser midt i salen (kan ændres bagefter)
   function goToSeats() {
-    setHoldUntil(new Date(Date.now() + HOLD_MINUTES * 60 * 1000).toISOString());
-    setSelectedIds(findBestSeats(rows, quantity).map((seat) => seat.id));
+    setHoldUntil(newHoldUntil());
+    setSelectedIds(bestSeatIds(rows, quantity));
     goTo("seats");
   }
 
@@ -131,6 +155,8 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume 
   return (
     <form action={formAction} className={styles.picker}>
       <input type="hidden" name="showtime_id" value={showtime.id} />
+      {/* Hvornår uret når 00:00 - så det går videre på de næste sider i stedet for at starte forfra */}
+      {holdUntil && <input type="hidden" name="hold_until" value={holdUntil} />}
       {/* Den reservation, man kom tilbage fra - så kan reserveSeats genbruge eller frigive den */}
       {resume && <input type="hidden" name="booking_id" value={resume.id} />}
       {selectedIds.map((id) => (
