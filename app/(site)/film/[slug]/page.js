@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import MovieDetails from "@/components/features/MovieDetails";
-import MovieHero from "@/components/features/MovieHero";
+import MovieDetails from "@/components/features/movie-page/MovieDetails";
+import MovieHero from "@/components/features/movie-page/MovieHero";
 import ShowtimeList from "@/components/features/showtimes/ShowtimeList";
 import { getCurrentUser } from "@/lib/auth";
 import { getSelectedCity } from "@/lib/data/cities";

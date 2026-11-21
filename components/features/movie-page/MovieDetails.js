@@ -1,4 +1,4 @@
-import BearRating from "@/components/features/BearRating";
+import BearRating from "./BearRating";
 import Poster from "@/components/features/movies/Poster";
 import ShareButton from "@/components/features/movies/ShareButton";
 import TrailerButton from "@/components/features/movies/TrailerButton";

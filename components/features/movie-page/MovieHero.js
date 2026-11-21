@@ -1,8 +1,8 @@
-import CaseLabel from "@/components/features/CaseLabel";
+import CaseLabel from "./CaseLabel";
 import Countdown from "@/components/features/Countdown";
-import Flashlight from "@/components/features/Flashlight";
-import MovieInfoBar from "@/components/features/MovieInfoBar";
-import MovieTitle from "@/components/features/MovieTitle";
+import Flashlight from "./Flashlight";
+import MovieInfoBar from "./MovieInfoBar";
+import MovieTitle from "./MovieTitle";
 import BackLink from "@/components/ui/BackLink";
 import styles from "./MovieHero.module.css";
 
