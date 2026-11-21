@@ -416,7 +416,7 @@
   --size-menu-marker-width: 3px;
   --size-menu-marker-height: 1.75rem;
   --size-city-tile-width: 12.5rem;
-  --size-footer-column: 13.958rem; /* 223px - bredden på en kolonne i footeren */
+  --size-newsletter-field-min: 10rem; /* 160px - e-mailfeltet i footeren bliver ikke smallere, før knappen hopper ned */
   --size-social-button: 2.5rem; /* 40px - den runde knap om et socialt ikon */
   --size-social-icon: 1.25rem; /* 20px - selve ikonet */
   --size-checkbox: 1.125rem; /* 18px - boksen i en checkbox */
@@ -645,7 +645,6 @@
   --layout-page-margin: calc((100% + var(--grid-gutter)) / var(--grid-columns));
   --z-dropdown: 10; /* Dropdown-listen ligger over indholdet under filtreringsbaren */
   --z-featured-dots: 50; /* Prikkerne ved "Kommer snart"-kortene - over siden, under headeren */
-  --layout-footer-width: 74.792rem; /* 1197px - indholdets bredde i footeren */
   /* ========================================================================
      KAMPAGNE: KATTEN MED HATTEN – kun til den film
      Figma "Titel – hopper"
