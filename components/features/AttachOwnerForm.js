@@ -1,22 +1,21 @@
 "use client";
 
 import { useActionState } from "react";
+import FormLoader from "@/components/features/FormLoader";
 import Button from "@/components/ui/Button";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
-import Overlay from "@/components/ui/Overlay";
 import TextField from "@/components/ui/TextField";
 import { attachBookingOwner } from "@/lib/actions/booking";
 import styles from "./AttachOwnerForm.module.css";
 
 // Gør reservationen til din og går videre til betaling.
-// Imens vises "Vi popper dine pladser …" over hele skærmen, indtil betalingen er klar.
+// Imens vises den almindelige loader ("Indlæser") over hele skærmen, indtil betalingen er klar.
 //
 //   bookingId  - id'et på reservationen
 //   asGuest    - true: spørg efter navn, telefon og e-mail (gæst). Ellers bruges den, der er logget ind
 //   children   - ekstra indhold under knappen, fx "Har du en rabatkode?"
 //   email      - e-mailen på den, der er logget ind (står på knappen)
-//   seatsLabel - sæderne som tekst, fx "Række 4, sæde 6–7" (vises i overlayet)
-export default function AttachOwnerForm({ bookingId, asGuest = false, email, seatsLabel, children }) {
+export default function AttachOwnerForm({ bookingId, asGuest = false, email, children }) {
   const [state, formAction, pending] = useActionState(attachBookingOwner, null);
 
   return (
@@ -63,9 +62,8 @@ export default function AttachOwnerForm({ bookingId, asGuest = false, email, sea
       </Button>
       {children}
 
-      <Overlay open={pending} title="Vi popper dine pladser …">
-        {seatsLabel && <p>{seatsLabel}</p>}
-      </Overlay>
+      {/* Mens man sendes videre til betaling, vises loaderen over hele skærmen */}
+      <FormLoader />
     </form>
   );
 }
