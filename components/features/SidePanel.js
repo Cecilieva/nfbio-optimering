@@ -117,9 +117,9 @@ export default function SidePanel({
               som punkterne i panelet ikke allerede gør */}
           <div className={styles.top}>
             <Button variant="secondary" onClick={close}>
-              Luk
-              {/* Figma-ikonet "Luk" i 18px */}
+              {/* Figma-ikonet "Luk" i 18px. Ikonet står foran teksten, som på alle knapper med ikon */}
               <Image src="/icons/close.svg" alt="" width={18} height={18} />
+              Luk
             </Button>
           </div>
 
