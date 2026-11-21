@@ -1,4 +1,5 @@
-"use client"; // Error boundaries must be Client Components
+// Fejlsiden for Log ind og Opret profil. En fejlside skal køre i browseren ("use client")
+"use client";
 
 import ErrorState from "@/components/features/ErrorState";
 

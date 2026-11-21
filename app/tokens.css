@@ -449,6 +449,13 @@
   --space-not-found-top: 7.5rem; /* 120px - luft over indholdet */
   --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
   --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
+  /* 404- og fejlsiden: beskeden fylder skærmen under headeren. På en lav skærm bliver den mindre (svh = skærmens højde) */
+  --size-message-min-height: calc(100svh - var(--size-header-height)); /* skærmen minus headeren */
+  --font-size-message-title: clamp(2.5rem, 8svh, var(--figma-font-size-x-large)); /* højst 64px */
+  --size-message-illustration-height: clamp(15rem, 48svh, 23.875rem); /* højst 382px */
+  --space-message-top: clamp(1.5rem, 4svh, var(--space-not-found-top)); /* luft over */
+  --space-message-bottom: clamp(1.5rem, 4svh, var(--space-not-found-bottom)); /* luft under */
+  --space-message-buttons: clamp(1.5rem, 7svh, var(--space-not-found-buttons)); /* højst 56px */
   --angle-popcorn-wobble: 8deg; /* "Tiden er udløbet": popkorn-bægeret vipper så meget til hver side */
   --size-popcorn-loader: 10rem; /* 160px - popkorn-loaderen (bæger + popkorn, der hopper) */
   --size-loading-dot: 0.3125rem; /* 5px - én af de tre prikker efter "Indlæser" (LoadingDots) */

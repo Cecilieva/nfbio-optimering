@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import Overlay from "@/components/ui/Overlay";
 import PopcornLoader from "@/components/ui/PopcornLoader";
 import { completePayment } from "@/lib/actions/booking";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./PaymentFailed.module.css";
 
 // "Betalingen fejlede" med de brændte popkorn.
@@ -18,6 +19,8 @@ import styles from "./PaymentFailed.module.css";
 export default function PaymentFailed({ bookingId, method, minutesLeft, seatsLabel }) {
   // Lykkes eller fejler betalingen, sendes man videre. state får kun andre fejl
   const [state, formAction, pending] = useActionState(completePayment, null);
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(pending);
 
   return (
     // role="alert": skærmlæsere læser den op med det samme
@@ -28,7 +31,7 @@ export default function PaymentFailed({ bookingId, method, minutesLeft, seatsLab
       </p>
 
       <div className={styles.actions}>
-        <form action={formAction} className={styles.form}>
+        <form action={formAction} onSubmit={submitOnce} className={styles.form}>
           {/* Samme felter som betalingsformularen */}
           <input type="hidden" name="booking_id" value={bookingId} />
           <input type="hidden" name="method" value={method} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import FormLoader from "@/components/features/FormLoader";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
@@ -8,6 +8,7 @@ import Chip from "@/components/ui/Chip";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import TextField from "@/components/ui/TextField";
 import { signUp } from "@/lib/actions/auth";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./CheckoutSignupForm.module.css";
 
 // Valgene under "Køn". value er det, der gemmes i profiles.gender (samme som SignUpForm)
@@ -71,6 +72,8 @@ export default function CheckoutSignupForm({ next, bookingId }) {
   const [gender, setGender] = useState("vil-ikke-oplyse");
   // Fejl, hvis de to adgangskoder ikke er ens
   const [passwordError, setPasswordError] = useState(null);
+  // pending = true, mens profilen oprettes
+  const [, formAction, pending] = useActionState((prevState, formData) => signUp(formData), null);
 
   // Før formularen sendes: findes fødselsdagen, og er de to adgangskoder ens?
   function checkForm(event) {
@@ -99,8 +102,11 @@ export default function CheckoutSignupForm({ next, bookingId }) {
     setPasswordError(null);
   }
 
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(pending, checkForm);
+
   return (
-    <form action={signUp} onSubmit={checkForm} className={styles.form}>
+    <form action={formAction} onSubmit={submitOnce} className={styles.form}>
       {/* Efter oprettelsen sendes man tilbage hertil */}
       <input type="hidden" name="next" value={next} />
       <input type="hidden" name="booking_id" value={bookingId} />
@@ -209,7 +215,7 @@ export default function CheckoutSignupForm({ next, bookingId }) {
         label="Ja tak til nyhedsbreve, filmnyheder og tilbud på e-mail (valgfrit). Du kan altid framelde dig."
       />
 
-      <Button type="submit" className={styles.button}>
+      <Button type="submit" disabled={pending} className={styles.button}>
         Opret profil
       </Button>
       {/* Viser "Indlæser", mens formularen sendes */}

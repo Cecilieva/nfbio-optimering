@@ -1,9 +1,9 @@
-import PosterPlaceholder from "@/components/features/PosterPlaceholder";
+import Poster from "@/components/features/Poster";
 import { formatDay, formatDayKey, formatPrice, formatSeats, formatTime, formatWeekday } from "@/lib/format";
 import { TICKET_TYPES, ticketPrice } from "@/lib/ticket-types";
 import styles from "./OrderSummary.module.css";
 
-// Gebyret er altid 0 kr. Linjen vises, så man kan se, at der ikke kommer noget oven i prisen
+// Gebyret er altid 0 kr. Linjen viser, at der ikke kommer noget oven i prisen
 const FEE_DKK = 0;
 
 // Hvornår filmen går: "I dag, tirsdag kl. 18.20" - eller fx "Mandag 16. november kl. 18.00"
@@ -19,9 +19,8 @@ function formatWhen(date) {
   return `${day.charAt(0).toUpperCase()}${day.slice(1)} kl. ${time}`;
 }
 
-// Linjerne med billetter, fx [{ label: "2 × Voksen", priceDkk: 280 }].
-// Ved vi, hvilke billettyper man valgte, får hver type sin egen linje.
-// Ellers står alle billetterne på én linje med prisen fra bookingen
+// Billetlinjerne, fx [{ label: "2 × Voksen", priceDkk: 280 }]. Én linje pr. billettype,
+// eller én linje med det hele, hvis vi ikke kender typerne
 function ticketLines(tickets, seats, showtime, totalDkk) {
   if (!tickets) {
     return [{ label: `${seats.length} × Billet`, priceDkk: totalDkk }];
@@ -34,16 +33,16 @@ function ticketLines(tickets, seats, showtime, totalDkk) {
   }));
 }
 
-// "Din ordre": plakat, film, tid, biograf og sæder - og under det billetterne, gebyr og prisen i alt.
+// "Din ordre": filmen, tid, biograf og sæder – og under det billetter, gebyr og pris i alt
 //
 //   showtime - forestillingen fra getShowtime()
 //   seats    - de valgte sæder
 //   tickets  - antal pr. billettype, fx { adult: 2, child: 0, senior: 0 } (kan mangle)
-//   totalDkk - prisen fra bookingen. Bruges, når vi ikke kender billettyperne
+//   totalDkk - prisen fra bookingen, hvis vi ikke kender billettyperne
 export default function OrderSummary({ showtime, seats = [], tickets, totalDkk }) {
   const { movie, hall } = showtime;
   const lines = ticketLines(tickets, seats, showtime, totalDkk);
-  // I alt = alle billetlinjerne lagt sammen + gebyret
+  // I alt = billetterne + gebyret
   const total = lines.reduce((sum, line) => sum + line.priceDkk, FEE_DKK);
 
   return (
@@ -55,11 +54,7 @@ export default function OrderSummary({ showtime, seats = [], tickets, totalDkk }
       {/* Plakaten til venstre og filmens oplysninger til højre */}
       <div className={styles.movie}>
         <div className={styles.poster}>
-          {movie.poster_url ? (
-            <img src={movie.poster_url} alt="" className={styles.image} />
-          ) : (
-            <PosterPlaceholder title={movie.title} />
-          )}
+          <Poster src={movie.poster_url} title={movie.title} className={styles.image} />
         </div>
         <div className={styles.info}>
           <p className={styles.title}>{movie.title}</p>
@@ -72,7 +67,7 @@ export default function OrderSummary({ showtime, seats = [], tickets, totalDkk }
         </div>
       </div>
 
-      {/* Billetter og gebyr - mellem to streger */}
+      {/* Billetter og gebyr mellem to streger */}
       <dl className={styles.lines}>
         {lines.map((line) => (
           <div key={line.label} className={styles.line}>

@@ -10,6 +10,7 @@ import Button from "@/components/ui/Button";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import TextField from "@/components/ui/TextField";
 import { signInOnPage } from "@/lib/actions/auth";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./CheckoutLogin.module.css";
 
 // Kortet til højre på "Dine oplysninger". Det viser én af fire ting:
@@ -27,6 +28,8 @@ export default function CheckoutLogin({ bookingId, next, email, mode = "login" }
   const [showDiscount, setShowDiscount] = useState(false);
   // Log ind: virker det ikke, får vi en fejl tilbage og bliver på siden
   const [loginState, loginAction, loggingIn] = useActionState(signInOnPage, null);
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(loggingIn);
 
   if (email) {
     return (
@@ -73,7 +76,7 @@ export default function CheckoutLogin({ bookingId, next, email, mode = "login" }
 
   return (
     <Card title="Har du en profil?" intro="Log ind for at samle point og finde billetten igen på 2 sekunder.">
-      <form action={loginAction} className={styles.form}>
+      <form action={loginAction} onSubmit={submitOnce} className={styles.form}>
         {/* Efter login sendes man tilbage til denne side */}
         <input type="hidden" name="next" value={next} />
         <input type="hidden" name="booking_id" value={bookingId} />

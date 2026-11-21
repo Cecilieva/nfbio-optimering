@@ -1,5 +1,4 @@
-// "use client" betyder, at komponenten kører i browseren.
-// Det er nødvendigt, fordi feltet åbner og lukker og viser resultater, mens man skriver.
+// "use client": søgningen kører i browseren, fordi den viser resultater, mens man skriver
 "use client";
 
 import Image from "next/image";
@@ -18,23 +17,14 @@ function normalize(text) {
   return text.toLocaleLowerCase("da").trim();
 }
 
-/**
- * Søgningen efter film. Et klik på ikonet åbner et søgefelt, og filmene, der passer, vises under feltet,
- * mens man skriver. Bruges to steder (se variant).
- * Pil op/ned flytter markeringen i listen, Enter åbner den markerede film (eller den første).
- * Et klik på ikonet igen, Escape eller et klik udenfor lukker feltet.
- *
- * Feltet er en "combobox": fokus bliver i feltet, mens man bladrer med piletasterne, og
- * aria-activedescendant fortæller skærmlæsere, hvilken film der er markeret.
- *
- * @param {object} props
- * @param {{ id: number, title: string, slug: string, poster_url?: string }[]} props.movies
- *   Filmene, man kan søge i (fra getSearchMovies)
- * @param {"header" | "filter"} [props.variant] "header": feltet folder sig ud til venstre for ikonet i headeren.
- *   "filter": den blå søgeknap i filtreringen på /film - et panel med feltet og filmene åbner under knappen
- * @param {string} [props.className] Ekstra stil til boksen om knap og felt (fx dens plads i filtreringsbaren)
- * @param {string} [props.triggerClassName] Stilen til ikon-knappen
- */
+// Søgning efter film. Ikonet åbner et felt, og filmene, der passer, vises, mens man skriver.
+// Pil op/ned flytter markeringen, Enter åbner filmen. Escape, ikonet eller et klik udenfor lukker.
+// Skærmlæsere får den markerede film at vide via aria-activedescendant.
+//
+//   movies           - filmene, man kan søge i (fra getSearchMovies)
+//   variant          - "header": feltet folder sig ud til venstre. "filter": et panel under knappen på /film
+//   className        - ekstra stil til boksen om knap og felt
+//   triggerClassName - stilen til ikon-knappen
 export default function HeaderSearch({ movies, variant = "header", className, triggerClassName }) {
   const isFilter = variant === "filter";
   const router = useRouter();
@@ -42,9 +32,9 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
   const [query, setQuery] = useState("");
   // Den film, der er markeret med piletasterne (-1 = ingen)
   const [activeIndex, setActiveIndex] = useState(-1);
-  // Et unikt id til listen, så feltet kan pege på den og på den markerede film
+  // Id til listen, så feltet kan pege på den markerede film
   const listId = useId();
-  // Håndtag til knappen og hele søgningen (knap + felt), så vi kan flytte fokus og se, om et klik er udenfor
+  // Til at flytte fokus og se, om et klik er udenfor
   const triggerRef = useRef(null);
   const wrapperRef = useRef(null);
 
@@ -68,12 +58,11 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
     setOpen(false);
     setQuery("");
     setActiveIndex(-1);
-    // Fokus tilbage på ikonet, så tastaturbrugere ikke mister deres plads
+    // Fokus tilbage på ikonet, så man ikke mister sin plads med tastaturet
     triggerRef.current?.focus();
   }
 
-  // Et klik udenfor søgningen lukker den (kun mens den er åben).
-  // Ikonet tæller som indenfor - det lukker selv feltet med toggle() nedenfor
+  // Et klik udenfor lukker søgningen. Ikonet lukker selv med toggle()
   useEffect(() => {
     if (!open) return;
 
@@ -103,9 +92,11 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
     }
   }
 
-  // Piletasterne i feltet flytter markeringen op og ned i listen (og hopper rundt i enderne)
+  // Piletasterne flytter markeringen (og hopper rundt i enderne)
   function handleFieldKeyDown(event) {
-    if (results.length === 0) return;
+    if (results.length === 0) {
+      return;
+    }
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setActiveIndex((index) => (index + 1) % results.length);
@@ -115,9 +106,11 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
     }
   }
 
-  // Den markerede film skal kunne ses, også når listen er scrollet
+  // Den markerede film scrolles frem
   useEffect(() => {
-    if (activeIndex < 0) return;
+    if (activeIndex < 0) {
+      return;
+    }
     document.getElementById(`${listId}-${activeIndex}`)?.scrollIntoView({ block: "nearest" });
   }, [activeIndex, listId]);
 
@@ -130,7 +123,7 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
   }
 
   return (
-    // Feltet placeres i forhold til denne boks (se CSS'en)
+    // Feltet placeres i forhold til denne boks
     <div
       ref={wrapperRef}
       className={className ? `${styles.wrapper} ${className}` : styles.wrapper}
@@ -150,7 +143,7 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
       </button>
 
       {open && (
-        // Header: feltet folder sig ud til venstre for ikonet. Filter: panelet åbner under knappen.
+        // Header: felt til venstre. Filter: panel under knappen
         <div className={styles.panel} data-search-open>
           <form role="search" onSubmit={handleSubmit}>
             <TextField
@@ -178,8 +171,7 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
           </form>
 
           {/* Resultaterne vises først, når man har skrevet noget */}
-          {/* Skærmlæsere får at vide, hvor mange film der passer. Feltet findes, så længe søgningen er åben -
-              ellers når skærmlæseren ikke at opdage det, før teksten ændrer sig første gang */}
+          {/* Skærmlæsere hører, hvor mange film der passer. Står der hele tiden, så første ændring bliver læst op */}
           <p className="visually-hidden" aria-live="polite">
             {search && (results.length === 1 ? "1 film fundet" : `${results.length} film fundet`)}
           </p>
@@ -194,10 +186,10 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
                       id={`${listId}-${index}`}
                       role="option"
                       aria-selected={index === activeIndex}
-                      // Musen markerer også en film, så mus og piletaster viser det samme
+                      // Musen markerer også filmen
                       onMouseEnter={() => setActiveIndex(index)}
                     >
-                      {/* Linket kan ikke nås med Tab - man bruger piletasterne i feltet i stedet */}
+                      {/* Ikke med Tab – man bruger piletasterne */}
                       <Link
                         href={`/film/${movie.slug}`}
                         className={styles.item}
@@ -209,15 +201,15 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
                           setActiveIndex(-1);
                         }}
                       >
-                        {/* Plakaten - eller en tom boks, hvis filmen ikke har en */}
+                        {/* Plakaten – eller en tom boks */}
                         {movie.poster_url ? (
                           <img src={movie.poster_url} alt="" className={styles.poster} />
                         ) : (
                           <span className={styles.poster} aria-hidden="true" />
                         )}
-                        {/* Kun titlen - ingen anden tekst */}
+                        {/* Kun titlen */}
                         <span className={styles.title}>{movie.title}</span>
-                        {/* På vej ind på en filmside vises loaderen altid (som filmkortene) */}
+                        {/* Loaderen vises altid på vej ind på en filmside */}
                         <LinkLoader always />
                       </Link>
                     </li>

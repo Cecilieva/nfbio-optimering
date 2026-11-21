@@ -7,6 +7,7 @@ import Checkbox from "@/components/ui/Checkbox";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import Radio from "@/components/ui/Radio";
 import { completePayment } from "@/lib/actions/booking";
+import { useSubmitOnce } from "@/lib/use-submit-once";
 import styles from "./PaymentForm.module.css";
 
 const METHODS = [
@@ -22,6 +23,8 @@ const METHODS = [
 //   initialError - fejlen fra fejlsiden: metoden bliver rød med fejlen under (valgfri)
 export default function PaymentForm({ bookingId, seatsLabel, initialError }) {
   const [state, formAction, pending] = useActionState(completePayment, initialError ? { error: initialError } : null);
+  // Stopper dobbeltklik
+  const submitOnce = useSubmitOnce(pending);
   const failedMethod = state?.error?.method;
   // Husk valget, så det ikke springer tilbage. Fra fejlsiden er den fejlede metode valgt
   const [selected, setSelected] = useState(initialError?.method ?? METHODS[0].value);
@@ -33,7 +36,7 @@ export default function PaymentForm({ bookingId, seatsLabel, initialError }) {
         Vælg betalingsmetode
       </h2>
 
-      <form action={formAction} className={styles.form}>
+      <form action={formAction} onSubmit={submitOnce} className={styles.form}>
         <input type="hidden" name="booking_id" value={bookingId} />
 
         <InvalidFieldsMessage className={styles.error} />
