@@ -19,9 +19,9 @@ import styles from "./MovieCard.module.css";
  * @param {{ slug: string, title: string, poster_url?: string, age_rating?: string, duration_min?: number,
  *   premiere_date?: string, ticket_sale_opens?: string | null, ticket_sale_open?: boolean }} props.movie
  * @param {"default" | "coming-soon" | "feed"} [props.variant="default"]
- * @param {string} [props.format] Variant "feed": the format in the corner, e.g. "2D"
+ * @param {string[]} [props.formats] Variant "feed": the formats in the corner, e.g. ["2D", "3D"]
  */
-export default function MovieCard({ movie, variant = "default", format }) {
+export default function MovieCard({ movie, variant = "default", formats = [] }) {
   // Plakaten til "Kommende film" har sit eget udseende, så den bygges i en funktion for sig (nederst)
   if (variant === "coming-soon") {
     return <ComingSoonPoster movie={movie} />;
@@ -29,7 +29,7 @@ export default function MovieCard({ movie, variant = "default", format }) {
 
   // Kortet i listen under filtreringen har også sit eget udseende (se FeedPoster nederst)
   if (variant === "feed") {
-    return <FeedPoster movie={movie} format={format} />;
+    return <FeedPoster movie={movie} formats={formats} />;
   }
 
   const details = [movie.age_rating, formatDuration(movie.duration_min)].filter(Boolean);
@@ -109,7 +109,7 @@ function ComingSoonPoster({ movie }) {
  * bliver kortet mørkere, teksten skjules, og "Se spilletider" vises i midten –
  * Figma "Filmplakat", Property 1=se spilletider.
  */
-function FeedPoster({ movie, format }) {
+function FeedPoster({ movie, formats }) {
   // Figma viser kun én genre og alderen som "15+", fx "Thriller · 15+"
   const details = [movie.genres?.[0], formatAgeShort(movie.age_rating)].filter(Boolean);
 
@@ -119,14 +119,14 @@ function FeedPoster({ movie, format }) {
           Har filmen intet billede, ses den blå gradient fra CSS'en i stedet. */}
       {movie.poster_url && <img src={movie.poster_url} alt="" className={styles.image} />}
 
-      {/* Figma "Genre-chip": formatet øverst til højre, fx "2D" */}
+      {/* Figma "Genre-chip": formaterne øverst til højre, ét mærke pr. format, fx "2D" og "3D" */}
       <div className={styles.feedTop}>
-        {format && (
-          <span className={styles.formatChip}>
+        {formats.map((format) => (
+          <span key={format} className={styles.formatChip}>
             <span className={styles.visuallyHidden}>Format </span>
             {format}
           </span>
-        )}
+        ))}
       </div>
 
       {/* Figma "se spilletider": ligner en blå knap (samme styles som Button "primary").

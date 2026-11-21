@@ -126,12 +126,14 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
   // Er der flere film, end der vises?
   const hasMore = shown.length > visible.length;
 
-  // Formatet i hjørnet af kortet: det valgte format – ellers formatet på filmens første passende spilletid
-  function formatFor(movie) {
+  // Formaterne i hjørnet af kortet: det valgte format – ellers alle filmens formater
+  // (fra de spilletider, der passer), i samme rækkefølge som knapperne, fx ["2D", "3D", "4DX"]
+  function formatsFor(movie) {
     if (filters.format !== "all") {
-      return filters.format;
+      return [filters.format];
     }
-    return movie.showtimes.find(showtimeMatches)?.format;
+    const formats = movie.showtimes.filter(showtimeMatches).map((showtime) => showtime.format);
+    return FORMATS.filter((format) => formats.includes(format));
   }
 
   // Søgeknappen: luk en åben dropdown og hop ned til filmene.
@@ -225,7 +227,7 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
           <ul className={styles.grid}>
             {visible.map((movie) => (
               <li key={movie.id}>
-                <MovieCard movie={movie} variant="feed" format={formatFor(movie)} />
+                <MovieCard movie={movie} variant="feed" formats={formatsFor(movie)} />
               </li>
             ))}
           </ul>
