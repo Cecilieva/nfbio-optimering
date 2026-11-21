@@ -10,7 +10,8 @@ import styles from "./StepHeader.module.css";
 //   subtitle   - fx "Clayface · i dag kl. 19.30 · Aarhus Bio"
 //   backHref   - "Tilbage" er et link hertil (BackLink) …
 //   onBack     - … eller en knap, der kalder denne funktion (fx tilbage til forrige fase på samme side)
-export default function StepHeader({ step, totalSteps = 4, title, subtitle, backHref, onBack }) {
+//   centered   - titel og undertekst står i midten (fx på billetten)
+export default function StepHeader({ step, totalSteps = 4, title, subtitle, backHref, onBack, centered = false }) {
   // Fx [1, 2, 3, 4] - én streg pr. trin
   const steps = Array.from({ length: totalSteps }, (_, index) => index + 1);
 
@@ -29,7 +30,7 @@ export default function StepHeader({ step, totalSteps = 4, title, subtitle, back
         </div>
       </div>
 
-      <div className={styles.titles}>
+      <div className={styles.titles} data-centered={centered}>
         <h1 className={styles.title}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
       </div>
