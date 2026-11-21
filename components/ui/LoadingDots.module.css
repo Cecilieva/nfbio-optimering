@@ -1,0 +1,58 @@
+/* Prikkerne står på tekstens grundlinje, ligesom punktummer */
+.dots {
+  display: inline-flex;
+  gap: var(--space-0-5);
+  margin-left: var(--space-0-5);
+}
+
+.dot {
+  display: inline-block;
+  width: var(--size-loading-dot);
+  height: var(--size-loading-dot);
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  scale: 0;
+  animation: var(--duration-loading-dots) var(--easing-out) infinite;
+}
+
+/* Én runde: ingen prikker -> 1 -> 2 -> 3 -> forfra (Figma Trin 0-3) */
+.dot:nth-child(1) {
+  animation-name: dot-1;
+}
+
+.dot:nth-child(2) {
+  animation-name: dot-2;
+}
+
+.dot:nth-child(3) {
+  animation-name: dot-3;
+}
+
+/* Prik 1 vokser frem i trin 1 */
+@keyframes dot-1 {
+  0%, 20% { scale: 0; }
+  30%, 92% { scale: 1; }
+  100% { scale: 0; }
+}
+
+/* Prik 2 vokser frem i trin 2 */
+@keyframes dot-2 {
+  0%, 45% { scale: 0; }
+  55%, 92% { scale: 1; }
+  100% { scale: 0; }
+}
+
+/* Prik 3 vokser frem i trin 3 - til sidst forsvinder alle tre sammen */
+@keyframes dot-3 {
+  0%, 70% { scale: 0; }
+  80%, 92% { scale: 1; }
+  100% { scale: 0; }
+}
+
+/* Har man slået animationer fra, står alle tre prikker stille */
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    scale: 1;
+    animation: none;
+  }
+}
