@@ -18,10 +18,8 @@ const HELP_LINKS = [
   { label: "Erhverv", href: "/film" },
 ];
 
-const LEGAL_LINKS = [
-  { label: "Privatliv og cookies", href: "/film" },
-  { label: "Betingelser", href: "/film" },
-];
+// Teksten nederst til venstre. Privatliv og Betingelser er kun tekst - siderne findes ikke.
+const LEGAL_TEXTS = ["© 2026", "Privatliv og cookies", "Betingelser"];
 
 // Vi linker til forsiderne af de sociale medier og ikke til en rigtig profil,
 // fordi sitet er et studieprojekt uden tilknytning til Nordisk Film Biografer.
@@ -46,10 +44,11 @@ export default function Footer({ showNewsletter = true }) {
         {/* Øverst: logo, to kolonner med links og nyhedsbrevet */}
         <div className={styles.columns}>
           <div className={styles.logoColumn}>
-            <Link href="/film" className={styles.logo} aria-label="Til forsiden">
-              {/* alt="" fordi linket allerede har en tekst (aria-label) til skærmlæsere */}
-              <Image src="/logo.svg" alt="" width={84.75} height={63.75} />
-            </Link>
+            {/* Egmont-logoet (ejeren af Nordisk Film Biografer) som på nfbio.dk - linker til egmont.com.
+                150px bredt som på nfbio.dk. alt="" fordi linket allerede har en tekst (aria-label) */}
+            <a href="https://www.egmont.com" className={styles.logo} aria-label="Egmont">
+              <Image src="/egmont-logo.svg" alt="" width={150} height={37.89} />
+            </a>
           </div>
 
           {/* Hver kolonne er sin egen <nav>, så skærmlæsere kan hoppe direkte til den */}
@@ -97,30 +96,15 @@ export default function Footer({ showNewsletter = true }) {
 
         <hr className={styles.divider} />
 
-        {/* Nederst: copyright, juridiske links og sociale medier */}
+        {/* Nederst: copyright, juridisk tekst og sociale medier */}
         <div className={styles.bottom}>
-          <div className={styles.legalGroup}>
-            {/* Teksten viser tydeligt, at sitet er et studieprojekt og ikke Nordisk Films
-                rigtige side. Det er et krav i projektbeskrivelsen.
-                Den står på sin egen linje og er lysere end de juridiske links,
-                så den ikke drukner i dem. */}
-            <p className={styles.disclaimer}>
-              © 2026 – studieprojekt uden tilknytning til Nordisk Film Biografer
-            </p>
+          {/* Venstre: copyright og juridisk tekst, adskilt med en prik (som i Figma) */}
+          <p className={styles.legal}>{LEGAL_TEXTS.join(" · ")}</p>
 
-            {/* De juridiske links på linjen under, adskilt med en prik */}
-            <p className={styles.legal}>
-              {LEGAL_LINKS.map((link, index) => (
-                <span key={link.label}>
-                  {/* Prikken sættes kun ind før link nummer 2 og fremefter */}
-                  {index > 0 && " · "}
-                  <Link href={link.href} className={styles.legalLink}>
-                    {link.label}
-                  </Link>
-                </span>
-              ))}
-            </p>
-          </div>
+          {/* Midten: viser, at sitet ikke er Nordisk Films rigtige side (krav i projektbeskrivelsen) */}
+          <p className={`${styles.legal} ${styles.disclaimer}`}>
+            Studieprojekt uden tilknytning til Nordisk Film Biografer
+          </p>
 
           <ul className={styles.social}>
             {SOCIAL_LINKS.map((link) => (

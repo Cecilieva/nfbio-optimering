@@ -13,9 +13,10 @@
   align-items: flex-start;
 }
 
-/* Feltet fylder den plads, der er tilbage ved siden af knappen */
+/* Feltet fylder den plads, der er tilbage ved siden af knappen.
+   Bliver det smallere end 160px, hopper knappen ned under det */
 .field {
-  flex: 1 1 var(--size-footer-column);
+  flex: 1 1 var(--size-newsletter-field-min);
   min-width: 0;
 }
 
