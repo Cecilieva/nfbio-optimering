@@ -47,8 +47,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dotOn {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .dotOn {
+  animation: none;
 }

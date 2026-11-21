@@ -83,12 +83,10 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .titleBlock,
-  .word,
-  .title[data-variant="standard"]:hover .word {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .titleBlock,
+:global(html[data-motion="reduce"]) .word,
+:global(html[data-motion="reduce"]) .title[data-variant="standard"]:hover .word {
+  animation: none;
 }
 
 @media (max-width: 48rem) {
@@ -169,11 +167,9 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .letter,
-  .title[data-variant="katten"]:hover .letter {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .letter,
+:global(html[data-motion="reduce"]) .title[data-variant="katten"]:hover .letter {
+  animation: none;
 }
 
 @media (max-width: 48rem) {
@@ -238,14 +234,12 @@
 }
 
 /* animationer slået fra: dråberne står stille, helt nede */
-@media (prefers-reduced-motion: reduce) {
-  .drip {
-    height: var(--height);
-    opacity: 1;
-    filter: blur(var(--blur-title-melt-drip));
-    transform: translateY(var(--distance-title-melt-drip));
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .drip {
+  height: var(--height);
+  opacity: 1;
+  filter: blur(var(--blur-title-melt-drip));
+  transform: translateY(var(--distance-title-melt-drip));
+  animation: none;
 }
 
 @media (max-width: 48rem) {

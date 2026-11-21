@@ -171,13 +171,11 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .image,
-  .toning,
-  .beam,
-  .details {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .image,
+:global(html[data-motion="reduce"]) .toning,
+:global(html[data-motion="reduce"]) .beam,
+:global(html[data-motion="reduce"]) .details {
+  animation: none;
 }
 
 @media (max-width: 48rem) {

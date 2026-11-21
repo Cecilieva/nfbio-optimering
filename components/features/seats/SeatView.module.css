@@ -181,9 +181,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .screen,
-  .screenBox {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .screen,
+:global(html[data-motion="reduce"]) .screenBox {
+  animation: none;
 }

@@ -67,8 +67,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bell[data-ringing] {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .bell[data-ringing] {
+  animation: none;
 }

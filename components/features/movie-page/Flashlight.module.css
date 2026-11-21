@@ -40,8 +40,6 @@
   object-fit: cover;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .cone {
-    transition: none;
-  }
+:global(html[data-motion="reduce"]) .cone {
+  transition: none;
 }

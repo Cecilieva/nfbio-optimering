@@ -102,8 +102,6 @@
 }
 
 /* reduced motion: ingen animation */
-@media (prefers-reduced-motion: reduce) {
-  .modal[open] {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .modal[open] {
+  animation: none;
 }

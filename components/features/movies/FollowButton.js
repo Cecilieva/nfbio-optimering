@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import styles from "./FollowButton.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // How long the message under the button stays visible
 const TOAST_MS = 3000;
@@ -62,7 +63,7 @@ export default function FollowButton({ title, loginHref, wideToast = false }) {
       return;
     }
     // "Mindre bevægelse": slå til med det samme. Ellers ringer klokken først.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       setFollowing(true);
       setShowToast(true);
       return;

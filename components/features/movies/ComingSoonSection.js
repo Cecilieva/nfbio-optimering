@@ -7,14 +7,15 @@ import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import { formatMonth } from "@/lib/format";
 import styles from "./ComingSoonSection.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Rul hen til et element og flyt fokus dertil, så man ikke mister sin plads med tastatur eller skærmlæser.
-// Bruger man "mindre bevægelse" i styresystemet, hopper siden i stedet for at glide.
+// Er animationerne slået fra, hopper siden i stedet for at glide.
 function scrollToAndFocus(element) {
   if (!element) {
     return;
   }
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = prefersReducedMotion();
   element.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   // preventScroll: rulningen klarer scrollIntoView – ellers ville focus() hoppe derhen med det samme
   element.focus({ preventScroll: true });

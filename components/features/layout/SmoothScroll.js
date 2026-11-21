@@ -5,6 +5,7 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "lenis/dist/lenis.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Der er kun én Lenis på hele siden. Den gemmes her, så andre komponenter kan hente den med useLenis().
 // listeners er dem, der skal have besked, når Lenis bliver startet eller fjernet.
@@ -39,7 +40,7 @@ export function useLenis() {
  */
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       return;
     }
     gsap.registerPlugin(ScrollTrigger);

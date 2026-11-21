@@ -71,10 +71,8 @@
   }
 }
 
-/* Har brugeren slået animationer fra i styresystemet, står keglen bare stille */
-@media (prefers-reduced-motion: reduce) {
-  .pivot,
-  .cone {
-    animation: none;
-  }
+/* Har brugeren slået animationer fra, står keglen bare stille */
+:global(html[data-motion="reduce"]) .pivot,
+:global(html[data-motion="reduce"]) .cone {
+  animation: none;
 }

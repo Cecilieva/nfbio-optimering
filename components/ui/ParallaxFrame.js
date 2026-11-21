@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ParallaxFrame.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Hvor meget billedet bevæger sig i forhold til rammen.
 // 1 = billedet står helt stille på skærmen, 0 = billedet følger rammen (ingen effekt).
@@ -85,7 +86,7 @@ export default function ParallaxFrame({
   useEffect(() => {
     const frame = frameRef.current;
     const layer = layerRef.current;
-    if (!layer || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (!layer || prefersReducedMotion()) {
       return;
     }
     gsap.registerPlugin(ScrollTrigger);

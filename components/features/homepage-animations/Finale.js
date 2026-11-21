@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Starfield from "@/components/features/homepage-animations/Starfield";
 import styles from "./Finale.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Sloganet, én linje ad gangen – som i Figma
 const SLOGAN_LINES = ["We bring", "stories", "to life"];
@@ -25,7 +26,7 @@ const REFRESH_DELAY = 150; // ms – hvor længe vi venter, før siden måles ig
  * 2. Så står finalen fast et øjeblik (pin) med sloganet helt tændt, mens det glider op på plads.
  * Det hele følger scrollen (scrub), så det kører baglæns, når man scroller op.
  *
- * Har man slået animationer fra i styresystemet, står sloganet bare der i fuldt lys.
+ * Har man slået animationer fra, står sloganet bare der i fuldt lys.
  */
 export default function Finale() {
   const rootRef = useRef(null);
@@ -34,7 +35,7 @@ export default function Finale() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       return;
     }
 

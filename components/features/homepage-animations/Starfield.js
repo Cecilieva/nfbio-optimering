@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Starfield.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /**
  * Stjernebaggrund: et 3D-stjernefelt på et canvas, hvor stjernerne flyver roligt imod brugeren.
@@ -28,7 +29,7 @@ export default function Starfield({ count = 520, speed = 0.075, reactToScroll = 
     const section = canvas.parentElement;
     const ctx = canvas.getContext("2d");
     gsap.registerPlugin(ScrollTrigger);
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = prefersReducedMotion();
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     // dpr: hvor skarp skærmen er (2 på en Retina-skærm). Canvas'et tegnes i den opløsning, så stjernerne er skarpe.
     // Farven hentes fra CSS'en (tokenet --color-star), så der står ingen farve her

@@ -30,6 +30,20 @@ body {
   white-space: nowrap;
 }
 
+/* Animationer slået fra (data-motion="reduce" - se lib/motion.js).
+   Komponenterne stopper selv deres animationer. Her slår vi små overgange
+   (fx hover) og blød scroll fra overalt, så intet glider eller zoomer */
+html[data-motion="reduce"] {
+  scroll-behavior: auto;
+}
+
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
 main {
   max-width: var(--layout-max-width);
   margin: 0 auto;

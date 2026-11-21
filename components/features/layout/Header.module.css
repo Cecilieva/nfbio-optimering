@@ -31,10 +31,8 @@
   inset-inline: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .header {
-    transition: none;
-  }
+:global(html[data-motion="reduce"]) .header {
+  transition: none;
 }
 
 /* position: relative, så søgefeltet (HeaderSearch) på mobil kan strække sig fra headerens venstre kant */

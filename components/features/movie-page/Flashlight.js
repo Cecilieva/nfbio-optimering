@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./Flashlight.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // positioner som andel (0–1) af Figma-rammen på 1440 × 560, så de passer på alle skærme
 const AUTO_POSITIONS = [
@@ -63,7 +64,7 @@ export default function Flashlight({ image }) {
 
   // vandrer selv, når musen er væk (ikke hvis animationer er slået fra)
   useEffect(() => {
-    if (zone || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (zone || prefersReducedMotion()) {
       return;
     }
     const timer = setInterval(() => setAutoIndex((index) => (index + 1) % AUTO_POSITIONS.length), AUTO_STEP_MS);
