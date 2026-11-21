@@ -1,11 +1,6 @@
-// "use client" betyder, at komponenten kører i browseren.
-// Det er nødvendigt, fordi menuen reagerer på klik (åbn og luk).
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 import Button from "@/components/ui/Button";
+import SidePanel, { SidePanelHeading, SidePanelItem } from "./SidePanel";
 import styles from "./MainMenu.module.css";
 
 // Linkene i menuen. Når de står i en liste, kan vi tilføje eller fjerne
@@ -25,119 +20,54 @@ const MORE_LINKS = [
   { label: "Om Nordisk Film Biografer", href: "/film" },
 ];
 
-// Figma: "Menu".
-// Burgerknappen i headeren plus menuen, der glider ind fra venstre.
-// Menuen er et HTML-<dialog>. Så giver browseren os gratis:
-//   - Escape lukker menuen
-//   - tastaturfokus bliver inde i menuen, mens den er åben
-//   - en mørk baggrund (backdrop) bag menuen
+// Figma: "Menu" (1056:25687).
+// Burgerknappen i headeren plus menuen, der glider ind fra venstre (SidePanel).
 export default function MainMenu({ triggerClassName }) {
-  // En ref er et "håndtag" til <dialog>-elementet, så vi kan åbne og lukke det
-  const dialogRef = useRef(null);
-
-  function openMenu() {
-    dialogRef.current.showModal();
-  }
-
-  function closeMenu() {
-    dialogRef.current.close();
-  }
-
-  // Luk menuen, når brugeren klikker på den mørke baggrund.
-  // Et klik på baggrunden tæller som et klik på selve <dialog>,
-  // mens et klik inde i menuen rammer et af elementerne indeni.
-  function handleDialogClick(event) {
-    if (event.target === dialogRef.current) {
-      closeMenu();
-    }
-  }
-
   return (
-    <>
-      {/* Burgerknappen, der vises i headeren */}
-      <button
-        type="button"
-        className={triggerClassName}
-        aria-label="Menu"
-        aria-haspopup="dialog"
-        onClick={openMenu}
-      >
-        <Image src="/icons/menu.svg" alt="" width={24} height={24} />
-      </button>
+    <SidePanel
+      label="Menu"
+      triggerLabel="Menu"
+      triggerIcon="/icons/menu.svg"
+      triggerClassName={triggerClassName}
+    >
+      {/* Panelet lukker selv, når man klikker på et af linkene */}
+      <nav aria-label="Hovedmenu">
+        {/* Sektion 1: de store film-links */}
+        <section>
+          <SidePanelHeading>FILM</SidePanelHeading>
+          <ul className={styles.list}>
+            {FILM_LINKS.map((link) => (
+              <li key={link.label}>
+                <SidePanelItem href={link.href}>{link.label}</SidePanelItem>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      {/* Selve menuen. Den er skjult, indtil showModal() bliver kaldt. */}
-      <dialog
-        ref={dialogRef}
-        className={styles.drawer}
-        aria-label="Menu"
-        onClick={handleDialogClick}
-      >
-        <div className={styles.panel}>
-          {/* Øverst: logo og luk-knap */}
-          <div className={styles.top}>
-            <Link
-              href="/film"
-              className={styles.logo}
-              aria-label="Nordisk Film Biografer – forside"
-              onClick={closeMenu}
-            >
-              <Image src="/logo.svg" alt="" width={84.75} height={63.75} />
-            </Link>
-            <Button variant="secondary" onClick={closeMenu}>
-              Luk <span aria-hidden="true">✕</span>
-            </Button>
-          </div>
+        <hr className={styles.divider} />
 
-          <nav aria-label="Hovedmenu" className={styles.nav}>
-            {/* Sektion 1: de store film-links */}
-            <section className={styles.film}>
-              <h2 className={styles.heading}>Film</h2>
-              <ul className={styles.list}>
-                {/* Lav ét link for hvert punkt i FILM_LINKS.
-                    Hvert link lukker også menuen, når man klikker på det. */}
-                {FILM_LINKS.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href} className={styles.item} onClick={closeMenu}>
-                      {/* Den blå streg og pilen vises kun ved hover (se CSS'en) */}
-                      <span className={styles.marker} aria-hidden="true" />
-                      <span className={styles.itemText}>{link.label}</span>
-                      <span className={styles.arrow} aria-hidden="true">
-                        →
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
+        {/* Sektion 2: de mindre "Mere"-links */}
+        <section>
+          <SidePanelHeading>MERE</SidePanelHeading>
+          <ul className={styles.moreList}>
+            {MORE_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} className={styles.moreLink}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </nav>
 
-            <hr className={styles.divider} />
-
-            {/* Sektion 2: de mindre "Mere"-links */}
-            <section className={styles.more}>
-              <h2 className={styles.heading}>Mere</h2>
-              <ul className={styles.moreList}>
-                {MORE_LINKS.map((link) => (
-                  <li key={link.label}>
-                    <Link href={link.href} className={styles.moreLink} onClick={closeMenu}>
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </nav>
-
-          {/* Nederst: log ind / opret profil */}
-          <div className={styles.profile}>
-            <Button href="/login" onClick={closeMenu}>
-              Log ind
-            </Button>
-            <Button variant="secondary" href="/signup" onClick={closeMenu}>
-              Opret profil
-            </Button>
-          </div>
-        </div>
-      </dialog>
-    </>
+      {/* Nederst: log ind / opret profil */}
+      <div className={styles.profile}>
+        <Button href="/login">Log ind</Button>
+        <Button variant="secondary" href="/signup">
+          Opret profil
+        </Button>
+      </div>
+    </SidePanel>
   );
 }

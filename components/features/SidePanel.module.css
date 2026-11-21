@@ -1,0 +1,184 @@
+/* Figma "Menu" og "Byskift": panelet ligger fast i venstre side og er lige så højt som skærmen */
+.drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(var(--size-menu-width), 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Er der flere punkter end der er plads til (fx mange byer), kan man scrolle */
+  border: 0;
+  border-right: var(--border-width) solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* Når panelet åbnes, glider det ind fra venstre */
+.drawer[open] {
+  animation: slide-in var(--duration-menu) var(--easing-out);
+}
+
+/* Byskiftet: panelet ligger i højre side, ved lokations-ikonet, og glider ind fra højre */
+.drawer[data-side="right"] {
+  inset: 0 0 0 auto;
+  border-right: 0;
+  border-left: var(--border-width) solid var(--color-border);
+}
+
+.drawer[data-side="right"][open] {
+  animation-name: slide-in-right;
+}
+
+/* Den mørke baggrund bag panelet */
+.drawer::backdrop {
+  background: var(--color-backdrop);
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+/* Ingen glide-animation, hvis brugeren har slået animationer fra */
+@media (prefers-reduced-motion: reduce) {
+  .drawer[open],
+  .drawer[data-side="right"][open] {
+    animation: none;
+  }
+}
+
+/* Figma: 24px luft i toppen, 32px i siderne og 40px i bunden */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: var(--space-6) var(--space-8) var(--space-10);
+}
+
+/* Luk-knappen står til højre */
+.top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--space-10);
+}
+
+/* Lille overskrift over en gruppe, fx "FILM" eller "Vælg by" */
+.heading {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "Menupunkt": den blå streg og pilen er skjult (opacity: 0), indtil man holder musen over */
+.item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: var(--size-menu-item-height);
+  padding: var(--space-2) 0;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-menu-item);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    padding-left var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+/* Byskift: en streg under hvert punkt */
+.item[data-divider] {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.marker {
+  position: absolute;
+  top: var(--space-3);
+  left: 0;
+  width: var(--size-menu-marker-width);
+  height: var(--size-menu-marker-height);
+  border-radius: var(--radius-xs);
+  background: var(--color-cta);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+}
+
+.arrow {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+/* Ved hover rykker teksten lidt til højre og bliver blå.
+   Det valgte punkt ser altid sådan ud (men kan ikke klikkes) */
+.item[data-selected],
+.item:hover,
+.item:focus-visible {
+  padding-left: var(--space-4);
+  color: var(--color-accent); /* Figma text/Hover */
+  outline: none;
+}
+
+.item[data-selected] {
+  cursor: default;
+}
+
+/* Fluebenet ved det valgte punkt. check.svg bruges som maske, så farven kan komme fra et token
+   og blive den samme blå som pilen (Figma accent/Primær) */
+.check {
+  flex-shrink: 0;
+  width: var(--size-icon);
+  height: var(--size-icon);
+  background: var(--color-cta);
+  mask: url("/icons/check.svg") center / contain no-repeat;
+}
+
+/* ...og stregen og pilen bliver synlige */
+.item[data-selected] .marker,
+.item:hover .marker,
+.item:hover .arrow,
+.item:focus-visible .marker,
+.item:focus-visible .arrow {
+  opacity: 1;
+}
+
+/* Mobil: lidt mindre luft, så flere punkter kan ses uden at scrolle */
+@media (max-width: 48rem) {
+  /* Mobil og tablet: panelet fylder hele skærmen, så der ikke står en smal strimmel af siden tilbage */
+  .drawer,
+  .drawer[data-side="right"] {
+    width: 100%;
+    border: 0;
+  }
+
+  .panel {
+    padding: var(--space-5) var(--space-5) var(--space-8);
+  }
+
+  .top {
+    margin-bottom: var(--space-8);
+  }
+}
