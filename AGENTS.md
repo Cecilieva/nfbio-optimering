@@ -63,7 +63,7 @@ components/
     auth/                 Log ind, Opret profil og Profil: AuthScreen, AuthStatus, SignUpForm, UserBadge
 lib/
   data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, profile
-  actions/                Server actions: auth, city, booking
+  actions/                Server actions: auth, city, booking, newsletter
   supabase/server.js      Supabase-klienten til serveren
   auth.js                 getCurrentUser()
   booking-cookie.js       Kopi af bookingen til gæster (se nedenfor)
@@ -74,6 +74,7 @@ lib/
   safe-path.js            Validerer ?next=
   seat-rules.js           Sædevalget: et ledigt sæde må ikke efterlades alene (findLoneSeats) og de bedste pladser midt i salen (findBestSeats)
   use-submit-once.js      useSubmitOnce: stopper dobbeltklik, så en formular i købsflowet ikke sendes to gange
+  motion.js               Animationer til eller fra (data-motion på <html>, ud fra styresystemet) - se "Tilgængelighed" nedenfor
 supabase/supabase_schema.sql
 ```
 
@@ -88,6 +89,15 @@ supabase/supabase_schema.sql
 - Indlæsning: brug altid den almindelige loader (LoadingState - popkorn + "Indlæser"). Der er ingen `loading.js` - den gamle side bliver stående, indtil den nye er klar, så man ikke ser en tom side. En formular, der sender en videre til en ny side, får `<FormLoader />` inde i `<form>` (ved betaling med `title`/`text`: "Reserverer pladser"). Alle links, der henter en ny side (fx Button med `href`, BackLink, MovieCard, menuen, headeren og footeren), har `<LinkLoader />` inde i linket, så loaderen også vises med det samme på et langsomt net. Loaderen kommer først frem efter 1 sekund (på et hurtigt net ser man den ikke), og når den er synlig, står den mindst 3 sekunder (LoadingHost i hver gruppes layout). Kun to steder vises den altid (`always`): på vej ind på en filmside (filmkortene i MovieCard og søgningen i headeren) og "Reserverer pladser" ved betaling. Små formularer, der bliver på siden (fx nyhedsbrevet), får ingen loader.
 - Betalingen er simuleret (`completePayment`): MobilePay går altid igennem. Betalingskort (KORT-402) og gavekort (GAVEKORT-404) fejler altid og sender til fejlsiden (`betaling/fejl?metode=…`). Derfra prøver man igen eller går tilbage til betalingen, hvor fejlen vises i formularen (`?fejl=…`). Fejlkoderne står i `lib/payment-errors.js`.
 - `/bestil/saeder/…` hedder sådan, fordi Next.js ikke tillader to forskellige dynamiske navne (`[showtimeId]` og `[bookingId]`) på samme niveau.
+
+## Tilgængelighed
+
+- **Animationer:** `<html>` har altid `data-motion="reduce"` (fra) eller `"full"` (til). Det sættes ud fra styresystemets "Reducer bevægelse" af et lille script i `<head>` (`lib/motion.js`), før siden tegnes. Brug aldrig `prefers-reduced-motion` direkte:
+  - CSS: `:global(html[data-motion="reduce"]) .x { animation: none; }` (og `:global(html:not([data-motion="reduce"])) .x` for noget, der kun må ske med bevægelse). Små overgange (`transition`) slås fra for hele sitet i `globals.css`.
+  - JavaScript: `prefersReducedMotion()` (og `subscribeReducedMotion` til `useSyncExternalStore`) fra `lib/motion.js`.
+  - Alt, der bevæger sig, skal kunne slås fra og stå pænt stille. Intet må blinke mere end 3 gange i sekundet.
+- **Tastatur:** Alt, man kan klikke på, skal kunne nås med Tab og have en synlig fokus-ring (`globals.css` giver en, hvis komponenten ikke selv har en). Hver side giver sin `<main>` `id="indhold"`, så "Spring til indhold" (`app/layout.js`) virker.
+- **Skærmlæsere:** Fejl bruger `role="alert"`, beskeder `role="status"`. Billeder har `alt` (`alt=""`, hvis de kun er pynt). Ikon-knapper har `aria-label`.
 
 ## Sæder
 
