@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
+import FormLoader from "@/components/features/FormLoader";
 import BottomBar from "@/components/features/BottomBar";
 import Countdown from "@/components/features/Countdown";
 import SeatMap from "@/components/features/SeatMap";
@@ -39,7 +40,6 @@ function bestSeatIds(rows, quantity) {
 //   2. "Vælg dine pladser" (SeatMap + SeatView) - vælg sæderne og reservér med "Til betaling".
 //      Uret i bundbjælken starter her. Pladserne holdes først rigtigt i databasen efter "Til betaling"
 // Er et sæde lige blevet taget af en anden, vises "Dine popkorn blev brændt".
-// ("Vi popper dine pladser" vises først på næste trin - se AttachOwnerForm)
 //
 //   showtime - fra getShowtime()
 //   rows     - fra getSeatMap()
@@ -225,6 +225,8 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume,
         <p>Du valgte: {formatSeats(selectedSeats)}</p>
         <Button onClick={chooseOtherSeats}>Vælg andre sæder</Button>
       </Overlay>
+      {/* Viser "Indlæser", mens formularen sendes */}
+      <FormLoader />
     </form>
   );
 }

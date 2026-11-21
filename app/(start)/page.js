@@ -1,3 +1,4 @@
+import FormLoader from "@/components/features/FormLoader";
 import Spotlight from "@/components/features/Spotlight";
 import Button from "@/components/ui/Button";
 import { selectCity } from "@/lib/actions/city";
@@ -53,6 +54,8 @@ export default async function CityPage({ searchParams }) {
                 >
                   {city.name}
                 </Button>
+                {/* Viser "Indlæser", mens formularen sendes */}
+                <FormLoader />
               </form>
             </li>
           ))}
