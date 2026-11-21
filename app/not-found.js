@@ -1,5 +1,5 @@
-import Footer from "@/components/features/Footer";
-import Header from "@/components/features/Header";
+import Footer from "@/components/features/layout/Footer";
+import Header from "@/components/features/layout/Header";
 import MessagePage from "@/components/features/MessagePage";
 import Button from "@/components/ui/Button";
 

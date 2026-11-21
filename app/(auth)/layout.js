@@ -1,4 +1,4 @@
-import Header from "@/components/features/Header";
+import Header from "@/components/features/layout/Header";
 import { LoadingHost } from "@/components/features/LoadingState";
 import styles from "./layout.module.css";
 

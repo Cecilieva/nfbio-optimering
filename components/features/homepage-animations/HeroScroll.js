@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IntroCountdown from "@/components/features/homepage-animations/IntroCountdown";
 import Starfield from "@/components/features/homepage-animations/Starfield";
-import { useLenis } from "@/components/features/SmoothScroll";
+import { useLenis } from "@/components/features/layout/SmoothScroll";
 import { getParallaxBox, PARALLAX_STRENGTH } from "@/components/ui/ParallaxFrame";
 import styles from "./HeroScroll.module.css";
 

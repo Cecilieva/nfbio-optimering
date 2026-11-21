@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import HeaderSearch from "@/components/features/HeaderSearch";
+import HeaderSearch from "@/components/features/layout/HeaderSearch";
 import MovieCard from "@/components/features/MovieCard";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";

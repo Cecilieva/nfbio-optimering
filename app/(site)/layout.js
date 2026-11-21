@@ -1,7 +1,7 @@
-import Footer from "@/components/features/Footer";
-import Header from "@/components/features/Header";
+import Footer from "@/components/features/layout/Footer";
+import Header from "@/components/features/layout/Header";
 import { LoadingHost } from "@/components/features/LoadingState";
-import SmoothScroll from "@/components/features/SmoothScroll";
+import SmoothScroll from "@/components/features/layout/SmoothScroll";
 
 // Layout for route-gruppen "(site)": alle sider undtagen Vælg by.
 // Parenteserne betyder, at "(site)" IKKE kommer med i URL'en, så /film bare er /film.
