@@ -1,7 +1,7 @@
 // Fejlsiden for Log ind og Opret profil. En fejlside skal køre i browseren ("use client")
 "use client";
 
-import ErrorState from "@/components/features/ErrorState";
+import ErrorState from "@/components/features/messages/ErrorState";
 
 export default function Error({ error, retry }) {
   return <ErrorState error={error} retry={retry} />;

@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import FormLoader from "@/components/features/FormLoader";
-import UserBadge from "@/components/features/UserBadge";
+import FormLoader from "@/components/features/loading/FormLoader";
+import UserBadge from "@/components/features/auth/UserBadge";
 import { signOut } from "@/lib/actions/auth";
 import { getCurrentUser } from "@/lib/auth";
 import { getCurrentProfile } from "@/lib/data/profile";

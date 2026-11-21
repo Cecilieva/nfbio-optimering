@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import SeatPicker from "@/components/features/SeatPicker";
+import SeatPicker from "@/components/features/seats/SeatPicker";
 import { getBooking, isReservationActive } from "@/lib/data/bookings";
 import { getSeatMap } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";

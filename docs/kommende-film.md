@@ -21,10 +21,10 @@ lib/data/movies.js  getComingSoon()      ← fjerner dubletter, tilføjer plakat
 app/(site)/film/page.js                  ← henter data og sender dem videre som props
    │
    ▼
-components/features/ComingSoonSection.js ← filtrerer og viser 10 eller alle
+components/features/movies/ComingSoonSection.js ← filtrerer og viser 10 eller alle
    ├─ components/ui/Button.js            ("Se alle" / "Skjul")
    ├─ components/ui/Chip.js              (filtrene – Figma "Option button")
-   └─ components/features/MovieCard.js   (plakaterne – variant "coming-soon")
+   └─ components/features/movies/MovieCard.js   (plakaterne – variant "coming-soon")
 ```
 
 ## 1. Data – `lib/data/`
@@ -58,7 +58,7 @@ Den lille pilleformede knap til filtrene. Den valgte får `aria-pressed="true"` 
 
 > `Chip` bruges også i `SeatPicker` (vælg antal billetter), så knapperne dér ser ens ud.
 
-### `components/features/MovieCard.js` – variant `coming-soon`
+### `components/features/movies/MovieCard.js` – variant `coming-soon`
 Figma "Kommer snart" (node `927:6300`). Plakaten består af:
 - billedet med en mørk toning (Figma "Overlay")
 - kalender-ikonet (`public/icons/calendar.svg`), premieredatoen og "Billetsalget er åbent" (når billetsalget er åbent) eller "Billetsalg fra …" i midten
@@ -73,7 +73,7 @@ Plakaten har 8px runde hjørner (`--radius-md`) og toningen `Toning/85%` (`--col
 ### `components/ui/Button.js` – variant `more`
 Bruges til "Se alle kommende film" og "Skjul kommende film" – samme knap som "Se flere film" under filtreringen (Figma "Knap", Type=Se flere). Kanten er `border/Standard`.
 
-## 4. Sektionen – `components/features/ComingSoonSection.js`
+## 4. Sektionen – `components/features/movies/ComingSoonSection.js`
 
 En **client component** (`"use client"`), fordi den skal kunne huske, hvad brugeren har klikket på:
 
@@ -119,7 +119,7 @@ Derfor står der 5 plakater pr. række på desktop som i Figma, og der bliver au
 | Jeg vil … | Ret her |
 |---|---|
 | ændre hvor mange dage før premieren billetsalget åbner | `lib/data/ticket-sale.js` |
-| ændre hvor mange plakater der vises før "Se alle" | `VISIBLE_COUNT` i `components/features/ComingSoonSection.js` |
-| ændre teksterne i sektionen | `components/features/ComingSoonSection.js` |
-| ændre plakatens udseende | `components/features/MovieCard.module.css` |
+| ændre hvor mange plakater der vises før "Se alle" | `VISIBLE_COUNT` i `components/features/movies/ComingSoonSection.js` |
+| ændre teksterne i sektionen | `components/features/movies/ComingSoonSection.js` |
+| ændre plakatens udseende | `components/features/movies/MovieCard.module.css` |
 | ændre farver, størrelser og afstande | `app/tokens.css` |

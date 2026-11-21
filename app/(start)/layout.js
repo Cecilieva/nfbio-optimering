@@ -1,5 +1,5 @@
-import Header from "@/components/features/Header";
-import { LoadingHost } from "@/components/features/LoadingState";
+import Header from "@/components/features/layout/Header";
+import { LoadingHost } from "@/components/features/loading/LoadingState";
 import styles from "./page.module.css";
 
 // Layout for route-gruppen "(start)", som indeholder "/" og "/by".

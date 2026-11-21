@@ -2,7 +2,7 @@
 // så den laver selv <html> og <body>. Ingen header og footer – det kan være dem, der fejler
 "use client";
 
-import ErrorState from "@/components/features/ErrorState";
+import ErrorState from "@/components/features/messages/ErrorState";
 import { fontClasses } from "./fonts";
 import "./tokens.css";
 import "./globals.css";

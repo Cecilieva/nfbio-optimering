@@ -1,5 +1,5 @@
-import FormLoader from "@/components/features/FormLoader";
-import Spotlight from "@/components/features/Spotlight";
+import FormLoader from "@/components/features/loading/FormLoader";
+import Spotlight from "@/components/features/city-picker/Spotlight";
 import Button from "@/components/ui/Button";
 import { selectCity } from "@/lib/actions/city";
 import { getCities } from "@/lib/data/cities";

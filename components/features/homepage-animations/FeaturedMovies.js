@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ComingSoonCard from "@/components/features/ComingSoonCard";
+import ComingSoonCard from "@/components/features/movies/ComingSoonCard";
 import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
 

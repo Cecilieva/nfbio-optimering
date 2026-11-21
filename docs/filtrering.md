@@ -16,10 +16,10 @@ Supabase (movies, showtimes, cinemas)
 app/(site)/film/page.js                            ← henter data og sender dem videre som props
    │
    ▼
-components/features/MovieFilter.js                 ← Figma "Filtrering": husker filtrene og filtrerer
+components/features/movies/MovieFilter.js                 ← Figma "Filtrering": husker filtrene og filtrerer
    ├─ components/ui/FilterField.js                 (de fire felter med dropdown – Figma "Filterfelt")
    ├─ components/ui/Chip.js  variant="subtle"      (format-knapperne – Figma "Formater")
-   └─ components/features/MovieCard.js  variant="feed"  (plakaterne under filtrene – Figma "card i feed")
+   └─ components/features/movies/MovieCard.js  variant="feed"  (plakaterne under filtrene – Figma "card i feed")
 ```
 
 ## Data
@@ -97,10 +97,10 @@ Format-knapperne i Figma har ingen synlig kant, fordi kanten har samme farve som
 
 | Jeg vil … | Ret her |
 |---|---|
-| ændre format-knapperne | `FORMATS` i `components/features/MovieFilter.js` |
-| tilføje punkter til "Ekstra filtrering" | `extraOptions` i `components/features/MovieFilter.js` |
+| ændre format-knapperne | `FORMATS` i `components/features/movies/MovieFilter.js` |
+| tilføje punkter til "Ekstra filtrering" | `extraOptions` i `components/features/movies/MovieFilter.js` |
 | ændre udseendet på felterne og dropdownen | `components/ui/FilterField.module.css` |
-| ændre baren, søgeknappen og format-rækken | `components/features/MovieFilter.module.css` |
-| ændre udseendet på filmkortene | `.feed` m.fl. i `components/features/MovieCard.module.css` |
-| ændre hvor mange film der vises ad gangen | `PAGE_SIZE` i `components/features/MovieFilter.js` |
+| ændre baren, søgeknappen og format-rækken | `components/features/movies/MovieFilter.module.css` |
+| ændre udseendet på filmkortene | `.feed` m.fl. i `components/features/movies/MovieCard.module.css` |
+| ændre hvor mange film der vises ad gangen | `PAGE_SIZE` i `components/features/movies/MovieFilter.js` |
 | ændre farver, størrelser og afstande | `app/tokens.css` |

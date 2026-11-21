@@ -18,7 +18,7 @@ Databasen er allerede sat op. Skemaet (tabeller, RPC-funktioner, RLS og testdata
 |---|---|
 | `app/` | Sider – én route pr. skærm i flowet |
 | `components/ui/` | Generiske byggeklodser (knapper, felter, modal, overlay) |
-| `components/features/` | Domænekomponenter (MovieCard, SeatMap, OrderSummary …) |
+| `components/features/` | Domænekomponenter, delt op i mapper efter hvor de bruges (`layout/`, `movies/`, `movie-page/`, `seats/`, `checkout/`, `payment/` …) |
 | `lib/data/` | Læsning fra Supabase |
 | `lib/actions/` | Server actions (reservation, gæst/login, betaling) |
 | `app/tokens.css` | Design tokens fra Figma |
