@@ -74,14 +74,12 @@
   text-decoration: none;
 }
 
-.item:hover,
-.item:focus-visible {
+/* Den markerede film (med musen eller piletasterne) */
+.item[data-active] {
   background: var(--color-option-background-active);
-  outline: none;
 }
 
-.item:hover .title,
-.item:focus-visible .title {
+.item[data-active] .title {
   color: var(--color-accent);
 }
 
