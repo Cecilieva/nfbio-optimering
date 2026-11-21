@@ -421,6 +421,9 @@
   --size-social-icon: 1.25rem; /* 20px - selve ikonet */
   --size-checkbox: 1.125rem; /* 18px - boksen i en checkbox */
   --size-checkbox-icon: 1rem; /* 16px - fluebenet i boksen */
+  --size-radio: 1.125rem; /* 18px - cirklen i en radioknap (fx betalingsmetoderne) */
+  --size-radio-dot: 0.5rem; /* 8px - prikken i cirklen, når den er valgt */
+  --size-radio-icon: 1rem; /* 16px - fejl-ikonet i en radioknap, der har fejlet */
   --size-form-width: 32rem; /* 512px - formularerne på pladsholdersiderne (opret profil m.m.) */
   --size-auth-fade-right: 22.5rem; /* 360px - Figma "Toning – højre" på billedet på Log ind */
   --size-auth-fade-top: 18.75rem; /* 300px - Figma "Toning – top" */

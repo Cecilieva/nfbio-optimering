@@ -1,22 +1,22 @@
 import { notFound, redirect } from "next/navigation";
+import BottomBar from "@/components/features/BottomBar";
 import Countdown from "@/components/features/Countdown";
 import OrderSummary from "@/components/features/OrderSummary";
 import PaymentForm from "@/components/features/PaymentForm";
 import ReservationExpired from "@/components/features/ReservationExpired";
 import StepHeader from "@/components/features/StepHeader";
-import DataDump from "@/components/ui/DataDump";
+import Seat from "@/components/ui/Seat";
 import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
 import { formatSeats } from "@/lib/format";
+import styles from "./page.module.css";
 
 export const metadata = {
   title: "Betaling",
 };
 
-// Trin 3 i købet: betaling.
-// Viser nedtællingen (hvor længe sæderne holdes), hvad man køber, og betalingsformularen.
-// Betalingen er ikke rigtig - i formularen vælger man selv, om den lykkes eller fejler.
+// Trin 3 i købet: betaling. "Din ordre" til venstre, betalingsmetoderne til højre
 export default async function PaymentPage({ params }) {
   // bookingId er id'et i adressen, fx /bestil/abc123/betaling
   const { bookingId } = await params;
@@ -58,14 +58,30 @@ export default async function PaymentPage({ params }) {
   }
 
   return (
-    <main>
-      <StepHeader step={3} title="Betaling" />
-      {/* Rammer uret 00:00, lægges "Tiden er udløbet" over siden */}
-      <Countdown until={booking.reserved_until} expiredHref={restartHref} />
-      <OrderSummary showtime={showtime} seats={seats} totalDkk={booking.total_dkk} />
-      <PaymentForm bookingId={bookingId} seatsLabel={formatSeats(seats)} />
-      {/* Pladsholder: viser rå data, indtil siden er bygget */}
-      <DataDump label="booking" data={booking} />
+    <main className={styles.page}>
+      <StepHeader step={3} title="Betaling" backHref={restartHref} />
+
+      <div className={styles.columns}>
+        <OrderSummary
+          showtime={showtime}
+          seats={seats}
+          tickets={booking.tickets}
+          totalDkk={booking.total_dkk}
+        />
+        <PaymentForm bookingId={bookingId} seatsLabel={formatSeats(seats)} />
+      </div>
+
+      <BottomBar
+        summary={
+          <>
+            <Seat state="selected" />
+            {formatSeats(seats)}
+          </>
+        }
+      >
+        {/* Rammer uret 00:00, lægges "Tiden er udløbet" over siden */}
+        <Countdown until={booking.reserved_until} expiredHref={restartHref} />
+      </BottomBar>
     </main>
   );
 }

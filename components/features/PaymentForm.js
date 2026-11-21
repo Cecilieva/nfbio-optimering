@@ -1,69 +1,87 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import FormLoader from "@/components/features/FormLoader";
 import Button from "@/components/ui/Button";
+import Checkbox from "@/components/ui/Checkbox";
+import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
 import Radio from "@/components/ui/Radio";
 import { completePayment } from "@/lib/actions/booking";
-import { PAYMENT_ERRORS } from "@/lib/payment-errors";
+import styles from "./PaymentForm.module.css";
 
 const METHODS = [
-  { value: "mobilepay", label: "MobilePay" },
-  { value: "card", label: "Betalingskort" },
-  { value: "giftcard", label: "Gavekort" },
+  { value: "mobilepay", label: "MobilePay", description: "Hurtigst – godkend i appen" },
+  { value: "card", label: "Betalingskort", description: "Visa, Mastercard, Dankort" },
+  { value: "giftcard", label: "Gavekort / klippekort", description: "Indløs kode" },
 ];
 
-// Vælg betalingsmetode og betal.
-// Betalingen er ikke rigtig, så der er et felt, hvor man selv vælger, om den lykkes eller fejler.
-// Små fejl vises her i formularen. Store fejl sender brugeren videre til fejlsiden.
+// Vælg betalingsmetode og betal. Fejler betalingen, bliver metoden rød med fejlen under.
 //
-//   bookingId  - id'et på reservationen, der skal betales
-//   seatsLabel - sæderne som tekst, fx "Række 4, sæde 6–7" (fra formatSeats)
+//   bookingId  - reservationen, der skal betales
+//   seatsLabel - sæderne som tekst, fx "Række 4, sæde 6–7"
 export default function PaymentForm({ bookingId, seatsLabel }) {
   const [state, formAction, pending] = useActionState(completePayment, null);
-  // "Række 4, sæde 6–7" -> "række 4, sæde 6–7", så den passer midt i sætningen
+  const failedMethod = state?.error?.method;
+  // Formularen nulstilles efter hvert forsøg. Vi husker valget, så det ikke springer tilbage
+  const [selected, setSelected] = useState(METHODS[0].value);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  // Lille forbogstav, så teksten passer midt i en sætning
   const seatsInText = seatsLabel.charAt(0).toLowerCase() + seatsLabel.slice(1);
 
   return (
-    <form action={formAction}>
-      <input type="hidden" name="booking_id" value={bookingId} />
+    <section className={styles.card} aria-labelledby="payment-title">
+      <h2 id="payment-title" className={styles.title}>
+        Vælg betalingsmetode
+      </h2>
 
-      <fieldset>
-        <legend>Betalingsmetode</legend>
-        {METHODS.map((method) => (
-          <Radio key={method.value} name="method" value={method.value} label={method.label} required />
-        ))}
-      </fieldset>
+      <form action={formAction} className={styles.form}>
+        <input type="hidden" name="booking_id" value={bookingId} />
 
-      <fieldset>
-        <legend>Simulér resultat (kun prototype)</legend>
-        <select name="outcome" defaultValue="success" aria-label="Simuleret resultat">
-          <option value="success">Betalingen går igennem</option>
-          {Object.keys(PAYMENT_ERRORS).map((code) => (
-            <option key={code} value={code}>
-              Fejl {code}
-            </option>
+        <InvalidFieldsMessage className={styles.error} />
+
+        <fieldset className={styles.methods}>
+          <legend className="visually-hidden">Betalingsmetode</legend>
+          {METHODS.map((method) => (
+            <Radio
+              key={method.value}
+              name="method"
+              value={method.value}
+              label={method.label}
+              description={method.description}
+              error={method.value === failedMethod ? state.error.message : undefined}
+              defaultChecked={selected === method.value}
+              onChange={() => setSelected(method.value)}
+              required
+            />
           ))}
-        </select>
-      </fieldset>
+        </fieldset>
 
-      {state?.error && (
-        <p role="alert">
-          {state.error.message} ({state.error.code})
-        </p>
-      )}
+        <Checkbox
+          name="terms"
+          label="Jeg accepterer handelsbetingelserne"
+          defaultChecked={termsAccepted}
+          onChange={(event) => setTermsAccepted(event.target.checked)}
+          required
+        />
 
-      <Button type="submit" disabled={pending}>
-        {pending ? "Betaler …" : "Betal"}
-      </Button>
+        {/* Andre fejl, fx hvis databasen ikke svarer */}
+        {state?.error && !failedMethod && (
+          <p role="alert" className={styles.error}>
+            {state.error.message}
+          </p>
+        )}
 
-      {/* Mens betalingen går igennem, hopper popkornene over hele skærmen.
-          always: den vises altid (også på et hurtigt net), så man kan se, at pladserne bliver reserveret */}
-      <FormLoader
-        always
-        title="Reserverer pladser"
-        text={`Vi reserverer ${seatsInText}. Det tager kun et øjeblik.`}
-      />
-    </form>
+        <Button type="submit" disabled={pending} className={styles.button}>
+          {pending ? "Betaler …" : "Betal"}
+        </Button>
+
+        {/* always: loaderen vises altid, også på et hurtigt net */}
+        <FormLoader
+          always
+          title="Reserverer pladser"
+          text={`Vi reserverer ${seatsInText}. Det tager kun et øjeblik.`}
+        />
+      </form>
+    </section>
   );
 }

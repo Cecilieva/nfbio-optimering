@@ -1,0 +1,38 @@
+/* Samme opbygning som "Dine oplysninger" */
+.page {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  row-gap: var(--space-8);
+  align-content: start;
+  width: 100%;
+  max-width: none; /* <main> er ellers højst 1024px bred (globals.css) */
+  padding: var(--space-8) 0 var(--space-16);
+}
+
+.page > * {
+  grid-column: 2 / 12;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  align-items: start;
+}
+
+/* Mobil: kortene under hinanden */
+@media (max-width: 48rem) {
+  .page {
+    padding-right: var(--space-4);
+    padding-left: var(--space-4);
+  }
+
+  .page > * {
+    grid-column: 1 / -1;
+  }
+
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
