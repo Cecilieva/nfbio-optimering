@@ -585,6 +585,7 @@
      Samles her, så alle animationer på sitet føles ens. */
   --easing-standard: ease; /* Små hover-effekter på knapper og links */
   --easing-out: ease-out; /* Starter hurtigt og bremser blødt op, fx menuen der glider ind */
+  --easing-in: ease-in; /* Starter blødt og slutter hurtigt, fx menuen der glider ud */
   --easing-in-out: ease-in-out; /* Starter og slutter blødt, fx lyskeglen der svinger */
   --easing-linear: linear; /* Samme fart hele vejen, fx lyskeglen der blinker */
   --easing-slide: cubic-bezier(0.65, 0, 0.35, 1); /* Roligt i gang, roligt i stå - fx kortene i karrusellen */

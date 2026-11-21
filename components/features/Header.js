@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getSelectedCity } from "@/lib/data/cities";
+import { getCities, getSelectedCity } from "@/lib/data/cities";
+import CityMenu from "./CityMenu";
 import MainMenu from "./MainMenu";
 import ScrollHeader from "./ScrollHeader";
 import styles from "./Header.module.css";
@@ -11,9 +12,11 @@ import styles from "./Header.module.css";
 // Headeren gemmer sig, når man scroller ned, og kommer frem igen, når man scroller op (ScrollHeader).
 export default async function Header({ variant = "full" }) {
   // Det er kun den fulde header, der bruger byen, så vi henter den kun dér
+  // (og listen over byer til byskiftet)
   let city = null;
+  let cities = [];
   if (variant === "full") {
-    city = await getSelectedCity();
+    [city, cities] = await Promise.all([getSelectedCity(), getCities()]);
   }
 
   // Hvor logoet linker hen: til filmoversigten, eller tilbage til Vælg by på startskærmen
@@ -58,14 +61,8 @@ export default async function Header({ variant = "full" }) {
             </button>
           </li>
           <li>
-            {/* Går til Vælg by. Teksten fortæller skærmlæsere, hvilken by der er valgt. */}
-            <Link
-              href="/by"
-              className={styles.iconButton}
-              aria-label={city ? `By: ${city.name}. Skift by` : "Vælg by"}
-            >
-              <Image src="/icons/location.svg" alt="" width={24} height={24} />
-            </Link>
+            {/* Åbner byskiftet (Figma "Byskift"), hvor man vælger en anden by */}
+            <CityMenu cities={cities} city={city} triggerClassName={styles.iconButton} />
           </li>
           <li>
             <Link href="/profile" className={styles.iconButton} aria-label="Profil">

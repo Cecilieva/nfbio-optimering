@@ -1,0 +1,7 @@
+/* Figma "Byskift". Panelet, overskriften og punkterne styles i SidePanel.module.css */
+
+/* Byerne: 6px under overskriften og ingen luft imellem - stregen under hver by adskiller dem */
+.list {
+  margin-top: var(--space-1-5);
+  list-style: none;
+}

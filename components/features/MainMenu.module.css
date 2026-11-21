@@ -1,165 +1,35 @@
-/* Figma "Menu": menuen ligger fast i venstre side og er lige så høj som skærmen */
-.drawer {
-  position: fixed;
-  inset: 0 auto 0 0;
-  width: min(var(--size-menu-width), 100%);
-  max-width: 100%;
-  height: 100dvh;
-  max-height: 100dvh;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-right: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-}
-
-/* Når menuen åbnes, glider den ind fra venstre */
-.drawer[open] {
-  animation: slide-in var(--duration-menu) var(--easing-out);
-}
-
-/* Den mørke baggrund bag menuen */
-.drawer::backdrop {
-  background: var(--color-backdrop);
-}
-
-@keyframes slide-in {
-  from {
-    transform: translateX(-100%);
-  }
-}
-
-/* Ingen glide-animation, hvis brugeren har slået animationer fra */
-@media (prefers-reduced-motion: reduce) {
-  .drawer[open] {
-    animation: none;
-  }
-}
-
-.panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  padding: var(--space-7) var(--space-8) var(--space-10);
-}
-
-.top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  display: block;
-  line-height: 0;
-}
-
-.logo:hover {
-  opacity: var(--opacity-hover);
-}
-
-.logo:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-text);
-  outline-offset: var(--space-1);
-}
-
-.nav {
-  margin-top: var(--space-10);
-}
-
-.heading {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-snug);
-  text-transform: uppercase;
-}
+/* Figma "Menu". Panelet, overskrifterne og de store punkter styles i SidePanel.module.css */
 
 .list,
 .moreList {
   list-style: none;
 }
 
+/* Film-punkterne: 22px under overskriften og 8px imellem */
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  margin-top: var(--space-3-5);
+  gap: var(--space-2);
+  margin-top: calc(var(--space-4) + var(--space-1-5));
 }
 
-/* Figma "Menupunkt": den blå streg og pilen er skjult (opacity: 0), indtil man holder musen over */
-.item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  height: var(--size-menu-item-height);
-  padding: var(--space-2-5) 0;
-  color: var(--color-text);
-  font-size: var(--font-size-menu-item);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-snug);
-  text-decoration: none;
-  transition:
-    padding-left var(--duration-fast) var(--easing-standard),
-    color var(--duration-fast) var(--easing-standard);
-}
-
-.marker {
-  position: absolute;
-  top: var(--space-3);
-  left: 0;
-  width: var(--size-menu-marker-width);
-  height: var(--size-menu-marker-height);
-  border-radius: var(--radius-xs);
-  background: var(--color-cta);
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--easing-standard);
-}
-
-.itemText {
-  flex: 1;
-  min-width: 0;
-}
-
-.arrow {
-  color: var(--color-cta-soft);
-  opacity: 0;
-  transition: opacity var(--duration-fast) var(--easing-standard);
-}
-
-/* Ved hover rykker teksten lidt til højre og bliver blå */
-.item:hover,
-.item:focus-visible {
-  padding-left: var(--space-4);
-  color: var(--color-cta-soft);
-  outline: none;
-}
-
-/* ...og stregen og pilen bliver synlige */
-.item:hover .marker,
-.item:hover .arrow,
-.item:focus-visible .marker,
-.item:focus-visible .arrow {
-  opacity: 1;
-}
-
+/* Stregen mellem "Film" og "Mere" med 28px luft på hver side */
 .divider {
   margin: var(--space-7) 0;
   border: 0;
   border-top: var(--border-width) solid var(--color-border);
 }
 
+/* "Mere"-linkene: 34px under overskriften og 16px imellem */
 .moreList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3-5);
-  margin-top: var(--space-7-5);
+  gap: var(--space-4);
+  margin-top: calc(var(--space-8) + var(--space-0-5));
 }
 
 .moreLink {
+  display: block;
   color: var(--color-text);
   font-size: var(--font-size-md);
   line-height: var(--line-height-snug);
@@ -178,7 +48,7 @@
 /* margin-top: auto skubber knapperne helt ned i bunden af menuen */
 .profile {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-top: auto;
   padding-top: var(--space-5);
 }
@@ -186,15 +56,4 @@
 /* De to knapper deler bredden ligeligt */
 .profile > * {
   flex: 1;
-}
-
-/* Mobil: lidt mindre luft, så flere menupunkter kan ses uden at scrolle */
-@media (max-width: 48rem) {
-  .panel {
-    padding: var(--space-5) var(--space-5) var(--space-8);
-  }
-
-  .nav {
-    margin-top: var(--space-8);
-  }
 }
