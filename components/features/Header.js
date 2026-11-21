@@ -19,7 +19,9 @@ export default async function Header({ variant = "full" }) {
   let cities = [];
   let searchMovies = [];
   if (variant === "full") {
-    [city, cities, searchMovies] = await Promise.all([getSelectedCity(), getCities(), getSearchMovies()]);
+    // Byen skal kendes først, fordi søgningen kun viser film, der kører i byen
+    city = await getSelectedCity();
+    [cities, searchMovies] = await Promise.all([getCities(), getSearchMovies(city?.id)]);
   }
 
   // Hvor logoet linker hen: til filmoversigten, eller tilbage til Vælg by på startskærmen
