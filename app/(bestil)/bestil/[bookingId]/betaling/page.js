@@ -10,6 +10,7 @@ import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
 import { formatSeats } from "@/lib/format";
+import { getPaymentError } from "@/lib/payment-errors";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -17,9 +18,11 @@ export const metadata = {
 };
 
 // Trin 3 i købet: betaling. "Din ordre" til venstre, betalingsmetoderne til højre
-export default async function PaymentPage({ params }) {
+export default async function PaymentPage({ params, searchParams }) {
   // bookingId er id'et i adressen, fx /bestil/abc123/betaling
   const { bookingId } = await params;
+  // ?fejl=card: man kommer fra fejlsiden, og kortet fejlede
+  const { fejl } = await searchParams;
   const booking = await getBooking(bookingId);
 
   // Findes reservationen ikke, viser vi 404-siden
@@ -68,7 +71,11 @@ export default async function PaymentPage({ params }) {
           tickets={booking.tickets}
           totalDkk={booking.total_dkk}
         />
-        <PaymentForm bookingId={bookingId} seatsLabel={formatSeats(seats)} />
+        <PaymentForm
+          bookingId={bookingId}
+          seatsLabel={formatSeats(seats)}
+          initialError={getPaymentError(fejl)}
+        />
       </div>
 
       <BottomBar

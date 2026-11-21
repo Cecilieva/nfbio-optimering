@@ -1,4 +1,5 @@
-/* Dækker hele skærmen (også headeren) og toner frem. Indholdet står under hinanden i midten */
+/* Dækker hele skærmen (også headeren) og toner frem. Indholdet står under hinanden på midten.
+   Det starter altid i samme højde, så intet hopper, når fx loaderen skifter til fejlsiden */
 .overlay {
   position: fixed;
   inset: 0;
@@ -6,9 +7,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--space-4);
-  padding: var(--space-4);
+  padding: var(--space-overlay-top) var(--space-4) var(--space-4);
   overflow-y: auto;
   background: var(--color-background);
   text-align: center;

@@ -1,0 +1,21 @@
+/* Lidt smallere tekst end i de andre overlays */
+.text {
+  max-width: var(--size-payment-failed-text);
+}
+
+/* De to knapper under hinanden og lige brede */
+.actions {
+  display: grid;
+  gap: var(--space-4);
+  width: var(--size-payment-failed-actions);
+  max-width: 100%;
+}
+
+/* grid: knappen i formularen bliver lige så bred som den anden */
+.form {
+  display: grid;
+}
+
+.error {
+  color: var(--color-danger);
+}

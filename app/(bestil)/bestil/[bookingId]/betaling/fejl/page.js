@@ -1,5 +1,7 @@
-import Button from "@/components/ui/Button";
-import { getBooking } from "@/lib/data/bookings";
+import { notFound, redirect } from "next/navigation";
+import PaymentFailed from "@/components/features/PaymentFailed";
+import ReservationExpired from "@/components/features/ReservationExpired";
+import { getBooking, getMinutesLeft, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
 import { formatSeats } from "@/lib/format";
 import { getPaymentError } from "@/lib/payment-errors";
@@ -8,28 +10,50 @@ export const metadata = {
   title: "Betalingen fejlede",
 };
 
-// Fejlsiden - vises, når betalingen fejler på en måde, der kræver en hel side.
-// Fejlkoden står i adressen, fx /bestil/abc123/betaling/fejl?kode=MP-408
-// (de mindre fejl vises i stedet direkte i betalingsformularen)
+// Fejlsiden, når betalingen fejler. Metoden står i adressen, fx ?metode=card
 export default async function PaymentErrorPage({ params, searchParams }) {
   const { bookingId } = await params;
-  // ?kode=… fra adressen
-  const { kode } = await searchParams;
-  // Slå fejlteksten op i lib/payment-errors.js
-  const paymentError = getPaymentError(kode);
-
-  // Sæderne er stadig reserveret, så vi minder brugeren om, hvilke det er
+  const { metode } = await searchParams;
   const booking = await getBooking(bookingId);
-  const seats = booking ? await getSeatsByIds(booking.seat_ids) : [];
+
+  if (!booking) {
+    notFound();
+  }
+
+  // Allerede betalt: videre til billetten
+  if (booking.status === "paid") {
+    redirect(`/bestil/${bookingId}/billet`);
+  }
+
+  // Ingen ejer endnu: først log ind eller gæst
+  if (!hasOwner(booking)) {
+    redirect(`/bestil/${bookingId}/login`);
+  }
+
+  // Ukendt metode: ingen fejl at vise
+  if (!getPaymentError(metode)) {
+    redirect(`/bestil/${bookingId}/betaling`);
+  }
+
+  // Tiden er gået: vis "Tiden er udløbet"
+  if (!isReservationActive(booking)) {
+    return (
+      <main>
+        <ReservationExpired href={`/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`} />
+      </main>
+    );
+  }
+
+  const seats = await getSeatsByIds(booking.seat_ids);
 
   return (
     <main>
-      <h1>Betalingen fejlede</h1>
-      <p>{paymentError.message}</p>
-      {kode && <p>Fejlkode: {kode}</p>}
-      {seats.length > 0 && <p>Dine pladser er stadig reserveret: {formatSeats(seats)}</p>}
-      {/* Tilbage til betalingen for at prøve igen */}
-      <Button href={`/bestil/${bookingId}/betaling`}>Prøv igen</Button>
+      <PaymentFailed
+        bookingId={bookingId}
+        method={metode}
+        minutesLeft={getMinutesLeft(booking)}
+        seatsLabel={formatSeats(seats)}
+      />
     </main>
   );
 }
