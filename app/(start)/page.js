@@ -2,7 +2,7 @@ import FormLoader from "@/components/features/FormLoader";
 import Spotlight from "@/components/features/Spotlight";
 import Button from "@/components/ui/Button";
 import { selectCity } from "@/lib/actions/city";
-import { getCities, getSelectedCity } from "@/lib/data/cities";
+import { getCities } from "@/lib/data/cities";
 import { safePath } from "@/lib/safe-path";
 import styles from "./page.module.css";
 
@@ -18,9 +18,8 @@ export default async function CityPage({ searchParams }) {
   // Eksempel: /by?next=/film/dune
   const { next } = await searchParams;
 
-  // Hent alle byer fra databasen og den by, brugeren evt. har valgt før.
-  // Promise.all kører begge hentninger på samme tid, så siden loader hurtigere.
-  const [cities, selected] = await Promise.all([getCities(), getSelectedCity()]);
+  // Hent alle byer fra databasen. Ingen by er markeret på forhånd - man vælger selv
+  const cities = await getCities();
 
   // Mangler ?next=, eller peger den på en anden hjemmeside, går vi til filmoversigten i stedet.
   const nextPage = safePath(next, "/film");
@@ -45,13 +44,7 @@ export default async function CityPage({ searchParams }) {
                 <input type="hidden" name="city_id" value={city.id} />
                 <input type="hidden" name="next" value={nextPage} />
 
-                {/* aria-current markerer den by, der allerede er valgt,
-                    så den får en tydeligere kant (se Button.module.css) */}
-                <Button
-                  type="submit"
-                  variant="tile"
-                  aria-current={city.id === selected?.id ? "true" : undefined}
-                >
+                <Button type="submit" variant="tile">
                   {city.name}
                 </Button>
                 {/* Viser "Indlæser", mens formularen sendes */}
