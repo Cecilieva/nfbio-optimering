@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ComingSoonCard from "@/components/features/movies/ComingSoonCard";
 import HeroScroll from "@/components/features/homepage-animations/HeroScroll";
 import styles from "./FeaturedMovies.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 // Antal plakater, der svæver forbi i stjernehimlen, før den sidste folder sig ud til kort 1
 const INTRO_POSTER_COUNT = 8;
@@ -54,7 +55,7 @@ export default function FeaturedMovies({ movies, introPosters = [], loginHref, s
   );
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       return;
     }
     gsap.registerPlugin(ScrollTrigger);

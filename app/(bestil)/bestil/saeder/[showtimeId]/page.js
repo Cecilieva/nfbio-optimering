@@ -50,7 +50,7 @@ export default async function SeatsPage({ params, searchParams }) {
 
   return (
     // data-fit-screen: siden er lige så høj som skærmen og kan ikke scrolles (på desktop)
-    <main className={styles.page} data-fit-screen>
+    <main id="indhold" className={styles.page} data-fit-screen>
       <SeatPicker
         showtime={showtime}
         rows={rows}

@@ -86,11 +86,9 @@
 }
 
 /* Ingen glide-animation, hvis brugeren har slået animationer fra */
-@media (prefers-reduced-motion: reduce) {
-  .drawer[open],
-  .drawer[data-side="right"][open] {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .drawer[open],
+:global(html[data-motion="reduce"]) .drawer[data-side="right"][open] {
+  animation: none;
 }
 
 /* Figma: 24px luft i toppen, 32px i siderne og 40px i bunden */

@@ -51,8 +51,6 @@
 }
 
 /* Har man slået animationer fra, ligger popkornene bare på plads */
-@media (prefers-reduced-motion: reduce) {
-  .popcorn {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .popcorn {
+  animation: none;
 }

@@ -9,6 +9,7 @@ import { useRef } from "react";
 import Button from "@/components/ui/Button";
 import { useLenis } from "./SmoothScroll";
 import styles from "./SidePanel.module.css";
+import { prefersReducedMotion } from "@/lib/motion";
 
 /**
  * Et panel, der glider ind fra siden (Figma "Menu" 1056:25687 og "Byskift" 2588:40783).
@@ -54,7 +55,7 @@ export default function SidePanel({
     if (!dialog.open || dialog.hasAttribute("data-closing")) return;
 
     // Har man bedt om mindre bevægelse, lukker panelet med det samme
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       dialog.close();
       return;
     }

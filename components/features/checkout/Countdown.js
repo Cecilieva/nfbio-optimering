@@ -6,6 +6,9 @@ import ReservationExpired from "./ReservationExpired";
 import { startOfDanishDay } from "@/lib/format";
 import styles from "./Countdown.module.css";
 
+// Advarslen til skærmlæsere kommer, når der er 2 minutter tilbage (2 × 60 × 1000 ms)
+const WARNING_MS = 2 * 60 * 1000;
+
 // ms -> "09:59"
 // Math.ceil runder op, så uret først viser 00:00, når tiden faktisk er gået
 function formatRemaining(ms) {
@@ -86,10 +89,18 @@ export default function Countdown({ until, variant = "reservation", expiredHref 
     );
   }
 
+  // Uret læses ikke op hvert sekund - det ville drukne alt andet.
+  // I stedet siger skærmlæseren én gang, når der er 2 minutter tilbage.
+  const almostOut = remaining !== null && remaining <= WARNING_MS;
+
   return (
     <p className={styles.reservation}>
       Dine pladser holdes i
       <time className={styles.time}>{remaining === null ? "--:--" : formatRemaining(remaining)}</time>
+      {/* Elementet er der hele tiden, så skærmlæseren opdager, når teksten kommer */}
+      <span className="visually-hidden" role="status">
+        {almostOut && "Der er under 2 minutter tilbage til at gøre købet færdigt."}
+      </span>
     </p>
   );
 }

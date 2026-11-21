@@ -92,14 +92,12 @@
 }
 
 /* Animationer slået fra: alt står stille, men røgen kan stadig ses */
-@media (prefers-reduced-motion: reduce) {
-  .pop,
-  .bucket,
-  .smoke {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .pop,
+:global(html[data-motion="reduce"]) .bucket,
+:global(html[data-motion="reduce"]) .smoke {
+  animation: none;
+}
 
-  .smoke {
-    opacity: 0.5;
-  }
+:global(html[data-motion="reduce"]) .smoke {
+  opacity: 0.5;
 }

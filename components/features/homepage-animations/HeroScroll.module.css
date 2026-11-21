@@ -146,9 +146,7 @@
 }
 
 /* Mindre bevægelse: ingen hero – kortene står bare under hinanden (se FeaturedMovies) */
-@media (prefers-reduced-motion: reduce) {
-  .hero,
-  .countdownLayer {
-    display: none;
-  }
+:global(html[data-motion="reduce"]) .hero,
+:global(html[data-motion="reduce"]) .countdownLayer {
+  display: none;
 }

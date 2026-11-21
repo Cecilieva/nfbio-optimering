@@ -24,17 +24,15 @@
 
 /* Med bevægelse: sektionen trækkes en skærmhøjde op under den pinnede hero, og kort 1 er skjult,
    indtil hero'ens plakat bytter med det (HeroScroll.js sætter det synligt). */
-@media (prefers-reduced-motion: no-preference) {
-  /* Kort 1 står lodret i midten af skærmen, når hero'en slipper */
-  .cards {
-    margin-top: calc(-1 * var(--size-hero-height));
-    padding-top: max(var(--space-4), calc((var(--size-hero-height) - var(--size-featured-card-height)) / 2));
-  }
+/* Kort 1 står lodret i midten af skærmen, når hero'en slipper */
+:global(html:not([data-motion="reduce"])) .cards {
+  margin-top: calc(-1 * var(--size-hero-height));
+  padding-top: max(var(--space-4), calc((var(--size-hero-height) - var(--size-featured-card-height)) / 2));
+}
 
-  .card:first-child {
-    visibility: hidden;
-    opacity: 0;
-  }
+:global(html:not([data-motion="reduce"])) .card:first-child {
+  visibility: hidden;
+  opacity: 0;
 }
 
 /* Prikkerne i højre side: én pr. kort, den aktive er lysere og større */
@@ -83,15 +81,13 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dots {
-    display: none;
-  }
+:global(html[data-motion="reduce"]) .dots {
+  display: none;
 }
 
 /* Mobil med bevægelse: kort 1 står stadig i midten (reglen ovenfor ville ellers overskrive det) */
-@media (prefers-reduced-motion: no-preference) and (max-width: 48rem) {
-  .cards {
+@media (max-width: 48rem) {
+  :global(html:not([data-motion="reduce"])) .cards {
     padding-top: max(var(--space-3), calc((var(--size-hero-height) - var(--size-featured-card-height)) / 2));
   }
 }

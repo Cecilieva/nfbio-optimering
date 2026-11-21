@@ -47,8 +47,6 @@
 }
 
 /* Har man slået animationer fra, dukker det bare op */
-@media (prefers-reduced-motion: reduce) {
-  .overlay[data-fade-in] {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .overlay[data-fade-in] {
+  animation: none;
 }

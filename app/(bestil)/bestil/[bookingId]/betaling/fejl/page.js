@@ -38,7 +38,7 @@ export default async function PaymentErrorPage({ params, searchParams }) {
   // Tiden er gået: vis "Tiden er udløbet"
   if (!isReservationActive(booking)) {
     return (
-      <main>
+      <main id="indhold">
         <ReservationExpired href={`/bestil/saeder/${booking.showtime_id}?booking=${bookingId}`} />
       </main>
     );
@@ -47,7 +47,7 @@ export default async function PaymentErrorPage({ params, searchParams }) {
   const seats = await getSeatsByIds(booking.seat_ids);
 
   return (
-    <main>
+    <main id="indhold">
       <PaymentFailed
         bookingId={bookingId}
         method={metode}

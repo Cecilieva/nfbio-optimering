@@ -8,6 +8,7 @@ import IntroCountdown from "@/components/features/homepage-animations/IntroCount
 import Starfield from "@/components/features/homepage-animations/Starfield";
 import { useLenis } from "@/components/features/layout/SmoothScroll";
 import { getParallaxBox, PARALLAX_STRENGTH } from "@/components/ui/ParallaxFrame";
+import { prefersReducedMotion, subscribeReducedMotion } from "@/lib/motion";
 import styles from "./HeroScroll.module.css";
 
 // Plakaterne, der svæver forbi, kommer fra FeaturedMovies (tilfældige plakater fra Supabase).
@@ -40,20 +41,8 @@ function parsePosition(position = "50% 50%") {
   return [parseFloat(x), parseFloat(y)];
 }
 
-// Brugerens indstilling for "mindre bevægelse", læst med useSyncExternalStore.
+// Er animationerne slået fra? (lib/motion.js) Læst med useSyncExternalStore.
 // Serveren kan ikke se indstillingen, så dér er svaret null ("ved ikke endnu").
-const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
-
-function subscribeReducedMotion(onChange) {
-  const query = window.matchMedia(REDUCED_MOTION);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-}
-
-function getReducedMotion() {
-  return window.matchMedia(REDUCED_MOTION).matches;
-}
-
 function getServerReducedMotion() {
   return null;
 }
@@ -122,7 +111,7 @@ export default function HeroScroll({
   skipIntro = false,
 }) {
   // true/false i browseren, null på serveren
-  const reduceMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
+  const reduceMotion = useSyncExternalStore(subscribeReducedMotion, prefersReducedMotion, getServerReducedMotion);
   // Nedtællingen vises, hvis den ikke allerede har kørt siden siden blev indlæst, og ikke skal springes over
   const [showCountdown, setShowCountdown] = useState(() => !introPlayed && !skipIntro);
   const lenis = useLenis();

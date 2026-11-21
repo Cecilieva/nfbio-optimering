@@ -22,7 +22,7 @@ export default async function ProfilePage() {
   // Logged in, but no row in profiles: the trigger did not create it at sign up
   if (!profile) {
     return (
-      <main>
+      <main id="indhold">
         <h1>Profil</h1>
         <p>Vi kunne ikke finde en profil for {user.email}.</p>
         <form action={signOut} className="form">
@@ -35,7 +35,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main>
+    <main id="indhold">
       <h1>Profil</h1>
       <UserBadge profile={profile} />
       <p>E-mail: {profile.email}</p>

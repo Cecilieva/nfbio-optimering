@@ -84,14 +84,12 @@
 }
 
 /* Har man slået animationer fra, er billetten printet med det samme */
-@media (prefers-reduced-motion: reduce) {
-  .paper {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .paper {
+  animation: none;
+}
 
-  .done {
-    transition: none;
-  }
+:global(html[data-motion="reduce"]) .done {
+  transition: none;
 }
 
 /* Mobil: billetten bliver lidt mindre, så den kan være på skærmen */

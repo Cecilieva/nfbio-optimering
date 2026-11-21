@@ -50,9 +50,7 @@
 }
 
 /* Har man slået animationer fra, står alle tre prikker stille */
-@media (prefers-reduced-motion: reduce) {
-  .dot {
-    scale: 1;
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .dot {
+  scale: 1;
+  animation: none;
 }

@@ -181,8 +181,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .panel {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .panel {
+  animation: none;
 }

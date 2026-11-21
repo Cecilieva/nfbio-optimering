@@ -30,6 +30,48 @@ body {
   white-space: nowrap;
 }
 
+/* "Spring til indhold" (app/layout.js): skjult oppe over kanten, glider frem, når den får fokus */
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-skip-link);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-cta-button);
+  color: var(--color-on-accent);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  translate: 0 calc(-100% - var(--space-4));
+}
+
+.skip-link:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+  translate: 0 0;
+}
+
+/* Fokus-ring på alt, man kan tabbe til. Komponenter kan selv lave en anden ring,
+   men ingen må stå uden. :where() gør reglen svag, så komponenternes egne regler vinder */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Animationer slået fra (data-motion="reduce" - se lib/motion.js).
+   Komponenterne stopper selv deres animationer. Her slår vi små overgange
+   (fx hover) og blød scroll fra overalt, så intet glider eller zoomer */
+html[data-motion="reduce"] {
+  scroll-behavior: auto;
+}
+
+html[data-motion="reduce"] *,
+html[data-motion="reduce"] *::before,
+html[data-motion="reduce"] *::after {
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
 main {
   max-width: var(--layout-max-width);
   margin: 0 auto;

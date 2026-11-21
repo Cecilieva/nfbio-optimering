@@ -22,8 +22,6 @@
 }
 
 /* Har man slået animationer fra, står bægeret stille */
-@media (prefers-reduced-motion: reduce) {
-  .cup {
-    animation: none;
-  }
+:global(html[data-motion="reduce"]) .cup {
+  animation: none;
 }

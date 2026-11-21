@@ -34,7 +34,7 @@ export default async function HomePage({ searchParams }) {
   const loginHref = user ? undefined : "/login?next=/film";
 
   return (
-    <main className={styles.page}>
+    <main id="indhold" className={styles.page}>
       {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
           Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
       <FeaturedMovies

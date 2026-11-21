@@ -86,8 +86,6 @@
 }
 
 /* reduced motion: intet tæppe, videoen vises med det samme */
-@media (prefers-reduced-motion: reduce) {
-  .curtain {
-    display: none;
-  }
+:global(html[data-motion="reduce"]) .curtain {
+  display: none;
 }
