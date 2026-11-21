@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import PosterPlaceholder from "@/components/features/PosterPlaceholder";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { formatAgeShort, formatDayMonthShort, formatDuration } from "@/lib/format";
@@ -42,6 +43,8 @@ export default function MovieCard({ movie, variant = "default", format }) {
       )}
       <h3>{movie.title}</h3>
       {details.length > 0 && <p>{details.join(" · ")}</p>}
+      {/* Viser "Indlæser" på vej ind på filmsiden - altid, også på et hurtigt net */}
+      <LinkLoader always />
     </Link>
   );
 }
@@ -93,6 +96,8 @@ function ComingSoonPoster({ movie }) {
       <span className={`${buttonStyles.button} ${styles.action}`} data-variant="primary" aria-hidden="true">
         {canBuy ? "Se spilletider" : "Læs mere"}
       </span>
+      {/* Viser "Indlæser" på vej ind på filmsiden - altid, også på et hurtigt net */}
+      <LinkLoader always />
     </Link>
   );
 }
@@ -150,6 +155,8 @@ function FeedPoster({ movie, format }) {
           </p>
         )}
       </div>
+      {/* Viser "Indlæser" på vej ind på filmsiden - altid, også på et hurtigt net */}
+      <LinkLoader always />
     </Link>
   );
 }

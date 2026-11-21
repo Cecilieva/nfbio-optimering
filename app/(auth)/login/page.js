@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import FormLoader from "@/components/features/FormLoader";
 import AuthScreen, { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
@@ -85,6 +86,8 @@ export default async function LoginPage({ searchParams }) {
         <Button type="submit" className={styles.fullWidth}>
           Log ind
         </Button>
+        {/* Viser "Indlæser", mens formularen sendes */}
+        <FormLoader />
       </form>
 
       <AuthNote>

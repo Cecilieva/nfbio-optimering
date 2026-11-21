@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import styles from "./BackLink.module.css";
 
 /**
@@ -37,6 +38,8 @@ export default function BackLink({ href, onClick, children = "Tilbage", classNam
   return (
     <Link href={href} className={classes}>
       {content}
+      {/* Viser "Indlæser", hvis den næste side er længe om at komme (fx på langsomt net) */}
+      <LinkLoader />
     </Link>
   );
 }

@@ -1,5 +1,6 @@
 import Footer from "@/components/features/Footer";
 import Header from "@/components/features/Header";
+import { LoadingHost } from "@/components/features/LoadingState";
 import SmoothScroll from "@/components/features/SmoothScroll";
 
 // Layout for route-gruppen "(site)": alle sider undtagen Vælg by.
@@ -13,6 +14,8 @@ export default function SiteLayout({ children }) {
       {/* children er den side, der vises, fx /film */}
       {children}
       <Footer />
+      {/* Loaderen: henter popkornene på forhånd og holder loaderen på skærmen i mindst 3 sekunder */}
+      <LoadingHost />
     </>
   );
 }

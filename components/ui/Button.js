@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LinkLoader from "@/components/features/LinkLoader";
 import styles from "./Button.module.css";
 
 /**
@@ -44,6 +45,9 @@ export default function Button({
     return (
       <Link href={href} data-variant={variant} className={classes} {...rest}>
         {children}
+        {/* Viser "Indlæser", hvis den næste side er længe om at komme (fx på langsomt net).
+            Ikke ved et hop på samme side (fx "#spilletider") - der skal ikke hentes noget */}
+        {!href.startsWith("#") && <LinkLoader />}
       </Link>
     );
   }

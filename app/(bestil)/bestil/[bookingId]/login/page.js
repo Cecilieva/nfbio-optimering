@@ -87,7 +87,6 @@ export default async function BookingLoginPage({ params, searchParams }) {
             bookingId={bookingId}
             next={here}
             email={user?.email}
-            seatsLabel={formatSeats(seats)}
             mode={mode}
           />
         </div>

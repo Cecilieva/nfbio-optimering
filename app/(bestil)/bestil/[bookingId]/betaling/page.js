@@ -8,6 +8,7 @@ import DataDump from "@/components/ui/DataDump";
 import { getBooking, hasOwner, isReservationActive } from "@/lib/data/bookings";
 import { getSeatsByIds } from "@/lib/data/seats";
 import { getShowtime } from "@/lib/data/showtimes";
+import { formatSeats } from "@/lib/format";
 
 export const metadata = {
   title: "Betaling",
@@ -62,7 +63,7 @@ export default async function PaymentPage({ params }) {
       {/* Rammer uret 00:00, lægges "Tiden er udløbet" over siden */}
       <Countdown until={booking.reserved_until} expiredHref={restartHref} />
       <OrderSummary showtime={showtime} seats={seats} totalDkk={booking.total_dkk} />
-      <PaymentForm bookingId={bookingId} />
+      <PaymentForm bookingId={bookingId} seatsLabel={formatSeats(seats)} />
       {/* Pladsholder: viser rå data, indtil siden er bygget */}
       <DataDump label="booking" data={booking} />
     </main>

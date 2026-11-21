@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
+import FormLoader from "@/components/features/FormLoader";
 import AttachOwnerForm from "@/components/features/AttachOwnerForm";
 import CheckoutSignupForm from "@/components/features/CheckoutSignupForm";
 import Button from "@/components/ui/Button";
@@ -19,9 +20,8 @@ import styles from "./CheckoutLogin.module.css";
 //   bookingId  - id'et på reservationen
 //   next       - adressen på siden, så login og "Opret profil" sender en tilbage hertil bagefter
 //   email      - e-mailen på den, der er logget ind (ellers tom)
-//   seatsLabel - sæderne som tekst til "Vi popper dine pladser …", fx "Række 4, sæde 6–7"
 //   mode       - "login", "guest" eller "signup" (se ovenfor)
-export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode = "login" }) {
+export default function CheckoutLogin({ bookingId, next, email, mode = "login" }) {
   // Om feltet til rabatkoden vises (efter "Klik her")
   const [showDiscount, setShowDiscount] = useState(false);
   // Log ind: virker det ikke, får vi en fejl tilbage og bliver på siden
@@ -30,7 +30,7 @@ export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode
   if (email) {
     return (
       <Card title="Du er logget ind" intro="Billetten bliver gemt på din profil.">
-        <AttachOwnerForm bookingId={bookingId} email={email} seatsLabel={seatsLabel} />
+        <AttachOwnerForm bookingId={bookingId} email={email} />
       </Card>
     );
   }
@@ -53,7 +53,7 @@ export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode
         title="Gæstebestilling"
         intro="Oplysningerne gemmes kun midlertidigt i forbindelse med din bestilling, og ingen profil bliver oprettet."
       >
-        <AttachOwnerForm bookingId={bookingId} asGuest seatsLabel={seatsLabel}>
+        <AttachOwnerForm bookingId={bookingId} asGuest>
           {/* "Klik her" viser feltet til rabatkoden. Koden bliver ikke brugt til noget endnu */}
           {showDiscount ? (
             <TextField label="Rabatkode" name="discount_code" autoComplete="off" autoFocus />
@@ -103,6 +103,8 @@ export default function CheckoutLogin({ bookingId, next, email, seatsLabel, mode
         <Button type="submit" disabled={loggingIn} className={styles.button}>
           Log ind
         </Button>
+        {/* Viser "Indlæser", mens formularen sendes */}
+        <FormLoader />
       </form>
 
       {/* Stregen med "eller" i midten - kun pynt */}

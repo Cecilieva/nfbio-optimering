@@ -44,7 +44,7 @@ app/
   (site)/profile/         Konto
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
-  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, ParallaxFrame, Seat, DataDump
+  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, LoadingDots, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter: Header, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
@@ -70,6 +70,7 @@ supabase/supabase_schema.sql
 - Er brugeren logget ind ved reservationen, sætter `reserve_seats` ejeren med det samme, og login-skærmen springes over.
 - RLS lader kun indloggede ejere læse `bookings`. Derfor gemmer actions en kopi af bookingrækken + sæde-id'er i den httpOnly-cookie `nf_booking`, og `getBooking()` falder tilbage til den. Kopien er kun til visning - RPC'erne tjekker alt i databasen.
 - Uret ("Dine pladser holdes i") er det samme på alle siderne. Det starter på "Vælg dine pladser", og tidspunktet gemmes som `hold_until` i booking-cookien. `getBooking()` bruger det i stedet for databasens `reserved_until`, når det er tidligere. Løber tiden ud, vises "Tiden er udløbet" (ReservationExpired), og "Vælg pladser igen" fører til "Vælg dine pladser" med de samme billetter (`?booking=…`).
+- Indlæsning: brug altid den almindelige loader (LoadingState - popkorn + "Indlæser"). Hver route-gruppe har en `loading.js`, og en formular, der sender en videre til en ny side, får `<FormLoader />` inde i `<form>` (ved betaling med `title`/`text`: "Reserverer pladser"). Links, der henter en ny side (Button med `href`, BackLink og MovieCard), har `<LinkLoader />` inde i linket, så loaderen også vises med det samme på et langsomt net. Loaderen kommer først frem efter 1 sekund (på et hurtigt net ser man den ikke), og når den er synlig, står den mindst 3 sekunder (LoadingHost i hver gruppes layout). Kun to steder vises den altid (`always`): på vej ind på en filmside (`film/[slug]/loading.js` og filmkortene i MovieCard) og "Reserverer pladser" ved betaling. Små formularer, der bliver på siden (fx nyhedsbrevet), får ingen loader.
 - Betalingen er simuleret. `PaymentForm` har et felt til at vælge resultatet; fejlkoderne står i `lib/payment-errors.js`.
 - `/bestil/saeder/…` hedder sådan, fordi Next.js ikke tillader to forskellige dynamiske navne (`[showtimeId]` og `[bookingId]`) på samme niveau.
 
@@ -107,9 +108,9 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Trailer-modal | 596:3073 (Fortæppe: 636:3749) | `/film/[slug]` og `/film` | TrailerButton, Modal, Curtain (fortæppet, der åbner over videoen), Button (`variant="secondary"` - "Luk" med kryds) |
 | Sædevalg - vælg antal ("Antal pladser") | 737:6375 (Trin-header: 811:6487, Vælg antal-kort: 775:6366) | `/bestil/saeder/[showtimeId]` | StepHeader, SeatPicker (trin 1 af 2 på siden), TicketCounter, Button. Billettyper og priser i `lib/ticket-types.js` |
 | Sædevalg - vælg sæder | 214:4067 (Info-boks: 838:6543, Bundbar: 843:6569) | `/bestil/saeder/[showtimeId]` | SeatPicker (trin 2 af 2 på siden), SeatMap (salen - tegnes med Seat som HallMap), SeatView ("Udsigt fra sædet": lærredet i perspektiv, Række/Sæder, pris og "Til betaling"), BottomBar (valgte sæder + Countdown "Dine pladser holdes i"), Button |
-| Overlay: Vi popper dine pladser | | `/bestil/[bookingId]/login` | Overlay (i AttachOwnerForm - vises efter log ind eller "Fortsæt som gæst") |
 | Overlay: Dine popkorn blev brændt | | `/bestil/saeder/[showtimeId]` | Overlay, Button |
-| Tiden er udløbet | 1625:55285 (Popcorn – loader: 1335:26656, "Tom popkorn 1-2" + "Trin11-12") | `/bestil/[bookingId]/login` og `/betaling` | ReservationExpired (dækker hele skærmen med det svingende popkorn-bæger - vises af siden, eller af Countdown med `expiredHref`, når uret rammer 00:00), Button |
+| Tiden er udløbet | 1625:55285 (Popcorn – loader: 1335:26656, "Tom popkorn 1-2" + "Trin11-12") | `/bestil/[bookingId]/login` og `/betaling` | ReservationExpired (bygger på Overlay - dækker hele skærmen med det svingende popkorn-bæger - vises af siden, eller af Countdown med `expiredHref`, når uret rammer 00:00), Button |
+| Loading (+ "Reserverer pladser" ved betaling) | 214:4509 (Popcorn – loader: 1335:26656, Trin 1-4; Prikker – loader: 1352:26878) | alle sider (se "Indlæsning" under Købsflowet) | LoadingState (siger "jeg henter noget"), LoadingHost (tegner loaderen - i hver route-gruppes layout), FormLoader, LinkLoader, Overlay, PopcornLoader, LoadingDots. Loaderen har altid de samme farver, også i thriller og familie (`--color-loader-…`). Bæger + bunke er én svg (`public/popcorn/popkorn.svg`), popkornene, der hopper, er `pop-1…3.svg` |
 | Log ind / gæst / opret profil ("Dine oplysninger") | 214:5116 (Gæstebestilling: 1519:35087, Opret profil: 1894:29458, Ordreoversigt: 214:3695) | `/bestil/[bookingId]/login` | StepHeader, OrderSummary ("Din ordre"), CheckoutLogin (log ind; `?gaest=1` giver "Gæstebestilling", `?opret=1` giver "Opret en BioPlus-profil" med CheckoutSignupForm, Chip og Checkbox), AttachOwnerForm, TextField, Button, BottomBar + Countdown. Billettyperne (fx "2 × Voksen") gemmes kun i booking-cookien (`tickets`) |
 | Betaling | | `/bestil/[bookingId]/betaling` | StepHeader, Countdown, OrderSummary, PaymentForm, Radio, Button |
 | Betalingsfejl (inline) | | `/bestil/[bookingId]/betaling` | PaymentForm |

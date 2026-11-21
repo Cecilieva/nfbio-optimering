@@ -1,18 +1,53 @@
-/* Only what the overlay needs to work. The look comes from Figma. */
+/* Dækker hele skærmen (også headeren) og toner frem. Indholdet står under hinanden i midten */
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 10;
-  display: grid;
-  place-items: center;
-  padding: var(--space-6);
-  background: var(--color-backdrop);
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  overflow-y: auto;
+  background: var(--color-background);
+  text-align: center;
 }
 
-.content {
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface-raised);
-  box-shadow: var(--shadow-lg);
-  text-align: center;
+/* Toner frem (fadeIn) - ikke når en loader, der allerede står på skærmen, bare tegnes igen */
+.overlay[data-fade-in] {
+  animation: fade-in var(--duration-overlay-in) var(--easing-out);
+}
+
+/* Overskriften, fx "Reserverer pladser" */
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* Tekst under overskriften - samme bredde som kortene i købsflowet.
+   :where() gør reglen svag, så en side nemt kan give teksten en anden farve */
+:where(.overlay) p {
+  max-width: var(--size-ticket-card-width);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+/* Overlayet starter usynligt og toner frem */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Har man slået animationer fra, dukker det bare op */
+@media (prefers-reduced-motion: reduce) {
+  .overlay[data-fade-in] {
+    animation: none;
+  }
 }

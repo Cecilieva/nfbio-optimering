@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import FormLoader from "@/components/features/FormLoader";
 import Button from "@/components/ui/Button";
 import Radio from "@/components/ui/Radio";
 import { completePayment } from "@/lib/actions/booking";
@@ -16,9 +17,12 @@ const METHODS = [
 // Betalingen er ikke rigtig, så der er et felt, hvor man selv vælger, om den lykkes eller fejler.
 // Små fejl vises her i formularen. Store fejl sender brugeren videre til fejlsiden.
 //
-//   bookingId - id'et på reservationen, der skal betales
-export default function PaymentForm({ bookingId }) {
+//   bookingId  - id'et på reservationen, der skal betales
+//   seatsLabel - sæderne som tekst, fx "Række 4, sæde 6–7" (fra formatSeats)
+export default function PaymentForm({ bookingId, seatsLabel }) {
   const [state, formAction, pending] = useActionState(completePayment, null);
+  // "Række 4, sæde 6–7" -> "række 4, sæde 6–7", så den passer midt i sætningen
+  const seatsInText = seatsLabel.charAt(0).toLowerCase() + seatsLabel.slice(1);
 
   return (
     <form action={formAction}>
@@ -52,6 +56,14 @@ export default function PaymentForm({ bookingId }) {
       <Button type="submit" disabled={pending}>
         {pending ? "Betaler …" : "Betal"}
       </Button>
+
+      {/* Mens betalingen går igennem, hopper popkornene over hele skærmen.
+          always: den vises altid (også på et hurtigt net), så man kan se, at pladserne bliver reserveret */}
+      <FormLoader
+        always
+        title="Reserverer pladser"
+        text={`Vi reserverer ${seatsInText}. Det tager kun et øjeblik.`}
+      />
     </form>
   );
 }
