@@ -10,8 +10,10 @@ import { getIntroPosters } from "@/lib/data/intro-posters";
 import { getComingSoon, getNowPlaying } from "@/lib/data/movies";
 import styles from "./page.module.css";
 
-// /film – Figma: "Forside" – film, der kører nu i byen, og film, der kommer snart
-export default async function HomePage() {
+// /film – Figma: "Forside" – film, der kører nu i byen, og film, der kommer snart.
+// ?intro=0: nedtællingen 3-2-1 springes over (fx når man kommer fra billetten)
+export default async function HomePage({ searchParams }) {
+  const { intro } = await searchParams;
   const city = await getSelectedCity();
 
   if (!city) {
@@ -35,7 +37,12 @@ export default async function HomePage() {
     <main className={styles.page}>
       {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
           Derefter scroller man selv igennem de fremhævede film (se FeaturedMovies). */}
-      <FeaturedMovies movies={featured} introPosters={introPosters} loginHref={loginHref} />
+      <FeaturedMovies
+        movies={featured}
+        introPosters={introPosters}
+        loginHref={loginHref}
+        skipIntro={intro === "0"}
+      />
 
       {/* Figma "Forside – samlet": filmene, der kører nu, og under dem "Kommende film" */}
       <div className={styles.sections}>
