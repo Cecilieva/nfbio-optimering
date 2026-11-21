@@ -63,10 +63,43 @@
   }
 }
 
-/* Har man slået animationer fra, står bægeret stille uden popkorn i luften */
+/* Røgen: hver stribe stiger op og forsvinder, én ad gangen */
+.smoke {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: smoke var(--duration-popcorn-smoke) var(--easing-out) infinite;
+  animation-delay: calc(var(--duration-popcorn-smoke) / var(--count) * var(--index));
+}
+
+/* Lav og kort -> tydelig -> højere oppe og væk */
+@keyframes smoke {
+  0% {
+    translate: 0 var(--space-3);
+    scale: 1 0.7;
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.6;
+  }
+
+  100% {
+    translate: 0 calc(var(--space-3) * -1);
+    scale: 1 1.1;
+    opacity: 0;
+  }
+}
+
+/* Animationer slået fra: alt står stille, men røgen kan stadig ses */
 @media (prefers-reduced-motion: reduce) {
   .pop,
-  .bucket {
+  .bucket,
+  .smoke {
     animation: none;
+  }
+
+  .smoke {
+    opacity: 0.5;
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import FormLoader from "@/components/features/FormLoader";
+import PaymentLoader from "@/components/features/PaymentLoader";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
 import InvalidFieldsMessage from "@/components/ui/InvalidFieldsMessage";
@@ -15,18 +15,17 @@ const METHODS = [
   { value: "giftcard", label: "Gavekort / klippekort", description: "Indløs kode" },
 ];
 
-// Vælg betalingsmetode og betal. Fejler betalingen, bliver metoden rød med fejlen under.
+// Vælg betalingsmetode og betal. Fejler betalingen, vises fejlsiden.
 //
-//   bookingId  - reservationen, der skal betales
-//   seatsLabel - sæderne som tekst, fx "Række 4, sæde 6–7"
-export default function PaymentForm({ bookingId, seatsLabel }) {
-  const [state, formAction, pending] = useActionState(completePayment, null);
+//   bookingId    - reservationen, der skal betales
+//   seatsLabel   - sæderne som tekst, fx "Række 4, sæde 6–7"
+//   initialError - fejlen fra fejlsiden: metoden bliver rød med fejlen under (valgfri)
+export default function PaymentForm({ bookingId, seatsLabel, initialError }) {
+  const [state, formAction, pending] = useActionState(completePayment, initialError ? { error: initialError } : null);
   const failedMethod = state?.error?.method;
-  // Formularen nulstilles efter hvert forsøg. Vi husker valget, så det ikke springer tilbage
-  const [selected, setSelected] = useState(METHODS[0].value);
+  // Husk valget, så det ikke springer tilbage. Fra fejlsiden er den fejlede metode valgt
+  const [selected, setSelected] = useState(initialError?.method ?? METHODS[0].value);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  // Lille forbogstav, så teksten passer midt i en sætning
-  const seatsInText = seatsLabel.charAt(0).toLowerCase() + seatsLabel.slice(1);
 
   return (
     <section className={styles.card} aria-labelledby="payment-title">
@@ -75,12 +74,7 @@ export default function PaymentForm({ bookingId, seatsLabel }) {
           {pending ? "Betaler …" : "Betal"}
         </Button>
 
-        {/* always: loaderen vises altid, også på et hurtigt net */}
-        <FormLoader
-          always
-          title="Reserverer pladser"
-          text={`Vi reserverer ${seatsInText}. Det tager kun et øjeblik.`}
-        />
+        <PaymentLoader seatsLabel={seatsLabel} />
       </form>
     </section>
   );
