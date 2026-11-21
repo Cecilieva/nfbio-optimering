@@ -28,7 +28,9 @@ app/
   tokens.css              Design tokens: farvepalet (--palette-…), Figma-variabler (--figma-…), sitets tokens og Figma-tilstande
   globals.css             Base-styles, kun med tokens
   layout.js               Kun <html>/<body> og fonte
+  fonts.js                Sitets fonte (bruges af layout.js og global-error.js)
   not-found.js            404 (viser selv Header + Footer)
+  global-error.js         Fejlsiden, hvis selve layoutet fejler (uden header og footer). Hver route-gruppe har sin egen error.js
   (start)/               Route-gruppe: Vælg by. layout.js giver logo-header og ingen footer
   (start)/page.js         / - Vælg by, starten på flowet (vises altid først)
   (start)/by/page.js      /by - samme skærm, bruges til at skifte by (?next=)
@@ -45,7 +47,7 @@ app/
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, PopcornShower, LoadingDots, ParallaxFrame, Seat, DataDump
-  features/               Domænekomponenter: Header, HeaderSearch, MainMenu, CityMenu, SidePanel, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
+  features/               Domænekomponenter: Header, HeaderSearch, MainMenu, CityMenu, SidePanel, Footer, Spotlight, MovieCard, Poster, MessagePage, ErrorState, SeatMap, SeatPicker, SeatView, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
 lib/
@@ -60,6 +62,7 @@ lib/
   ticket-types.js         Billettyperne (Voksen, Barn, Pensionist) og deres priser
   safe-path.js            Validerer ?next=
   seat-rules.js           Sædevalget: et ledigt sæde må ikke efterlades alene (findLoneSeats) og de bedste pladser midt i salen (findBestSeats)
+  use-submit-once.js      useSubmitOnce: stopper dobbeltklik, så en formular i købsflowet ikke sendes to gange
 supabase/supabase_schema.sql
 ```
 
@@ -104,7 +107,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside - "Filtrering" | 2848:14506 (komponent "Filtering" 464:12550, "Filterfelt" 2087:9999, "Dropdown valg" 535:2814, "Søgepanel" 3761:15644) | `/film` | MovieFilter, FilterField, Chip (`variant="subtle"` - Figma "Formater"), MovieCard, HeaderSearch (`variant="filter"` - den blå søgeknap åbner et søgepanel under sig og søger i filmene, der kører i byen) |
 | Forside - "Program" (filmene under filtreringen) | 2867:21344 (kortet "card i feed" 214:3673) | `/film` | MovieFilter, MovieCard (`variant="feed"`), Button (`variant="secondary"`) - "Se flere film" |
 | Forside - Finale (motion) | 1883:12291 | `/film` | Finale (i `features/homepage-animations/` - scroll-styret med GSAP: sektionen pinnes, og sloganet lyses op bogstav for bogstav), Starfield |
-| Forside | | `/film` | Header, MovieCard, PosterPlaceholder, Footer |
+| Forside | | `/film` | Header, MovieCard, Poster (plakaten - viser PosterPlaceholder, hvis billedet mangler eller ikke kan hentes), PosterPlaceholder, Footer |
 | Filmside | Projektor - standard: 3063:14519, Titel - standard: 3063:14531, Titel - smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="clayface"` og `variant="katten"` - unikke kampagne-animationer, kun til de to film; valgt i `getTitleVariant` i `lib/data/movies.js`. Dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal |
 | Filmside - "Filmdetaljer" (plakat, handling, fakta) | 2250:15224 (Anmeldelse: 2249:15255) | `/film/[slug]` | MovieDetails, TrailerButton, ShareButton, BearRating, PosterPlaceholder |
 | Filmside - "Spilletider" | 627:3145 (Din forestilling: 2010:26575, Biograf-vælger: 1813:9324) | `/film/[slug]` | ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime (alle i `features/showtimes/`), Chip (format), FilterField (`variant="box"` - biograf), Button (`variant="more"` - "Se salen", `primary` - "Vælg billetter"). Ledige pladser regnes ud i `getShowtimes`. Kommende film: første dag hedder "Premiere" |
@@ -121,6 +124,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Betalingsfejl (side) | Fejlside (Popcorn – loader: 1335:26656, "Brændt 1-4") | `/bestil/[bookingId]/betaling/fejl?metode=card` | PaymentFailed (bygger på Overlay - de brændte popkorn med røg: PopcornLoader `burnt`), PaymentLoader ("Reserverer pladser" - deles med PaymentForm), Button. "Prøv igen" betaler igen med samme metode ("Reserverer pladser" og så fejlsiden igen), "Vælg anden betaling" fører til betalingen med inline-fejlen |
 | Billet - printes ("Din billet klargøres til udprintning") | 214:5203 | `/bestil/[bookingId]/billet` | TicketPrint (billetten printes ud af sprækken i fire ryk - `--duration-ticket-print`), StepHeader (`centered`), LoadingDots, PopcornShower (popkornene, der drysser over skærmen i stedet for konfetti - `pop-1…3.svg`) |
 | Billet - færdig ("Din billet er printet") | 214:4766 (Billet: 2964:14829, Popkorn: 668:4961) | `/bestil/[bookingId]/billet` | TicketPrint, Ticket (papiret med splinterne `public/billet/moenster.svg` og stubben med isbjørnen `icons/bear.svg` - bruger Figmas variabler), Button ("Tilbage til forsiden"). Underteksten laves med `formatShowtimeLine` i `lib/format.js` |
+| 404 side | 1580:35416 | alle ukendte adresser (`app/not-found.js`) | Header, MessagePage (illustrationen til venstre, tekst og knapper til højre - deles med fejlsiden), Button, Footer |
+| 500 side (fejlside) | 3745:16005 | `error.js` i hver route-gruppe + `app/global-error.js` | ErrorState (samme MessagePage som 404 med "Noget gik galt hos os.", "Prøv igen" (`retry`) og "Gå til support"), Button. Fontene ligger i `app/fonts.js`, så `global-error.js` (der laver sit eget `<html>`) også får dem |
 | Log ind | 761:18178 | `/login` | TextField, Checkbox, Button |
 | Opret profil | | `/signup` | - (bruger globale `.form`-styles) |
 | Profil | | `/profile` | UserBadge |
