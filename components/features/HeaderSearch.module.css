@@ -1,0 +1,141 @@
+/* Boksen om ikonet. Feltet placeres i forhold til den */
+.wrapper {
+  position: relative;
+  line-height: 0;
+}
+
+/* Feltet ligger lige til venstre for søge-ikonet, lodret i midten.
+   De andre ikoner i headeren kan stadig ses */
+.panel {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + var(--space-3));
+  z-index: 1;
+  /* Højst 360px - og aldrig så bredt, at det rammer logoet i midten:
+     halvdelen af skærmen minus luften i siden, ikonerne, det halve logo og lidt luft */
+  width: min(
+    var(--size-header-search-width),
+    calc(50vw - var(--space-8) - var(--size-header-side) - var(--size-header-logo-width) / 2 - 2 * var(--space-3))
+  );
+  line-height: var(--line-height-snug);
+  transform: translateY(-50%);
+  /* Folder sig ud fra ikonet mod venstre */
+  animation: unfold var(--duration-menu) var(--easing-out);
+}
+
+@keyframes unfold {
+  from {
+    clip-path: inset(0 0 0 100%);
+    opacity: 0;
+  }
+}
+
+/* Feltet og krydset ved siden af hinanden */
+.row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Browserens eget kryds i søgefelter skjules - vi har vores eget ved siden af feltet */
+.field input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+/* Listen med film under feltet */
+.results {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  left: 0;
+  max-height: var(--size-header-search-results);
+  overflow-y: auto;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.list {
+  list-style: none;
+}
+
+/* Én film: plakat til venstre, titel til højre */
+.item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+/* Den markerede film (med musen eller piletasterne) */
+.item[data-active] {
+  background: var(--color-option-background-active);
+}
+
+.item[data-active] .title {
+  color: var(--color-accent);
+}
+
+/* Lille plakat. En film uden plakat får en tom boks i samme størrelse */
+.poster {
+  flex-shrink: 0;
+  width: var(--size-search-poster-width);
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-xs);
+  background: var(--color-option-background);
+  object-fit: cover;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-snug);
+}
+
+.meta {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+/* Når ingen film passer */
+.empty {
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+}
+
+/* Mobil: der er ikke plads mellem logoet og ikonerne. Feltet går fra headerens venstre kant
+   hen til søge-ikonet (som er det første af de tre ikoner), og logoet og menuen skjules imens.
+   .wrapper er ikke længere udgangspunkt - det er .bar i Header.module.css */
+@media (max-width: 48rem) {
+  .wrapper {
+    position: static;
+  }
+
+  .panel {
+    right: calc(var(--space-4) + var(--size-header-side-compact) + var(--space-3));
+    left: var(--space-4);
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
+}
