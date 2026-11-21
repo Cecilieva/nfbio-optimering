@@ -65,7 +65,8 @@ const PASSWORD_PATTERN = "(?=.*\\d)(?=.*[A-ZÆØÅ]).{8,}";
 // Alle felter skal udfyldes - signUp afviser profilen, hvis noget mangler
 //
 //   next - adressen, man sendes tilbage til bagefter
-export default function CheckoutSignupForm({ next }) {
+//   bookingId - reservationen, så man går direkte til betaling bagefter
+export default function CheckoutSignupForm({ next, bookingId }) {
   // Samme start som SignUpForm: "Vil ikke oplyse" er valgt
   const [gender, setGender] = useState("vil-ikke-oplyse");
   // Fejl, hvis de to adgangskoder ikke er ens
@@ -102,6 +103,7 @@ export default function CheckoutSignupForm({ next }) {
     <form action={signUp} onSubmit={checkForm} className={styles.form}>
       {/* Efter oprettelsen sendes man tilbage hertil */}
       <input type="hidden" name="next" value={next} />
+      <input type="hidden" name="booking_id" value={bookingId} />
 
       {/* "Udfyld de markerede felter.", når et felt mangler eller er forkert. Felterne får rød kant */}
       <InvalidFieldsMessage className={styles.error} />

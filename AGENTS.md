@@ -54,6 +54,7 @@ lib/
   supabase/server.js      Supabase-klienten til serveren
   auth.js                 getCurrentUser()
   booking-cookie.js       Kopi af bookingen til gæster (se nedenfor)
+  booking-owner.js        claimBooking: gør den, der er logget ind, til ejer af en reservation (bruges af actions)
   format.js               Dato, tid, pris, varighed og sæder (formatSeats) - dansk og i Europe/Copenhagen
   payment-errors.js       De simulerede betalingsfejl (fx MP-408)
   ticket-types.js         Billettyperne (Voksen, Barn, Pensionist) og deres priser
@@ -67,7 +68,7 @@ supabase/supabase_schema.sql
 `/` (Vælg by) -> `/film` -> `/film/[slug]` -> `/bestil/saeder/[showtimeId]` -> `reserve_seats` (uden ejer) -> `/bestil/[bookingId]/login` -> `attach_booking_owner` -> `/bestil/[bookingId]/betaling` -> `complete_payment` -> `/bestil/[bookingId]/billet`
 
 - Byen gemmes i cookien `nf_city` (`lib/actions/city.js`). `/` viser altid Vælg by - også når en by er valgt - og sender videre til `/film`.
-- Er brugeren logget ind ved reservationen, sætter `reserve_seats` ejeren med det samme, og login-skærmen springes over.
+- Er brugeren logget ind ved reservationen, sætter `reserve_seats` ejeren med det samme, og login-skærmen springes over. Logger man ind eller opretter en profil på login-skærmen (eller går tilbage og vælger de samme sæder efter at have logget ind), bliver man ejer med det samme (`claimBooking` i `lib/booking-owner.js`) og går direkte til betaling - der er intet "Du er logget ind"-mellemtrin.
 - RLS lader kun indloggede ejere læse `bookings`. Derfor gemmer actions en kopi af bookingrækken + sæde-id'er i den httpOnly-cookie `nf_booking`, og `getBooking()` falder tilbage til den. Kopien er kun til visning - RPC'erne tjekker alt i databasen.
 - Uret ("Dine pladser holdes i") er det samme på alle siderne. Det starter på "Vælg dine pladser", og tidspunktet gemmes som `hold_until` i booking-cookien. `getBooking()` bruger det i stedet for databasens `reserved_until`, når det er tidligere. Løber tiden ud, vises "Tiden er udløbet" (ReservationExpired), og "Vælg pladser igen" fører til "Vælg dine pladser" med de samme billetter (`?booking=…`).
 - Indlæsning: brug altid den almindelige loader (LoadingState - popkorn + "Indlæser"). Hver route-gruppe har en `loading.js`, og en formular, der sender en videre til en ny side, får `<FormLoader />` inde i `<form>` (ved betaling med `title`/`text`: "Reserverer pladser"). Links, der henter en ny side (Button med `href`, BackLink og MovieCard), har `<LinkLoader />` inde i linket, så loaderen også vises med det samme på et langsomt net. Loaderen kommer først frem efter 1 sekund (på et hurtigt net ser man den ikke), og når den er synlig, står den mindst 3 sekunder (LoadingHost i hver gruppes layout). Kun to steder vises den altid (`always`): på vej ind på en filmside (`film/[slug]/loading.js` og filmkortene i MovieCard) og "Reserverer pladser" ved betaling. Små formularer, der bliver på siden (fx nyhedsbrevet), får ingen loader.

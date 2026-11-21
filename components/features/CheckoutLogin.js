@@ -42,7 +42,7 @@ export default function CheckoutLogin({ bookingId, next, email, mode = "login" }
         intro="Bestil hurtigere, anmeld film og få invitationer til forpremierer og events."
         spacious
       >
-        <CheckoutSignupForm next={next} />
+        <CheckoutSignupForm next={next} bookingId={bookingId} />
       </Card>
     );
   }
@@ -75,6 +75,7 @@ export default function CheckoutLogin({ bookingId, next, email, mode = "login" }
       <form action={loginAction} className={styles.form}>
         {/* Efter login sendes man tilbage til denne side */}
         <input type="hidden" name="next" value={next} />
+        <input type="hidden" name="booking_id" value={bookingId} />
         {/* "Udfyld de markerede felter.", hvis et felt mangler */}
         <InvalidFieldsMessage className={styles.error} />
         <TextField
