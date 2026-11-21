@@ -5,7 +5,7 @@ import Link from "next/link";
 import LinkLoader from "@/components/features/loading/LinkLoader";
 import { useEffect, useRef, useState } from "react";
 import FormLoader from "@/components/features/loading/FormLoader";
-import { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
+import { AuthHeading, AuthNote } from "./AuthScreen";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
 import Chip from "@/components/ui/Chip";

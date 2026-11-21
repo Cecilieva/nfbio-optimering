@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import AuthScreen from "@/components/features/AuthScreen";
-import SignUpForm from "@/components/features/SignUpForm";
+import AuthScreen from "@/components/features/auth/AuthScreen";
+import SignUpForm from "@/components/features/auth/SignUpForm";
 import { getCurrentUser } from "@/lib/auth";
 import { safePath } from "@/lib/safe-path";
 
