@@ -420,6 +420,7 @@
   --size-header-logo-width: 4.653rem; /* 74.45px - logoet i headeren (56px højt) */
   --size-header-search-results: 26rem; /* 416px - højst så høj bliver listen med søgeresultater, før man scroller */
   --size-search-poster-width: 2.5rem; /* 40px - de små plakater i søgeresultaterne */
+  --size-filter-search-width: 22.75rem; /* 364px - søgepanelet under søgeknappen i filtreringen */
   --opacity-poster-text: 0.85; /* "Billetsalg fra 10. nov" på plakaterne */
   --size-control-height: var(--figma-btn-height-medium); /* 40px - standardknappen */
   --size-button-height: var(--figma-btn-height-medium); /* 40px - knapper og tekstfelter */

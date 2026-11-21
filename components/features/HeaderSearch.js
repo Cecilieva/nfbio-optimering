@@ -19,8 +19,8 @@ function normalize(text) {
 }
 
 /**
- * Søgningen i headeren. Et klik på ikonet folder et søgefelt ud til venstre for ikonet, og filmene,
- * der passer, vises under feltet, mens man skriver.
+ * Søgningen efter film. Et klik på ikonet åbner et søgefelt, og filmene, der passer, vises under feltet,
+ * mens man skriver. Bruges to steder (se variant).
  * Pil op/ned flytter markeringen i listen, Enter åbner den markerede film (eller den første).
  * Et klik på ikonet igen, Escape eller et klik udenfor lukker feltet.
  *
@@ -28,11 +28,15 @@ function normalize(text) {
  * aria-activedescendant fortæller skærmlæsere, hvilken film der er markeret.
  *
  * @param {object} props
- * @param {{ id: number, title: string, slug: string, poster_url?: string, comingSoon: boolean }[]} props.movies
+ * @param {{ id: number, title: string, slug: string, poster_url?: string }[]} props.movies
  *   Filmene, man kan søge i (fra getSearchMovies)
- * @param {string} [props.triggerClassName] Headerens stil til ikon-knappen
+ * @param {"header" | "filter"} [props.variant] "header": feltet folder sig ud til venstre for ikonet i headeren.
+ *   "filter": den blå søgeknap i filtreringen på /film - et panel med feltet og filmene åbner under knappen
+ * @param {string} [props.className] Ekstra stil til boksen om knap og felt (fx dens plads i filtreringsbaren)
+ * @param {string} [props.triggerClassName] Stilen til ikon-knappen
  */
-export default function HeaderSearch({ movies, triggerClassName }) {
+export default function HeaderSearch({ movies, variant = "header", className, triggerClassName }) {
+  const isFilter = variant === "filter";
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -126,30 +130,35 @@ export default function HeaderSearch({ movies, triggerClassName }) {
   }
 
   return (
-    // Feltet placeres i forhold til denne boks: lige til venstre for ikonet (se CSS'en)
-    <div ref={wrapperRef} className={styles.wrapper} onKeyDown={handleKeyDown}>
-      {/* Ikonet i headeren */}
+    // Feltet placeres i forhold til denne boks (se CSS'en)
+    <div
+      ref={wrapperRef}
+      className={className ? `${styles.wrapper} ${className}` : styles.wrapper}
+      data-variant={variant}
+      onKeyDown={handleKeyDown}
+    >
+      {/* Søge-ikonet */}
       <button
         ref={triggerRef}
         type="button"
         className={triggerClassName}
-        aria-label="Søg"
+        aria-label={isFilter ? "Søg efter film" : "Søg"}
         aria-expanded={open}
         onClick={toggle}
       >
-        <Image src="/icons/search.svg" alt="" width={24} height={24} />
+        <Image src={isFilter ? "/icons/search-filter.svg" : "/icons/search.svg"} alt="" width={24} height={24} />
       </button>
 
       {open && (
-        // Feltet folder sig ud til venstre for ikonet
+        // Header: feltet folder sig ud til venstre for ikonet. Filter: panelet åbner under knappen.
         <div className={styles.panel} data-search-open>
-          <form role="search" className={styles.row} onSubmit={handleSubmit}>
+          <form role="search" onSubmit={handleSubmit}>
             <TextField
               label="Søg efter film"
               hideLabel
-              name="header-search"
+              name={isFilter ? "filter-search" : "header-search"}
               type="search"
-              placeholder="Søg efter film"
+              placeholder={isFilter ? undefined : "Søg efter film"}
               autoComplete="off"
               enterKeyHint="search"
               autoFocus
@@ -206,10 +215,8 @@ export default function HeaderSearch({ movies, triggerClassName }) {
                         ) : (
                           <span className={styles.poster} aria-hidden="true" />
                         )}
-                        <span className={styles.text}>
-                          <span className={styles.title}>{movie.title}</span>
-                          {movie.comingSoon && <span className={styles.meta}>Kommer snart</span>}
-                        </span>
+                        {/* Kun titlen - ingen anden tekst */}
+                        <span className={styles.title}>{movie.title}</span>
                         {/* På vej ind på en filmside vises loaderen altid (som filmkortene) */}
                         <LinkLoader always />
                       </Link>

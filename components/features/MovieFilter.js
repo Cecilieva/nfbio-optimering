@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
+import HeaderSearch from "@/components/features/HeaderSearch";
 import MovieCard from "@/components/features/MovieCard";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
@@ -24,7 +25,7 @@ const NO_FILTERS = { cinema: "all", day: "all", genre: "all", extra: "all", form
  * Filtreringen af de film, der kører nu i byen – og listen med filmene under den.
  * Figma: "Filtrering" (komponent "Filtering").
  *
- * Fire felter med dropdown (Biograf, Dato, Genre, Ekstra filtrering), søgeknappen,
+ * Fire felter med dropdown (Biograf, Dato, Genre, Ekstra filtrering), søgeknappen (søger i filmene, der kører i byen),
  * format-knapperne og "Nulstil filter". Filmene filtreres med det samme, når man vælger noget.
  * Under filtrene står filmene som plakater – Figma "Program".
  *
@@ -43,9 +44,6 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
 
   // Hvor mange film der vises – "Se flere film" lægger PAGE_SIZE til
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-
-  // Listen med film – søgeknappen hopper ned til den
-  const resultsRef = useRef(null);
 
   // Sæt ét filter og behold de andre. Listen starter forfra med 10 film, når filtrene ændres.
   function setFilter(key, value) {
@@ -136,14 +134,6 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
     return FORMATS.filter((format) => formats.includes(format));
   }
 
-  // Søgeknappen: luk en åben dropdown og hop ned til filmene.
-  // Fokus flytter med, så skærmlæsere og tastatur også lander dér.
-  function showResults() {
-    setOpenField(null);
-    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    resultsRef.current?.focus({ preventScroll: true });
-  }
-
   // "Nulstil filter": alle felter tilbage på "Alle …"
   function resetFilters() {
     setFilters(NO_FILTERS);
@@ -183,11 +173,10 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
           </div>
         ))}
 
-        {/* Den blå søgeknap til højre – med samme "Skille" foran som mellem felterne, så afstanden er ens */}
+        {/* Den blå søgeknap til højre – med samme "Skille" foran som mellem felterne, så afstanden er ens.
+            Den åbner et søgepanel under sig (samme søgning som i headeren). */}
         <span className={styles.divider} aria-hidden="true" />
-        <button type="button" className={styles.search} aria-label="Vis film" onClick={showResults}>
-          <img src="/icons/search-filter.svg" alt="" width={24} height={24} />
-        </button>
+        <HeaderSearch movies={movies} variant="filter" className={styles.searchSlot} triggerClassName={styles.search} />
       </div>
 
       {/* Figma: format-knapperne til venstre og "Nulstil filter" til højre */}
@@ -215,8 +204,8 @@ export default function MovieFilter({ cityName, cinemas, movies }) {
         </button>
       </div>
 
-      {/* Filmene, der passer til filtrene. tabIndex={-1}, så søgeknappen kan flytte fokus hertil. */}
-      <div ref={resultsRef} tabIndex={-1} className={styles.results}>
+      {/* Filmene, der passer til filtrene */}
+      <div className={styles.results}>
         {/* Læses op for skærmlæsere, hver gang antallet ændrer sig */}
         <p role="status" className={styles.visuallyHidden}>
           {shown.length === 1 ? "1 film" : `${shown.length} film`}
