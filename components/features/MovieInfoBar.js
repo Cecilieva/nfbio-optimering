@@ -39,7 +39,7 @@ export default function MovieInfoBar({ movie, ticketsHref }) {
         <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
         {/* "Følg film" giver besked, når billetsalget åbner – så den vises kun, indtil salget er åbent.
             "Køb billet" kommer først, når billetsalget er åbnet. */}
-        {!movie.ticket_sale_open && <FollowButton title={movie.title} />}
+        {!movie.ticket_sale_open && <FollowButton title={movie.title} wideToast />}
         {movie.ticket_sale_open && <Button href={ticketsHref}>Køb billet</Button>}
       </div>
     </div>

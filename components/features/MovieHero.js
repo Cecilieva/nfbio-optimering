@@ -21,16 +21,19 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider" }) {
 
   return (
     <section className={styles.hero} aria-labelledby="movie-title">
-      {flashlight ? (
-        <Flashlight image={image} />
-      ) : (
-        <>
-          {image && <img src={image} alt="" className={styles.image} />}
-          <div className={styles.toning} aria-hidden="true" />
-          <div className={styles.beam} aria-hidden="true" />
-          <div className={styles.fadeTop} aria-hidden="true" />
-        </>
-      )}
+      {/* Billedet ligger i sit eget lag, så beskeden fra "Følg film" ikke bliver skåret væk */}
+      <div className={styles.backdrop}>
+        {flashlight ? (
+          <Flashlight image={image} />
+        ) : (
+          <>
+            {image && <img src={image} alt="" className={styles.image} />}
+            <div className={styles.toning} aria-hidden="true" />
+            <div className={styles.beam} aria-hidden="true" />
+            <div className={styles.fadeTop} aria-hidden="true" />
+          </>
+        )}
+      </div>
 
       <div className={styles.top}>
         <div className={styles.topLeft}>

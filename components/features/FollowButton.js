@@ -21,8 +21,9 @@ const RING_MS = 500;
  *
  * @param {object} props
  * @param {string} props.title Filmens titel (til skærmlæsere)
+ * @param {boolean} [props.wideToast] Beskeden bliver lige så bred som knaprækken (den skal have position: relative)
  */
-export default function FollowButton({ title }) {
+export default function FollowButton({ title, wideToast = false }) {
   const [following, setFollowing] = useState(false);
   const [ringing, setRinging] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -69,7 +70,7 @@ export default function FollowButton({ title }) {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-wide-toast={wideToast || undefined}>
       {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
         variant={following ? "primary" : "outline"}

@@ -518,6 +518,7 @@
   --size-curtain-spot-width: 52.778%; /* 507 af 960px */
   --size-curtain-spot-height: 95%; /* 513 af 540px */
   --size-age-badge: 1.5rem; /* 24px - boksen med aldersgrænsen, fx "7" */
+  --size-toast-width: 12rem; /* 192px - bredden på beskeden under "Følg film" */
   --opacity-rating-empty: 0.25; /* hvor synlige de tomme bjørne er i "Anmeldelse" (0 = usynlig, 1 = helt synlig) */
   --size-coming-card-height: 56rem; /* 896px - "Kommer snart"-kortet */
   --size-featured-card-height: min(var(--size-coming-card-height), 85svh); /* Tilpasser sig skærmen, så titel og knapper kan ses */

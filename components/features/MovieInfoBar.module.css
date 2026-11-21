@@ -50,9 +50,11 @@
 }
 
 .actions {
+  /* kun så bred som knapperne, så beskeden fra "Følg film" får samme bredde */
+  position: relative;
   grid-column: 7 / -1;
+  justify-self: end;
   display: flex;
-  justify-content: flex-end;
   gap: var(--space-2);
 }
 
@@ -68,9 +70,6 @@
 
   .actions {
     flex-wrap: wrap;
-  }
-
-  .actions > * {
-    flex: 1 1 auto;
+    justify-self: start;
   }
 }
