@@ -28,10 +28,11 @@ const INTRO_POSTER_COUNT = 8;
  *
  * @param {object} props
  * @param {object[]} props.movies Filmene i den rækkefølge, de vises (se lib/data/featured.js)
+ * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
  * @param {{ slug: string, src: string }[]} [props.introPosters] Plakaterne til stjernehimlen i tilfældig
  *   rækkefølge (se lib/data/intro-posters.js)
  */
-export default function FeaturedMovies({ movies, introPosters = [] }) {
+export default function FeaturedMovies({ movies, introPosters = [], loginHref }) {
   const sectionRef = useRef(null);
   const firstCardRef = useRef(null);
   const dotsRef = useRef(null);
@@ -174,7 +175,7 @@ export default function FeaturedMovies({ movies, introPosters = [] }) {
         targetImage={first?.hero_url}
         films={films}
       >
-        {first && <ComingSoonCard movie={first} copy />}
+        {first && <ComingSoonCard movie={first} copy loginHref={loginHref} />}
       </HeroScroll>
 
       <section ref={sectionRef} className={styles.cards} aria-label="Kommer snart">
@@ -185,6 +186,7 @@ export default function FeaturedMovies({ movies, introPosters = [] }) {
               movie={movie}
               preload={index === 0}
               loading={index === 0 ? undefined : "eager"}
+              loginHref={loginHref}
             />
           </div>
         ))}
