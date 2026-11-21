@@ -1,4 +1,5 @@
 import Header from "@/components/features/Header";
+import { LoadingHost } from "@/components/features/LoadingState";
 import styles from "./page.module.css";
 
 // Layout for route-gruppen "(start)", som indeholder "/" og "/by".
@@ -10,6 +11,8 @@ export default function CityLayout({ children }) {
       <Header variant="logo" />
       {/* children er siden inde i layoutet (Vælg by-siden) */}
       {children}
+      {/* Loaderen: henter popkornene på forhånd og holder loaderen på skærmen i mindst 3 sekunder */}
+      <LoadingHost />
 
       {/* Vælg by er den første skærm, alle ser. Skærmen har ingen footer,
           så vi viser her, at sitet er et studieprojekt (et krav i projektbeskrivelsen).
