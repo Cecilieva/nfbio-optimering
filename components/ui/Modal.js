@@ -48,7 +48,7 @@ export default function Modal({ open, onClose, title, size = "large", children }
       <div className={styles.header}>
         <h2 className={styles.title}>{title}</h2>
         <Button variant="secondary" onClick={onClose} className={styles.close}>
-          <Image src="/icons/close.svg" alt="" width={15.536} height={12} />
+          <Image src="/icons/close.svg" alt="" width={18} height={18} />
           Luk
         </Button>
       </div>
