@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import FormLoader from "@/components/features/FormLoader";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
 import Chip from "@/components/ui/Chip";
@@ -209,6 +210,8 @@ export default function CheckoutSignupForm({ next }) {
       <Button type="submit" className={styles.button}>
         Opret profil
       </Button>
+      {/* Viser "Indlæser", mens formularen sendes */}
+      <FormLoader />
     </form>
   );
 }

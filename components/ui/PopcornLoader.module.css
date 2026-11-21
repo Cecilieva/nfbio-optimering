@@ -1,0 +1,72 @@
+.loader {
+  display: block;
+  width: var(--size-popcorn-loader);
+  height: var(--size-popcorn-loader);
+  overflow: visible; /* Popkornene må gerne flyve lidt uden for boksen */
+}
+
+/* Et popkorn: hopper op, drejer rundt og falder ned ved siden af bægeret.
+   Hvert popkorn starter lidt efter det forrige (--index), så de kommer ét ad gangen */
+.pop {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop var(--duration-popcorn-pop) var(--easing-in-out) infinite;
+  animation-delay: calc(var(--duration-popcorn-pop) / var(--count) * var(--index));
+}
+
+/* Bægeret hopper lidt med, mens popkornene springer */
+.bucket {
+  animation: bob calc(var(--duration-popcorn-pop) / 2) var(--easing-in-out) infinite alternate;
+}
+
+/* Inde i bægeret (lille) -> højt oppe (stort) -> ned ved siden af bægeret, hvor det forsvinder.
+   De ekstra trin (20 % og 70 %) giver en bue i stedet for en lige streg */
+@keyframes pop {
+  0% {
+    translate: 0 0;
+    scale: 0.5;
+    opacity: 0;
+  }
+
+  /* På vej op: næsten oppe i højden, men kun halvt ude til siden */
+  20% {
+    translate: calc(var(--top-x) * 0.5) calc(var(--top-y) * 0.8);
+    opacity: 1;
+  }
+
+  /* Det højeste punkt */
+  45% {
+    translate: var(--top-x) var(--top-y);
+    scale: 1.6;
+    rotate: 90deg;
+  }
+
+  /* På vej ned: ude til siden, mens det falder */
+  70% {
+    translate: calc((var(--top-x) + var(--land-x)) / 2) calc(var(--top-y) * 0.4);
+    opacity: 1;
+  }
+
+  100% {
+    translate: var(--land-x) var(--land-y);
+    scale: 1.3;
+    rotate: 180deg;
+    opacity: 0;
+  }
+}
+
+/* Bægeret løfter sig en lille smule og sænker sig igen */
+@keyframes bob {
+  to {
+    translate: 0 calc(var(--space-0-5) * -1);
+  }
+}
+
+/* Har man slået animationer fra, står bægeret stille uden popkorn i luften */
+@media (prefers-reduced-motion: reduce) {
+  .pop,
+  .bucket {
+    animation: none;
+  }
+}

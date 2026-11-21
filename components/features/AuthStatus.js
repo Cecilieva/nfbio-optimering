@@ -1,4 +1,5 @@
 import Link from "next/link";
+import FormLoader from "@/components/features/FormLoader";
 import { getCurrentUser } from "@/lib/auth";
 import { signOut } from "@/lib/actions/auth";
 import styles from "./AuthStatus.module.css";
@@ -24,6 +25,8 @@ export default async function AuthStatus() {
         <button type="submit" className={styles.logout}>
           Log ud
         </button>
+        {/* Viser "Indlæser", mens formularen sendes */}
+        <FormLoader />
       </form>
     </div>
   );

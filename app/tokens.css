@@ -244,6 +244,10 @@
   --color-trailer-text: var(--palette-white-soft); /* text/Primær */
   --color-trailer-button-border: var(--palette-navy); /* Buttons/Sekundær border */
   --color-trailer-video: var(--palette-pure-black); /* bag videoen, mens den loader */
+  /* loaderen ("Indlæser") - altid de samme farver, også på vej ind i thriller og familie -> farver direkte fra paletten */
+  --color-loader-background: var(--palette-navy-darkest); /* bg/Primær baggrund */
+  --color-loader-text: var(--palette-white-soft); /* text/Primær */
+  --color-loader-text-muted: var(--palette-lavender); /* text/Sekundær */
   /* én fold i tæppet: mørk -> lys -> mørk */
   --gradient-curtain-fold: linear-gradient(
     90deg,
@@ -407,6 +411,8 @@
   --space-not-found-bottom: 8.75rem; /* 140px - luft under indholdet */
   --space-not-found-buttons: 3.5rem; /* 56px - fra teksten ned til knapperne */
   --angle-popcorn-wobble: 8deg; /* "Tiden er udløbet": popkorn-bægeret vipper så meget til hver side */
+  --size-popcorn-loader: 10rem; /* 160px - popkorn-loaderen (bæger + popkorn, der hopper) */
+  --size-loading-dot: 0.3125rem; /* 5px - én af de tre prikker efter "Indlæser" (LoadingDots) */
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   /* Figma "Projektor - standard": Start -> Tændt -> Drift */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
@@ -570,7 +576,9 @@
   --duration-title-wave-hop: 450ms; /* Ét hop i bølgen - bruges, når man holder musen over titlen */
   --delay-title-wave: 150ms; /* Tid mellem ordene i bølgen */
   --delay-title-wave-start: calc(var(--delay-movie-hero-title) + var(--duration-movie-hero-title)); /* Når titlen er gledet på plads */
-  --duration-expired-in: 400ms; /* "Tiden er udløbet" toner frem */
+  --duration-overlay-in: 400ms; /* Overlayet toner frem */
+  --duration-popcorn-pop: 1.6s; /* Loaderen: ét popkorn hopper op af bægeret og falder ned igen */
+  --duration-loading-dots: 1.6s; /* Prikkerne: én runde fra ingen til tre prikker */
   --duration-popcorn-wobble: 1.4s; /* Popkorn-bægeret svinger fra den ene side til den anden */
 
   /* Easing: hvordan en bevægelse tager fart og bremser op.
@@ -594,7 +602,7 @@
   --z-header: 60; /* Headeren hænger fast i toppen - over siden og prikkerne, under "Tiden er udløbet" */
   --z-intro-header: 101; /* Headeren oven på hero'en */
   --z-intro-countdown: 102; /* Nedtællingen - over alt */
-  --z-expired: 100; /* "Tiden er udløbet" dækker hele købsflowet, også headeren og bundbjælken */
+  --z-overlay: 110; /* Overlay (loader, "Tiden er udløbet" m.m.) dækker hele skærmen - over alt andet */
 
   /* Layout */
   /* Breakpoints - CSS-variabler virker ikke i @media, så tallene skrives direkte i media queries.

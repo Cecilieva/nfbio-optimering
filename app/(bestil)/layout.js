@@ -1,4 +1,5 @@
 import Header from "@/components/features/Header";
+import { LoadingHost } from "@/components/features/LoadingState";
 import styles from "./layout.module.css";
 
 // Layout for route-gruppen "(bestil)": hele købsflowet under /bestil.
@@ -10,6 +11,8 @@ export default function BookingLayout({ children }) {
     <div className={styles.screen}>
       <Header variant="logo" />
       {children}
+      {/* Loaderen: henter popkornene på forhånd og holder loaderen på skærmen i mindst 3 sekunder */}
+      <LoadingHost />
     </div>
   );
 }

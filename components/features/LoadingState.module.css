@@ -1,0 +1,10 @@
+/* Loaderen har altid de samme farver - også når siden er på vej ind i thriller eller familie.
+   Overlayet bruger de almindelige farve-tokens, så her sætter vi dem til loaderens faste farver.
+   display: contents: boksen fylder ikke noget selv - den giver bare farverne videre til overlayet */
+.loader {
+  --color-background: var(--color-loader-background);
+  --color-text-primary: var(--color-loader-text);
+  --color-text-muted: var(--color-loader-text-muted);
+
+  display: contents;
+}

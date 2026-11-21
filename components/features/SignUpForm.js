@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import FormLoader from "@/components/features/FormLoader";
 import { AuthHeading, AuthNote } from "@/components/features/AuthScreen";
 import Button from "@/components/ui/Button";
 import Checkbox from "@/components/ui/Checkbox";
@@ -277,6 +278,8 @@ export default function SignUpForm({ next, error = false }) {
             Bliv BioPlus-medlem
           </Button>
         </div>
+        {/* Viser "Indlæser", mens formularen sendes */}
+        <FormLoader />
       </form>
 
       {step === 1 ? (

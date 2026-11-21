@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import FormLoader from "@/components/features/FormLoader";
 import UserBadge from "@/components/features/UserBadge";
 import { signOut } from "@/lib/actions/auth";
 import { getCurrentUser } from "@/lib/auth";
@@ -26,6 +27,8 @@ export default async function ProfilePage() {
         <p>Vi kunne ikke finde en profil for {user.email}.</p>
         <form action={signOut} className="form">
           <button type="submit">Log ud</button>
+          {/* Viser "Indlæser", mens formularen sendes */}
+          <FormLoader />
         </form>
       </main>
     );
@@ -40,6 +43,8 @@ export default async function ProfilePage() {
       <p>Point: {profile.points}</p>
       <form action={signOut} className="form">
         <button type="submit">Log ud</button>
+        {/* Viser "Indlæser", mens formularen sendes */}
+        <FormLoader />
       </form>
     </main>
   );
