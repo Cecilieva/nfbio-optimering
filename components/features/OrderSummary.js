@@ -1,4 +1,4 @@
-import Poster from "@/components/features/Poster";
+import Poster from "@/components/features/movies/Poster";
 import { formatDay, formatDayKey, formatPrice, formatSeats, formatTime, formatWeekday } from "@/lib/format";
 import { TICKET_TYPES, ticketPrice } from "@/lib/ticket-types";
 import styles from "./OrderSummary.module.css";

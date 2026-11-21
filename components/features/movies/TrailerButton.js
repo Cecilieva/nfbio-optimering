@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import Curtain from "@/components/features/Curtain";
+import Curtain from "./Curtain";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import styles from "./TrailerButton.module.css";

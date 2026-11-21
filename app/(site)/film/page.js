@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import ComingSoonSection from "@/components/features/ComingSoonSection";
+import ComingSoonSection from "@/components/features/movies/ComingSoonSection";
 import FeaturedMovies from "@/components/features/homepage-animations/FeaturedMovies";
 import Finale from "@/components/features/homepage-animations/Finale";
-import MovieFilter from "@/components/features/MovieFilter";
+import MovieFilter from "@/components/features/movies/MovieFilter";
 import { getCurrentUser } from "@/lib/auth";
 import { getCinemas, getSelectedCity } from "@/lib/data/cities";
 import { getFeaturedMovies } from "@/lib/data/featured";

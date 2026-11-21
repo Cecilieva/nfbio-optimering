@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import MovieCard from "@/components/features/MovieCard";
+import MovieCard from "./MovieCard";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import { formatMonth } from "@/lib/format";

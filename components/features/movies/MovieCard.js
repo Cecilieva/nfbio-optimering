@@ -1,6 +1,6 @@
 import Link from "next/link";
 import LinkLoader from "@/components/features/loading/LinkLoader";
-import Poster from "@/components/features/Poster";
+import Poster from "./Poster";
 import buttonStyles from "@/components/ui/Button.module.css";
 import { formatAgeShort, formatDayMonthShort, formatDuration } from "@/lib/format";
 import styles from "./MovieCard.module.css";

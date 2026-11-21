@@ -1,7 +1,7 @@
 import BearRating from "@/components/features/BearRating";
-import Poster from "@/components/features/Poster";
-import ShareButton from "@/components/features/ShareButton";
-import TrailerButton from "@/components/features/TrailerButton";
+import Poster from "@/components/features/movies/Poster";
+import ShareButton from "@/components/features/movies/ShareButton";
+import TrailerButton from "@/components/features/movies/TrailerButton";
 import { formatAgeRating, formatDuration, formatPremiere } from "@/lib/format";
 import styles from "./MovieDetails.module.css";
 

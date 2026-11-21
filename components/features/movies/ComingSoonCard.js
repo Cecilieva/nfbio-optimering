@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import FollowButton from "@/components/features/FollowButton";
-import TrailerButton from "@/components/features/TrailerButton";
+import FollowButton from "./FollowButton";
+import TrailerButton from "./TrailerButton";
 import Button from "@/components/ui/Button";
 import ParallaxFrame from "@/components/ui/ParallaxFrame";
 import { formatCountdown, formatDayKey, formatPremiere, formatPremiereShort } from "@/lib/format";

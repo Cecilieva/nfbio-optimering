@@ -1,5 +1,5 @@
-import FollowButton from "@/components/features/FollowButton";
-import TrailerButton from "@/components/features/TrailerButton";
+import FollowButton from "@/components/features/movies/FollowButton";
+import TrailerButton from "@/components/features/movies/TrailerButton";
 import Button from "@/components/ui/Button";
 import { formatDuration, formatPremiere } from "@/lib/format";
 import styles from "./MovieInfoBar.module.css";

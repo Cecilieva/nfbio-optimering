@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import HeaderSearch from "@/components/features/layout/HeaderSearch";
-import MovieCard from "@/components/features/MovieCard";
+import MovieCard from "./MovieCard";
 import Button from "@/components/ui/Button";
 import Chip from "@/components/ui/Chip";
 import FilterField from "@/components/ui/FilterField";
