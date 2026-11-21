@@ -1,0 +1,58 @@
+/* Dækker hele skærmen, men kan ikke klikkes på */
+.shower {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Ét popkorn. Billedet er lidt mindre end boksen, så det står i midten */
+.popcorn {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: var(--size-icon); /* 24px */
+  height: var(--size-icon);
+  object-fit: none;
+  /* steps(1): det hopper fra trin til trin uden at glide (som i Figma).
+     Hvert popkorn venter, til billetten er printet, og det er dets tur */
+  animation: popcorn-rise var(--duration-popcorn-burst) steps(1, end) both;
+  animation-delay: calc(var(--delay-popcorn-shower) + var(--duration-ticket-print) * var(--start));
+}
+
+/* Popkornet flyver op i fire hop - lidt kortere hver gang - og popper, når det lander */
+@keyframes popcorn-rise {
+  0% {
+    opacity: 0;
+    translate: 0 var(--rise);
+    scale: var(--scale-popcorn-start);
+  }
+  1% {
+    opacity: 1;
+  }
+  21% {
+    translate: 0 calc(var(--rise) * 0.6);
+  }
+  42% {
+    translate: 0 calc(var(--rise) * 0.3);
+  }
+  63% {
+    translate: 0 calc(var(--rise) * 0.1);
+  }
+  83% {
+    translate: 0 0;
+    scale: var(--scale-popcorn-pop);
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+/* Har man slået animationer fra, ligger popkornene bare på plads */
+@media (prefers-reduced-motion: reduce) {
+  .popcorn {
+    animation: none;
+  }
+}

@@ -1,0 +1,102 @@
+/* Trin-headeren øverst og printeren i midten af resten af skærmen - 32px imellem (Gabs/Large) */
+.print {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* Sprækken, billetten og teksten under hinanden */
+.printer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding-bottom: var(--space-8);
+}
+
+/* Printersprækken: mørk og dyb */
+.slot {
+  width: var(--size-printer-width);
+  max-width: 100%;
+  height: var(--size-printer-slot-height);
+  border: var(--border-width-strong) solid var(--color-border); /* border/Standard */
+  border-radius: var(--radius-printer-slot);
+  background: var(--color-background-secondary); /* bg/Sekundær Baggrund */
+  box-shadow: var(--shadow-printer-slot);
+}
+
+/* Vinduet, billetten glider ned i. Det starter midt i sprækken, så billetten kommer ud inde fra den
+   og lægger sig over sprækkens nederste kant. Før den printes, er den skjult inde i sprækken.
+   Lidt luft i siderne og forneden, så skyggen ikke bliver skåret af */
+.paperWindow {
+  position: relative; /* ligger over sprækken */
+  margin: calc(-1 * var(--space-6) - var(--size-printer-slot-height) / 2) 0 calc(-1 * var(--space-8));
+  padding: 0 var(--space-6) var(--space-8);
+  overflow: hidden;
+}
+
+/* Billetten printes i fire ryk, ligesom en rigtig printer - efter "klargøres til udprintning" har stået et øjeblik */
+.paper {
+  animation: ticket-print var(--duration-ticket-print) var(--easing-in-out) var(--delay-ticket-print) both;
+}
+
+@keyframes ticket-print {
+  0%,
+  11% {
+    translate: 0 -100%;
+  }
+  29% {
+    translate: 0 -75%;
+  }
+  48% {
+    translate: 0 -50%;
+  }
+  67% {
+    translate: 0 -25%;
+  }
+  86%,
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* "Rigtig god fornøjelse!" og knappen - skjult, indtil billetten er printet */
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  text-align: center;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--duration-ticket-done) var(--easing-out),
+    visibility var(--duration-ticket-done);
+}
+
+/* Kommer frem, når billetten er printet */
+.done[data-visible="true"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Har man slået animationer fra, er billetten printet med det samme */
+@media (prefers-reduced-motion: reduce) {
+  .paper {
+    animation: none;
+  }
+
+  .done {
+    transition: none;
+  }
+}
+
+/* Mobil: billetten bliver lidt mindre, så den kan være på skærmen */
+@media (max-width: 26rem) {
+  .paperWindow {
+    zoom: 0.85;
+  }
+}

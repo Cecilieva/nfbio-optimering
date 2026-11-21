@@ -44,7 +44,7 @@ app/
   (site)/profile/         Konto
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
 components/
-  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, LoadingDots, ParallaxFrame, Seat, DataDump
+  ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, PopcornShower, LoadingDots, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter: Header, HeaderSearch, MainMenu, CityMenu, SidePanel, Footer, Spotlight, MovieCard, SeatMap, SeatPicker, SeatView, …
     homepage-animations/  Animationerne på /film: HeroScroll (GSAP ScrollTrigger), Starfield, IntroCountdown, FeaturedMovies, Finale
     showtimes/            Spilletiderne på filmsiden: ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime, HallMap
@@ -119,8 +119,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Betaling | | `/bestil/[bookingId]/betaling` | StepHeader, OrderSummary ("Din ordre" til venstre), PaymentForm ("Vælg betalingsmetode" til højre - Radio som bokse med titel og tekst, Checkbox til handelsbetingelserne, Button, PaymentLoader - "Reserverer pladser"), BottomBar + Countdown. Samme opbygning som "Dine oplysninger" |
 | Betalingsfejl (inline) | 1364:27183 | `/bestil/[bookingId]/betaling?fejl=card` | PaymentForm (`initialError`), Radio (`error` - metoden, der fejlede, får rød kant, fejl-ikon og fejlbeskeden under). Vises, når man kommer fra fejlsiden med "Vælg anden betaling". Resten af siden er uændret |
 | Betalingsfejl (side) | Fejlside (Popcorn – loader: 1335:26656, "Brændt 1-4") | `/bestil/[bookingId]/betaling/fejl?metode=card` | PaymentFailed (bygger på Overlay - de brændte popkorn med røg: PopcornLoader `burnt`), PaymentLoader ("Reserverer pladser" - deles med PaymentForm), Button. "Prøv igen" betaler igen med samme metode ("Reserverer pladser" og så fejlsiden igen), "Vælg anden betaling" fører til betalingen med inline-fejlen |
-| Billet - printes | | `/bestil/[bookingId]/billet` | TicketPrint |
-| Billet - færdig | | `/bestil/[bookingId]/billet` | StepHeader, TicketPrint, OrderSummary |
+| Billet - printes ("Din billet klargøres til udprintning") | 214:5203 | `/bestil/[bookingId]/billet` | TicketPrint (billetten printes ud af sprækken i fire ryk - `--duration-ticket-print`), StepHeader (`centered`), LoadingDots, PopcornShower (popkornene, der drysser over skærmen i stedet for konfetti - `pop-1…3.svg`) |
+| Billet - færdig ("Din billet er printet") | 214:4766 (Billet: 2964:14829, Popkorn: 668:4961) | `/bestil/[bookingId]/billet` | TicketPrint, Ticket (papiret med splinterne `public/billet/moenster.svg` og stubben med isbjørnen `icons/bear.svg` - bruger Figmas variabler), Button ("Tilbage til forsiden"). Underteksten laves med `formatShowtimeLine` i `lib/format.js` |
 | Log ind | 761:18178 | `/login` | TextField, Checkbox, Button |
 | Opret profil | | `/signup` | - (bruger globale `.form`-styles) |
 | Profil | | `/profile` | UserBadge |

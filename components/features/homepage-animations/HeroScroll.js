@@ -107,6 +107,7 @@ function getLayout(films) {
  * @param {number} [props.scrollLength] Hvor lang scrollen er, i procent af skærmhøjden
  * @param {string} [props.cueLabel] Teksten i scroll-markøren
  * @param {string} [props.label] Sektionens navn for skærmlæsere
+ * @param {boolean} [props.skipIntro] true: nedtællingen 3-2-1 springes over (fx når man kommer fra billetten)
  */
 export default function HeroScroll({
   targetRef,
@@ -118,11 +119,12 @@ export default function HeroScroll({
   scrollLength = 360,
   cueLabel = "Scroll",
   label,
+  skipIntro = false,
 }) {
   // true/false i browseren, null på serveren
   const reduceMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
-  // Nedtællingen vises, hvis den ikke allerede har kørt siden siden blev indlæst
-  const [showCountdown, setShowCountdown] = useState(() => !introPlayed);
+  // Nedtællingen vises, hvis den ikke allerede har kørt siden siden blev indlæst, og ikke skal springes over
+  const [showCountdown, setShowCountdown] = useState(() => !introPlayed && !skipIntro);
   const lenis = useLenis();
   // Lenis til klik på kortets knapper under udfoldningen. En ref, så scroll-animationen ikke starter forfra,
   // når Lenis er klar.
