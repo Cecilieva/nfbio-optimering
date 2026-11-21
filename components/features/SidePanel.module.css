@@ -31,9 +31,28 @@
   animation-name: slide-in-right;
 }
 
+/* Når panelet lukker, glider det ud mod sin egen side (data-closing sættes i SidePanel.js) */
+.drawer[data-closing] {
+  animation: slide-out var(--duration-menu) var(--easing-in) forwards;
+}
+
+.drawer[data-side="right"][data-closing] {
+  animation-name: slide-out-right;
+}
+
 /* Den mørke baggrund bag panelet */
 .drawer::backdrop {
   background: var(--color-backdrop);
+}
+
+/* ...og den mørke baggrund toner væk samtidig */
+.drawer[data-closing]::backdrop {
+  animation: fade-out var(--duration-menu) var(--easing-in) forwards;
+}
+
+/* Siden bagved kan ikke scrolle, mens et panel er åbent */
+:global(html):has(.drawer[open]) {
+  overflow: hidden;
 }
 
 @keyframes slide-in {
@@ -45,6 +64,24 @@
 @keyframes slide-in-right {
   from {
     transform: translateX(100%);
+  }
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-out-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
   }
 }
 

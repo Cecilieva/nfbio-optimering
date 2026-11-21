@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import Button from "@/components/ui/Button";
+import { useLenis } from "./SmoothScroll";
 import styles from "./SidePanel.module.css";
 
 /**
@@ -17,6 +18,8 @@ import styles from "./SidePanel.module.css";
  *   - Escape lukker panelet
  *   - tastaturfokus bliver inde i panelet, mens det er åbent
  *   - en mørk baggrund (backdrop) bag panelet
+ *
+ * Mens panelet er åbent, kan siden bagved ikke scrolle. Når det lukker, glider det ud igen.
  *
  * @param {object} props
  * @param {string} props.label Navnet på panelet til skærmlæsere, fx "Menu"
@@ -36,13 +39,45 @@ export default function SidePanel({
 }) {
   // En ref er et "håndtag" til <dialog>-elementet, så vi kan åbne og lukke det
   const dialogRef = useRef(null);
+  // Lenis styrer den bløde scroll. Den stoppes, mens panelet er åbent (null på sider uden Lenis)
+  const lenis = useLenis();
 
   function open() {
     dialogRef.current.showModal();
+    lenis?.stop();
   }
 
+  // Luk panelet: først glider det ud (data-closing i CSS'en), bagefter lukkes dialogen
   function close() {
-    dialogRef.current.close();
+    const dialog = dialogRef.current;
+    if (!dialog.open || dialog.hasAttribute("data-closing")) return;
+
+    // Har man bedt om mindre bevægelse, lukker panelet med det samme
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      dialog.close();
+      return;
+    }
+
+    dialog.setAttribute("data-closing", "");
+    dialog.addEventListener(
+      "animationend",
+      () => {
+        dialog.removeAttribute("data-closing");
+        dialog.close();
+      },
+      { once: true },
+    );
+  }
+
+  // Escape lukker normalt dialogen med det samme. Vi stopper det og lader panelet glide ud i stedet.
+  function handleCancel(event) {
+    event.preventDefault();
+    close();
+  }
+
+  // Når dialogen er lukket, må siden scrolle igen
+  function handleClose() {
+    lenis?.start();
   }
 
   // Luk panelet, når man klikker på den mørke baggrund eller på et link i panelet.
@@ -73,6 +108,8 @@ export default function SidePanel({
         data-side={side}
         aria-label={label}
         onClick={handleDialogClick}
+        onCancel={handleCancel}
+        onClose={handleClose}
         onSubmit={close} // Sender man en formular i panelet (fx vælger en by), lukker det også
       >
         <div className={styles.panel}>
