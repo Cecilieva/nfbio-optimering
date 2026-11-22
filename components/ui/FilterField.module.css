@@ -89,6 +89,8 @@
   width: 100%;
   max-height: var(--size-dropdown-max-height);
   overflow-y: auto;
+  /* Når listen er scrollet helt til bunds (eller top), scroller siden ikke videre */
+  overscroll-behavior: contain;
   padding: var(--space-2);
   border: var(--border-width) solid var(--color-option-background);
   border-radius: var(--radius-medium);
@@ -97,8 +99,12 @@
   list-style: none;
 }
 
-/* Figma "Dropdown valg", Tilstand=Standard: dæmpet tekst */
+/* Figma "Dropdown valg", Tilstand=Standard: dæmpet tekst.
+   Har punktet et billede (fx en plakat), står det til venstre med 16px til teksten. */
 .option {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
   width: 100%;
   padding: var(--space-2-5) var(--space-4);
   border: 0;
@@ -125,6 +131,83 @@
   outline-offset: calc(-1 * var(--focus-ring-width));
 }
 
+/* En gruppe punkter med overskrift, fx "Sprog". Lidt ekstra luft over hver gruppe. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  margin-top: var(--space-2);
+}
+
+/* Overskriften: XS/Sekundær/Regular i text/Sekundær (som labelet i feltet) – ikke et punkt, man kan vælge */
+.groupLabel {
+  padding: var(--space-1) var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
+  line-height: var(--line-height-snug);
+}
+
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  list-style: none;
+}
+
+/* Teksten på én linje – en lang tekst slutter med "…" */
+.optionLabel {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Lille plakat foran teksten (samme størrelse som i søgningen i headeren).
+   Mangler billedet, står der en tom boks i samme størrelse. */
+.image {
+  flex-shrink: 0;
+  width: var(--size-search-poster-width);
+  aspect-ratio: 2 / 3;
+  background: var(--color-option-background-active);
+  object-fit: cover;
+}
+
+/* ---------- Dropdown med søgefelt (searchable) ----------
+   Figma "Søgepanel": feltet øverst og listen under med 8px imellem.
+   Bredere end feltet og står ud fra feltets højre kant, så plakat og titel kan være der.
+   Kun listen scroller – søgefeltet bliver stående øverst. */
+.dropdown[data-searchable] {
+  right: 0;
+  left: auto;
+  gap: var(--space-2);
+  width: max(100%, var(--size-filter-search-width));
+  max-width: calc(100vw - 2 * var(--space-4));
+  max-height: var(--size-filter-search-max-height);
+  overflow: hidden;
+}
+
+/* Browserens eget kryds i søgefeltet skjules – feltet tømmes, når dropdownen lukker */
+.search input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain; /* Siden scroller ikke videre, når listen er i bund */
+  list-style: none;
+}
+
+/* Når intet passer til søgningen */
+.empty {
+  padding: var(--space-2-5) var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-snug);
+}
+
 /* Mobil: felterne står to og to, så der er mindre plads – mindre luft i siderne og mellem tekst og pil */
 @media (max-width: 48rem) {
   .trigger {
@@ -133,6 +216,12 @@
 
   .row {
     gap: var(--space-2);
+  }
+
+  /* Feltet med søgning fylder en hel linje på mobil – så er dropdownen lige så bred */
+  .dropdown[data-searchable] {
+    width: 100%;
+    max-width: none;
   }
 }
 

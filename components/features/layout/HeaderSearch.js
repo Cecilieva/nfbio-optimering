@@ -22,11 +22,9 @@ function normalize(text) {
 // Skærmlæsere får den markerede film at vide via aria-activedescendant.
 //
 //   movies           - filmene, man kan søge i (fra getSearchMovies)
-//   variant          - "header": feltet folder sig ud til venstre. "filter": et panel under knappen på /film
 //   className        - ekstra stil til boksen om knap og felt
 //   triggerClassName - stilen til ikon-knappen
-export default function HeaderSearch({ movies, variant = "header", className, triggerClassName }) {
-  const isFilter = variant === "filter";
+export default function HeaderSearch({ movies, className, triggerClassName }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -127,7 +125,6 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
     <div
       ref={wrapperRef}
       className={className ? `${styles.wrapper} ${className}` : styles.wrapper}
-      data-variant={variant}
       onKeyDown={handleKeyDown}
     >
       {/* Søge-ikonet */}
@@ -135,23 +132,23 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
         ref={triggerRef}
         type="button"
         className={triggerClassName}
-        aria-label={isFilter ? "Søg efter film" : "Søg"}
+        aria-label="Søg"
         aria-expanded={open}
         onClick={toggle}
       >
-        <Image src={isFilter ? "/icons/search-filter.svg" : "/icons/search.svg"} alt="" width={24} height={24} />
+        <Image src="/icons/search.svg" alt="" width={24} height={24} />
       </button>
 
       {open && (
-        // Header: felt til venstre. Filter: panel under knappen
+        // Feltet ligger til venstre for ikonet
         <div className={styles.panel} data-search-open>
           <form role="search" onSubmit={handleSubmit}>
             <TextField
               label="Søg efter film"
               hideLabel
-              name={isFilter ? "filter-search" : "header-search"}
+              name="header-search"
               type="search"
-              placeholder={isFilter ? undefined : "Søg efter film"}
+              placeholder="Søg efter film"
               autoComplete="off"
               enterKeyHint="search"
               autoFocus
@@ -177,7 +174,8 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
           </p>
 
           {search && (
-            <div className={styles.results}>
+            // data-lenis-prevent: Lenis (den bløde scroll) rører ikke scrollen i listen, så siden ikke scroller med
+            <div className={styles.results} data-lenis-prevent>
               {results.length > 0 ? (
                 <ul id={listId} role="listbox" aria-label="Film" className={styles.list}>
                   {results.map((movie, index) => (
@@ -217,7 +215,7 @@ export default function HeaderSearch({ movies, variant = "header", className, tr
                 </ul>
               ) : (
                 <p className={styles.empty}>
-                  Ingen film matcher “{query.trim()}”
+                  Ingen film passer til “{query.trim()}”
                 </p>
               )}
             </div>

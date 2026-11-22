@@ -15,7 +15,7 @@
   line-height: var(--line-height-snug);
 }
 
-/* Figma: den mørke bar med runde hjørner. Felterne deler bredden, søgeknappen sidder yderst til højre.
+/* Figma: den mørke bar med runde hjørner. Felterne deler bredden.
    Ingen overflow: hidden – dropdownen skal kunne stikke ud under baren. */
 .bar {
   display: flex;
@@ -25,7 +25,7 @@
   background: var(--color-option-background);
 }
 
-/* Et felt og stregen foran det. flex: 1, så de fire felter er lige brede. */
+/* Et felt og stregen foran det. flex: 1, så felterne er lige brede. */
 .slot {
   display: flex;
   flex: 1 1 0;
@@ -41,44 +41,9 @@
   background: var(--color-option-background);
 }
 
-/* Skillen før søgeknappen står direkte i baren – lodret i midten som de andre */
-.bar > .divider {
-  align-self: center;
-}
-
 /* Felterne fylder hele barens højde */
 .slot > :last-child {
   align-self: stretch;
-}
-
-/* Boksen om søgeknappen (og panelet under den) - fylder barens højde */
-.searchSlot {
-  display: flex;
-  flex-shrink: 0;
-}
-
-/* Den blå søgeknap: lige så høj som baren, 32px luft på hver side af ikonet */
-.search {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--space-8);
-  border: 0;
-  border-radius: var(--radius-large);
-  background: var(--color-button-primary); /* accent/Primær – samme blå som de andre knapper */
-  cursor: pointer;
-  transition: background var(--duration-fast) var(--easing-standard);
-}
-
-/* Buttons/Primær hover – som de andre blå knapper */
-.search:hover {
-  background: var(--color-button-primary-hover);
-}
-
-.search:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-text);
-  outline-offset: var(--space-1);
 }
 
 /* Format-knapperne til venstre og "Nulstil filter" til højre, 24px imellem */
@@ -97,6 +62,22 @@
   min-width: 0;
   max-width: 100%; /* Aldrig bredere end skærmen – så scroller knapperne i stedet */
   overflow-x: auto;
+}
+
+/* Antallet og "Nulstil filter" på samme linje, lodret i midten */
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* "3 af 24 film" – S/Sekundær/Regular i text/Sekundær, så den ikke tager fokus fra filtrene */
+.count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-snug);
+  white-space: nowrap;
 }
 
 /* Figma "Nulstil filter": ikon og tekst uden baggrund, samme højde som format-knapperne */
@@ -161,17 +142,8 @@
   color: var(--color-text-secondary);
 }
 
-/* Kun til skærmlæsere: "8 film" */
-.visuallyHidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 
-/* Mobil: felterne står to og to, og søgeknappen fylder en hel linje nederst */
+/* Mobil: felterne står to og to, og det sidste ("Film") fylder en hel linje nederst */
 @media (max-width: 48rem) {
   .title {
     font-size: var(--font-size-medium);
@@ -187,13 +159,9 @@
     display: none;
   }
 
-  /* Søgeknappen fylder en hel linje nederst */
-  .searchSlot {
+  /* "Film" fylder en hel linje nederst */
+  .slot:last-child {
     grid-column: 1 / -1;
-  }
-
-  .search {
-    height: var(--size-button-height);
   }
 
   /* 48px ned til filmene på mobil */

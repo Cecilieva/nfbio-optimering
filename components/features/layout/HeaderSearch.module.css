@@ -43,6 +43,7 @@
   left: 0;
   max-height: var(--size-header-search-results);
   overflow-y: auto;
+  overscroll-behavior: contain; /* Siden scroller ikke videre, når listen er i bund */
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-small);
   background: var(--color-option-background);
@@ -103,81 +104,14 @@
    hen til søge-ikonet (som er det første af de tre ikoner), og logoet og menuen skjules imens.
    .wrapper er ikke længere udgangspunkt - det er .bar i Header.module.css */
 @media (max-width: 48rem) {
-  .wrapper[data-variant="header"] {
+  .wrapper {
     position: static;
   }
 
-  .wrapper[data-variant="header"] .panel {
+  .wrapper .panel {
     right: calc(var(--space-4) + var(--size-header-side-compact) + var(--space-3));
     left: var(--space-4);
     width: auto;
-  }
-}
-
-/* ---------- Variant "filter": søgeknappen i filtreringen på /film ----------
-   Knappens plads i baren styres af MovieFilter. Her står kun panelet. */
-
-/* Panelet under søgeknappen, ude til højre: mørk boks med runde hjørner,
-   feltet øverst og filmene under med 8px imellem */
-.wrapper[data-variant="filter"] .panel {
-  top: calc(100% + var(--space-2));
-  right: 0;
-  z-index: var(--z-dropdown);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  width: var(--size-filter-search-width);
-  max-width: calc(100vw - 2 * var(--space-4));
-  padding: var(--space-4);
-  border-radius: var(--radius-large);
-  background: var(--color-option-background);
-  box-shadow: var(--shadow-dropdown);
-  transform: none;
-  animation-name: drop;
-}
-
-/* Folder sig ned fra knappen */
-@keyframes drop {
-  from {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0;
-  }
-}
-
-/* Filmene står inde i panelet - ikke i en boks for sig */
-.wrapper[data-variant="filter"] .results {
-  position: static;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-
-/* Én film: plakat og titel med 16px imellem */
-.wrapper[data-variant="filter"] .item {
-  gap: var(--space-4);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-small);
-}
-
-/* Titlen er 12px og bliver ikke blå - kun baggrunden skifter */
-.wrapper[data-variant="filter"] .title {
-  font-size: var(--font-size-x-small);
-}
-
-.wrapper[data-variant="filter"] .item[data-active] .title {
-  color: inherit;
-}
-
-.wrapper[data-variant="filter"] .poster {
-  border-radius: 0;
-}
-
-/* Mobil: panelet bliver lige så bredt som søgeknappen */
-@media (max-width: 48rem) {
-  .wrapper[data-variant="filter"] .panel {
-    left: 0;
-    width: auto;
-    max-width: none;
   }
 }
 
