@@ -24,7 +24,8 @@ export default async function SignUpPage({ searchParams }) {
   }
 
   return (
-    <AuthScreen>
+    // "Tilbage" fører til Log ind, hvor man kom fra
+    <AuthScreen backHref={`/login?next=${encodeURIComponent(nextPath)}`}>
       <SignUpForm next={nextPath} error={Boolean(error)} />
     </AuthScreen>
   );
