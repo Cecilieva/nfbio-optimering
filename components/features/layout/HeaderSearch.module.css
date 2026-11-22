@@ -45,7 +45,7 @@
   overflow-y: auto;
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-small);
-  background: var(--color-surface);
+  background: var(--color-option-background);
 }
 
 .list {

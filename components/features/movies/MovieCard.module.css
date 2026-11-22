@@ -9,7 +9,7 @@
   aspect-ratio: var(--aspect-poster-card);
   padding: var(--space-4);
   border-radius: var(--radius-x-small);
-  background: linear-gradient(to bottom, var(--color-surface), var(--color-background));
+  background: linear-gradient(to bottom, var(--color-option-background), var(--color-background));
   color: var(--color-text);
   text-decoration: none;
 }

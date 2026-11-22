@@ -19,7 +19,7 @@
 .poster {
   overflow: hidden;
   /* ses kun, hvis billedet mangler */
-  background: linear-gradient(var(--color-surface), var(--color-background));
+  background: linear-gradient(var(--color-option-background), var(--color-background));
 }
 
 .poster img {

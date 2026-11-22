@@ -11,7 +11,7 @@
   overflow-y: auto; /* Er der flere punkter end der er plads til (fx mange byer), kan man scrolle */
   border: 0;
   border-right: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   color: var(--color-text);
 }
 

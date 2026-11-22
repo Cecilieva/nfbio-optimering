@@ -17,7 +17,7 @@
 
   /* Standard */
   --palette-navy-darkest: #0d0f1e; /* bg/Primær baggrund */
-  --palette-navy-dark: #161a30; /* bg/Blå og Option button/Standard baggrund */
+  --palette-navy-dark: #161a30; /* Option button/Standard baggrund */
   --palette-navy: #22346b; /* accent/Teritær */
   --palette-blue: #0080ff; /* accent/Primær */
   --palette-blue-light: #5e8cff; /* accent/Sekundær */
@@ -45,12 +45,11 @@
   --palette-spot-edge: #ff664d00; /* "Spotlys" kanten - usynlig */
 
   /* Thriller */
-  --palette-graphite: #1f1f22; /* bg/Blå */
   --palette-grey: #a0a0a8; /* text/Sekundær */
 
   /* Familie */
   --palette-cream: #fbf4e8; /* bg/Primær baggrund */
-  --palette-cream-dark: #f2e7d4; /* bg/Blå og bg/Sekundær Baggrund */
+  --palette-cream-dark: #f2e7d4; /* bg/Sekundær Baggrund */
   --palette-sand: #e0d2ba; /* accent/Teritær */
   --palette-ink: #1d2a5c; /* text/Primær og Stjerner/Stjerne primær */
   --palette-ink-light: #4a5378; /* text/Sekundær */
@@ -69,7 +68,6 @@
   /* Farver (mode: NF Bio). Thriller og familie står nederst */
   --color-background: var(--palette-navy-darkest); /* bg/Primær baggrund */
   --color-background-secondary: var(--palette-black); /* bg/Sekundær Baggrund - fx Log ind-siden */
-  --color-surface: var(--palette-navy-dark); /* bg/Blå - kort, bokse og modaler (findes ikke længere i figma) */
   --color-text: var(--palette-white-soft); /* text/Primær */
   --color-text-secondary: var(--palette-lavender); /* text/Sekundær */
   --color-text-input-muted: var(--palette-white-soft-50); /* text/input (muted) - fx punkterne i en dropdown */
@@ -92,7 +90,7 @@
   --color-button-secondary-border: var(--color-text); /* Buttons/Sekundær border -> text/Primær */
   --color-button-secondary-hover: var(--palette-blue-12); /* Buttons/Sekundær hover */
   /* Option button - fx filtrene under "Kommende film" */
-  --color-option-background: var(--palette-navy-dark); /* Option button/Standard baggrund */
+  --color-option-background: var(--palette-navy-dark); /* Option button/Standard baggrund - også kort, bokse og paneler */
   --color-option-background-active: var(--color-accent-tertiary); /* Option button/Aktiv baggrund -> accent/Teritær */
   --color-option-border: var(--color-border); /* Option button/Border standard -> border/Standard */
   --color-option-border-active: var(--color-accent); /* Option button/Border aktiv -> border/Aktiv */
@@ -620,7 +618,7 @@
 
 :root:has(main[data-theme="thriller"]) {
   --color-background: var(--palette-black); /* bg/Primær baggrund */
-  --color-surface: var(--palette-graphite); /* bg/Blå */
+  --color-background-secondary: var(--color-background); /* bg/Sekundær Baggrund -> bg/Primær baggrund */
   --color-text-secondary: var(--palette-grey); /* text/Sekundær */
   --color-text-input-muted: var(--color-text-secondary); /* text/input (muted) -> text/Sekundær */
   --color-stars-background: var(--color-background-secondary); /* Stjerner/bg/Primær baggrund -> bg/Sekundær Baggrund */
@@ -629,7 +627,7 @@
 :root:has(main[data-theme="familie"]) {
   color-scheme: light; /* så scrollbar + felter også bliver lyse */
   --color-background: var(--palette-cream); /* bg/Primær baggrund */
-  --color-surface: var(--palette-cream-dark); /* bg/Blå */
+  --color-background-secondary: var(--palette-cream-dark); /* bg/Sekundær Baggrund */
   --color-text: var(--palette-ink); /* text/Primær */
   --color-text-secondary: var(--palette-ink-light); /* text/Sekundær */
   --color-text-input-muted: var(--palette-ink-muted); /* text/input (muted) */
@@ -640,7 +638,6 @@
   --color-star: var(--palette-ink); /* Stjerner/Stjerne primær */
   --color-seat-free: var(--palette-seat-family); /* Biografstole/Ledig */
   --color-seat-free-soft: var(--palette-seat-soft-family); /* Biografstole/Ledig sart */
-  --color-seat-taken: var(--palette-cream-dark); /* Biografstole/Optaget -> bg/Sekundær Baggrund (familie) */
   /* mindre hinde, så cremen ikke bleger billedet */
   --opacity-projector-on: 0.05;
   --opacity-projector-drift: 0.1;

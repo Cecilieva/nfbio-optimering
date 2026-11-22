@@ -35,7 +35,7 @@
   left: 0;
   overflow: hidden;
   border-radius: var(--radius-intro-poster);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   box-shadow: var(--shadow-intro-poster);
   opacity: 0;
   visibility: hidden;

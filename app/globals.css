@@ -119,7 +119,7 @@ video {
   padding: var(--space-3);
   border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-small);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   color: var(--color-text);
   font: inherit;
 }
@@ -151,7 +151,7 @@ video {
   padding: var(--space-4);
   border: var(--border-width) dashed var(--color-border);
   border-radius: var(--radius-small);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-x-small);
 }

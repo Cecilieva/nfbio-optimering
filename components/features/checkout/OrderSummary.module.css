@@ -31,7 +31,7 @@
   height: var(--size-order-poster-height);
   overflow: hidden;
   border-radius: var(--radius-small);
-  background: var(--color-surface);
+  background: var(--color-option-background);
 }
 
 /* Billedet fylder hele boksen uden at blive strakt */
