@@ -23,8 +23,8 @@
 /* "Rigtig god fornøjelse!" */
 .heading {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-lg); /* Font-Size/Medium */
+  color: var(--color-text);
+  font-size: var(--font-size-medium); /* Font-Size/Medium */
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -32,8 +32,8 @@
 /* "Billetten er sendt til dig på SMS …" */
 .body {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm); /* Font-Size/Small */
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small); /* Font-Size/Small */
 }
 
 /* Tablet og mobil: hele bredden med 16px luft i siderne */

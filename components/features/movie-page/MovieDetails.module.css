@@ -19,7 +19,7 @@
 .poster {
   overflow: hidden;
   /* ses kun, hvis billedet mangler */
-  background: linear-gradient(var(--color-poster-gradient-top), var(--color-poster-gradient-bottom));
+  background: linear-gradient(var(--color-surface), var(--color-background));
 }
 
 .poster img {
@@ -35,9 +35,9 @@
   justify-content: center;
   aspect-ratio: var(--aspect-poster-card);
   padding: var(--space-4);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   text-align: center;
 }
@@ -68,9 +68,9 @@
 
 .plotText {
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-snug);
 }
@@ -106,14 +106,14 @@
 
 .label {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 .value {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
@@ -139,7 +139,7 @@
   }
 
   .plotText {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-medium);
   }
 
   .facts {

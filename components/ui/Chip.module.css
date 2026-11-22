@@ -5,14 +5,14 @@
   flex-shrink: 0;
   align-items: center;
   gap: var(--space-2);
-  height: var(--size-option-button-height);
+  height: var(--size-button-height-small);
   padding: var(--space-2) var(--space-4);
   border: var(--border-width) solid var(--color-option-border);
-  border-radius: var(--radius-option-button);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-snug);
   white-space: nowrap;
@@ -34,7 +34,7 @@
 .chip[aria-pressed="true"] {
   border-color: var(--color-option-border-active);
   background: var(--color-option-background-active);
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 .chip:focus-visible {

@@ -1,15 +1,15 @@
 /* reservation – "Dine pladser holdes i 09:59" med tiden i fed */
 .reservation {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
 /* tabular-nums så tallene ikke hopper, når de skifter */
 .time {
   margin-left: var(--space-2);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-weight: var(--font-weight-bold);
   font-variant-numeric: tabular-nums;
 }
@@ -25,8 +25,8 @@
 /* XS/Sekundær/Bold */
 .heading {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
   text-transform: uppercase;
@@ -45,8 +45,8 @@
   gap: var(--space-0-5);
   width: var(--size-countdown-unit);
   padding-block: var(--space-2);
-  border: var(--border-width) solid var(--color-border-default);
-  border-radius: var(--radius-md);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-small);
   background: var(--color-surface);
 }
 
@@ -58,8 +58,8 @@
 
 /* L/Sekundær/Bold – tabular-nums så tallene ikke hopper */
 .value {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-heading);
+  color: var(--color-text);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   font-variant-numeric: tabular-nums;
   line-height: var(--line-height-snug);
@@ -68,12 +68,12 @@
 /* XS/Sekundær/Regular */
 .label {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 .unit:last-child .label {
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 /* små telefoner: mindre bokse */
@@ -83,6 +83,6 @@
   }
 
   .value {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-medium);
   }
 }

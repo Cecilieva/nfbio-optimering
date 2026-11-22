@@ -5,7 +5,7 @@
   gap: var(--space-4);
   padding: var(--space-6);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
   line-height: var(--line-height-snug);
 }
@@ -18,8 +18,8 @@
 /* Overskriften, fx "Har du en profil?" */
 .title {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
 }
 
@@ -27,8 +27,8 @@
 .intro,
 .note {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 /* Felterne og "Log ind" under hinanden */
@@ -41,8 +41,8 @@
 /* Fejlbesked under felterne, fx "Vi kan ikke finde en profil …" */
 .error {
   margin: 0;
-  color: var(--color-danger);
-  font-size: var(--font-size-xs);
+  color: var(--color-status-error);
+  font-size: var(--font-size-x-small);
 }
 
 /* Knapperne fylder hele kortets bredde */
@@ -55,8 +55,8 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-subtle);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 .divider::before,

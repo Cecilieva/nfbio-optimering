@@ -7,8 +7,8 @@
 
 /* XS/Sekundær/Regular i text/Primær */
 .label {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -29,11 +29,11 @@
   padding: 0 var(--space-4);
   /* Figma "Felt": samme farver som Option button */
   border: var(--border-width) solid var(--color-option-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-small);
   background: var(--color-option-background);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font: inherit;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
@@ -44,7 +44,7 @@
 }
 
 .input:hover {
-  border-color: var(--color-text-muted);
+  border-color: var(--color-text-secondary);
 }
 
 /* Når man står i feltet, bliver kanten accent-blå (Option button/Border aktiv) – samme blå som et valgt filter.
@@ -59,8 +59,8 @@
    En indvendig skygge i feltets farve dækker baggrunden, og teksten får vores farve igen.
    Lang transition på background-color for browsere, der ellers blinker med deres egen farve. */
 .input:autofill {
-  -webkit-text-fill-color: var(--color-text-primary);
-  caret-color: var(--color-text-primary);
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-text);
   box-shadow: inset 0 0 0 100vmax var(--color-option-background);
   transition:
     border-color var(--duration-fast) var(--easing-standard),
@@ -69,16 +69,16 @@
 
 /* Rød kant, når feltet har en fejl */
 .input[aria-invalid="true"] {
-  border-color: var(--color-danger);
+  border-color: var(--color-status-error);
 }
 
 /* … også når man står i feltet, så fejlen ikke bliver skjult af den blå ramme */
 .input[aria-invalid="true"]:focus-visible {
-  outline-color: var(--color-danger);
+  outline-color: var(--color-status-error);
 }
 
 .error {
-  color: var(--color-danger);
-  font-size: var(--font-size-xs);
+  color: var(--color-status-error);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }

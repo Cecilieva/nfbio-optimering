@@ -3,13 +3,13 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  height: var(--size-option-button-height); /* Btn-Height/Small – 32px */
+  height: var(--size-button-height-small); /* Btn-Height/Small – 32px */
   padding: var(--space-2) 0;
   border: 0; /* Når den er en <button> */
   background: none;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-decoration: none;
   cursor: pointer;
@@ -18,7 +18,7 @@
 
 /* Tilstand=Hover: tekst og pil bliver accent/Sekundær */
 .back:hover {
-  color: var(--color-cta-soft);
+  color: var(--color-accent-secondary);
 }
 
 .back:focus-visible {

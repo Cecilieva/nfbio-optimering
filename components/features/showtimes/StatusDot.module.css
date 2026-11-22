@@ -9,13 +9,13 @@
 
 /* Farven: grøn = ledige pladser, gul = få pladser, rød = udsolgt */
 .dot[data-status="available"] {
-  background: var(--color-seats-available);
+  background: var(--color-status-available);
 }
 
 .dot[data-status="few"] {
-  background: var(--color-seats-few);
+  background: var(--color-status-warning);
 }
 
 .dot[data-status="sold_out"] {
-  background: var(--color-seats-sold-out);
+  background: var(--color-status-error);
 }

@@ -18,8 +18,8 @@
 /* Overskriften "Spilletider i Aarhus Bio" – stor og fed */
 .heading {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-heading);
+  color: var(--color-text);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -59,8 +59,8 @@
   display: flex;
   gap: var(--space-2);
   align-items: center;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -79,11 +79,11 @@
   height: var(--size-week-arrow);
   padding: 0;
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-small);
   background: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: inherit;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
   cursor: pointer;
@@ -91,7 +91,7 @@
 }
 
 .arrow:hover:not(:disabled) {
-  border-color: var(--color-text-muted);
+  border-color: var(--color-text-secondary);
 }
 
 /* Grå pil, når man ikke kan komme længere */
@@ -143,24 +143,24 @@
 /* Ugedagen, "I dag" eller "Premiere" – lille og dæmpet */
 .dayLabel {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-regular);
 }
 
 /* Datoen, fx "11. nov" – fed */
 .dayDate {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-bold);
 }
 
 .empty {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
 }
 
 /* Tablet og mobil: mindre overskrift */
 @media (max-width: 48rem) {
   .heading {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-medium);
   }
 }

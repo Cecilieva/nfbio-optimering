@@ -4,7 +4,7 @@
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4) var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
 }
 
@@ -39,14 +39,14 @@
 .label,
 .details {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 /* Titlen, fx "Clayface · I dag kl. 18.20" - stor og fed */
 .title {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -62,8 +62,8 @@
   display: flex;
   align-items: center;
   margin: 0;
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -96,15 +96,15 @@
 
 /* "Overblik over salen" - stor og fed */
 .hallTitle {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
 }
 
 /* "Du vælger selv pladser i næste trin." - lille og dæmpet */
 .hallHint {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 /* Tablet og mobil: knapperne under teksten, og salen over teksten */
@@ -118,7 +118,7 @@
   }
 
   .title {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-small);
   }
 
   .hall {

@@ -15,5 +15,5 @@
   place-items: center;
   margin: 0;
   color: var(--color-trailer-text);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
 }

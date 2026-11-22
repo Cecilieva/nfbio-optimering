@@ -4,7 +4,7 @@
   align-items: center;
   gap: var(--space-2);
   color: var(--color-text-input-muted); /* text/input (muted) */
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   cursor: pointer;
 }
@@ -16,8 +16,8 @@
   width: var(--size-checkbox);
   height: var(--size-checkbox);
   margin: 0;
-  border: var(--border-width-strong) solid var(--color-cta);
-  border-radius: var(--radius-sm);
+  border: var(--border-width-strong) solid var(--color-accent);
+  border-radius: var(--radius-x-small);
   background: transparent;
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--easing-standard);
@@ -25,7 +25,7 @@
 
 /* Krydset af: blå boks med Figmas flueben i midten */
 .input:checked {
-  background: var(--color-cta) url("/icons/check.svg") center / var(--size-checkbox-icon) no-repeat;
+  background: var(--color-accent) url("/icons/check.svg") center / var(--size-icon-small) no-repeat;
 }
 
 .input:focus-visible {
@@ -35,7 +35,7 @@
 
 /* Rød kant, når den mangler et flueben */
 .input[aria-invalid="true"] {
-  border-color: var(--color-danger);
+  border-color: var(--color-status-error);
 }
 
 /* Kun for skærmlæsere (display: none ville også skjule den for dem) */

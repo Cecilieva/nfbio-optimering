@@ -10,7 +10,7 @@
   margin: 0; /* Fjerner den globale h1-margin; afstanden kommer fra gap */
   color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-heading);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -21,7 +21,7 @@
   display: flex;
   align-items: stretch;
   border: var(--border-width) solid var(--color-option-background);
-  border-radius: var(--radius-filter-bar);
+  border-radius: var(--radius-large);
   background: var(--color-option-background);
 }
 
@@ -65,15 +65,15 @@
   justify-content: center;
   padding: 0 var(--space-8);
   border: 0;
-  border-radius: var(--radius-filter-bar);
-  background: var(--color-cta-button); /* accent/Primær – samme blå som de andre knapper */
+  border-radius: var(--radius-large);
+  background: var(--color-button-primary); /* accent/Primær – samme blå som de andre knapper */
   cursor: pointer;
   transition: background var(--duration-fast) var(--easing-standard);
 }
 
 /* Buttons/Primær hover – som de andre blå knapper */
 .search:hover {
-  background: var(--color-cta-button-hover);
+  background: var(--color-button-primary-hover);
 }
 
 .search:focus-visible {
@@ -105,14 +105,14 @@
   flex-shrink: 0;
   gap: var(--space-2);
   align-items: center;
-  height: var(--size-option-button-height);
+  height: var(--size-button-height-small);
   padding: var(--space-2) var(--space-4);
   border: 0;
-  border-radius: var(--radius-option-button);
+  border-radius: var(--radius-medium);
   background: none;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font: inherit;
-  font-size: var(--font-size-md); /* S/Sekundær/Regular – 16px */
+  font-size: var(--font-size-small); /* S/Sekundær/Regular – 16px */
   line-height: var(--line-height-snug);
   white-space: nowrap;
   cursor: pointer;
@@ -158,7 +158,7 @@
 }
 
 .empty {
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
 }
 
 /* Kun til skærmlæsere: "8 film" */
@@ -174,7 +174,7 @@
 /* Mobil: felterne står to og to, og søgeknappen fylder en hel linje nederst */
 @media (max-width: 48rem) {
   .title {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-medium);
   }
 
   .bar {
@@ -193,7 +193,7 @@
   }
 
   .search {
-    height: var(--size-control-height);
+    height: var(--size-button-height);
   }
 
   /* 48px ned til filmene på mobil */

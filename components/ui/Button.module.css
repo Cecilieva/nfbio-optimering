@@ -4,14 +4,14 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: var(--size-control-height);
+  height: var(--size-button-height);
   padding: 0 var(--space-4);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-small);
   background: var(--color-surface);
   color: var(--color-text);
   font-family: inherit;
-  font-size: var(--font-size-control);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular); /* Inter Regular som i Figma */
   line-height: var(--line-height-tight);
   text-decoration: none;
@@ -21,7 +21,7 @@
 
 /* Kanten bliver blå ved hover (Figma "By-knap", Tilstand=Hover: accent/Primær) */
 .button[data-variant="tile"]:hover {
-  border-color: var(--color-cta);
+  border-color: var(--color-accent);
 }
 
 .button[data-variant="tile"]:focus-visible {
@@ -42,10 +42,10 @@
   height: var(--size-button-height);
   padding: 0 var(--space-6);
   border: var(--border-width) solid transparent;
-  border-radius: var(--radius-md);
-  color: var(--color-text-primary);
+  border-radius: var(--radius-small);
+  color: var(--color-text);
   font-family: inherit;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
   white-space: nowrap;
@@ -57,13 +57,13 @@
 }
 
 .button[data-variant="primary"] {
-  background: var(--color-cta-button); /* Buttons/Primær */
-  color: var(--color-on-accent); /* Buttons/Primær tekst – altid lys, også i familie */
+  background: var(--color-button-primary); /* Buttons/Primær */
+  color: var(--color-button-primary-text); /* Buttons/Primær tekst – altid lys, også i familie */
 }
 
 /* Buttons/Primær hover */
 .button[data-variant="primary"]:hover {
-  background: var(--color-cta-button-hover);
+  background: var(--color-button-primary-hover);
 }
 
 /* secondary + outline er ens i figma (outline = "Følg film")
@@ -76,7 +76,7 @@
 
 /* Figma "Knap", Type=Se flere: som secondary, men med den mørke kant border/Standard */
 .button[data-variant="more"] {
-  border-color: var(--color-border-default);
+  border-color: var(--color-border);
   background: transparent;
 }
 

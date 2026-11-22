@@ -3,7 +3,7 @@
    står i kolonne 2-11 - præcis som på filmsiden (--layout-page-margin) */
 .footer {
   padding: var(--space-10) var(--layout-page-margin);
-  border-top: var(--border-width) solid var(--color-border-default);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 .inner {
@@ -47,8 +47,8 @@
    Teksten i koden er "Biograf" – det er CSS'en, der laver store bogstaver. */
 .heading {
   margin: 0;
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-snug);
   text-transform: uppercase;
@@ -64,7 +64,7 @@
 }
 
 .link {
-  color: var(--color-text-primary);
+  color: var(--color-text);
   line-height: var(--line-height-snug);
   text-decoration: none;
   transition: color var(--duration-fast) var(--easing-standard);
@@ -85,14 +85,14 @@
 }
 
 .text {
-  color: var(--color-text-primary);
+  color: var(--color-text);
   line-height: var(--line-height-snug);
 }
 
 /* Stregen mellem indholdet og bunden */
 .divider {
   border: 0;
-  border-top: var(--border-width) solid var(--color-border-default);
+  border-top: var(--border-width) solid var(--color-border);
 }
 
 /* Bunden: tre områder - tekst til venstre, studieprojekt-teksten i midten og sociale medier til højre.
@@ -106,8 +106,8 @@
 
 /* Den lille tekst nederst (Figma XS/Sekundær/Regular) */
 .legal {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -129,7 +129,7 @@
   justify-content: center;
   width: var(--size-social-button);
   height: var(--size-social-button);
-  border: var(--border-width) solid var(--color-border-default);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-pill);
   transition: border-color var(--duration-fast) var(--easing-standard);
 }
@@ -142,7 +142,7 @@
 
 /* Kanten bliver lysere ved hover */
 .socialLink:hover {
-  border-color: var(--color-text-label);
+  border-color: var(--color-text-secondary);
 }
 
 /* Synlig ramme, når man navigerer med tastaturet */

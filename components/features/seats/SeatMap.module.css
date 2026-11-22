@@ -8,14 +8,14 @@
   min-width: 0; /* kortet må gerne være smallere end sæderne - så kan man scrolle i stedet */
   padding: var(--space-8);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
 }
 
 .screenLabel {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -37,8 +37,8 @@
 }
 
 .screenGlow {
-  top: var(--space-hall-screen-top);
-  height: calc(100% - var(--space-hall-screen-top));
+  top: var(--space-0-5);
+  height: calc(100% - var(--space-0-5));
 }
 
 .screenLine {
@@ -64,8 +64,8 @@
 }
 
 .rowLabel {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -76,7 +76,7 @@
   height: var(--size-hall-seat);
   padding: 0;
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-x-small);
   background: none;
   cursor: pointer;
   transition: transform var(--duration-fast) var(--easing-standard);
@@ -88,7 +88,7 @@
 }
 
 .seatButton:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-cta);
+  outline: var(--focus-ring-width) solid var(--color-accent);
   outline-offset: var(--focus-ring-width);
 }
 
@@ -117,8 +117,8 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 

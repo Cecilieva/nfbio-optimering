@@ -8,9 +8,9 @@
   gap: var(--space-2) var(--space-4);
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-bottom-bar) 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  padding: var(--space-6) 0;
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 

@@ -9,14 +9,14 @@
 
 /* "Vi har sendt dig en mail …": samme størrelse som fejlen, men lys tekst, fordi det ikke er en fejl */
 .notice {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 .error {
-  color: var(--color-danger);
-  font-size: var(--font-size-xs);
+  color: var(--color-status-error);
+  font-size: var(--font-size-x-small);
 }
 
 /* Figma "Husk mig / glemt": checkbox til venstre, link til højre */
@@ -35,7 +35,7 @@
   background: none;
   color: var(--color-text-input-muted);
   font: inherit;
-  font-size: var(--font-size-caption);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 

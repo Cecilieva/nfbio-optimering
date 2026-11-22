@@ -37,7 +37,7 @@
 .toning {
   position: absolute;
   inset: 0;
-  background: var(--color-toning);
+  background: var(--color-toning-100);
   opacity: var(--opacity-projector-on);
   animation:
     projectorToningOn var(--duration-projector-on) var(--easing-out) both,
@@ -53,9 +53,9 @@
   height: var(--size-projector-beam-height);
   background: linear-gradient(
     to right,
-    var(--color-projector-beam-edge),
-    var(--color-projector-beam),
-    var(--color-projector-beam-edge)
+    var(--color-projector-soft),
+    var(--color-projector-strong),
+    var(--color-projector-soft)
   );
   transform: translateY(-50%) rotate(var(--angle-projector-beam));
   pointer-events: none;

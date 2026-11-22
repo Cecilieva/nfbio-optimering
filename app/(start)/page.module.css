@@ -33,15 +33,15 @@
 .title {
   margin: 0;
   color: var(--color-text);
-  font-size: var(--font-size-display);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   letter-spacing: var(--letter-spacing-display);
 }
 
 .subtitle {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-tight);
 }
 
@@ -57,8 +57,8 @@
 /* Studieprojekt-linjen nederst på Vælg by: lille og rolig, men let at læse */
 .notice {
   padding: var(--space-4);
-  color: var(--color-text-label);
-  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-align: center;
 }
@@ -66,7 +66,7 @@
 /* Mobil: mindre overskrift */
 @media (max-width: 48rem) {
   .title {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-large);
   }
 }
 

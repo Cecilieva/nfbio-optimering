@@ -48,7 +48,7 @@
     overflow-y: auto;
     padding-bottom: calc(var(--size-bottom-bar-height) + var(--space-8));
     /* Runde hjørner i toppen: det, der scrolles op, bliver klippet rundt af - ikke lige over */
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0;
     /* Ingen scrollbar - man kan se, at kortet fortsætter bag bundbjælken */
     scrollbar-width: none;
   }
@@ -61,11 +61,11 @@
     top: 0;
     z-index: 1;
     display: block;
-    height: var(--radius-lg);
-    margin-bottom: calc(-1 * var(--radius-lg));
+    height: var(--radius-medium);
+    margin-bottom: calc(-1 * var(--radius-medium));
     border: var(--border-width) solid var(--color-border);
     border-bottom: 0;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border-radius: var(--radius-medium) var(--radius-medium) 0 0;
     pointer-events: none;
   }
 }

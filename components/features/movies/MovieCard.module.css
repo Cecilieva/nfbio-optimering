@@ -8,9 +8,9 @@
   overflow: hidden;
   aspect-ratio: var(--aspect-poster-card);
   padding: var(--space-4);
-  border-radius: var(--radius-sm);
-  background: linear-gradient(to bottom, var(--color-poster-gradient-top), var(--color-poster-gradient-bottom));
-  color: var(--color-text-primary);
+  border-radius: var(--radius-x-small);
+  background: linear-gradient(to bottom, var(--color-surface), var(--color-background));
+  color: var(--color-text);
   text-decoration: none;
 }
 
@@ -27,7 +27,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-poster-overlay);
+  background: var(--color-toning-85);
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
@@ -65,14 +65,14 @@
 
 /* L/Sekundær/Bold */
 .date {
-  font-size: var(--font-size-heading);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
 }
 
 /* XS/Sekundær/Regular */
 .ticketSale {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   opacity: var(--opacity-poster-text);
 }
 
@@ -89,11 +89,11 @@
 
 /* Figma "Kommer snart": 8px runde hjørner og toningen Toning/85% */
 .comingSoon {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-small);
 }
 
 .comingSoon::after {
-  background: var(--color-poster-overlay);
+  background: var(--color-toning-85);
   transition: background var(--duration-fast) var(--easing-standard);
 }
 
@@ -118,7 +118,7 @@
 /* Kommer snart: toningen bliver lysere (Figma: bg/Primær 70 %), og premieren og titlen skjules */
 .comingSoon:hover::after,
 .comingSoon:focus-visible::after {
-  background: var(--color-poster-hover-overlay);
+  background: var(--color-toning-70);
 }
 
 .comingSoon:hover .middle,
@@ -161,7 +161,7 @@
 /* Hover eller tastaturfokus: kortet bliver ensartet mørkt, og teksten skjules (knappen: se .action) */
 .feed:hover::after,
 .feed:focus-visible::after {
-  background: var(--color-poster-hover-overlay);
+  background: var(--color-toning-70);
 }
 
 .feed:hover .feedTop,
@@ -189,9 +189,9 @@
 /* Figma "Genre-chip": lille mørk boks med formatet. XS/Sekundær/Regular */
 .formatChip {
   padding: var(--space-0-75) var(--space-2);
-  border-radius: var(--radius-poster-chip);
+  border-radius: var(--radius-chip);
   background: var(--color-poster-chip);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   white-space: nowrap;
 }
@@ -208,7 +208,7 @@
 .details {
   display: flex;
   overflow: hidden;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-shadow: var(--shadow-text-poster);
   white-space: nowrap;
@@ -226,14 +226,14 @@
   }
 
   .date {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-medium);
   }
 
   .title {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-small);
   }
 
   .details {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-small);
   }
 }

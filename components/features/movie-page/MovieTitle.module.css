@@ -13,8 +13,8 @@
 /* "Univers titel", fx "THE HUNGER GAMES" */
 .series {
   margin: 0;
-  color: var(--color-text-label);
-  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   letter-spacing: var(--letter-spacing-overtitle);
   text-transform: uppercase;
 }
@@ -24,7 +24,7 @@
   flex-wrap: wrap;
   column-gap: var(--space-movie-title-word);
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
   font-size: var(--font-size-movie-title);
   font-weight: var(--font-weight-black);
@@ -92,11 +92,11 @@
 @media (max-width: 48rem) {
   .title {
     column-gap: var(--space-3);
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-large);
   }
 
   .series {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-x-small);
   }
 }
 
@@ -149,7 +149,7 @@
   22.5%,
   100% {
     transform: none;
-    color: var(--color-text-primary);
+    color: var(--color-text);
   }
 }
 
@@ -206,10 +206,10 @@
   left: var(--left);
   width: var(--width);
   height: var(--size-title-melt-drip-start);
-  border-radius: var(--radius-xs) var(--radius-xs) calc(var(--width) / 2) calc(var(--width) / 2);
+  border-radius: var(--radius-xx-small) var(--radius-xx-small) calc(var(--width) / 2) calc(var(--width) / 2);
   background: linear-gradient(
     to bottom,
-    var(--color-title-melt-drip),
+    var(--color-text),
     var(--color-title-melt-drip-middle) 45%,
     var(--color-title-melt-drip-end)
   );

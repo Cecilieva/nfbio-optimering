@@ -24,9 +24,9 @@
 /* L/Sekundær/Bold */
 .title {
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-heading);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -37,8 +37,8 @@
 
 /* S/Sekundær/Regular */
 .intro {
-  color: var(--color-text-label);
-  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
@@ -61,7 +61,7 @@
 }
 
 .empty {
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
 }
 
 /* Mobil: to plakater pr. række og mindre luft */
@@ -76,6 +76,6 @@
   }
 
   .title {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-medium);
   }
 }

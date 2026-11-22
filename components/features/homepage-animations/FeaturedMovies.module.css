@@ -59,14 +59,14 @@
   width: var(--size-featured-dot);
   height: var(--size-featured-dot);
   border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--color-text-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--color-text) 30%, transparent);
   transition:
     background var(--duration-featured-dots) var(--easing-standard),
     scale var(--duration-featured-dots) var(--easing-standard);
 }
 
 .dot[data-active] {
-  background: var(--color-text-primary);
+  background: var(--color-text);
   scale: var(--scale-featured-dot-active);
 }
 

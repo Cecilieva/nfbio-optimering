@@ -20,8 +20,8 @@
 }
 
 .error {
-  color: var(--color-danger);
-  font-size: var(--font-size-xs);
+  color: var(--color-status-error);
+  font-size: var(--font-size-x-small);
 }
 
 /* Figma "Navn", "Fødselsdag" og "Telefon og postnummer": felter ved siden af hinanden med 16px imellem */
@@ -63,7 +63,7 @@
 /* XS/Sekundær/Regular i text/input (muted) – Figma viser "Køn" dæmpet, ikke som feltlabels */
 .genderLabel {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 

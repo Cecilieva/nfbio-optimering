@@ -28,8 +28,8 @@
 
 /* Teksten "4 / 6" – Figma "XS/Sekundær/Regular" (12px) */
 .score {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   white-space: nowrap; /* "4 / 6" må ikke deles over to linjer */
 }

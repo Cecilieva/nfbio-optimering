@@ -2,7 +2,7 @@
 .modal {
   /* vinduet er altid mørkt – også på familie-siderne
      → tekst, knapkant og kryds får de mørke farver her */
-  --color-text-primary: var(--color-trailer-text);
+  --color-text: var(--color-trailer-text);
   --color-button-secondary-border: var(--color-trailer-button-border);
   --filter-icon: none;
 
@@ -12,7 +12,7 @@
   padding: 0;
   overflow: hidden;
   border: 0;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-trailer-background);
   color: var(--color-trailer-text);
   box-shadow: var(--shadow-lg);
@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  padding: var(--space-trailer-button);
+  padding: var(--space-2-5);
   padding-left: var(--space-6);
 }
 
@@ -51,22 +51,22 @@
   width: min(var(--size-message-modal-width), 100% - var(--space-8));
 }
 
-/* --space-message-modal (80px) hele vejen rundt og Gabs/Small (16px) mellem titel og tekst */
+/* --space-20 (80px) hele vejen rundt og Gabs/Small (16px) mellem titel og tekst */
 .modal[data-size="small"] .header {
-  padding: var(--space-message-modal) var(--space-message-modal) var(--space-4);
+  padding: var(--space-20) var(--space-20) var(--space-4);
 }
 
 /* "Luk" sidder oppe i højre hjørne med Paddings/Medium (24px) til kanten */
 .modal[data-size="small"] .close {
   position: absolute;
-  top: var(--space-message-modal-close);
-  right: var(--space-message-modal-close);
+  top: var(--space-6);
+  right: var(--space-6);
 }
 
 .body {
-  padding: 0 var(--space-message-modal) var(--space-message-modal);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  padding: 0 var(--space-20) var(--space-20);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
@@ -88,7 +88,7 @@
   }
 
   .title {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-small);
   }
 
   /* beskeden: 80px er for meget på en telefon -> Paddings/Medium (24px) */
