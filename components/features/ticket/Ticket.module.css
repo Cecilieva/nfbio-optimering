@@ -50,6 +50,10 @@
 /* Filmtitlen */
 .title {
   font-size: var(--font-size-medium); /* Font-Size/Medium */
+  /* Én linje - en lang titel slutter med "…" */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Sted til venstre og tid til højre */
@@ -95,12 +99,17 @@
   writing-mode: vertical-rl;
   rotate: 180deg;
   align-self: flex-start;
+  max-height: 100%; /* Bliver inde i stubben */
 }
 
 /* Filmtitlen på stubben */
 .stubTitle {
   font-size: var(--font-size-small); /* Font-Size/Small */
   font-weight: var(--font-weight-bold);
+  /* Én linje - en lang titel slutter med "…" */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 /* Sal/række/sæde og dag/tid side om side */
