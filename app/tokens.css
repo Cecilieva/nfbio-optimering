@@ -216,6 +216,18 @@
     color-mix(in srgb, var(--color-toning-100) 97%, transparent) 88%,
     var(--color-toning-100) 100%
   );
+  /* Tablet og mobil: teksten fylder den nederste halvdel af heroen, så skyggen er næsten
+     dækkende fra midten og nedad, og billedet kun ses tydeligt foroven */
+  --gradient-movie-hero-shadow-bottom-compact: linear-gradient(
+    to bottom,
+    var(--color-toning-0) 0%,
+    color-mix(in srgb, var(--color-toning-100) 12%, transparent) 15%,
+    color-mix(in srgb, var(--color-toning-100) 35%, transparent) 30%,
+    color-mix(in srgb, var(--color-toning-100) 65%, transparent) 42%,
+    color-mix(in srgb, var(--color-toning-100) 85%, transparent) 52%,
+    color-mix(in srgb, var(--color-toning-100) 95%, transparent) 62%,
+    var(--color-toning-100) 72%
+  );
   /* Figma "Program – filmgitter": toningen på kortene i "Film der kører nu".
      Toning/0% til og med 40 %, Toning/70% ved 65 % og Toning/100% i bunden. */
   --gradient-poster-feed-overlay: linear-gradient(
@@ -395,6 +407,7 @@
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   --size-movie-hero-shadow: min(30rem, 46%); /* Højden på skyggerne foroven og forneden på filmsidens hero */
   --size-movie-hero-shadow-strong: min(36rem, 55%); /* Højere skygger på standard-filmsiden */
+  --size-movie-hero-shadow-compact: 85%; /* Tablet og mobil: skyggen forneden går højere op, fordi teksten fylder mere af heroen */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
   --scale-projector-drift: 1.06; /* Drift: … og glider langsomt mellem 100 % og 106 % */
   --distance-projector-drift-x: -3%; /* Drift: billedet glider 3 % mod venstre */

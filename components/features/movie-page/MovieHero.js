@@ -23,7 +23,12 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider", loginHr
   const standard = !movie.theme && !flashlight;
 
   return (
-    <section className={styles.hero} data-standard={standard || undefined} aria-labelledby="movie-title">
+    <section
+      className={styles.hero}
+      data-standard={standard || undefined}
+      data-flashlight={flashlight || undefined}
+      aria-labelledby="movie-title"
+    >
       {/* Billedet ligger i sit eget lag, så beskeden fra "Følg film" ikke bliver skåret væk */}
       <div className={styles.backdrop}>
         {flashlight ? (
