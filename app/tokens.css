@@ -354,7 +354,8 @@
 
   /* Forsiden: filtrering og filmkort */
   --size-filter-divider-height: 2rem; /* 32px - "Skille" mellem felterne i filtreringsbaren */
-  --size-filter-search-width: 22.75rem; /* 364px - søgepanelet under søgeknappen i filtreringen */
+  --size-filter-search-width: 22.75rem; /* 364px - dropdownen med søgefelt ("Film") i filtreringen */
+  --size-filter-search-max-height: 30rem; /* 480px - samme dropdown: højere end de andre, så der er plads til flere plakater */
   --size-dropdown-max-height: 20rem; /* Lange dropdown-lister (fx Genre) kan scrolles */
   --size-poster-card-width: 13.75rem; /* 220px - en plakat under "Kommende film" */
   --size-poster-card-width-compact: 9rem; /* Mindste bredde på mobil, så der er to pr. række */
