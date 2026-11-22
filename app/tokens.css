@@ -599,6 +599,7 @@
   --space-movie-title-melt-drip: 0.4em; /* plads til dråberne - halv længde, ellers sidder titlen for højt */
   --space-movie-title-melt-row: 0.1em; /* hvis en lang titel går over 2 linjer */
   --font-size-movie-title-melt-compact: 4rem; /* 64px (8 × 8) på tablet og mobil */
+  --font-size-movie-title-melt-narrow: min(var(--font-size-movie-title-melt-compact), 16vw); /* smalle telefoner: CLAYFACE er 5,5 × skriftstørrelsen bred, så den skal kunne krympe */
   --line-height-movie-title-melt: 0.8;
   --duration-title-melt: 7s; /* ned 3,5 s -> hænger 2,1 s -> op 1,4 s */
   --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* dråberne: langsom start, blødt stop */
