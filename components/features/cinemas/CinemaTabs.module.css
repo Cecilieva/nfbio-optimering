@@ -1,0 +1,50 @@
+/* Figma: bjælken med fanerne – 40px luft over og under og en streg (border/Standard) nederst i fuld bredde */
+.bar {
+  padding: var(--space-10) var(--layout-page-margin);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* Fanerne på én linje med 32px imellem. Kan scrolles vandret på en smal skærm. */
+.list {
+  display: flex;
+  gap: var(--space-8);
+  overflow-x: auto;
+  list-style: none;
+}
+
+/* M/Sekundær/Medium i text/Sekundær. 16px luft over og under (og til højre) som i Figma */
+.tab {
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-4) calc(var(--space-4) - var(--size-cinema-tab-underline));
+  border-bottom: var(--size-cinema-tab-underline) solid transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+}
+
+/* Den første fane starter helt ude til venstre (Figma: ingen luft til venstre) */
+.tab:first-child {
+  padding-left: 0;
+}
+
+/* "Program": lys tekst og den blå streg (accent/Primær) under, som den valgte fane i Figma */
+.tab[data-active] {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+/* Mobil: mindre tekst og luft, 16px i siderne */
+@media (max-width: 48rem) {
+  .bar {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .list {
+    gap: var(--space-4);
+  }
+
+  .tab {
+    font-size: var(--font-size-small);
+  }
+}

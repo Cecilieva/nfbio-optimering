@@ -236,6 +236,9 @@
     var(--color-toning-70) 65%,
     var(--color-toning-100) 100%
   );
+  /* Figma "By-header" (Fade) på biografsiden: toner ned mod baggrunden forneden og mørk fra venstre bag teksten */
+  --gradient-cinema-hero-fade: linear-gradient(to bottom, var(--color-toning-0) 45%, var(--color-background) 100%),
+    linear-gradient(to right, var(--color-background-secondary) 0%, var(--color-toning-85) 35%, var(--color-toning-0) 70%);
   /* Figma "Stjernehimmel": rummet bag hero'en og finalen på forsiden. Radial gradient fra
      bg/Sekundær Baggrund i midten (0 %) til Stjerner/bg/Primær baggrund ved kanten (100 %), så rummet har dybde. */
   --gradient-space: radial-gradient(closest-side, var(--color-background-secondary), var(--color-stars-background));
@@ -347,6 +350,15 @@
   --size-menu-marker-width: 3px;
   --size-menu-marker-height: 1.75rem;
   --size-city-tile-width: 12.5rem;
+  --size-cinema-card-min-width: 13rem; /* 208px - smalleste biografkort på /biografer, før der falder et kort af rækken */
+  --size-cinema-card-height: 11rem; /* 176px */
+  --size-cinema-search-width: 17.5rem; /* 280px - "Søg efter by eller biograf" på /biografer */
+  --size-cinema-cities-width: 59.583rem; /* 953px - by-knapperne under søgningen på /biografer brydes på flere linjer */
+  --size-cinema-hero-height: min(30rem, 70svh); /* 480px - "By-header" på biografsiden */
+  --size-cinema-find-us-width: 32.5rem; /* 520px - "Find os"-kortet under "Før du kommer" */
+  --size-cinema-map-height: 13.75rem; /* 220px - kortet i "Find os" */
+  --size-cinema-info-icon-box: 3rem; /* 48px - boksen om ikonet i en info-række */
+  --size-cinema-tab-underline: 4px; /* Stregen under den valgte fane (Program, Events & nyheder …) */
   --size-newsletter-field-min: 10rem; /* 160px - e-mailfeltet i footeren bliver ikke smallere, før knappen hopper ned */
   --size-social-button: 2.5rem; /* 40px - den runde knap om et socialt ikon */
   --size-social-icon: 1.25rem; /* 20px - selve ikonet */
