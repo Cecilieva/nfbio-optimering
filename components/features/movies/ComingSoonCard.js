@@ -24,9 +24,9 @@ import styles from "./ComingSoonCard.module.css";
  * @param {"eager" | "lazy"} [props.loading] "eager" henter billedet, før kortet er på skærmen
  * @param {boolean | number} [props.scrub] Parallaxens udjævning (se ParallaxFrame)
  * @param {number} [props.lift] Vis mere af billedets bund (se ParallaxFrame)
- * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
+ * @param {boolean} [props.loggedIn] Er man logget ind? ("Følg film" viser ellers en besked om at logge ind)
  */
-export default function ComingSoonCard({ movie, copy = false, preload, loading, scrub, lift, loginHref }) {
+export default function ComingSoonCard({ movie, copy = false, preload, loading, scrub, lift, loggedIn }) {
   // Det brede billede fra movies.hero_url i Supabase
   const image = movie.hero_url;
 
@@ -68,7 +68,7 @@ export default function ComingSoonCard({ movie, copy = false, preload, loading, 
       <div className={styles.top}>
         {/* "Følg film" giver besked, når billetsalget åbner – så den skjules, når salget allerede er åbent.
             Boksen bliver stående, så nøgletallene stadig står i højre side. */}
-        <div data-reveal>{!saleOpen && <FollowButton title={movie.title} loginHref={loginHref} />}</div>
+        <div data-reveal>{!saleOpen && <FollowButton title={movie.title} loggedIn={loggedIn} />}</div>
 
         {stats.length > 0 && (
           <dl className={styles.stats}>

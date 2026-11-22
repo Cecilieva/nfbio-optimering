@@ -33,6 +33,26 @@
   width: auto;
 }
 
+/* Knappen står yderst til højre: beskeden flugter med knappens højre kant, så den ikke går ud over kortet.
+   På mobil står knappen til venstre, så der starter beskeden ved knappens venstre kant som normalt. */
+@media (min-width: 48rem) {
+  .wrapper[data-toast-end] .toast {
+    right: 0;
+    left: auto;
+  }
+}
+
+/* "Du skal være logget ind …" står på én linje (Figma "Ikke logget ind – besked") */
+.toast[data-login] {
+  width: max-content;
+  white-space: nowrap;
+}
+
+.wrapper[data-wide-toast] .toast[data-login] {
+  width: auto;
+  white-space: normal;
+}
+
 .toast[data-visible="true"] {
   opacity: 1;
 }
