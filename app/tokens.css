@@ -618,6 +618,7 @@
   --duration-title-melt: 7s; /* ned 3,5 s -> hænger 2,1 s -> op 1,4 s */
   --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* dråberne: langsom start, blødt stop */
   --size-flashlight: 40cqw; /* lyskeglen: 576px ved 1440px = 40 % af heroens bredde (i Figma 480px – gjort større) */
+  --size-flashlight-compact: 70cqw; /* små telefoner: 70 % af heroens bredde, så lyskeglen er til at se */
   --size-rec-dot: 0.625rem; /* 10px - den røde prik ved "REC" */
   --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
   --duration-flashlight-follow: 300ms; /* … og meget hurtigere, når den følger musen */

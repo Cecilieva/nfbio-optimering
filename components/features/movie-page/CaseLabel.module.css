@@ -50,3 +50,11 @@
 :global(html[data-motion="reduce"]) .dotOn {
   animation: none;
 }
+
+/* Små telefoner: hele linjen skjules, så nedtællingen ikke rykker ned.
+   Genren står også under titlen, så der mangler ikke noget */
+@media (max-width: 30rem) {
+  .label {
+    display: none;
+  }
+}
