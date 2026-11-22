@@ -4,7 +4,7 @@
   width: 100%;
   /* Kortet tilpasser sig skærmens højde, så titel og knapper altid kan ses */
   height: var(--size-featured-card-height);
-  border-radius: var(--radius-card-lg);
+  border-radius: var(--radius-large);
   background: var(--color-background); /* Figma bg/Primær baggrund – ses kun indtil billedet er loadet */
 }
 
@@ -57,7 +57,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: var(--space-6);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   line-height: var(--line-height-snug);
   text-align: right;
 }
@@ -70,7 +70,7 @@
 }
 
 .stat dt {
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
 }
 
 .stat dd {
@@ -98,9 +98,9 @@
 
 /* Figma "Overtitel": serien med store bogstaver, fx "THE HUNGER GAMES" */
 .eyebrow {
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -117,9 +117,9 @@
 
 .title {
   margin: 0; /* Fjerner den globale h2-margin */
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
-  font-size: var(--font-size-hero-title);
+  font-size: var(--font-size-x-large);
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-snug); /* Figma "XL": 1.25 */
 }
@@ -128,7 +128,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -139,11 +139,11 @@
 }
 
 .credit dt {
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
 }
 
 .credit dd {
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 .actions {
@@ -160,7 +160,7 @@
     justify-content: space-between;
     height: auto;
     min-height: var(--size-featured-card-height);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-medium);
   }
 
   .top,
@@ -184,11 +184,11 @@
   }
 
   .stat dd {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-small);
   }
 
   .title {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-large);
     overflow-wrap: break-word;
   }
 

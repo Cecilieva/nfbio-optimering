@@ -35,7 +35,7 @@
   left: 0;
   overflow: hidden;
   border-radius: var(--radius-intro-poster);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   box-shadow: var(--shadow-intro-poster);
   opacity: 0;
   visibility: hidden;
@@ -101,8 +101,8 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-5);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-transform: uppercase;
   translate: -50% 0;
@@ -114,13 +114,13 @@
   overflow: hidden;
   width: var(--border-width-strong);
   height: var(--size-intro-scroll-track);
-  background: color-mix(in srgb, var(--color-text-primary) 25%, transparent);
+  background: color-mix(in srgb, var(--color-text) 25%, transparent);
 }
 
 .cueLine {
   position: absolute;
   inset: 0 0 50%;
-  background: var(--color-text-primary);
+  background: var(--color-text);
   animation: cueLine var(--duration-intro-scroll-line) var(--easing-in-out) infinite;
 }
 

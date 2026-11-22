@@ -7,10 +7,10 @@
   max-width: var(--size-ticket-card-width);
   padding: var(--space-6);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
@@ -48,8 +48,8 @@
 
 /* Prisen og "Du vælger sæder i næste trin" */
 .small {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 .stepper {
@@ -62,31 +62,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-stepper-button);
-  height: var(--size-stepper-button);
+  width: var(--size-button-height-small);
+  height: var(--size-button-height-small);
   padding: 0;
   border: 0;
-  border-radius: var(--radius-md);
-  background: var(--color-stepper-button);
-  color: var(--color-text-primary);
+  border-radius: var(--radius-small);
+  background: var(--color-accent-secondary);
+  color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-small);
   cursor: pointer;
   transition: background var(--duration-fast) var(--easing-standard);
 }
 
 .stepperButton:hover:not(:disabled) {
-  background: var(--color-cta-button);
+  background: var(--color-button-primary);
 }
 
 .stepperButton:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-cta);
+  outline: var(--focus-ring-width) solid var(--color-accent);
   outline-offset: var(--focus-ring-width);
 }
 
 /* Minus ved 0 (og plus, når man har nået det højeste antal) */
 .stepperButton:disabled {
-  background: var(--color-stepper-button-disabled);
+  background: var(--color-option-background-active);
   opacity: var(--opacity-stepper-disabled);
   cursor: not-allowed;
 }

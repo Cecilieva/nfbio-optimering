@@ -9,7 +9,7 @@
 .seats {
   display: flex;
   flex-direction: column;
-  gap: var(--space-seat-columns);
+  gap: var(--space-5);
 }
 
 /* "Vælg antal"-kortet står i midten */
@@ -20,8 +20,8 @@
 
 .error {
   margin: 0;
-  color: var(--color-danger);
-  font-size: var(--font-size-sm);
+  color: var(--color-status-error);
+  font-size: var(--font-size-small);
 }
 
 /* Desktop: siden følger 12-kolonne-griddet. Siden står i kolonne 2–11,

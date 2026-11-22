@@ -62,7 +62,7 @@ const HOP_COLORS = [
   "var(--color-title-hop-red)",
   "var(--color-title-hop-blue)",
   "var(--color-title-hop-yellow)",
-  "var(--color-title-hop-ink)",
+  "var(--color-text)",
 ];
 
 function HopLetter({ letter, number }) {

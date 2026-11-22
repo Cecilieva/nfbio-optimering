@@ -6,7 +6,7 @@
   gap: var(--space-4);
   padding: var(--space-4);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
 }
 
@@ -17,14 +17,14 @@
   flex-direction: column;
   gap: var(--space-6);
   padding: var(--space-4) var(--space-10);
-  border-radius: var(--radius-md);
-  background: linear-gradient(var(--color-seat-view-top), var(--color-seat-view-bottom));
+  border-radius: var(--radius-small);
+  background: linear-gradient(var(--color-background), var(--color-option-background));
 }
 
 .label {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   text-align: center;
 }
@@ -100,15 +100,15 @@
   min-width: 0;
   padding: var(--space-4);
   border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-lg);
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  border-radius: var(--radius-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 .value {
   margin: 0;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-medium);
   overflow-wrap: anywhere;
 }
@@ -133,13 +133,13 @@
 }
 
 .tickets {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
 }
 
 .price {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 /* Desktop: siden kan ikke scrolles. Er skærmen for lav, bliver udsigten lavere,

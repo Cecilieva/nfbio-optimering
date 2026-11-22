@@ -27,12 +27,12 @@
 .step {
   flex: 1;
   height: var(--size-step-bar-height);
-  border-radius: var(--radius-xs);
-  background: var(--color-step-todo);
+  border-radius: var(--radius-xx-small);
+  background: var(--color-border);
 }
 
 .step[data-done="true"] {
-  background: var(--color-step-done);
+  background: var(--color-accent);
 }
 
 .titles {
@@ -49,16 +49,16 @@
 
 .title {
   margin: 0;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
 
 .subtitle {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }

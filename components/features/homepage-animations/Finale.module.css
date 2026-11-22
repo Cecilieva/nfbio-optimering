@@ -22,7 +22,7 @@
   justify-content: center;
   margin: 0;
   padding-inline: var(--space-finale-slogan-inline);
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
   font-size: var(--font-size-finale);
   font-weight: var(--font-weight-black);

@@ -16,9 +16,9 @@
   min-width: 0;
   padding: var(--space-4) var(--space-6);
   border: 0;
-  border-radius: var(--radius-filter-bar);
+  border-radius: var(--radius-large);
   background: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -45,8 +45,8 @@
 
 /* XS/Sekundær/Regular */
 .label {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
   white-space: nowrap;
 }
@@ -64,7 +64,7 @@
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -91,7 +91,7 @@
   overflow-y: auto;
   padding: var(--space-2);
   border: var(--border-width) solid var(--color-option-background);
-  border-radius: var(--radius-dropdown);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
   box-shadow: var(--shadow-dropdown);
   list-style: none;
@@ -102,11 +102,11 @@
   width: 100%;
   padding: var(--space-2-5) var(--space-4);
   border: 0;
-  border-radius: var(--radius-dropdown-item);
+  border-radius: var(--radius-chip);
   background: transparent;
   color: var(--color-text-input-muted);
   font: inherit;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
   text-align: left;
   white-space: nowrap;
@@ -117,7 +117,7 @@
 .option:hover,
 .option[aria-pressed="true"] {
   background: var(--color-option-background-active);
-  color: var(--color-text-primary);
+  color: var(--color-text);
 }
 
 .option:focus-visible {
@@ -146,7 +146,7 @@
   gap: var(--space-0-5);
   padding: var(--space-2) var(--space-4);
   border: var(--border-width) solid var(--color-option-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-medium);
   background: var(--color-option-background);
 }
 

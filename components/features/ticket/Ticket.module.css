@@ -4,7 +4,7 @@
   display: flex;
   height: var(--size-ticket-height);
   overflow: hidden;
-  border-radius: var(--radius-sm); /* Border-radius/X-Small */
+  border-radius: var(--radius-x-small); /* Border-radius/X-Small */
   background: linear-gradient(
     123.3deg,
     var(--color-ticket-paper-light) 0%,
@@ -49,14 +49,14 @@
 
 /* Filmtitlen */
 .title {
-  font-size: var(--font-size-lg); /* Font-Size/Medium */
+  font-size: var(--font-size-medium); /* Font-Size/Medium */
 }
 
 /* Sted til venstre og tid til højre */
 .details {
   display: flex;
   gap: var(--space-6); /* Gabs/Medium */
-  font-size: var(--font-size-xs); /* XS/Sekundær/Bold */
+  font-size: var(--font-size-x-small); /* XS/Sekundær/Bold */
 }
 
 /* En kolonne med linjer under hinanden */
@@ -71,7 +71,7 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  font-size: var(--font-size-xs); /* XS/Sekundær/Regular */
+  font-size: var(--font-size-x-small); /* XS/Sekundær/Regular */
 }
 
 /* Stubben: den stiplede linje er dens venstre kant */
@@ -99,7 +99,7 @@
 
 /* Filmtitlen på stubben */
 .stubTitle {
-  font-size: var(--font-size-sm); /* Font-Size/Small */
+  font-size: var(--font-size-small); /* Font-Size/Small */
   font-weight: var(--font-weight-bold);
 }
 
@@ -107,7 +107,7 @@
 .stubDetails {
   display: flex;
   gap: var(--space-4); /* Gabs/Small */
-  font-size: var(--font-size-xs); /* Font-Size/X-Small */
+  font-size: var(--font-size-x-small); /* Font-Size/X-Small */
 }
 
 /* Isbjørnen nederst i midten af stubben */

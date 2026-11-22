@@ -42,11 +42,11 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to top, transparent, var(--color-fade-strong) 55%, var(--color-fade)) top / 100%
+    linear-gradient(to top, transparent, var(--color-fade-strong) 55%, var(--color-background-secondary)) top / 100%
       var(--size-auth-fade-top) no-repeat,
-    linear-gradient(to bottom, transparent, var(--color-fade-strong) 55%, var(--color-fade)) bottom / 100%
+    linear-gradient(to bottom, transparent, var(--color-fade-strong) 55%, var(--color-background-secondary)) bottom / 100%
       var(--size-auth-fade-bottom) no-repeat,
-    linear-gradient(to right, transparent, var(--color-fade-strong) 55%, var(--color-fade)) right /
+    linear-gradient(to right, transparent, var(--color-fade-strong) 55%, var(--color-background-secondary)) right /
       var(--size-auth-fade-right) 100% no-repeat;
 }
 
@@ -74,15 +74,15 @@
 /* XS/Sekundær/Bold i text/Hover */
 .eyebrow {
   color: var(--color-accent);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-bold);
 }
 
 /* L/Primær/Regular */
 .title {
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
-  font-size: var(--font-size-heading);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-snug);
   margin-bottom: 0; /* Fjerner den globale h1-margin; afstanden kommer fra gap */
@@ -95,15 +95,15 @@
 
 /* S/Sekundær/Regular i text/Sekundær */
 .intro {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
 }
 
 /* Fx "Ny her? Opret profil": XS/Sekundær/Regular i text/input (muted).
    Links i teksten: XS/Sekundær/Bold og blå (text/Hover). */
 .note {
   color: var(--color-text-input-muted);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 

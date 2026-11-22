@@ -26,8 +26,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 
@@ -39,13 +39,13 @@
   height: var(--size-age-badge);
   padding: 0 var(--space-1-5);
   border: var(--border-width) solid var(--color-button-secondary-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-small);
 }
 
 .text {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-snug);
 }
 

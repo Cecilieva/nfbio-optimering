@@ -27,8 +27,8 @@
 
 /* "Åh nej.." */
 .eyebrow {
-  color: var(--color-cta);
-  font-size: var(--font-size-display);
+  color: var(--color-accent);
+  font-size: var(--font-size-large);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -37,7 +37,7 @@
 .title {
   max-width: var(--size-not-found-title-width);
   margin: var(--space-3-5) 0 0;
-  color: var(--color-text-primary);
+  color: var(--color-text);
   font-family: var(--font-family-display);
   font-size: var(--font-size-message-title);
   font-weight: var(--font-weight-black);
@@ -48,8 +48,8 @@
 .intro {
   max-width: var(--size-not-found-text-width);
   margin-top: var(--space-7);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   line-height: var(--line-height-body);
 }
 
@@ -84,7 +84,7 @@
   }
 
   .title {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-large);
   }
 
   /* Knapperne fylder hver sin halvdel */

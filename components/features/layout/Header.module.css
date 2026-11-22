@@ -5,7 +5,7 @@
   top: 0;
   z-index: var(--z-header);
   background: var(--color-header-background);
-  color: var(--color-header-text);
+  color: var(--color-text);
   transition: transform var(--duration-header-slide) var(--easing-out);
 }
 
@@ -85,7 +85,7 @@
 /* Synlig ramme, når man navigerer med tastaturet */
 .iconButton:focus-visible,
 .logo:focus-visible {
-  outline: var(--focus-ring-width) solid var(--color-header-text);
+  outline: var(--focus-ring-width) solid var(--color-text);
   outline-offset: var(--space-1);
 }
 

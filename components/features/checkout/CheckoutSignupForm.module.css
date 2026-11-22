@@ -8,8 +8,8 @@
 /* "Personlige oplysninger" og "Login" */
 .heading {
   margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -37,8 +37,8 @@
 .legend {
   padding: 0;
   margin-bottom: var(--space-1-5);
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -55,22 +55,22 @@
   height: var(--border-width);
   margin: 0;
   border: 0;
-  background: var(--color-divider);
+  background: var(--color-border);
 }
 
 /* "Udfyld de markerede felter." øverst i formularen */
 .error {
   margin: 0;
-  color: var(--color-danger);
-  font-size: var(--font-size-xs);
+  color: var(--color-status-error);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
 /* "Brug mindst 8 tegn …" */
 .hint {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 

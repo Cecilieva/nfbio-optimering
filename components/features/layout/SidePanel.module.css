@@ -11,7 +11,7 @@
   overflow-y: auto; /* Er der flere punkter end der er plads til (fx mange byer), kan man scrolle */
   border: 0;
   border-right: var(--border-width) solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-option-background);
   color: var(--color-text);
 }
 
@@ -109,8 +109,8 @@
 /* Lille overskrift over en gruppe, fx "FILM" eller "Vælg by" */
 .heading {
   margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
 }
@@ -128,7 +128,7 @@
   background: none;
   color: var(--color-text);
   font: inherit;
-  font-size: var(--font-size-menu-item);
+  font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-snug);
   text-align: left;
@@ -150,8 +150,8 @@
   left: 0;
   width: var(--size-menu-marker-width);
   height: var(--size-menu-marker-height);
-  border-radius: var(--radius-xs);
-  background: var(--color-cta);
+  border-radius: var(--radius-xx-small);
+  background: var(--color-accent);
   opacity: 0;
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
@@ -187,7 +187,7 @@
   flex-shrink: 0;
   width: var(--size-icon);
   height: var(--size-icon);
-  background: var(--color-cta);
+  background: var(--color-accent);
   mask: url("/icons/check.svg") center / contain no-repeat;
 }
 

@@ -3,8 +3,8 @@
    display: contents: boksen fylder ikke noget selv - den giver bare farverne videre til overlayet */
 .loader {
   --color-background: var(--color-loader-background);
-  --color-text-primary: var(--color-loader-text);
-  --color-text-muted: var(--color-loader-text-muted);
+  --color-text: var(--color-loader-text);
+  --color-text-secondary: var(--color-loader-text-muted);
 
   display: contents;
 }

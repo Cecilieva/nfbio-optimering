@@ -25,15 +25,15 @@
 }
 
 .name {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-black);
 }
 
 .free,
 .screenLabel {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
 }
 
@@ -56,9 +56,9 @@
 
 /* Gløden starter lidt under toppen og fylder resten */
 .screenGlow {
-  top: var(--space-hall-screen-top);
+  top: var(--space-0-5);
   bottom: 0;
-  height: calc(100% - var(--space-hall-screen-top));
+  height: calc(100% - var(--space-0-5));
 }
 
 /* Den lyse streg øverst */
@@ -89,8 +89,8 @@
 }
 
 .rowLabel {
-  color: var(--color-text-label);
-  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
 }
 
 .rowLabelRight {
@@ -119,6 +119,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-1-5);
-  color: var(--color-text-label);
+  color: var(--color-text-secondary);
   font-size: var(--font-size-hall-legend);
 }

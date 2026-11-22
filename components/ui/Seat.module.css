@@ -10,13 +10,13 @@
 .seat[data-state="free"] {
   --seat-main: var(--color-seat-free);
   --seat-soft: var(--color-seat-free-soft);
-  --seat-symbol: var(--color-seat-symbol);
+  --seat-symbol: var(--color-text);
 }
 
 .seat[data-state="selected"] {
   --seat-main: var(--color-seat-selected);
   --seat-soft: var(--color-seat-selected-soft);
-  --seat-symbol: var(--color-seat-symbol);
+  --seat-symbol: var(--color-text);
 }
 
 .seat[data-state="taken"] {
