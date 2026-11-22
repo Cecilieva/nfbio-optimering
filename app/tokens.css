@@ -471,6 +471,7 @@
   --size-ticket-logo-width: 50px; /* isbjørnen på stubben */
   --size-ticket-logo-height: 38px; /* isbjørnens højde */
   --space-ticket-logo-bottom: 9px; /* isbjørnen fra bunden af stubben */
+  --scale-ticket-compact: 0.78; /* mobil: billetten (360px) bliver mindre, så den kan være inde i sprækken på en 320px skærm */
   --scale-popcorn-start: 40%; /* Popkornet er lille, mens det flyver op … */
   --scale-popcorn-pop: 135%; /* … og popper lidt for stort, før det falder på plads */
 
