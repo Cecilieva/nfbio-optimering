@@ -37,7 +37,7 @@ export default function AuthScreen({ children, backHref }) {
         <Image src={publikum} alt="" fill sizes="50vw" quality={90} preload className={styles.photo} />
       </div>
 
-      {/* Figma "Formular-kolonne": kolonne 8-11 i 12-kolonne-griddet, lodret i midten */}
+      {/* Figma "Formular-kolonne": kolonne 8-11 i 12-kolonne-griddet, i højde med "Tilbage" */}
       <div className={styles.content}>{children}</div>
     </main>
   );

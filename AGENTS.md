@@ -43,8 +43,8 @@ app/
     [bookingId]/login/    Log ind / gæst / opret profil
     [bookingId]/betaling/ Betaling (+ fejl/ til fejlsiden)
     [bookingId]/billet/   Billet
-  (site)/profile/         Konto
   (auth)/login/ signup/   Log ind og Opret profil (2 trin). layout.js giver fuld Header og ingen footer (som i Figma)
+  (auth)/profile/         Profil: Mine oplysninger og Mine billetter
 components/
   ui/                     Generiske byggeklodser: Button, Chip, TextField, Checkbox, Radio, Modal, Overlay, PopcornLoader, PopcornShower, LoadingDots, ParallaxFrame, Seat, DataDump
   features/               Domænekomponenter, delt op efter hvor på sitet de bruges:
@@ -60,9 +60,9 @@ components/
     seats/                Sædevalg: SeatPicker, SeatMap, SeatView, TicketCounter
     payment/              Betaling: PaymentForm, PaymentFailed, PaymentLoader
     ticket/               Billetten: Ticket, TicketPrint
-    auth/                 Log ind, Opret profil og Profil: AuthScreen, AuthStatus, SignUpForm, UserBadge
+    auth/                 Log ind, Opret profil og Profil: AuthScreen, AuthStatus, SignUpForm, ProfileCard, ProfileTickets
 lib/
-  data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, profile
+  data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, tickets, profile
   actions/                Server actions: auth, city, booking, newsletter
   supabase/server.js      Supabase-klienten til serveren
   auth.js                 getCurrentUser()
@@ -149,4 +149,4 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | 500 side (fejlside) | 3745:16005 | `error.js` i hver route-gruppe + `app/global-error.js` | ErrorState (samme MessagePage som 404 med "Noget gik galt hos os.", "Prøv igen" (`retry`) og "Gå til support"), Button. Fontene ligger i `app/fonts.js`, så `global-error.js` (der laver sit eget `<html>`) også får dem |
 | Log ind | 761:18178 | `/login` | TextField, Checkbox, Button |
 | Opret profil | | `/signup` | - (bruger globale `.form`-styles) |
-| Profil | | `/profile` | UserBadge |
+| Profil | 3885:15442 | `/profile` | AuthScreen (samme skærm som Log ind), ProfileCard + ProfileRow ("Mine oplysninger"), ProfileTickets ("Mine billetter" - Ticket fra billet-siden, data fra `getMyTickets` i `lib/data/tickets.js`), Button |

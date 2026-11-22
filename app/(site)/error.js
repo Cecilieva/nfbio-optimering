@@ -1,4 +1,4 @@
-// Fejlsiden for sider med fuld header og footer, fx /film og /profile. En fejlside skal køre i browseren ("use client")
+// Fejlsiden for sider med fuld header og footer, fx /film. En fejlside skal køre i browseren ("use client")
 "use client";
 
 import ErrorState from "@/components/features/messages/ErrorState";
