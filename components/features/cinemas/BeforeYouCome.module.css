@@ -1,0 +1,170 @@
+/* Figma "Før du kommer": overskriften og indholdet med 24px imellem, sidens margen og 40px luft */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-10) var(--layout-page-margin) var(--space-24);
+}
+
+/* L/Sekundær/Bold */
+.title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* "Find os" (520px) til venstre og "Praktisk info" i resten af bredden, 32px imellem */
+.content {
+  display: flex;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+/* Figma "Find os": mørk boks med runde hjørner og 24px luft, kort, adresse og knapper med 16px imellem */
+.findUs {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-4);
+  width: var(--size-cinema-find-us-width);
+  max-width: 100%;
+  padding: var(--space-6);
+  border-radius: var(--radius-medium);
+  background: var(--color-option-background);
+}
+
+/* Figma "Kort": 220px højt med små runde hjørner */
+.map {
+  width: 100%;
+  height: var(--size-cinema-map-height);
+  border: 0;
+  border-radius: var(--radius-small);
+  background: var(--color-option-background-active);
+}
+
+/* Figma "Adresse": to linjer med 2px imellem. font-style: normal fjerner browserens kursiv på <address> */
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  font-size: var(--font-size-small);
+  font-style: normal;
+  line-height: var(--line-height-snug);
+}
+
+.street {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.postal {
+  color: var(--color-text-secondary);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* Figma "Praktisk info": rækkerne under hinanden */
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Figma "Info-række": streg (border/Standard) under hver række, 24px luft over og under */
+.row {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+/* Den del, man klikker på: ikon, titel og pil på én linje med 16px imellem */
+.summary {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  padding-block: var(--space-6);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Browserens egen trekant skjules – vi har pilen fra Figma */
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-text);
+  outline-offset: var(--space-1);
+}
+
+/* Figma "Ikonboks": 48px med ikonet i midten */
+.iconBox {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-cinema-info-icon-box);
+  height: var(--size-cinema-info-icon-box);
+}
+
+/* M/Sekundær/Medium */
+.rowTitle {
+  flex: 1;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-snug);
+}
+
+.summary:hover .rowTitle {
+  color: var(--color-accent);
+}
+
+/* Pilen vender op, når rækken er foldet ud */
+.chevron {
+  flex-shrink: 0;
+  width: var(--size-icon-small);
+  height: auto;
+  transition: rotate var(--duration-fast) var(--easing-standard);
+}
+
+.row[open] .chevron {
+  rotate: 180deg;
+}
+
+/* Teksten under titlen – rykket ind under titlen (ikonboks + 16px) */
+.rowText {
+  padding: 0 0 var(--space-6) calc(var(--size-cinema-info-icon-box) + var(--space-4));
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-body);
+}
+
+/* Tablet og mobil: "Find os" over rækkerne i fuld bredde, 16px i siderne */
+@media (max-width: 48rem) {
+  .section {
+    padding: var(--space-6) var(--space-4) var(--space-12);
+  }
+
+  .title {
+    font-size: var(--font-size-medium);
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .findUs {
+    width: 100%;
+  }
+
+  .rowTitle {
+    font-size: var(--font-size-small);
+  }
+}

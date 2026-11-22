@@ -8,7 +8,7 @@ import styles from "./Footer.module.css";
 // uden at røre HTML'en længere nede.
 // TODO: peg pladsholder-linkene på rigtige sider, når de findes.
 const CINEMA_LINKS = [
-  { label: "Biografer", href: "/by" },
+  { label: "Biografer", href: "/biografer" },
   { label: "Gavekort", href: "/film" },
   { label: "BIOPLUS", href: "/film" },
 ];

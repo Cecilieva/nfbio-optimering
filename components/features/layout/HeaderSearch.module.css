@@ -82,6 +82,15 @@
   object-fit: cover;
 }
 
+/* Titlen og kategorien under hinanden. Fylder resten af bredden, så en lang titel kan afkortes */
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-0-5);
+  min-width: 0;
+}
+
 /* Titlen på én linje - en lang titel slutter med "…" */
 .title {
   min-width: 0;
@@ -92,7 +101,17 @@
   white-space: nowrap;
 }
 
-/* Når ingen film passer */
+/* Kategorien under titlen ("Film" eller "Biograf · Aarhus"): XS i text/Sekundær, på én linje */
+.category {
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
+  line-height: var(--line-height-snug);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Når intet passer */
 .empty {
   padding: var(--space-4);
   color: var(--color-text-secondary);

@@ -1,0 +1,60 @@
+/* Figma "By-header": 480px højt, teksten lodret i midten med sidens margen til venstre */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--size-cinema-hero-height);
+  padding-inline: var(--layout-page-margin);
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* Figma "Fade": toner ned mod baggrunden og mørk fra venstre bag teksten */
+.fade {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-cinema-hero-fade);
+}
+
+/* "Velkommen i" over navnet med 16px imellem */
+.title {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  color: var(--color-text);
+  line-height: var(--line-height-snug);
+}
+
+/* L/Sekundær/Bold */
+.welcome {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+}
+
+/* XL: Font-Family/Primær, Black, 64px */
+.name {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-x-large);
+  font-weight: var(--font-weight-black);
+}
+
+/* Mobil: mindre tekst og 16px i siderne */
+@media (max-width: 48rem) {
+  .hero {
+    padding-inline: var(--space-4);
+  }
+
+  .welcome {
+    font-size: var(--font-size-medium);
+  }
+
+  .name {
+    font-size: var(--font-size-large);
+  }
+}

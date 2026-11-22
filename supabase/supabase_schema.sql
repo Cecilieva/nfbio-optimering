@@ -15,7 +15,10 @@ create type payment_method as enum ('mobilepay', 'card', 'giftcard');
 create table cities (
   id         bigint generated always as identity primary key,
   name       text not null unique,
-  slug       text not null unique
+  slug       text not null unique,
+  region     text,                       -- landsdel på /biografer: "Jylland", "København", "Sjælland og øer", "Fyn"
+  latitude   double precision,           -- byens midte - "Brug min placering" på /biografer finder den nærmeste by
+  longitude  double precision
 );
 
 create table cinemas (
@@ -24,7 +27,11 @@ create table cinemas (
   name       text not null,
   slug       text not null unique,
   address    text,
-  image_url  text
+  image_url  text,
+  opening_hours text,                    -- "Åbningstider" på biografsiden
+  parking    text,                       -- "Parkering"
+  transport  text,                       -- "Tog og bus"
+  email      text                        -- "Kontakt os"
 );
 
 create table halls (
@@ -680,6 +687,120 @@ where m.id = s.movie_id
   and extract(hour from s.starts_at at time zone 'Europe/Copenhagen') >= 21;
 
 commit;
+
+
+-- Biografsiderne (/biografer): landsdel, billede og praktisk info pr. biograf.
+-- Teksterne er hentet fra nfbio.dk/biografer/<slug> (22. nov 2026). Kolonnerne står i create table ovenfor.
+-- 2. Landsdel pr. by (som på nfbio.dk/biografer)
+update cities set region = 'København'       where slug = 'storkoebenhavn';
+update cities set region = 'Jylland'         where slug in ('aalborg', 'aarhus', 'esbjerg', 'herning', 'kolding', 'randers', 'viborg');
+update cities set region = 'Sjælland og øer' where slug in ('frederikssund', 'hilleroed', 'koege', 'nykoebingfalster', 'naestved');
+update cities set region = 'Fyn'             where slug = 'odense';
+
+-- Byernes midte (til "Brug min placering")
+update cities c set latitude = v.lat, longitude = v.lng
+from (values
+  ('storkoebenhavn', 55.6761, 12.5683), ('aalborg', 57.0488, 9.9217), ('aarhus', 56.1629, 10.2039),
+  ('esbjerg', 55.4765, 8.4594), ('frederikssund', 55.8396, 12.0690), ('herning', 56.1393, 8.9738),
+  ('hilleroed', 55.9267, 12.3109), ('kolding', 55.4904, 9.4722), ('koege', 55.4580, 12.1821),
+  ('nykoebingfalster', 54.7691, 11.8743), ('naestved', 55.2299, 11.7609), ('odense', 55.4038, 10.4024),
+  ('randers', 56.4607, 10.0364), ('viborg', 56.4532, 9.4020)
+) as v(slug, lat, lng)
+where c.slug = v.slug;
+
+-- 3. Samme slug som på nfbio.dk
+update cinemas set slug = 'aarhus-bio' where slug = 'aarhus-c';
+
+-- 4. Billede: et af de 9 publikumsbilleder fra Figma (public/biografer)
+update cinemas set image_url = '/biografer/publikum-' || (((id - 1) % 9) + 1) || '.jpg';
+
+-- 5. Åbningstider: ens for alle undtagen Reservoir
+update cinemas set opening_hours = 'Vi åbner 30 min. før første forestilling. Mandag–søndag (samt helligdage).';
+update cinemas set opening_hours = 'Mandag–torsdag: 15.00–23.00. Fredag–søndag: 10.00–23.00.' where slug = 'reservoir';
+
+-- 6. Parkering, tog og bus og e-mail pr. biograf
+update cinemas c set parking = v.parking, transport = v.transport, email = v.email
+from (values
+  ('dagmar-teatret', 'Hos Q-Park Vesterport i Nyropsgade.',
+   'S-tog: Vesterport Station og Københavns Hovedbanegård. Metro: Rådhuspladsen og Københavns Hovedbanegård. Regionaltog: Københavns Hovedbanegård.',
+   'servicedagmar@nfbio.dk'),
+  ('falkoner-bio', 'Parkeringskælderen ved Sylows Allé. Frederiksbergs parkeringsregler gælder.',
+   'Metro: Frederiksberg Station. Bus: linje 14, 15 og 18.',
+   'servicefalkoner@nfbio.dk'),
+  ('fields', '1 times gratis parkering i Field''s p-kælder. Registrerer du din nummerplade på tabletten i biografen, får du 3 timer mere.',
+   'Metro og regionaltog: Ørestad Station. Bus: linje 18, 32 og 33.',
+   'servicefields@nfbio.dk'),
+  ('herlev-bio', '2 timers parkering i stueplan og 4 timer på tagparkeringen. Husk p-skiven.',
+   'S-tog: Herlev Station. Bus: linje 5C, 350S og 161.',
+   'serviceherlev@nfbio.dk'),
+  ('imperial', 'Hos Q-Park Vesterport i Nyropsgade.',
+   'S-tog: Vesterport Station og Københavns Hovedbanegård. Metro: Københavns Hovedbanegård og Rådhuspladsen. Regionaltog: Københavns Hovedbanegård.',
+   'serviceimperial@nfbio.dk'),
+  ('kinopalaeet', 'Betalingsparkering i p-kælderen under Lyngby Storcenter (9 kr. pr. påbegyndt halve time).',
+   'S-tog: Ca. 7 minutters gang (500 meter) fra Lyngby Station.',
+   'servicelyngby@nfbio.dk'),
+  ('nordhavn-bio', 'P-hus Lüders og p-kælderen på Kronløbsøen ligger tæt på.',
+   'Metro: Nordhavn St. (M4). S-tog: Nordhavn Station. Bus: linje 14 og 23.',
+   'servicenordhavn@nfbio.dk'),
+  ('palads', 'Hos Q-Park Vesterport i Nyropsgade.',
+   'S-tog: Vesterport Station og Københavns Hovedbanegård. Metro: Rådhuspladsen og Københavns Hovedbanegård. Regionaltog: Københavns Hovedbanegård.',
+   'servicepalads@nfbio.dk'),
+  ('reservoir', 'I p-kælderen under Caroline Hus ved Bryggernes Plads og Ottilia Jacobsens Plads.',
+   'Bus: linje 1A, 8A, 11, 18 og 26. Tog: Carlsberg Station.',
+   'service@reservoirkbh.dk'),
+  ('taastrup', '4 timers parkering på City 2''s 2.000 p-pladser. Ekstra timer kan fås i biografen.',
+   'S-tog og regionaltog: Høje Taastrup Station. Bus: linje 120, 123, 400, 400S og 93N.',
+   'servicetaastrup@nfbio.dk'),
+  ('waves', 'Gratis parkering i Waves uden tidsbegrænsning. Brug tagparkeringen (indgang L) eller stueparkeringen (indgang F).',
+   'S-tog: Hundige Station. Bus: linje 224, 225, 400 og 600S.',
+   'servicewaves@nfbio.dk'),
+  ('aalborg-city-syd', 'Gratis parkering på p-pladserne ved City Syd.',
+   'Bus: linje 1 stopper ved Aalborg Busterminal og ved Bilka på Hobrovej.',
+   'serviceaalborgcitysyd@nfbio.dk'),
+  ('aalborg-kennedy', 'Arkadens P-hus (indkørsel fra Østre Allé) og p-pladsen øst for Arkaden. Begge koster p-afgift.',
+   'Biografen ligger ved siden af Banegården og Busterminalen.',
+   'serviceaalborg@nfbio.dk'),
+  ('aarhus-bio', 'Parkering i nærheden hos Q-Park og i Bruuns Galleri.',
+   'Biografen ligger ca. 200 meter fra gågaden og Banegården.',
+   'serviceaarhus@nfbio.dk'),
+  ('esbjerg-broen', '4 timers gratis parkering på BROEN Shoppings 600 p-pladser på taget.',
+   'Ca. 650 meters gang fra Esbjerg tog- og busstation.',
+   'serviceesbjerg@nfbio.dk'),
+  ('herning-bio', 'P-pladsen lige bag biografen (Smedegade). 3 timer på hverdage kl. 8–18, ubegrænset i weekenden.',
+   'Alle bybusser og tog holder lige uden for døren.',
+   'serviceherning@nfbio.dk'),
+  ('kolding', '2.500 gratis p-pladser ved Kolding Storcenter. Indgang "Lilla" eller "G" er tættest på biografen.',
+   'Ca. 15 minutter i bil fra Kolding Station.',
+   'servicekolding@nfbio.dk'),
+  ('randers', '3 timers gratis parkering i kommunens p-hus ved Randers Sundhedscenter frem til kl. 18. Gratis fra kl. 18–24.',
+   'Ca. 15 minutters gang fra Randers Station.',
+   'serviceranders@nfbio.dk'),
+  ('troejborg', 'Der kan parkeres i gaderne omkring biografen.',
+   'Bus 1A holder lige uden for døren.',
+   'servicetroejborg@nfbio.dk'),
+  ('viborg', 'Gratis p-pladser ved siden af og bag biografen samt p-kælder ved stadion.',
+   null,
+   'serviceviborg@nfbio.dk'),
+  ('frederikssund', '2 timers gratis parkering i Sillebroens p-anlæg. Registrér din nummerplade på iPad''en i biografen, og få 2 timer mere.',
+   'S-tog: Ca. 5 minutters gang fra Frederikssund Station. Bus: linje 310R og 312.',
+   'servicefrederikssund@nfbio.dk'),
+  ('hillerod-bio', '4 timers gratis parkering i Gallerierne. Indtast din nummerplade på iPad''en i biografen.',
+   'S-tog: Ca. 15–20 minutters gang fra Hillerød Station.',
+   'servicehilleroed@nfbio.dk'),
+  ('koge', 'Betalingsparkering Bag Haverne (ved biografen), på Havnen og ved Torvebyen på hverdage kl. 8–18 og lørdage kl. 8–15.',
+   'Bybusser og tog 250 meter fra biografen.',
+   'servicekoege@nfbio.dk'),
+  ('nykobing-falster', 'Betalingsparkering bag biografen (Slotsbryggen 11) og 3 timers parkering i gaderne omkring.',
+   'Ca. 10 minutters gang fra stationen.',
+   'servicenykoebingf@nfbio.dk'),
+  ('naestved', 'Registrér din nummerplade med QR-koden i biografen, og få 5 timers gratis parkering (Avantpark).',
+   'Tog: Ca. 15 minutters gang fra stationen. Bus: Bybussen stopper tæt ved biografen.',
+   'servicenaestved@nfbio.dk'),
+  ('odense', '201 p-pladser med 4 timers gratis parkering i Banegårdscentret ved Dannebrogsgade (med registrering).',
+   'Bus og tog: Odense Station.',
+   'serviceodense@nfbio.dk')
+) as v(slug, parking, transport, email)
+where c.slug = v.slug;
 
 
 -- Udløbne reservationer slettes automatisk hvert minut (Supabase pg_cron).

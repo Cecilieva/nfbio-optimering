@@ -10,7 +10,7 @@ import styles from "./MainMenu.module.css";
 const FILM_LINKS = [
   { label: "Film i biografen", href: "/film" },
   { label: "Kommende film", href: "/film" },
-  { label: "Biografer", href: "/by" },
+  { label: "Biografer", href: "/biografer" },
   { label: "Events", href: "/film" },
 ];
 

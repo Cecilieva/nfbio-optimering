@@ -1,0 +1,6 @@
+/* Den globale main-regel giver max-bredde og padding. Biografsiden går i fuld bredde,
+   og hver sektion får selv sin margen (kolonne 2-11 som filmsiden). */
+.page {
+  max-width: none;
+  padding: 0;
+}

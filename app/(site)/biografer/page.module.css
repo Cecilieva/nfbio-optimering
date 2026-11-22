@@ -1,0 +1,52 @@
+/* Den globale main-regel giver max-bredde og padding. Siden går i fuld bredde,
+   og listen får selv sin margen (CinemaFinder). */
+.page {
+  max-width: none;
+  padding: 0;
+}
+
+/* Figma "Scene": lyskeglen øverst, overskriften og søgningen i midten under den.
+   overflow: clip skærer den del af lyskeglen væk, der stikker ud over kanten. */
+.scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  align-items: center;
+  padding-top: var(--space-24);
+  overflow: clip;
+}
+
+/* Overskriften og undertitlen med 16px imellem */
+.intro {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+  padding-inline: var(--space-4);
+  text-align: center;
+}
+
+/* L/Sekundær/Bold */
+.title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+/* S/Sekundær/Regular i text/Sekundær */
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-snug);
+}
+
+@media (max-width: 48rem) {
+  .scene {
+    gap: var(--space-6);
+    padding-top: var(--space-12);
+  }
+}

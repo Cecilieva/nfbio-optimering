@@ -1,0 +1,126 @@
+/* Figma "Søg og filtrér": søgefeltet og knappen øverst, byerne under – centreret med 16px imellem */
+.controls {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+  width: 100%;
+}
+
+/* Feltet (280px) og knappen ved siden af hinanden med 8px imellem */
+.search {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.field {
+  width: var(--size-cinema-search-width);
+}
+
+/* Browserens eget kryds i søgefeltet beholdes ikke – feltet tømmes ved at slette teksten */
+.field input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+/* "Brug min placering": samme højde som feltet */
+.locate {
+  flex-shrink: 0;
+}
+
+.locationError {
+  color: var(--color-status-error);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-snug);
+}
+
+/* Figma "Byer (filter)": knapperne brydes over flere linjer, centreret, 8px imellem */
+.cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  max-width: var(--size-cinema-cities-width);
+}
+
+/* Figma "Biografliste": landsdelene under hinanden med 56px imellem */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  width: 100%;
+  padding: var(--space-8) var(--layout-page-margin) var(--space-24);
+}
+
+/* En landsdel: overskriften og kortene med 24px imellem */
+.region {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Figma "Overskrift": "Jylland" (M/Sekundær/Bold) og "9 biografer" (S, dæmpet) på samme linje */
+.heading {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+}
+
+.count {
+  color: var(--color-text-input-muted);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Kortene: højst 5 pr. række. Bliver der for lidt plads, falder der et kort af ad gangen (5, 4, 3 …),
+   så et kort aldrig bliver smallere end --size-cinema-card-min-width. 2 pr. række på mobil.
+   max(): kolonnen er mindst 1/5 af bredden (så der aldrig er mere end 5) og mindst min-bredden.
+   32px mellem rækkerne og 20px mellem kortene */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(max(var(--size-cinema-card-min-width), calc((100% - 4 * var(--space-5)) / 5)), 1fr)
+  );
+  gap: var(--space-8) var(--space-5);
+  list-style: none;
+}
+
+.empty {
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* Mobil: feltet og knappen under hinanden, to kort pr. række og 16px i siderne */
+@media (max-width: 48rem) {
+  /* 16px i siderne, så feltet og knappen ikke rører kanten */
+  .controls {
+    padding-inline: var(--space-4);
+  }
+
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .list {
+    gap: var(--space-10);
+    padding-inline: var(--space-4);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+}
