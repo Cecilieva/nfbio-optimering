@@ -55,7 +55,7 @@
   height: var(--border-width);
   margin: 0;
   border: 0;
-  background: var(--color-divider);
+  background: var(--color-border);
 }
 
 /* "Udfyld de markerede felter." øverst i formularen */

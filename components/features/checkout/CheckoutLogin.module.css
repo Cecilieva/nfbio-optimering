@@ -64,7 +64,7 @@
   content: "";
   flex: 1;
   height: var(--border-width);
-  background: var(--color-divider);
+  background: var(--color-border);
 }
 
 /* "Opret profil" og "Klik her" nederst i kortet: blå tekst, understreget når man holder musen over */
