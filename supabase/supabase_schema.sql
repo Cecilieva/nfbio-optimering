@@ -96,6 +96,7 @@ create table showtimes (
   starts_at  timestamptz not null,
   format     text not null default '2D',   -- 2D / 3D / 4DX / 70MM
   price_dkk  int  not null default 130,
+  tags       text[] not null default '{}', -- forestillingens kendetegn, fx "Babybio", "Dansk undertekst" ("Ekstra filtrering" på /film)
   unique (hall_id, starts_at)
 );
 create index on showtimes (movie_id, starts_at);
