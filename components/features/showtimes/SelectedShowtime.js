@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import Button from "@/components/ui/Button";
-import { formatDayKey, formatDayMonthShort, formatPremiere, formatTime } from "@/lib/format";
+import { formatDayKey, formatDayMonthShort, formatTime } from "@/lib/format";
 import HallMap from "./HallMap";
 import styles from "./SelectedShowtime.module.css";
 
 // Boksen "Din forestilling" under skemaet - viser det tidspunkt, man har valgt.
 //   "Se salen"       - folder salen ud (HallMap), så man kan se hvilke sæder der er taget
-//   "Vælg billetter" - går videre til sædevalget. Kun når billetsalget er åbent (canBuy).
-//                      Ellers står der, hvornår billetsalget åbner (ticketSaleOpens).
+//   "Vælg billetter" - går videre til sædevalget
+// Den vises kun, når billetsalget er åbent (ellers viser ShowtimeList kortet "Billetsalg lukket").
 // hallLayout er salens sæder fra getHallLayouts(). Har vi den ikke, viser vi ikke "Se salen".
-export default function SelectedShowtime({ movie, showtime, hallLayout, canBuy, ticketSaleOpens }) {
+export default function SelectedShowtime({ movie, showtime, hallLayout }) {
   // Er salen foldet ud?
   const [hallOpen, setHallOpen] = useState(false);
 
@@ -60,11 +60,7 @@ export default function SelectedShowtime({ movie, showtime, hallLayout, canBuy, 
             </Button>
           )}
 
-          {/* "Vælg billetter" - eller hvornår billetsalget åbner */}
-          {canBuy && <Button href={`/bestil/saeder/${showtime.id}`}>Vælg billetter</Button>}
-          {!canBuy && ticketSaleOpens && (
-            <p className={styles.saleOpens}>Billetsalg fra {formatPremiere(ticketSaleOpens)}</p>
-          )}
+          <Button href={`/bestil/saeder/${showtime.id}`}>Vælg billetter</Button>
         </div>
       </div>
 

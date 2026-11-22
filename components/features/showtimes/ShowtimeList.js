@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Chip from "@/components/ui/Chip";
 import FilterField from "@/components/ui/FilterField";
 import { addDays, formatDayKey, formatDayMonthShort, formatPremiere, formatWeekday } from "@/lib/format";
+import SaleClosed from "./SaleClosed";
 import SelectedShowtime from "./SelectedShowtime";
 import ShowtimeButton from "./ShowtimeButton";
 import StatusDot from "./StatusDot";
@@ -24,8 +25,10 @@ const DAYS_PER_WEEK = 7;
 //   4. "Din forestilling" - det tidspunkt, man har valgt
 //
 // Aktuelle film vises fra i dag. Kommende film vises fra premieren.
-// Den får filmen (movie), alle filmens spilletider (showtimes) og salenes layout (halls) fra filmsiden.
-export default function ShowtimeList({ movie, showtimes, halls }) {
+// Er billetsalget ikke åbnet endnu, står kortet "Billetsalg lukket" (SaleClosed) i stedet for skemaet.
+// Den får filmen (movie), alle filmens spilletider (showtimes), salenes layout (halls)
+// og om man er logget ind (loggedIn - til "Følg") fra filmsiden.
+export default function ShowtimeList({ movie, showtimes, halls, loggedIn }) {
   // Det, brugeren har valgt på siden
   const [cinemaId, setCinemaId] = useState(null); // valgt biograf
   const [format, setFormat] = useState("all"); // valgt format: "all", "2D", "3D", "4DX" eller "70MM"
@@ -58,6 +61,11 @@ export default function ShowtimeList({ movie, showtimes, halls }) {
   // Vi bruger kun spilletider mellem første og sidste dag
   const inPeriod = showtimes.filter((showtime) => showtime.day >= firstDay && showtime.day <= lastDay);
 
+  // Billetsalget er ikke åbnet: overskrift og biograf-vælger øverst, og kortet "Billetsalg lukket" i stedet for skemaet
+  if (!movie.ticket_sale_open) {
+    return <ClosedShowtimes movie={movie} showtimes={inPeriod} loggedIn={loggedIn} />;
+  }
+
   // Er der ingen spilletider, viser vi en kort tekst i stedet for skemaet
   if (inPeriod.length === 0) {
     let message = "Der er ingen kommende spilletider i din by.";
@@ -77,15 +85,7 @@ export default function ShowtimeList({ movie, showtimes, halls }) {
 
   // ---------- 2) Biograf og format ----------
 
-  // Lav en liste over biograferne, der viser filmen (hver biograf kun én gang)
-  const cinemas = [];
-  for (const showtime of inPeriod) {
-    const cinema = showtime.hall.cinema;
-    const alreadyAdded = cinemas.some((c) => c.id === cinema.id);
-    if (!alreadyAdded) {
-      cinemas.push(cinema);
-    }
-  }
+  const cinemas = listCinemas(inPeriod);
 
   // Find den valgte biograf. Har man ikke valgt en, tager vi den første.
   let cinema = cinemas.find((c) => c.id === cinemaId);
@@ -96,14 +96,7 @@ export default function ShowtimeList({ movie, showtimes, halls }) {
   // Kun spilletiderne i den valgte biograf
   const inCinema = inPeriod.filter((showtime) => showtime.hall.cinema.id === cinema.id);
 
-  // Lav en liste over formaterne, fx ["2D", "4DX"] (hvert format kun én gang)
-  const formats = [];
-  for (const showtime of inCinema) {
-    if (!formats.includes(showtime.format)) {
-      formats.push(showtime.format);
-    }
-  }
-  formats.sort();
+  const formats = listFormats(inCinema);
 
   // Kun spilletiderne i det valgte format ("all" = alle formater)
   const visible = inCinema.filter((showtime) => format === "all" || showtime.format === format);
@@ -266,15 +259,70 @@ export default function ShowtimeList({ movie, showtimes, halls }) {
       </div>
 
       {/* 4. "Din forestilling" - vises kun, når der er valgt et tidspunkt */}
-      {selected && (
-        <SelectedShowtime
-          movie={movie}
-          showtime={selected}
-          hallLayout={halls[selected.hall_id]}
-          canBuy={movie.ticket_sale_open}
-          ticketSaleOpens={movie.ticket_sale_opens}
-        />
-      )}
+      {selected && <SelectedShowtime movie={movie} showtime={selected} hallLayout={halls[selected.hall_id]} />}
+    </section>
+  );
+}
+
+// Biograferne, der viser filmen (hver biograf kun én gang)
+function listCinemas(showtimes) {
+  const cinemas = [];
+  for (const showtime of showtimes) {
+    const cinema = showtime.hall.cinema;
+    if (!cinemas.some((c) => c.id === cinema.id)) {
+      cinemas.push(cinema);
+    }
+  }
+  return cinemas;
+}
+
+// Formaterne, fx ["2D", "4DX"] (hvert format kun én gang, i rækkefølge)
+function listFormats(showtimes) {
+  const formats = [];
+  for (const showtime of showtimes) {
+    if (!formats.includes(showtime.format)) {
+      formats.push(showtime.format);
+    }
+  }
+  return formats.sort();
+}
+
+// Spilletiderne, når billetsalget ikke er åbnet endnu (Figma "Billetsalg lukket"):
+// overskriften og biograf-vælgeren som normalt, og under dem kortet med "Følg".
+// Er der ingen spilletider i byen endnu, står der bare "Spilletider" uden biograf-vælger.
+function ClosedShowtimes({ movie, showtimes, loggedIn }) {
+  const [cinemaId, setCinemaId] = useState(null);
+  const [cinemaOpen, setCinemaOpen] = useState(false);
+
+  const cinemas = listCinemas(showtimes);
+
+  // Den valgte biograf - eller den første
+  const cinema = cinemas.find((c) => c.id === cinemaId) ?? cinemas[0];
+
+  // Formaterne i den valgte biograf
+  const formats = listFormats(showtimes.filter((showtime) => showtime.hall.cinema.id === cinema?.id));
+
+  return (
+    <section className={`${styles.showtimes} ${styles.closed}`} aria-labelledby="spilletider">
+      <div className={styles.top}>
+        <h2 id="spilletider" className={styles.heading}>
+          {cinema ? `Spilletider i ${cinema.name}` : "Spilletider"}
+        </h2>
+
+        {cinema && (
+          <FilterField
+            variant="box"
+            label="Biograf"
+            options={cinemas.map((c) => ({ value: String(c.id), label: c.name }))}
+            value={String(cinema.id)}
+            onChange={(value) => setCinemaId(Number(value))}
+            open={cinemaOpen}
+            onOpenChange={setCinemaOpen}
+          />
+        )}
+      </div>
+
+      <SaleClosed movie={movie} formats={formats} loggedIn={loggedIn} />
     </section>
   );
 }
