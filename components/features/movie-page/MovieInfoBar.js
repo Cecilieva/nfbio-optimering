@@ -12,9 +12,9 @@ import styles from "./MovieInfoBar.module.css";
  *   duration_min?: number, age_rating?: string, premiere_date?: string, trailer_url?: string,
  *   ticket_sale_open?: boolean }} props.movie "Følg film" før billetsalget åbner, "Køb billet" når det er åbent
  * @param {string} props.ticketsHref hvor "Køb billet" fører hen
- * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
+ * @param {boolean} [props.loggedIn] Er man logget ind? ("Følg film" viser ellers en besked om at logge ind)
  */
-export default function MovieInfoBar({ movie, ticketsHref, loginHref }) {
+export default function MovieInfoBar({ movie, ticketsHref, loggedIn }) {
   const age = movie.age_rating;
   const text = movie.short_description;
 
@@ -40,7 +40,7 @@ export default function MovieInfoBar({ movie, ticketsHref, loginHref }) {
         <TrailerButton trailerUrl={movie.trailer_url} title={movie.title} />
         {/* "Følg film" giver besked, når billetsalget åbner – så den vises kun, indtil salget er åbent.
             "Køb billet" kommer først, når billetsalget er åbnet. */}
-        {!movie.ticket_sale_open && <FollowButton title={movie.title} loginHref={loginHref} wideToast />}
+        {!movie.ticket_sale_open && <FollowButton title={movie.title} loggedIn={loggedIn} wideToast />}
         {movie.ticket_sale_open && <Button href={ticketsHref}>Køb billet</Button>}
       </div>
     </div>

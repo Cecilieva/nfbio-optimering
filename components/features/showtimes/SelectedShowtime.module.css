@@ -57,16 +57,6 @@
   gap: var(--space-4);
 }
 
-/* "Billetsalg fra 3. december" - står i stedet for "Vælg billetter", før billetsalget åbner */
-.saleOpens {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-x-small);
-  line-height: var(--line-height-snug);
-}
-
 /* Den lille pil i "Se salen" */
 .chevron {
   width: var(--size-showtime-chevron-width);

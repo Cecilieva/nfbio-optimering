@@ -5,6 +5,11 @@
   gap: var(--space-4);
 }
 
+/* "Billetsalg lukket": 24px mellem overskriften og kortet */
+.closed {
+  gap: var(--space-6);
+}
+
 /* ---------- 1. Overskrift til venstre, knapper og biograf-vælger til højre ---------- */
 
 .top {

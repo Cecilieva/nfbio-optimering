@@ -1,0 +1,78 @@
+/* Kortet: mørk boks med runde hjørner – indholdet til venstre, "Følg" til højre */
+.card {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-medium);
+  background: var(--color-option-background);
+}
+
+/* Plakat og tekst ved siden af hinanden */
+.content {
+  display: flex;
+  flex: 1;
+  gap: var(--space-6);
+  align-items: flex-start;
+  min-width: 0;
+}
+
+/* Den lille plakat – samme størrelse som i "Din forestilling" */
+.poster {
+  flex-shrink: 0;
+  width: var(--size-showtime-poster-width);
+  height: var(--size-showtime-poster-height);
+  overflow: hidden;
+}
+
+.poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  line-height: var(--line-height-snug);
+}
+
+/* "Billetsalget er ikke åbnet endnu" */
+.title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+}
+
+/* "Vises i 2D og 4DX" */
+.formats {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+}
+
+/* "Spilletider og billetter vises her, …" */
+.note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+}
+
+/* Mobil: "Følg" under teksten, og lidt mindre luft */
+@media (max-width: 48rem) {
+  .card {
+    flex-direction: column;
+    gap: var(--space-6);
+    align-items: flex-start;
+    padding: var(--space-6);
+  }
+
+  .title {
+    font-size: var(--font-size-small);
+  }
+}

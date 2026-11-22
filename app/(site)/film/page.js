@@ -30,9 +30,6 @@ export default async function HomePage({ searchParams }) {
     getCurrentUser(),
   ]);
 
-  // Ikke logget ind: "Følg film" sender en til login
-  const loginHref = user ? undefined : "/login?next=/film";
-
   return (
     <main id="indhold" className={styles.page}>
       {/* Hero'en: plakater i et stjernerum, styret af scroll, der folder sig ud til det første "Kommer snart"-kort.
@@ -40,7 +37,7 @@ export default async function HomePage({ searchParams }) {
       <FeaturedMovies
         movies={featured}
         introPosters={introPosters}
-        loginHref={loginHref}
+        loggedIn={Boolean(user)}
         skipIntro={intro === "0"}
       />
 

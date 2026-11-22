@@ -37,9 +37,6 @@ export default async function MoviePage({ params }) {
 
   const [showtimes, user] = await Promise.all([getShowtimes(movie.id, city.id), getCurrentUser()]);
 
-  // Ikke logget ind: "Følg film" sender en til login
-  const loginHref = user ? undefined : `/login?next=/film/${slug}`;
-
   // til "Se salen"
   const halls = await getHallLayouts(showtimes.map((showtime) => showtime.hall_id));
 
@@ -47,12 +44,12 @@ export default async function MoviePage({ params }) {
     // data-theme: "thriller", "familie" eller ingenting (farverne står nederst i tokens.css)
     // data-hero-under-header: headeren ligger gennemsigtig oven på heroen
     <main id="indhold" className={styles.page} data-theme={movie.theme ?? undefined} data-hero-under-header>
-      <MovieHero movie={movie} loginHref={loginHref} />
+      <MovieHero movie={movie} loggedIn={Boolean(user)} />
 
       <MovieDetails movie={movie} />
 
       <div className={styles.content}>
-        <ShowtimeList movie={movie} showtimes={showtimes} halls={halls} />
+        <ShowtimeList movie={movie} showtimes={showtimes} halls={halls} loggedIn={Boolean(user)} />
       </div>
     </main>
   );

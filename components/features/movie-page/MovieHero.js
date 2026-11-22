@@ -13,9 +13,9 @@ import styles from "./MovieHero.module.css";
  * @param {object} props
  * @param {object} props.movie fra getMovieBySlug (+ hero_url, poster_url, before_premiere, case_genre)
  * @param {string} [props.ticketsHref="#spilletider"] hvor "Køb billet" fører hen
- * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
+ * @param {boolean} [props.loggedIn] Er man logget ind? ("Følg film" viser ellers en besked om at logge ind)
  */
-export default function MovieHero({ movie, ticketsHref = "#spilletider", loginHref }) {
+export default function MovieHero({ movie, ticketsHref = "#spilletider", loggedIn }) {
   const image = movie.hero_url || movie.poster_url;
   const caseGenre = movie.case_genre;
   const flashlight = Boolean(caseGenre && image);
@@ -59,7 +59,7 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider", loginHr
         </div>
 
         <div className={styles.details}>
-          <MovieInfoBar movie={movie} ticketsHref={ticketsHref} loginHref={loginHref} />
+          <MovieInfoBar movie={movie} ticketsHref={ticketsHref} loggedIn={loggedIn} />
         </div>
       </div>
     </section>

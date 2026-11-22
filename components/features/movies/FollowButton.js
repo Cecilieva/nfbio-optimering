@@ -20,12 +20,23 @@ const RING_MS = 500;
  * Fra (kant og "Følg film") → klik: Ringer 1–4 (klokken ringer) → Til (blå knap med fyldt klokke og beskeden)
  * → Til stille (beskeden er væk efter 3 sekunder). Et klik mere slår den fra igen.
  *
+ * Er man ikke logget ind, bliver man på siden: et klik viser bare beskeden
+ * "Du skal være logget ind for at kunne følge filmen." (Figma "Ikke logget ind – besked").
+ *
  * @param {object} props
  * @param {string} props.title Filmens titel (til skærmlæsere)
- * @param {string} [props.loginHref] Link til login, hvis man ikke er logget ind
+ * @param {boolean} [props.loggedIn] Er man logget ind? Ellers kan man ikke følge filmen
+ * @param {string} [props.label] Teksten på knappen (standard: "Følg film")
  * @param {boolean} [props.wideToast] Beskeden bliver lige så bred som knaprækken (den skal have position: relative)
+ * @param {boolean} [props.toastEnd] Beskeden flugter med knappens højre kant (når knappen står yderst til højre)
  */
-export default function FollowButton({ title, loginHref, wideToast = false }) {
+export default function FollowButton({
+  title,
+  loggedIn = true,
+  label = "Følg film",
+  wideToast = false,
+  toastEnd = false,
+}) {
   const [following, setFollowing] = useState(false);
   const [ringing, setRinging] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -53,6 +64,11 @@ export default function FollowButton({ title, loginHref, wideToast = false }) {
   }, [ringing]);
 
   function handleClick() {
+    // Ikke logget ind: vis kun beskeden om at logge ind
+    if (!loggedIn) {
+      setShowToast(true);
+      return;
+    }
     if (ringing) {
       return;
     }
@@ -71,24 +87,15 @@ export default function FollowButton({ title, loginHref, wideToast = false }) {
     setRinging(true);
   }
 
-  // Ikke logget ind: knappen er et link til login
-  if (loginHref) {
-    return (
-      <Button variant="outline" href={loginHref} aria-label={`Log ind for at følge ${title}`}>
-        <Image src="/icons/bell.svg" alt="" width={16} height={18} className={styles.bell} />
-        Følg film
-      </Button>
-    );
-  }
-
   return (
-    <div className={styles.wrapper} data-wide-toast={wideToast || undefined}>
+    <div className={styles.wrapper} data-wide-toast={wideToast || undefined} data-toast-end={toastEnd || undefined}>
       {/* Fra: kant og "Følg film" (Button "outline"). Til: blå knap (Button "primary") med kun den fyldte klokke. */}
       <Button
         variant={following ? "primary" : "outline"}
         className={following ? styles.on : undefined}
         onClick={handleClick}
-        aria-pressed={following}
+        // Ikke logget ind: knappen kan ikke slås til, så den har ingen "trykket"-tilstand
+        aria-pressed={loggedIn ? following : undefined}
         aria-label={`Følg ${title}`}
       >
         <Image
@@ -99,12 +106,15 @@ export default function FollowButton({ title, loginHref, wideToast = false }) {
           className={styles.bell}
           data-ringing={ringing || undefined}
         />
-        {!following && "Følg film"}
+        {!following && label}
       </Button>
 
       {/* role="status" læser beskeden op for skærmlæsere, når den dukker op */}
-      <p role="status" className={styles.toast} data-visible={showToast}>
-        {showToast && "Vi giver besked på mail, når billetsalget åbner."}
+      <p role="status" className={styles.toast} data-visible={showToast} data-login={!loggedIn || undefined}>
+        {showToast &&
+          (loggedIn
+            ? "Vi giver besked på mail, når billetsalget åbner."
+            : "Du skal være logget ind for at kunne følge filmen.")}
       </p>
     </div>
   );
