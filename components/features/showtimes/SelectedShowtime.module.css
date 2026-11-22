@@ -126,3 +126,14 @@
     align-items: stretch;
   }
 }
+
+/* Små telefoner: knapperne deler bredden og lægger sig under hinanden, hvis de ikke kan være på én linje */
+@media (max-width: 30rem) {
+  .buttons {
+    flex-wrap: wrap;
+  }
+
+  .buttons > * {
+    flex: 1 1 auto;
+  }
+}

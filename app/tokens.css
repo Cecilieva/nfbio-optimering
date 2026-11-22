@@ -216,6 +216,18 @@
     color-mix(in srgb, var(--color-toning-100) 97%, transparent) 88%,
     var(--color-toning-100) 100%
   );
+  /* Tablet og mobil: teksten fylder den nederste halvdel af heroen, så skyggen er næsten
+     dækkende fra midten og nedad, og billedet kun ses tydeligt foroven */
+  --gradient-movie-hero-shadow-bottom-compact: linear-gradient(
+    to bottom,
+    var(--color-toning-0) 0%,
+    color-mix(in srgb, var(--color-toning-100) 12%, transparent) 15%,
+    color-mix(in srgb, var(--color-toning-100) 35%, transparent) 30%,
+    color-mix(in srgb, var(--color-toning-100) 65%, transparent) 42%,
+    color-mix(in srgb, var(--color-toning-100) 85%, transparent) 52%,
+    color-mix(in srgb, var(--color-toning-100) 95%, transparent) 62%,
+    var(--color-toning-100) 72%
+  );
   /* Figma "Program – filmgitter": toningen på kortene i "Film der kører nu".
      Toning/0% til og med 40 %, Toning/70% ved 65 % og Toning/100% i bunden. */
   --gradient-poster-feed-overlay: linear-gradient(
@@ -395,6 +407,7 @@
   --size-movie-hero-height: min(56rem, 90svh); /* 896px, max 90 % af skærmhøjden (svh) */
   --size-movie-hero-shadow: min(30rem, 46%); /* Højden på skyggerne foroven og forneden på filmsidens hero */
   --size-movie-hero-shadow-strong: min(36rem, 55%); /* Højere skygger på standard-filmsiden */
+  --size-movie-hero-shadow-compact: 85%; /* Tablet og mobil: skyggen forneden går højere op, fordi teksten fylder mere af heroen */
   --scale-projector-start: 1.08; /* Start: billedet er zoomet ind til 108 % … */
   --scale-projector-drift: 1.06; /* Drift: … og glider langsomt mellem 100 % og 106 % */
   --distance-projector-drift-x: -3%; /* Drift: billedet glider 3 % mod venstre */
@@ -471,6 +484,7 @@
   --size-ticket-logo-width: 50px; /* isbjørnen på stubben */
   --size-ticket-logo-height: 38px; /* isbjørnens højde */
   --space-ticket-logo-bottom: 9px; /* isbjørnen fra bunden af stubben */
+  --scale-ticket-compact: 0.78; /* mobil: billetten (360px) bliver mindre, så den kan være inde i sprækken på en 320px skærm */
   --scale-popcorn-start: 40%; /* Popkornet er lille, mens det flyver op … */
   --scale-popcorn-pop: 135%; /* … og popper lidt for stort, før det falder på plads */
 
@@ -599,10 +613,12 @@
   --space-movie-title-melt-drip: 0.4em; /* plads til dråberne - halv længde, ellers sidder titlen for højt */
   --space-movie-title-melt-row: 0.1em; /* hvis en lang titel går over 2 linjer */
   --font-size-movie-title-melt-compact: 4rem; /* 64px (8 × 8) på tablet og mobil */
+  --font-size-movie-title-melt-narrow: min(var(--font-size-movie-title-melt-compact), 16vw); /* smalle telefoner: CLAYFACE er 5,5 × skriftstørrelsen bred, så den skal kunne krympe */
   --line-height-movie-title-melt: 0.8;
   --duration-title-melt: 7s; /* ned 3,5 s -> hænger 2,1 s -> op 1,4 s */
   --easing-title-melt-down: cubic-bezier(0.45, 0, 0.2, 1); /* dråberne: langsom start, blødt stop */
   --size-flashlight: 40cqw; /* lyskeglen: 576px ved 1440px = 40 % af heroens bredde (i Figma 480px – gjort større) */
+  --size-flashlight-compact: 70cqw; /* små telefoner: 70 % af heroens bredde, så lyskeglen er til at se */
   --size-rec-dot: 0.625rem; /* 10px - den røde prik ved "REC" */
   --duration-flashlight-auto: 1.6s; /* Lommelygten glider selv videre til næste position (hvert 2. sekund) */
   --duration-flashlight-follow: 300ms; /* … og meget hurtigere, når den følger musen */

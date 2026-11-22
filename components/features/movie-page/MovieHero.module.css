@@ -188,4 +188,12 @@
   .bottom {
     grid-column: 1 / -1;
   }
+
+  /* Teksten fylder over halvdelen af heroen på små skærme. Skyggen forneden går derfor
+     højere op og er mørkere, så teksten kan læses oven på billedet.
+     Ikke med lommelygten: dens baggrund er allerede mørk, og skyggen ville skjule lyskeglen */
+  .hero:not([data-flashlight])::after {
+    height: var(--size-movie-hero-shadow-compact);
+    background: var(--gradient-movie-hero-shadow-bottom-compact);
+  }
 }

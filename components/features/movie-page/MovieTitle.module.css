@@ -247,3 +247,10 @@
     font-size: var(--font-size-movie-title-melt-compact);
   }
 }
+
+/* Små telefoner: titlen krymper med skærmen, så hele ordet kan ses */
+@media (max-width: 30rem) {
+  .title[data-variant="clayface"] {
+    font-size: var(--font-size-movie-title-melt-narrow);
+  }
+}

@@ -43,3 +43,10 @@
 :global(html[data-motion="reduce"]) .cone {
   transition: none;
 }
+
+/* Små telefoner: lyskeglen bliver større, så man kan se, hvad den lyser på */
+@media (max-width: 30rem) {
+  .flashlight {
+    --size-flashlight: var(--size-flashlight-compact);
+  }
+}

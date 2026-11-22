@@ -92,9 +92,9 @@
   transition: none;
 }
 
-/* Mobil: billetten bliver lidt mindre, så den kan være på skærmen */
+/* Mobil: billetten bliver lidt mindre, så den kan være inde i sprækken */
 @media (max-width: 26rem) {
   .paperWindow {
-    zoom: 0.85;
+    zoom: var(--scale-ticket-compact);
   }
 }
