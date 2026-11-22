@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { unstable_rethrow } from "next/navigation";
 import LinkLoader from "@/components/features/loading/LinkLoader";
+import { getSearchCinemas } from "@/lib/data/cinemas";
 import { getCities, getSelectedCity } from "@/lib/data/cities";
 import { getSearchMovies } from "@/lib/data/movies";
 import CityMenu from "./CityMenu";
@@ -15,15 +16,20 @@ import styles from "./Header.module.css";
 //   variant="full" - burgermenu, logo, søg, by og profil (standard)
 //   variant="logo" - kun logoet, fx på Vælg by
 export default async function Header({ variant = "full" }) {
-  // Kun den fulde header skal bruge byen, byerne og filmene til søgningen
+  // Kun den fulde header skal bruge byen, byerne og filmene og biograferne til søgningen
   let city = null;
   let cities = [];
   let searchMovies = [];
+  let searchCinemas = [];
   if (variant === "full") {
     try {
       // Byen hentes først, fordi søgningen kun viser film i byen
       city = await getSelectedCity();
-      [cities, searchMovies] = await Promise.all([getCities(), getSearchMovies(city?.id)]);
+      [cities, searchMovies, searchCinemas] = await Promise.all([
+        getCities(),
+        getSearchMovies(city?.id),
+        getSearchCinemas(),
+      ]);
     } catch (error) {
       // Next.js' egne signaler (fx fra cookies()) sendes videre – vi fanger kun rigtige fejl
       unstable_rethrow(error);
@@ -70,8 +76,8 @@ export default async function Header({ variant = "full" }) {
         {/* Højre: søg, by og profil */}
         <ul className={styles.actions}>
           <li>
-            {/* Søg efter film */}
-            <HeaderSearch movies={searchMovies} triggerClassName={styles.iconButton} />
+            {/* Søg efter film og biografer */}
+            <HeaderSearch movies={searchMovies} cinemas={searchCinemas} triggerClassName={styles.iconButton} />
           </li>
           <li>
             {/* Vælg en anden by */}

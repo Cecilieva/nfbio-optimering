@@ -37,6 +37,8 @@ app/
   (site)/                 Route-gruppe: alle andre sider. layout.js giver fuld Header + Footer
   (site)/film/page.js     /film - Forside (filmoversigt for den valgte by)
   (site)/film/[slug]/     Filmside
+  (site)/biografer/page.js       /biografer - Find din biograf (alle biografer pr. landsdel)
+  (site)/biografer/[slug]/       Biografsiden (fx /biografer/aarhus-bio)
   (bestil)/               Route-gruppe: købsflowet. layout.js giver logo-header og ingen footer
   (bestil)/bestil/
     saeder/[showtimeId]/  Sædevalg (før der findes en booking)
@@ -61,8 +63,9 @@ components/
     payment/              Betaling: PaymentForm, PaymentFailed, PaymentLoader
     ticket/               Billetten: Ticket, TicketPrint
     auth/                 Log ind, Opret profil og Profil: AuthScreen, AuthStatus, SignUpForm, ProfileCard, ProfileTickets
+    cinemas/              Biografsiderne: CinemaFinder, CinemaCard, CinemaHero, CinemaTabs, BeforeYouCome
 lib/
-  data/                   Læsning: cities, movies, featured, intro-posters, showtimes, seats, bookings, tickets, profile
+  data/                   Læsning: cities, cinemas, movies, featured, intro-posters, showtimes, seats, bookings, tickets, profile
   actions/                Server actions: auth, city, booking, newsletter
   supabase/server.js      Supabase-klienten til serveren
   auth.js                 getCurrentUser()
@@ -117,8 +120,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 
 | Figma-skærm | Figma node-id | Route | Komponenter |
 |---|---|---|---|
-| Header | 258:5371 | alle sider | Header (`variant="full"` og `variant="logo"`), ScrollHeader (gemmer headeren ved scroll ned, viser den ved scroll op), MainMenu, CityMenu, HeaderSearch (Figma "Søgning" 3709:15325 - søge-ikonet folder et felt ud til venstre for sig selv og lukker det igen; søger i titlerne fra `getSearchMovies` i `lib/data/movies.js` - film, der kører nu i den valgte by, og kommende. Piletaster flytter markeringen, Enter åbner filmen) |
-| Menu | 1056:25687 | alle sider med fuld header | MainMenu (burgermenuen), SidePanel (panelet fra siden med "Luk" øverst - intet logo; deles med Byskift), Button |
+| Header | 258:5371 | alle sider | Header (`variant="full"` og `variant="logo"`), ScrollHeader (gemmer headeren ved scroll ned, viser den ved scroll op), MainMenu, CityMenu, HeaderSearch (Figma "Søgning" 3709:15325 - søge-ikonet folder et felt ud til venstre for sig selv og lukker det igen; søger i film fra `getSearchMovies` i `lib/data/movies.js` - film, der kører nu i den valgte by, og kommende - og i alle biografer fra `getSearchCinemas` i `lib/data/cinemas.js` (navn og by). Under hver titel står en lille kategori: "Film" eller fx "Biograf · Aarhus" (Figma "Søgeresultat" med "Vis kategori"). Højst 8 resultater, og biograferne får op til 3 af dem. Piletaster flytter markeringen, Enter åbner resultatet) |
+| Menu | 1056:25687 | alle sider med fuld header | MainMenu (burgermenuen - "Biografer" fører til `/biografer`, ligesom i footeren), SidePanel (panelet fra siden med "Luk" øverst - intet logo; deles med Byskift), Button |
 | Byskift | 2588:40783 | alle sider med fuld header | CityMenu (lokations-ikonet i headeren - panelet kommer fra højre, vælger by med `selectCity` og sender til `/film`), SidePanel |
 | Footer | 1084:25941 | alle sider med footer | Footer (12-kolonne griddet: indholdet i kolonne 2-11 med `--layout-page-margin`; logo, Biograf og Hjælp 2 kolonner hver, nyhedsbrevet 4; Egmont-logoet fra nfbio.dk står lodret i midten og linker til egmont.com), NewsletterForm |
 | Vælg by | 2141:155168 (By-knap: 3686:15251) | `/` og `/by` | Header (`variant="logo"`), Spotlight, Button (`variant="tile"` - Figma "By-knap" med Default og Hover, hvor kanten bliver accent/Primær). Ingen by er markeret på forhånd |
@@ -146,6 +149,8 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Betalingsfejl (side) | Fejlside (Popcorn – loader: 1335:26656, "Brændt 1-4") | `/bestil/[bookingId]/betaling/fejl?metode=card` | PaymentFailed (bygger på Overlay - de brændte popkorn med røg: PopcornLoader `burnt`), PaymentLoader ("Reserverer pladser" - deles med PaymentForm), Button. "Prøv igen" betaler igen med samme metode ("Reserverer pladser" og så fejlsiden igen), "Vælg anden betaling" fører til betalingen med inline-fejlen |
 | Billet - printes ("Din billet klargøres til udprintning") | 214:5203 | `/bestil/[bookingId]/billet` | TicketPrint (billetten printes ud af sprækken i fire ryk - `--duration-ticket-print`), StepHeader (`centered`), LoadingDots, PopcornShower (popkornene, der drysser over skærmen i stedet for konfetti - `pop-1…3.svg`) |
 | Billet - færdig ("Din billet er printet") | 214:4766 (Billet: 2964:14829, Popkorn: 668:4961) | `/bestil/[bookingId]/billet` | TicketPrint, Ticket (papiret med splinterne `public/billet/moenster.svg` og stubben med isbjørnen `icons/bear.svg` - bruger Figmas variabler), Button ("Tilbage til forsiden"). Underteksten laves med `formatShowtimeLine` i `lib/format.js` |
+| Find din biograf | 1480:27857 | `/biografer` | Spotlight (lyskeglen fra Vælg by), CinemaFinder ("Søg efter by eller biograf", "Brug min placering" - finder den nærmeste by ud fra `cities.latitude/longitude` - og by-knapperne med Chip; biograferne grupperet efter `cities.region` i rækkefølgen fra `REGIONS` i `lib/data/cinemas.js`), CinemaCard (Figma "Biografkort" - højst 5 pr. række, færre på smallere skærme, 2 på mobil. Billedet er `cinemas.image_url`, et af publikumsbillederne i `public/biografer/`), TextField. Data fra `getAllCinemas` |
+| Biografside ("Detaljeside til by") | 1647:28524 (By-header: 1951:29733, Før du kommer: 1661:28782, Info-række: 1657:28754) | `/biografer/[slug]` | CinemaHero ("By-header"), CinemaTabs (fanerne Program, Events & nyheder og Om filmformater er kun pynt - de linker ikke til noget og har intet indhold), BeforeYouCome (kort fra Google Maps, adresse, "Find vej", "Kontakt os" og rækkerne Åbningstider, Parkering og Tog og bus fra `cinemas.opening_hours/parking/transport` - en tom række vises ikke). Data fra `getCinemaBySlug` |
 | 404 side | 1580:35416 | alle ukendte adresser (`app/not-found.js`) | Header, MessagePage (illustrationen til venstre, tekst og knapper til højre - deles med fejlsiden), Button, Footer |
 | 500 side (fejlside) | 3745:16005 | `error.js` i hver route-gruppe + `app/global-error.js` | ErrorState (samme MessagePage som 404 med "Noget gik galt hos os.", "Prøv igen" (`retry`) og "Gå til support"), Button. Fontene ligger i `app/fonts.js`, så `global-error.js` (der laver sit eget `<html>`) også får dem |
 | Log ind | 761:18178 | `/login` | TextField, Checkbox, Button |
