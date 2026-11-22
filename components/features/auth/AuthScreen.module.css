@@ -50,17 +50,16 @@
       var(--size-auth-fade-right) 100% no-repeat;
 }
 
-/* Figma "Formular": overskrift, felter og teksten i bunden med 32px imellem.
-   Står i kolonne 8-11 og lodret i midten af området under headeren:
-   margin-top skubber den ned forbi headeren, og align-self: center regner margen med. */
+/* Overskrift, felter og teksten i bunden med 32px imellem, i kolonne 8-11.
+   Starter i toppen, så den blå tekst står på linje med "Tilbage" på alle siderne */
 .content {
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
   grid-column: 8 / span 4;
-  align-self: center;
+  align-self: start;
   margin-top: var(--size-header-height);
-  padding-block: var(--space-12);
+  padding-block: var(--space-7) var(--space-12);
 }
 
 /* Figma "Overskrift": tre linjer med 8px imellem */
