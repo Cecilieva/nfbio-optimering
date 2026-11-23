@@ -1,36 +1,13 @@
-/* Badebolden (Figma "Lup Katten" – "Ring"): ligger i billedlaget i heroen.
-   Placeres og drejes med transform fra BouncingBall.js – derfor top/left 0. pointer-events: none, så den ikke tager klik. */
+/* Den røde bold (Figma "Lup Katten" – "Ring"): en cirkel, der ligger i billedlaget i heroen.
+   Placeres med transform fra BouncingBall.js – derfor top/left 0. pointer-events: none, så den ikke tager klik. */
 .ball {
   position: absolute;
   top: 0;
   left: 0;
   width: var(--size-katten-ball);
   height: var(--size-katten-ball);
+  border-radius: 50%;
+  background: var(--color-katten-ball);
   pointer-events: none;
   will-change: transform;
-}
-
-.svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-/* De røde felter */
-.red {
-  fill: var(--color-katten-ball);
-}
-
-/* De gule felter – samme gule som titlen */
-.yellow {
-  fill: var(--color-katten-ball-stripe);
-}
-
-/* Sømmene og omridset: tynde, mørke streger som på en badebold */
-.seam {
-  fill: none;
-  stroke: var(--color-katten-ball-seam);
-  stroke-width: var(--size-katten-ball-seam);
-  stroke-linecap: round;
 }

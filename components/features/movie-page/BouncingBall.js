@@ -19,8 +19,8 @@ const BOUNCE = 0.8;
 const START = { x: 0.15, y: 0.25 };
 
 /**
- * Badebolden i heroen på Katten med Hatten (Figma "Lup Katten" 1816:10337) – røde og gule felter som titlen.
- * Man skubber den væk med musen – jo hurtigere musen bevæger sig, jo længere ryger den. Den ruller, mens den kører.
+ * Den røde bold i heroen på Katten med Hatten (Figma "Lup Katten" 1816:10337).
+ * Man skubber den væk med musen – jo hurtigere musen bevæger sig, jo længere ryger den.
  * Den bremser langsomt op og hopper tilbage fra kanterne, så den aldrig forlader rammen
  * (forælderen – billedlaget i MovieHero). Med "Reducer bevægelse" står den stille.
  *
@@ -38,9 +38,8 @@ export default function BouncingBall() {
       return;
     }
 
-    // Boldens midte, fart i px og hvor meget den er drejet (i grader).
-    // Musens sidste plads bruges til at regne musens fart ud
-    const state = { x: 0, y: 0, vx: 0, vy: 0, angle: 0 };
+    // Boldens midte og fart i px. Musens sidste plads bruges til at regne musens fart ud
+    const state = { x: 0, y: 0, vx: 0, vy: 0 };
     let pointer = null;
     let size = { width: 0, height: 0, radius: 0 };
 
@@ -58,7 +57,7 @@ export default function BouncingBall() {
     }
 
     function draw() {
-      ball.style.transform = `translate3d(${state.x - size.radius}px, ${state.y - size.radius}px, 0) rotate(${state.angle}deg)`;
+      ball.style.transform = `translate3d(${state.x - size.radius}px, ${state.y - size.radius}px, 0)`;
     }
 
     measure(true);
@@ -115,10 +114,6 @@ export default function BouncingBall() {
 
       state.x += state.vx * steps;
       state.y += state.vy * steps;
-      // Bolden ruller: den drejer lige så langt, som den kører vandret (buelængde / radius)
-      if (size.radius > 0) {
-        state.angle += ((state.vx * steps) / size.radius) * (180 / Math.PI);
-      }
       const friction = FRICTION ** steps;
       state.vx *= friction;
       state.vy *= friction;
@@ -157,33 +152,5 @@ export default function BouncingBall() {
     };
   }, [reduced]);
 
-  return (
-    <span ref={ballRef} className={styles.ball} aria-hidden="true">
-      {/* Badebolden: rød bund, to gule felter og sømmene fra polen øverst (tegnet i en 100 × 100-boks) */}
-      <svg viewBox="0 0 100 100" className={styles.svg}>
-        <defs>
-          <clipPath id="katten-ball-clip">
-            <circle cx="50" cy="50" r="48" />
-          </clipPath>
-        </defs>
-        <g clipPath="url(#katten-ball-clip)">
-          <circle cx="50" cy="50" r="48" className={styles.red} />
-          {/* Gult felt forrest (mellem de to sømme nedad) og gult felt øverst (mellem sømmene til højre og venstre) */}
-          <path d="M56 19 C25 30 12 65 24 88 L20 110 L55 110 L48 95 C72 75 72 45 56 19 Z" className={styles.yellow} />
-          <path
-            d="M56 19 C75 22 90 32 93 48 L110 40 L110 -10 L-10 -10 L-10 20 L12 30 C22 18 40 15 56 19 Z"
-            className={styles.yellow}
-          />
-        </g>
-        {/* Sømmene og omridset */}
-        <g className={styles.seam}>
-          <path d="M56 19 C25 30 12 65 24 88" />
-          <path d="M56 19 C72 45 72 75 48 95" />
-          <path d="M56 19 C75 22 90 32 93 48" />
-          <path d="M56 19 C40 15 22 18 12 30" />
-          <circle cx="50" cy="50" r="48" />
-        </g>
-      </svg>
-    </span>
-  );
+  return <span ref={ballRef} className={styles.ball} aria-hidden="true" />;
 }
