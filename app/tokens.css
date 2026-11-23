@@ -60,6 +60,7 @@
 
   /* KAMPAGNE: KATTEN MED HATTEN – farverne i "Titel – hopper" */
   --palette-hop-red: #e8473b;
+  --palette-katten-ball: #b90101; /* Den røde bold i Figma "Lup Katten" */
   --palette-hop-blue: #3fa7e8;
   --palette-hop-yellow: #ffc43d;
 
@@ -608,6 +609,11 @@
   --line-height-movie-title-hop: 1.2;
   --duration-title-hop: 900ms; /* Ét hop i "Titel – hopper" ved hover: op, hænger lidt, lander */
   --delay-title-hop-letter: 50ms; /* Tid mellem bogstaverne i "Titel – hopper" */
+  --color-katten-ball: var(--palette-katten-ball); /* Bolden i heroen (BouncingBall) – de røde felter */
+  --color-katten-ball-stripe: var(--color-title-hop-yellow); /* De gule felter – samme gule som titlen */
+  --color-katten-ball-seam: var(--palette-black); /* Sømmene og omridset på bolden */
+  --size-katten-ball: clamp(7.5rem, 17.4vw, 15.625rem); /* 250px i Figma ved 1440px, mindre på små skærme */
+  --size-katten-ball-seam: 1.6; /* Sømmenes tykkelse i boldens 100 × 100-tegning (ca. 4px ved 250px) */
 
   /* ========================================================================
      KAMPAGNE: CLAYFACE – kun til den film

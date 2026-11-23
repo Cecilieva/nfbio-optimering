@@ -1,3 +1,4 @@
+import BouncingBall from "./BouncingBall";
 import CaseLabel from "./CaseLabel";
 import Countdown from "@/components/features/checkout/Countdown";
 import Flashlight from "./Flashlight";
@@ -8,7 +9,8 @@ import styles from "./MovieHero.module.css";
 
 /**
  * Toppen af filmsiden: billede, "Tilbage", titel + MovieInfoBar
- * Clayface får lommelygte og REC-linje i stedet for projektoren
+ * Clayface får lommelygte og REC-linje i stedet for projektoren.
+ * Katten med Hatten får en rød bold, man kan skubbe rundt med musen (BouncingBall)
  *
  * @param {object} props
  * @param {object} props.movie fra getMovieBySlug (+ hero_url, poster_url, before_premiere, case_genre)
@@ -39,6 +41,8 @@ export default function MovieHero({ movie, ticketsHref = "#spilletider", loggedI
             <div className={styles.toning} aria-hidden="true" />
             <div className={styles.beam} aria-hidden="true" />
             <div className={styles.fadeTop} aria-hidden="true" />
+            {/* Figma "Lup Katten": den røde bold – kun på Katten med Hatten */}
+            {movie.title_variant === "katten" && <BouncingBall />}
           </>
         )}
       </div>
