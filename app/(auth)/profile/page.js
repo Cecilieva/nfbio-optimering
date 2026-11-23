@@ -55,7 +55,7 @@ export default async function ProfilePage() {
 
       <form action={signOut}>
         <AuthNote>
-          Ikke dig? <button type="submit">Log ud</button>
+          Vil du logge ud? <button type="submit">Log ud</button>
         </AuthNote>
         <FormLoader />
       </form>
