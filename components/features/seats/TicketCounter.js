@@ -13,8 +13,21 @@ import styles from "./TicketCounter.module.css";
 //   counts       - antal pr. type, fx { adult: 2, child: 0, senior: 0 }. Forælderen gemmer dem.
 //   onChange     - kaldes med de nye antal, når man trykker plus eller minus
 //   onContinue   - kaldes, når man trykker "Vælg sæder"
-export default function TicketCounter({ basePriceDkk, counts, onChange, onContinue }) {
+//   freeSeats    - antal ledige pladser i salen. Man kan ikke vælge flere billetter end det (og højst MAX_TICKETS)
+export default function TicketCounter({ basePriceDkk, counts, onChange, onContinue, freeSeats = MAX_TICKETS }) {
   const { quantity: total, totalDkk } = countTickets(counts, basePriceDkk);
+
+  // Det højeste antal billetter: MAX_TICKETS – eller færre, hvis der ikke er flere ledige pladser
+  const maxTickets = Math.min(MAX_TICKETS, freeSeats);
+
+  // Teksten under antal og pris. Er der færre ledige pladser end MAX_TICKETS, siger vi det,
+  // så man forstår, hvorfor plus-knappen stopper
+  let hint = "Du vælger sæder i næste trin";
+  if (freeSeats === 0) {
+    hint = "Forestillingen er udsolgt";
+  } else if (freeSeats < MAX_TICKETS) {
+    hint = freeSeats === 1 ? "Der er kun 1 ledig plads" : `Der er kun ${freeSeats} ledige pladser`;
+  }
 
   // Lægger "amount" (1 eller -1) til antallet af én type
   function change(typeId, amount) {
@@ -53,7 +66,7 @@ export default function TicketCounter({ basePriceDkk, counts, onChange, onContin
                   type="button"
                   className={styles.stepperButton}
                   onClick={() => change(type.id, 1)}
-                  disabled={total >= MAX_TICKETS}
+                  disabled={total >= maxTickets}
                   aria-label={`Flere ${type.label.toLowerCase()}billetter`}
                 >
                   +
@@ -78,9 +91,12 @@ export default function TicketCounter({ basePriceDkk, counts, onChange, onContin
           <span>
             {total} {total === 1 ? "billet" : "billetter"} · {formatPrice(totalDkk)}
           </span>
-          <span className={styles.small}>Du vælger sæder i næste trin</span>
+          {/* role="status": skærmlæsere hører det, hvis der kun er få pladser */}
+          <span className={styles.small} role="status">
+            {hint}
+          </span>
         </div>
-        <Button onClick={onContinue} disabled={total === 0}>
+        <Button onClick={onContinue} disabled={total === 0 || total > maxTickets}>
           Vælg sæder
         </Button>
       </div>
