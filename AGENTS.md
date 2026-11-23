@@ -2,9 +2,9 @@
 
 ## This is NOT the Next.js you know
 
-This version has breaking changes - APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
-This block is written and re-added by `next dev` - verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 
@@ -74,6 +74,7 @@ lib/
   format.js               Dato, tid, pris, varighed og sæder (formatSeats) - dansk og i Europe/Copenhagen
   payment-errors.js       De simulerede betalingsfejl (fx KORT-402)
   ticket-types.js         Billettyperne (Voksen, Barn, Pensionist) og deres priser
+  showtime-tags.js        Særforestillingerne (fx Babybio) og deres forklaringer, og teksten på tids-knapperne (fra showtimes.tags)
   safe-path.js            Validerer ?next=
   seat-rules.js           Sædevalget: et ledigt sæde må ikke efterlades alene (findLoneSeats) og de bedste pladser midt i salen (findBestSeats)
   use-submit-once.js      useSubmitOnce: stopper dobbeltklik, så en formular i købsflowet ikke sendes to gange
@@ -134,7 +135,7 @@ Udfyld node-id, når skærmen hentes med Figma MCP (`get_design_context`).
 | Forside | | `/film` | Header, MovieCard, Poster (plakaten - viser PosterPlaceholder, hvis billedet mangler eller ikke kan hentes), PosterPlaceholder, Footer |
 | Filmside | Projektor - standard: 3063:14519, Titel - standard: 3063:14531, Titel - smelter: 1797:9068 / 1797:9099, Nedtælling: 594:3212, REC: 570:3180, Lommelygte: 570:3160 (topbar: 1842:64049) | `/film/[slug]` | MovieHero, Flashlight, MovieTitle (`variant="clayface"` og `variant="katten"` - unikke kampagne-animationer, kun til de to film; valgt i `getTitleVariant` i `lib/data/movies.js`. Dråberne (MeltDrips) i samme fil), Countdown (`variant="premiere"`), CaseLabel, MovieInfoBar (TrailerButton, FollowButton, Button), Modal |
 | Filmside - "Filmdetaljer" (plakat, handling, fakta) | 2250:15224 (Anmeldelse: 2249:15255) | `/film/[slug]` | MovieDetails, TrailerButton, ShareButton, BearRating, PosterPlaceholder |
-| Filmside - "Spilletider" | 627:3145 (Din forestilling: 2010:26575, Biograf-vælger: 1813:9324) | `/film/[slug]` | ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime (alle i `features/showtimes/`), Chip (format), FilterField (`variant="box"` - biograf), Button (`variant="more"` - "Se salen", `primary` - "Vælg billetter"). Ledige pladser regnes ud i `getShowtimes`. Kommende film: første dag hedder "Premiere" |
+| Filmside - "Spilletider" | 627:3145 (Din forestilling: 2010:26575, Biograf-vælger: 1813:9324) | `/film/[slug]` | ShowtimeList, ShowtimeButton, StatusDot, SelectedShowtime (alle i `features/showtimes/`), Chip (format), FilterField (`variant="box"` - biograf), Button (`variant="more"` - "Se salen", `primary` - "Vælg billetter"). Ledige pladser regnes ud i `getShowtimes`. Kommende film: første dag hedder "Premiere". Fangalla og Fan forpremiere ligger kun i filmens første dage (testdata). På tids-knappen står sal, format, sprog og evt. særforestilling og "Uden undertekster" som tekst i linjen (som på nfbio.dk), fx "Bio 7 · 2D · Eng. tale · Babybio". Danske undertekster står kun i "Din forestilling". Figma: teksten står i "Info" på "Forestilling". Særforestillingen forklares i "Din forestilling" ("Vis forklaring"). Teksterne står i `lib/showtime-tags.js` |
 | Filmside - "Billetsalg lukket" | 4034:18166 (Følg-knappen "Ikke logget ind – besked": 4061:17927) | `/film/[slug]` | ShowtimeList (overskrift og biograf-vælger), SaleClosed (kortet i stedet for skemaet, når billetsalget ikke er åbnet), Poster, FollowButton (`label="Følg"`, `toastEnd`). Er man ikke logget ind, viser FollowButton beskeden "Du skal være logget ind for at kunne følge filmen." - man bliver på siden |
 | Filmside - "Se salen" (overblik over salen) | Sal/1: 929:6302, Sal/3: 929:7069, Sal/4: 929:7295, Sal/5: 929:7522, Sal/6: 929:8100, Sal/7: 929:8359 | `/film/[slug]` | HallMap (i `features/showtimes/` - vises fra SelectedShowtime). Sæderne tegnes med Seat (`components/ui` - Figma "Sæde" 214:3678, farverne er tokens, så de skifter i familie-mode). Layoutet hentes med `getHallLayouts` i `lib/data/seats.js`; sædernes placering står i `seats.col`, og salene bygges med `seed_hall_seats` i skemaet |
 | Trailer-modal | 596:3073 (Fortæppe: 636:3749) | `/film/[slug]` og `/film` | TrailerButton, Modal, Curtain (fortæppet, der åbner over videoen), Button (`variant="secondary"` - "Luk" med kryds) |

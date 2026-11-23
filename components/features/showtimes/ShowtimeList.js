@@ -250,6 +250,7 @@ export default function ShowtimeList({ movie, showtimes, halls, loggedIn }) {
               <ShowtimeButton
                 key={showtime.id}
                 showtime={showtime}
+                language={movie.language}
                 selected={selected && showtime.id === selected.id}
                 onSelect={() => setSelectedId(showtime.id)}
               />

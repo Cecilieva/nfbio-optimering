@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { formatDayKey, formatDayMonthShort, formatTime } from "@/lib/format";
+import { getSpecialShowtime, getSubtitleTags } from "@/lib/showtime-tags";
 import HallMap from "./HallMap";
 import styles from "./SelectedShowtime.module.css";
 
@@ -19,10 +20,17 @@ export default function SelectedShowtime({ movie, showtime, hallLayout }) {
   const isToday = showtime.day === formatDayKey(new Date());
   const day = isToday ? "I dag" : formatDayMonthShort(showtime.starts_at);
 
-  // Teksten under titlen, fx "Sal 7 · 2D · Engelsk tale · Slut ca. kl. 20.28"
+  // Særforestillingen, fx Babybio – eller null
+  const special = getSpecialShowtime(showtime.tags);
+
+  // Teksten under titlen, fx "Sal 7 · 2D · Engelsk tale · Dansk undertekst · Babybio · Slut ca. kl. 20.28"
   const details = [showtime.hall.name, showtime.format];
   if (movie.language) {
     details.push(movie.language);
+  }
+  details.push(...getSubtitleTags(showtime.tags));
+  if (special) {
+    details.push(special.tag);
   }
   if (movie.duration_min) {
     // Sluttid = starttid + filmens længde. Tiden er i millisekunder, derfor "* 60 * 1000"
@@ -42,6 +50,12 @@ export default function SelectedShowtime({ movie, showtime, hallLayout }) {
             {movie.title} · {day} kl. {formatTime(showtime.starts_at)}
           </p>
           <p className={styles.details}>{details.join(" · ")}</p>
+          {/* Hvad særforestillingen betyder, fx "Babybio: Forestilling for forældre med babyer …" */}
+          {special && (
+            <p className={styles.special}>
+              <span className={styles.specialName}>{special.tag}:</span> {special.text}
+            </p>
+          )}
         </div>
 
         <div className={styles.buttons}>
