@@ -459,9 +459,9 @@ values
   ('Clayface', 'clayface',
    'Efter en ulykke vansiret af en gangster, får filmstjernen Matt Hagen evnen til at forme sin krop som ler.',
    'James Watkins', array['Tom Rhys Harries','Naomi Ackie','David Dencik','Max Minghella','Eddie Marsan'],
-   array['Thriller'], '15 år', 108, 'Engelsk tale', 'now_playing', 5.0, 597),
+   array['Thriller'], '15 år', 108, 'Engelsk tale', 'coming_soon', 5.0, 597),
   ('The Hunger Games: Sunrise on the Reaping', 'sunrise-on-the-reaping', null,
-   null, '{}', array['Action','Eventyr'], '15 år', null, 'Engelsk tale', 'coming_soon', null, 0);
+   null, '{}', array['Action','Eventyr'], '15 år', null, 'Engelsk tale', 'now_playing', null, 0);
 
 -- Spilletider de næste 7 dage for Clayface i alle biografer.
 -- Salen skifter med dag og tidspunkt, så filmen ikke altid går i den samme sal.
