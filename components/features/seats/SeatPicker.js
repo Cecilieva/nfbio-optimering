@@ -89,6 +89,13 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume,
 
   const { quantity, totalDkk } = countTickets(counts, showtime.price_dkk);
 
+  // Antal ledige pladser i salen – man kan ikke vælge flere billetter end det.
+  // Ens egne reserverede sæder (når man kommer tilbage med en aktiv reservation) tæller som ledige for en selv
+  const ownSeatIds = resume?.seat_ids ?? [];
+  const freeSeats = rows
+    .flatMap((row) => row.seats)
+    .filter((seat) => !seat.taken || ownSeatIds.includes(seat.id)).length;
+
   // Sæder, som valget efterlader helt alene. Så kan man ikke gå videre (se lib/seat-rules.js)
   const loneSeats = findLoneSeats(rows, selectedIds, quantity);
   // Vinduet "En plads står alene" åbner af sig selv, når valget efterlader et sæde alene
@@ -145,6 +152,7 @@ export default function SeatPicker({ showtime, rows, subtitle, backHref, resume,
         <div className={styles.counter}>
           <TicketCounter
             basePriceDkk={showtime.price_dkk}
+            freeSeats={freeSeats}
             counts={counts}
             onChange={changeCounts}
             onContinue={goToSeats}

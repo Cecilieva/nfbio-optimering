@@ -16,9 +16,9 @@
   transition: color var(--duration-fast) var(--easing-standard);
 }
 
-/* Tilstand=Hover: tekst og pil bliver accent/Sekundær */
+/* Tilstand=Hover: tekst og pil bliver text/Hover (accent/Primær – samme blå som de andre links) */
 .back:hover {
-  color: var(--color-accent-secondary);
+  color: var(--color-accent);
 }
 
 .back:focus-visible {

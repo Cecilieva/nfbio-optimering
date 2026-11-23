@@ -43,6 +43,19 @@
   line-height: var(--line-height-snug);
 }
 
+/* Forklaringen af særforestillingen (Figma "Forklaring") – lille tekst i text/Sekundær … */
+.special {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-x-small);
+  line-height: var(--line-height-snug);
+}
+
+/* … og navnet, fx "Babybio:", fed i text/Primær, så det skiller sig ud */
+.specialName {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
 /* Titlen, fx "Clayface · I dag kl. 18.20" - stor og fed */
 .title {
   color: var(--color-text);

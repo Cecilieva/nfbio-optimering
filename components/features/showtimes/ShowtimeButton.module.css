@@ -52,11 +52,16 @@
   line-height: var(--line-height-snug);
 }
 
-/* Sal og format, fx "Sal 7 · 2D" – lille tekst */
+/* Sal, format, sprog og evt. særforestilling, fx "Bio 7 · 2D · Eng. tale · Babybio" – lille tekst.
+   Brydes over flere linjer, hvis den er lang (prikken står på linjen med klokkeslættet, så den er ikke i vejen) */
 .info {
   color: var(--color-text-secondary);
   font-size: var(--font-size-x-small);
   line-height: var(--line-height-snug);
+}
+
+/* Én del af linjen, fx "Eng. tale · " – brydes ikke midt i */
+.part {
   white-space: nowrap;
 }
 
